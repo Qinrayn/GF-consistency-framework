@@ -351,16 +351,47 @@ def deepwalk_from_graph(G, walk_length=20, walks_per_node=10,
             if len(walk) >= 2:
                 walks.append(walk)
 
-    cooc = np.zeros((n, n))
-    for walk in walks:
-        for i, ni in enumerate(walk):
-            for j in range(max(0, i - window_size),
-                           min(len(walk), i + window_size + 1)):
-                if i != j:
-                    cooc[ni, walk[j]] += 1
+    # Build co-occurrence representation
+    if n > 1000:
+        # Sparse representation for large graphs — avoids n×n dense matrix
+        from scipy.sparse import csr_matrix
+        from scipy.sparse.linalg import svds
 
-    U, S, _ = np.linalg.svd(cooc, full_matrices=False)
-    return U[:, :dimensions] * np.sqrt(S[:dimensions])
+        cooc_dict = {}
+        for walk in walks:
+            for i, ni in enumerate(walk):
+                for j in range(max(0, i - window_size),
+                               min(len(walk), i + window_size + 1)):
+                    if i != j:
+                        key = (ni, walk[j])
+                        cooc_dict[key] = cooc_dict.get(key, 0) + 1
+
+        rows, cols, vals = [], [], []
+        for (i, j), val in cooc_dict.items():
+            rows.append(i)
+            cols.append(j)
+            vals.append(float(val))
+        cooc_sparse = csr_matrix(
+            (vals, (rows, cols)), shape=(n, n)
+        )
+        k = min(dimensions + 1, n - 1)
+        U, S, _ = svds(cooc_sparse.astype(np.float64), k=k)
+        # svds returns singular values in ascending order; reverse
+        idx = np.argsort(-S)
+        U = U[:, idx]
+        S = S[idx]
+        return U[:, :dimensions] * np.sqrt(S[:dimensions])
+    else:
+        cooc = np.zeros((n, n))
+        for walk in walks:
+            for i, ni in enumerate(walk):
+                for j in range(max(0, i - window_size),
+                               min(len(walk), i + window_size + 1)):
+                    if i != j:
+                        cooc[ni, walk[j]] += 1
+
+        U, S, _ = np.linalg.svd(cooc, full_matrices=False)
+        return U[:, :dimensions] * np.sqrt(S[:dimensions])
 
 
 def node2vec_from_graph(G, walk_length=20, walks_per_node=10,

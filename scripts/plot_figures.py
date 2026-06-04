@@ -134,10 +134,10 @@ def plot_figure2_pca_control(results_dir, figures_dir):
 
 
 # ------------------------------------------------------------------
-# Figure 3: Robustness across 10 random subsets
+# Figure 3: Robustness across random subsets
 # ------------------------------------------------------------------
 def plot_figure3_robustness(results_dir, figures_dir):
-    """Figure 3: Robustness across 10 random subsets."""
+    """Figure 3: Robustness across random subsets."""
     robust_file = results_dir / "subset_summary.json"
     if not robust_file.exists():
         print("Figure 3: subset_summary.json not found, skipping")
@@ -164,7 +164,7 @@ def plot_figure3_robustness(results_dir, figures_dir):
 
     ax.set_xlabel('Distance threshold r')
     ax.set_ylabel('Functional purity')
-    ax.set_title('Robustness Across 10 Random Subsets')
+    ax.set_title('Robustness Across Random Subsets')
     ax.legend()
     ax.grid(alpha=0.3)
 
@@ -236,6 +236,14 @@ def plot_figure5_gf_scores(results_dir, figures_dir):
         print("Figure 5: no scores key found in gf_scores.json")
         return
 
+    # Merge GNN results if available
+    gnn_file = results_dir / "gnn_gf_scores.json"
+    if gnn_file.exists():
+        with open(gnn_file) as f:
+            gnn_data = json.load(f)
+        if "gf_scores" in gnn_data:
+            scores.update(gnn_data["gf_scores"])
+
     methods = list(scores.keys())
     values = list(scores.values())
 
@@ -247,7 +255,7 @@ def plot_figure5_gf_scores(results_dir, figures_dir):
     fig, ax = plt.subplots(figsize=(10, 5))
 
     # Use a distinct color palette — top method highlighted, rest graded
-    palette = ['#4E79A7', '#76B7B2', '#59A14F', '#F28E2B', '#E15759', '#B07AA1', '#EDC948', '#FF9DA7']
+    palette = ['#4E79A7', '#76B7B2', '#59A14F', '#F28E2B', '#E15759', '#B07AA1', '#EDC948', '#FF9DA7', '#4C78A8', '#F58518', '#54A24B']
     colors = [palette[i] if i < len(palette) else 'lightgray' for i in range(len(methods))]
     bars = ax.bar(methods, values, color=colors, edgecolor='black', linewidth=0.5)
 
