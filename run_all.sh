@@ -2,6 +2,12 @@
 # G-F Consistency Framework - Complete Analysis Pipeline
 # Run this script to reproduce all experiments from scratch.
 # Usage: bash run_all.sh [--run-human]
+#
+# NOTE: This script covers Steps 1–14 (classical/NN embeddings, G-F curves,
+# robustness, geometric analysis, link prediction, k-NN, figures).
+# Steps 15–21 (GNN embeddings, adaptive interval, topology, rank reversal,
+# GO propagation, biological interpretation, benchmarking) are handled by
+# run_all_analysis.py. Use `python run_all_analysis.py` for the full 21-step pipeline.
 
 set -e
 
@@ -36,8 +42,8 @@ echo "--------------------------------------------"
 python scripts/leiden_baseline.py
 
 echo ""
-echo "Step 5: Robustness Analysis (10 random subsets + Bonferroni)"
-echo "-------------------------------------------------------------"
+echo "Step 5: Robustness Analysis (30 subsets × 5 sizes + Bonferroni)"
+echo "-----------------------------------------------------------------"
 python scripts/robustness.py
 
 echo ""

@@ -7,7 +7,10 @@
     "Node2Vec": 0.41526529890865754,
     "VGAE": 0.24813152527735283,
     "PCA": 0.5773132632478335,
-    "VGAE-feat": 0.4959734247688482
+    "VGAE-feat": 0.4959734247688482,
+    "GraphSAGE": 0.3468,
+    "GAT": 0.2832,
+    "GIN": 0.0
   },
   "unified_interval": [
     0.05,
@@ -81,6 +84,18 @@
     "VGAE": {
       "auroc_mean": 0.4971185454521178,
       "auroc_std": 0.024082666727106343
+    },
+    "GraphSAGE": {
+      "auroc_mean": 0.684,
+      "auroc_std": 0.0163
+    },
+    "GAT": {
+      "auroc_mean": 0.5223,
+      "auroc_std": 0.015
+    },
+    "GIN": {
+      "auroc_mean": 0.5,
+      "auroc_std": 0.0
     }
   },
   "spearman_rho_auroc_gf": 0.8285714285714287,
@@ -108,6 +123,18 @@
     "VGAE": {
       "micro_f1_mean": 0.1757,
       "micro_f1_std": 0.1093
+    },
+    "GraphSAGE": {
+      "micro_f1_mean": 0.2598,
+      "micro_f1_std": 0.0747
+    },
+    "GAT": {
+      "micro_f1_mean": 0.1844,
+      "micro_f1_std": 0.0314
+    },
+    "GIN": {
+      "micro_f1_mean": 0.2522,
+      "micro_f1_std": 0.0043
     }
   },
   "knn_n_nodes": 119,
@@ -152,6 +179,15 @@
       "W": 0.0879,
       "r_min": 0.05,
       "r_max": 0.1379
+    },
+    "GraphSAGE": {
+      "W": 0.0653
+    },
+    "GAT": {
+      "W": 0.0
+    },
+    "GIN": {
+      "W": 0.0
     }
   },
   "bonferroni_n_significant": 11,

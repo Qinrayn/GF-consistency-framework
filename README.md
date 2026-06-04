@@ -17,9 +17,12 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 21-s
 | DeepWalk | 0.462 | 0.249 | 0.536 ± 0.019 | 0.185 ± 0.042 |
 | Node2Vec | 0.415 | 0.045 | 0.536 ± 0.021 | 0.203 ± 0.065 |
 | VGAE | 0.248 | 0.000 | 0.497 ± 0.024 | 0.176 ± 0.109 |
+| GraphSAGE | 0.347 | 0.065 | 0.684 ± 0.016 | 0.260 ± 0.075 |
+| GAT | 0.283 | 0.000 | 0.522 ± 0.015 | 0.184 ± 0.031 |
+| GIN | 0.000 | 0.000 | 0.500 ± 0.000 | 0.252 ± 0.004 |
 
 - Leiden baseline purity: **0.689** (matches paper)
-- Bonferroni: **11/30** significant (5 in plateau)
+- Bonferroni (30 subsets, size 150): **9/30** significant after correction
 - Randomization: original max 0.916 > shuffled 0.857 ± 0.007 (10 permutations, Z = 8.14)
 - Spearman rho (AUROC vs G-F Score): **0.829** (*p* = 0.042)
 - Unified interval: **[0.05, 0.422]**
@@ -37,7 +40,7 @@ All metrics → [`results/final_results_summary.json`](results/final_results_sum
 conda env create -f environment.yml
 conda activate gf-consistency
 
-# 2. Run full pipeline (≈ 30 min on standard laptop)
+# 2. Run full pipeline (≈ 60 min on standard laptop)
 python run_all_analysis.py
 
 # Options:
@@ -82,7 +85,7 @@ Step 1  ─ Data Preprocessing ────────── Yeast PPI + GO ann
 Step 2  ─ Compute Embeddings ────────── 8 methods → embeddings/*.npy
 Step 3  ─ G-F Curves & Scores ───────── 200-point grid → gf_scores.json
 Step 4  ─ Leiden Baseline ────────────── Community detection baseline
-Step 5  ─ Subset Robustness ──────────── 10 subsets + Bonferroni correction
+Step 5  ─ Subset Robustness ──────────── 30 subsets × 5 sizes + Bonferroni correction
 Step 6  ─ Full Network ───────────────── 5,936-node STRING validation
 Step 7  ─ Geometric Analysis ─────────── d_intra / d_inter margin
 Step 8  ─ Link Prediction ────────────── 5-fold CV AUROC
@@ -169,7 +172,6 @@ GF-consistency-framework/
 │   ├── FigS1–S7                # Supplementary figures
 │   └── comparison_30vs200      # Sampling density check
 │
-├── _workspace/                 # Research design docs & manuscript drafts
 ├── human_validation/           # Cross-species (optional, STRING v12.0)
 ├── yeast_ppi_data/             # VGAE latent representations (.pkl)
 │

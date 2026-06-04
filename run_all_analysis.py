@@ -5,7 +5,7 @@ Master script to run all analyses for the G-F consistency framework.
 
 This script orchestrates the complete analysis pipeline:
 1.  Data preprocessing
-2.  Embedding computation (8 classical/NN methods)
+2.  Embedding computation (8 classical + 3 GNN methods)
 3.  G-F curve computation (200-point grid)
 4.  Leiden baseline
 5.  Robustness analysis (30 subsets x 5 size levels)
@@ -85,6 +85,26 @@ def generate_final_summary(results_dir):
                                                  data.get("unified_interval_paper", [0.05, 0.422]))
         summary["random_baseline"] = data.get("random_baseline",
                                                data.get("random_baseline_mean", None))
+
+    # 1b. Merge GNN method results
+    gnn_file = results_dir / "gnn_gf_scores.json"
+    if gnn_file.exists():
+        with open(gnn_file) as f:
+            gnn_data = json.load(f)
+        if "gf_scores" in summary and "gf_scores" in gnn_data:
+            summary["gf_scores"].update(gnn_data["gf_scores"])
+        if "link_prediction" not in summary:
+            summary["link_prediction"] = {}
+        if "link_prediction" in gnn_data:
+            summary["link_prediction"].update(gnn_data["link_prediction"])
+        if "downstream_knn" not in summary:
+            summary["downstream_knn"] = {}
+        if "downstream_knn" in gnn_data:
+            summary["downstream_knn"].update(gnn_data["downstream_knn"])
+        if "plateau_width_200pts" not in summary:
+            summary["plateau_width_200pts"] = {}
+        if "plateau_widths" in gnn_data:
+            summary["plateau_width_200pts"].update(gnn_data["plateau_widths"])
 
     # 2. Leiden baseline
     leiden_file = results_dir / "leiden_baseline.json"

@@ -33,6 +33,10 @@ Thumbs.db
 
 # Auto-generated / tool cache
 MANIFEST.json
+*.pkl
+
+# Windows artifacts
+nul
 
 # AI workspace (local only)
 _workspace/

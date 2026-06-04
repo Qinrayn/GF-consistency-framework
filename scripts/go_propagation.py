@@ -784,7 +784,7 @@ def plot_convergence(convergence, output_path):
     ax.legend(fontsize=10)
     ax.grid(True, alpha=0.3)
     fig.tight_layout()
-    fig.savefig(str(output_path), dpi=200)
+    fig.savefig(str(output_path), dpi=300)
     plt.close(fig)
     logger.info("Saved convergence figure: %s", output_path)
 
@@ -807,8 +807,9 @@ def parse_args():
         help="Minimum GO terms per gene in extended set (default: 1).",
     )
     parser.add_argument(
-        "--subset-sizes", type=str, default="50,100,200,500,1000",
-        help="Comma-separated subset sizes for convergence analysis.",
+        "--subset-sizes", type=str, default="30,60,90,120,150",
+        help="Comma-separated subset sizes for convergence analysis "
+             "(default: 30,60,90,120,150 — sizes capped at annotated node count).",
     )
     parser.add_argument(
         "--n-subsets", type=int, default=30,
@@ -1089,8 +1090,13 @@ def main():
             coords_conv, emb_nodes_conv = _load_or_compute_full_embedding(
                 conv_method, G_full, nodes_full,
             )
+            # Use original_go_map for purity evaluation: the extended map
+            # has ~29 terms/gene (True Path Rule) which inflates purity
+            # to ~1.0 and makes convergence uninformative.  The original
+            # map (~3.8 terms/gene) gives realistic purity values while
+            # still sampling from the full extended node set.
             convergence = subset_convergence_analysis(
-                coords_conv, emb_nodes_conv, extended_go_map,
+                coords_conv, emb_nodes_conv, original_go_map,
                 subset_sizes, args.n_subsets, r_vals,
             )
             logger.info("Convergence results (using %s):", conv_method)

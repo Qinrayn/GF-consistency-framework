@@ -958,6 +958,13 @@ def main():
 
     # Plot distance distributions
     if all_distances:
+        # Save distance data as pickle for external figure regeneration
+        import pickle as _pkl
+        _dist_path = results_dir / "distance_distributions.pkl"
+        with open(_dist_path, "wb") as _f:
+            _pkl.dump(all_distances, _f)
+        print(f"  Saved distance distribution data: {_dist_path}")
+
         print("\nPlotting embedding distance distributions...")
         plot_distance_distributions(all_distances, figures_dir)
     else:
