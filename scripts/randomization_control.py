@@ -12,13 +12,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from utils import (
-    SEED, get_data_dir, get_results_dir, get_embeddings_dir,
-    load_curated_network, load_embedding, compute_gf_curve,
+    SEED, R_MIN, R_MAX, N_POINTS, get_data_dir, get_results_dir,
+    get_embeddings_dir, load_curated_network, load_embedding,
+    compute_gf_curve,
 )
 
-R_MIN = 0.05
-R_MAX = 0.55
-N_POINTS = 200
 N_SHUFFLES = 10
 
 

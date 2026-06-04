@@ -4,7 +4,7 @@ This directory contains scripts for cross-species validation on the human PPI ne
 
 ## Important Note
 
-**This analysis requires significant computational resources and is NOT included in the main reproduction pipeline (`run_all.sh`).**
+**This analysis requires significant computational resources and is NOT included in the main reproduction pipeline (`run_all_analysis.py`).**
 
 The human interactome analysis (Paper Sections 2.10, 3.6, Figure 6) was performed on a high-performance server with:
 - ~16GB RAM for embedding generation

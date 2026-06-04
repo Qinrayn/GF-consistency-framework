@@ -172,13 +172,33 @@ def generate_final_summary(results_dir):
                     "r_max": float(row.get("r_max", 0)),
                 }
 
-    # 7. Bonferroni results
+    # 7. Bonferroni results (with cross-validation)
     bonf_file = results_dir / "bonferroni_results.json"
     if bonf_file.exists():
         with open(bonf_file) as f:
             data = json.load(f)
-        summary["bonferroni_n_significant"] = data.get("n_significant_corrected")
-        summary["bonferroni_n_significant_in_plateau"] = data.get("n_significant_in_plateau")
+
+        # Cross-validate n_significant_corrected against the boolean array
+        n_sig_corrected = data.get("n_significant_corrected")
+        sig_corrected_array = data.get("significant_corrected")
+        if sig_corrected_array is not None:
+            array_count = sum(sig_corrected_array)
+            if n_sig_corrected != array_count:
+                print(f"WARNING: bonferroni_results.json n_significant_corrected={n_sig_corrected} "
+                      f"but sum(significant_corrected)={array_count}. Using array count.")
+                n_sig_corrected = array_count
+        summary["bonferroni_n_significant"] = n_sig_corrected
+
+        # Cross-validate n_significant_in_plateau against available array data
+        n_sig_plateau = data.get("n_significant_in_plateau")
+        sig_in_plateau_array = data.get("significant_in_plateau")
+        if sig_in_plateau_array is not None:
+            plateau_count = sum(sig_in_plateau_array)
+            if n_sig_plateau != plateau_count:
+                print(f"WARNING: bonferroni_results.json n_significant_in_plateau={n_sig_plateau} "
+                      f"but sum(significant_in_plateau)={plateau_count}. Using array count.")
+                n_sig_plateau = plateau_count
+        summary["bonferroni_n_significant_in_plateau"] = n_sig_plateau
 
     # 8. Randomization control
     rand_file = results_dir / "randomization_control.json"

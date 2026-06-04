@@ -20,27 +20,31 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from utils import (
-    SEED, get_data_dir, get_results_dir, get_embeddings_dir,
+    SEED, R_MIN, R_MAX, N_POINTS, GF_R_MIN, GF_R_MAX,
+    CLASSICAL_METHODS, PLATEAU_PURITY_THRESHOLD,
+    get_data_dir, get_results_dir, get_embeddings_dir,
     load_curated_network, load_embedding, compute_gf_curve,
     compute_gf_score, compute_plateau_width, rescale_coordinates,
     precompute_distance_matrix,
 )
 
-R_MIN = 0.05
-R_MAX = 0.55
-N_POINTS = 200
-GF_R_MIN = 0.05
-GF_R_MAX = 0.422
 
-METHODS = ["DM", "MDS", "Spectral", "DeepWalk", "Node2Vec", "VGAE"]
+def compute_random_baseline(coords, nodes, go_map, r_vals, n_shuffles=10,
+                            method=None):
+    """Shuffle node-coordinate mapping, recompute G-F curve, return mean purity.
 
-
-def compute_random_baseline(coords, nodes, go_map, r_vals, n_shuffles=10):
-    """Shuffle node-coordinate mapping, recompute G-F curve, return mean purity."""
+    Parameters
+    ----------
+    method : str, optional
+        Method name used to derive a distinct random seed offset so that
+        each embedding method gets an independent baseline.  When *None*,
+        the original global seed offset is used (backward compatible).
+    """
+    method_offset = hash(method) % 10000 if method else 0
     n = len(nodes)
     all_purities = []
     for s in range(n_shuffles):
-        np.random.seed(SEED + s + 1000)
+        np.random.seed(SEED + s + 1000 + method_offset)
         perm = np.random.permutation(n)
         shuffled_coords = coords[perm]
         purities, _ = compute_gf_curve(shuffled_coords, nodes, go_map, r_vals)
@@ -48,7 +52,8 @@ def compute_random_baseline(coords, nodes, go_map, r_vals, n_shuffles=10):
     return np.mean(all_purities, axis=0).tolist()
 
 
-def compute_random_baseline_with_stats(coords, nodes, go_map, r_vals, n_shuffles=10):
+def compute_random_baseline_with_stats(coords, nodes, go_map, r_vals,
+                                       n_shuffles=10, method=None):
     """Return (mean_purity, std_of_mean) from shuffled baselines.
 
     Runs *n_shuffles* independent random shuffles of the node-coordinate
@@ -69,6 +74,10 @@ def compute_random_baseline_with_stats(coords, nodes, go_map, r_vals, n_shuffles
         Array of radius values at which to sample purity.
     n_shuffles : int, optional
         Number of independent shuffles (default 10).
+    method : str, optional
+        Method name used to derive a distinct random seed offset so that
+        each embedding method gets an independent baseline.  When *None*,
+        the original global seed offset is used (backward compatible).
 
     Returns
     -------
@@ -78,10 +87,11 @@ def compute_random_baseline_with_stats(coords, nodes, go_map, r_vals, n_shuffles
         *std_of_mean* is the sample standard deviation of the
         per-shuffle mean purities.
     """
+    method_offset = hash(method) % 10000 if method else 0
     n = len(nodes)
     all_purities = []
     for s in range(n_shuffles):
-        np.random.seed(SEED + s + 1000)
+        np.random.seed(SEED + s + 1000 + method_offset)
         perm = np.random.permutation(n)
         shuffled_coords = coords[perm]
         purities, _ = compute_gf_curve(shuffled_coords, nodes, go_map, r_vals)
@@ -169,7 +179,7 @@ def main():
     all_purities = {}
     all_modularities = {}
     
-    for method in METHODS:
+    for method in CLASSICAL_METHODS:
         print(f"\nComputing G-F curve for {method}...")
         try:
             coords, emb_nodes = load_embedding(method, "153", embeddings_dir=emb_dir)
@@ -386,11 +396,12 @@ def main():
         writer = csv.writer(f)
         writer.writerow(["Method", "W", "r_min", "r_max", "GF_Score"])
         for method in all_purities:
-            w = compute_plateau_width(r_vals, all_purities[method], threshold=0.5)
+            w = compute_plateau_width(r_vals, all_purities[method],
+                                      threshold=PLATEAU_PURITY_THRESHOLD)
             score = gf_scores.get(method, 0.0)
             # Find r_min and r_max of plateau
             p = np.array(all_purities[method])
-            mask = p >= 0.5
+            mask = p >= PLATEAU_PURITY_THRESHOLD
             if mask.any():
                 r_plateau = r_vals[mask]
                 r_min_p, r_max_p = float(r_plateau[0]), float(r_plateau[-1])

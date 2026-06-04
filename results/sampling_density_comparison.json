@@ -2,85 +2,85 @@
   "DM": {
     "30": {
       "n_points": 30,
-      "gf_score": 0.6118349914251531,
-      "plateau_width": 0.3620689655172414,
-      "max_purity": 0.9161946849446849
+      "gf_score": 0.1519719746032148,
+      "plateau_width": 0.0,
+      "max_purity": 0.24629228325874664
     },
     "200": {
       "n_points": 200,
-      "gf_score": 0.6252450976698284,
-      "plateau_width": 0.45979899497487436,
-      "max_purity": 0.9161946849446849
+      "gf_score": 0.15518241816105013,
+      "plateau_width": 0.0,
+      "max_purity": 0.24679606677244728
     }
   },
   "MDS": {
     "30": {
       "n_points": 30,
-      "gf_score": 0.5506065688452003,
-      "plateau_width": 0.25862068965517243,
-      "max_purity": 0.9035788133435193
+      "gf_score": 0.1501843702897099,
+      "plateau_width": 0.0,
+      "max_purity": 0.24540671598071753
     },
     "200": {
       "n_points": 200,
-      "gf_score": 0.5568047784037732,
-      "plateau_width": 0.30150753768844224,
-      "max_purity": 0.9035788133435193
+      "gf_score": 0.152155432912679,
+      "plateau_width": 0.0,
+      "max_purity": 0.24540671598071753
     }
   },
   "Spectral": {
     "30": {
       "n_points": 30,
-      "gf_score": 0.5859915183117563,
-      "plateau_width": 0.27586206896551724,
-      "max_purity": 0.8788422603225235
+      "gf_score": 0.16292454708193496,
+      "plateau_width": 0.0,
+      "max_purity": 0.25566903350487474
     },
     "200": {
       "n_points": 200,
-      "gf_score": 0.5881903561379765,
-      "plateau_width": 0.27889447236180903,
-      "max_purity": 0.8795193001443001
+      "gf_score": 0.16332658400038436,
+      "plateau_width": 0.0,
+      "max_purity": 0.2558458553424948
     }
   },
   "DeepWalk": {
     "30": {
       "n_points": 30,
-      "gf_score": 0.4539942838116923,
-      "plateau_width": 0.1896551724137931,
-      "max_purity": 0.7358409639515631
+      "gf_score": 0.12119230573805276,
+      "plateau_width": 0.0,
+      "max_purity": 0.19089334518868417
     },
     "200": {
       "n_points": 200,
-      "gf_score": 0.4622091343469395,
-      "plateau_width": 0.24874371859296485,
-      "max_purity": 0.7358409639515631
+      "gf_score": 0.1225356361238432,
+      "plateau_width": 0.0,
+      "max_purity": 0.1964363192928558
     }
   },
   "Node2Vec": {
     "30": {
       "n_points": 30,
-      "gf_score": 0.408107548082871,
-      "plateau_width": 0.034482758620689655,
-      "max_purity": 0.6354922695438255
+      "gf_score": 0.14898462916562588,
+      "plateau_width": 0.0,
+      "max_purity": 0.20029584234559
     },
     "200": {
       "n_points": 200,
-      "gf_score": 0.41526529890865754,
-      "plateau_width": 0.04522613065326633,
-      "max_purity": 0.6826294457176809
+      "gf_score": 0.1511706117501923,
+      "plateau_width": 0.0,
+      "max_purity": 0.22067720530835283
     }
   },
   "VGAE": {
     "30": {
       "n_points": 30,
-      "gf_score": 0.24182668598595453,
+      "gf_score": 0.06428656912605707,
       "plateau_width": 0.0,
-      "max_purity": 0.31768707482993197
+      "max_purity": 0.08277011560336694
     },
     "200": {
       "n_points": 200,
-      "gf_score": 0.24813152527735283,
+      "gf_score": 0.06567018452344808,
       "plateau_width": 0.0,
-      "max_purity": 0.31768707482993197
+      "max_purity": 0.08277011560336694
     }
   }
 }

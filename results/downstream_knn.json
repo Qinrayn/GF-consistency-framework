@@ -19,16 +19,16 @@
       "micro_f1_std": 0.0601
     },
     "DeepWalk": {
-      "micro_f1_mean": 0.1848,
-      "micro_f1_std": 0.042
+      "micro_f1_mean": 0.1855,
+      "micro_f1_std": 0.0793
     },
     "Node2Vec": {
-      "micro_f1_mean": 0.2025,
-      "micro_f1_std": 0.0651
+      "micro_f1_mean": 0.1431,
+      "micro_f1_std": 0.0683
     },
     "VGAE": {
-      "micro_f1_mean": 0.1757,
-      "micro_f1_std": 0.1093
+      "micro_f1_mean": 0.2105,
+      "micro_f1_std": 0.0759
     }
   }
 }

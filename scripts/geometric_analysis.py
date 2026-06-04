@@ -13,8 +13,9 @@ from collections import defaultdict
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from utils import (
-    SEED, get_data_dir, get_results_dir, get_embeddings_dir,
+    SEED, ALL_CURATED_METHODS, get_data_dir, get_results_dir, get_embeddings_dir,
     load_curated_network, load_embedding, compute_centrality_features,
+    precompute_distance_matrix,
 )
 
 
@@ -41,9 +42,8 @@ def compute_geometric_margins(coords, nodes, go_map):
         if node in node_to_term:
             modules[node_to_term[node]].append(i)
     
-    # Compute pairwise distances
-    diff = coords[:, None, :] - coords[None, :, :]
-    dist_matrix = np.sqrt((diff ** 2).sum(axis=2))
+    # Compute pairwise distances using the optimised utility
+    dist_matrix = precompute_distance_matrix(coords)
     
     # d_intra: average distance within modules
     intra_dists = []
@@ -87,7 +87,7 @@ def main():
     
     G, nodes, go_map = load_curated_network(data_dir)
     
-    methods = ["DM", "MDS", "Spectral", "DeepWalk", "Node2Vec", "VGAE", "PCA", "VGAE-feat"]
+    methods = ALL_CURATED_METHODS
     
     results = {}
     for method in methods:

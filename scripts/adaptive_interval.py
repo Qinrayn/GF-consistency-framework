@@ -8,26 +8,46 @@ with a principled, data-adaptive interval selected by sliding-window search
 subject to stability (CV), coverage (width), and significance constraints.
 """
 
+from __future__ import annotations
+
 import argparse
 import json
 import pickle
 import random
 import sys
+from typing import Any
+
 import numpy as np
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from utils import (
-    SEED, get_data_dir, get_results_dir, get_embeddings_dir,
-    load_curated_network, load_embedding, compute_gf_curve,
-    compute_gf_score, compute_plateau_width,
+    SEED,
+    GF_R_MIN,
+    GF_R_MAX,
+    R_MIN,
+    R_MAX,
+    N_POINTS,
+    ALL_CURATED_METHODS,
+    get_data_dir,
+    get_results_dir,
+    get_embeddings_dir,
+    load_curated_network,
+    load_embedding,
+    compute_gf_curve,
+    compute_gf_score,
+    compute_plateau_width,
 )
 
-# Fixed interval used in the original paper (compute_gf.py)
-FIXED_R_MIN = 0.05
-FIXED_R_MAX = 0.422
+# Methods to evaluate — single source of truth lives in utils.py
+METHODS: list[str] = ALL_CURATED_METHODS
 
-METHODS = ["DM", "MDS", "Spectral", "DeepWalk", "Node2Vec", "VGAE", "PCA", "VGAE-feat"]
+# Default relaxed CV threshold used when the strict pass yields no candidates
+RELAXED_CV_DEFAULT: float = 0.15
+
+# Conservative fallback for random baseline when no data is available
+FALLBACK_RB_MEAN: float = 0.30
+FALLBACK_RB_STD: float = 0.02
 
 
 # ---------------------------------------------------------------------------
@@ -42,7 +62,8 @@ def find_adaptive_interval(
     cv_threshold: float = 0.1,
     min_width: float = 0.15,
     significance_sigma: int = 2,
-) -> tuple:
+    relaxed_cv: float = RELAXED_CV_DEFAULT,
+) -> tuple[float, float, dict[str, Any]]:
     """Find the optimal interval [r_min, r_max] for G-F Score integration.
 
     Given a purity curve ``purity(r)`` sampled at *r_vals*, determine the
@@ -67,24 +88,29 @@ def find_adaptive_interval(
     significance_sigma : int, optional
         Number of standard deviations above the random baseline required
         for significance.  Default 2.
+    relaxed_cv : float, optional
+        Relaxed CV threshold used when the strict pass finds no candidates.
+        Default ``RELAXED_CV_DEFAULT`` (0.15).
 
     Returns
     -------
     tuple of (float, float, dict)
         ``(r_min, r_max, diagnostics)`` where *diagnostics* contains
         ``cv``, ``width``, ``mean_purity``, ``significance_threshold``,
-        ``n_candidates``, and ``relaxed`` (bool).
+        ``n_candidates``, ``relaxed`` (bool), and ``fallback`` (bool).
     """
     r = np.asarray(r_vals, dtype=float)
     p = np.asarray(purity_vals, dtype=float)
     n = len(r)
 
-    significance_threshold = random_baseline_purity + significance_sigma * random_baseline_std
+    significance_threshold: float = (
+        random_baseline_purity + significance_sigma * random_baseline_std
+    )
 
-    def _evaluate_candidates(cv_thresh: float):
+    def _evaluate_candidates(cv_thresh: float) -> list[dict[str, Any]]:
         """Slide windows of varying width across the r-axis and collect
         all candidates satisfying the three constraints."""
-        candidates = []
+        candidates: list[dict[str, Any]] = []
         # Step through all possible left boundaries
         for i in range(n):
             for j in range(i + 1, n):
@@ -95,13 +121,13 @@ def find_adaptive_interval(
                     continue
 
                 p_sub = p[i:j + 1]
-                mean_p = float(np.mean(p_sub))
-                std_p = float(np.std(p_sub, ddof=0))
+                mean_p: float = float(np.mean(p_sub))
+                std_p: float = float(np.std(p_sub, ddof=0))
 
                 # CV constraint (guard against zero mean)
                 if mean_p < 1e-12:
                     continue
-                cv = std_p / mean_p
+                cv: float = std_p / mean_p
                 if cv > cv_thresh:
                     continue
 
@@ -124,7 +150,6 @@ def find_adaptive_interval(
 
     # --- Second pass: relaxed CV if no candidates found ---
     if not candidates:
-        relaxed_cv = 0.15
         candidates = _evaluate_candidates(relaxed_cv)
         relaxed = True
 
@@ -134,20 +159,25 @@ def find_adaptive_interval(
         best = max(candidates, key=lambda c: c["width"] * c["mean_purity"])
         r_min_out = best["r_min"]
         r_max_out = best["r_max"]
-        diagnostics = {
+        diagnostics: dict[str, Any] = {
+            "r_min": r_min_out,
+            "r_max": r_max_out,
             "cv": best["cv"],
             "width": best["width"],
             "mean_purity": best["mean_purity"],
             "significance_threshold": significance_threshold,
             "n_candidates": len(candidates),
             "relaxed": relaxed,
+            "fallback": False,
         }
     else:
         # Fallback: return the fixed interval and flag it
-        r_min_out = FIXED_R_MIN
-        r_max_out = FIXED_R_MAX
+        r_min_out = GF_R_MIN
+        r_max_out = GF_R_MAX
         p_sub = p[(r >= r_min_out) & (r <= r_max_out)]
         diagnostics = {
+            "r_min": r_min_out,
+            "r_max": r_max_out,
             "cv": float(np.std(p_sub) / np.mean(p_sub)) if len(p_sub) > 0 and np.mean(p_sub) > 0 else float("nan"),
             "width": r_max_out - r_min_out,
             "mean_purity": float(np.mean(p_sub)) if len(p_sub) > 0 else float("nan"),
@@ -161,15 +191,80 @@ def find_adaptive_interval(
 
 
 # ---------------------------------------------------------------------------
+# Consensus with transparency
+# ---------------------------------------------------------------------------
+
+def compute_consensus_with_transparency(
+    diagnostics_all: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    """Compute consensus interval with full transparency about fallbacks.
+
+    Separates genuine (non-fallback) adaptive intervals from fallback
+    intervals, computes the consensus only from genuine intervals, and
+    reports the fallback ratio so callers can judge the reliability of
+    the result.
+
+    Parameters
+    ----------
+    diagnostics_all : dict
+        ``{method_name: diagnostics_dict}`` as returned by
+        :func:`find_adaptive_interval` for each method.  Each diagnostics
+        dict must contain ``"r_min"``, ``"r_max"``, and ``"fallback"`` keys.
+
+    Returns
+    -------
+    dict
+        ``consensus_interval`` (list of two floats),
+        ``genuine_methods`` (list of str),
+        ``fallback_methods`` (list of str),
+        ``fallback_count`` (int),
+        ``total_count`` (int),
+        ``fallback_ratio`` (float in [0, 1]).
+    """
+    genuine: dict[str, dict[str, Any]] = {}
+    fallback: list[str] = []
+
+    for method, diag in diagnostics_all.items():
+        if diag.get("fallback", False):
+            fallback.append(method)
+        else:
+            genuine[method] = diag
+
+    total: int = len(diagnostics_all)
+    fallback_count: int = len(fallback)
+    fallback_ratio: float = fallback_count / total if total > 0 else 0.0
+
+    if genuine:
+        r_min_vals: list[float] = [v["r_min"] for v in genuine.values()]
+        r_max_vals: list[float] = [v["r_max"] for v in genuine.values()]
+        consensus: list[float] = [
+            float(np.median(r_min_vals)),
+            float(np.median(r_max_vals)),
+        ]
+    else:
+        # Every method fell back — consensus degenerates to the fixed interval
+        consensus = [GF_R_MIN, GF_R_MAX]
+
+    return {
+        "consensus_interval": consensus,
+        "genuine_methods": list(genuine.keys()),
+        "fallback_methods": fallback,
+        "fallback_count": fallback_count,
+        "total_count": total,
+        "fallback_ratio": fallback_ratio,
+    }
+
+
+# ---------------------------------------------------------------------------
 # Validation helpers
 # ---------------------------------------------------------------------------
 
 def validate_adaptive_vs_fixed(
     r_vals: np.ndarray,
     purity_vals: np.ndarray,
-    fixed_interval: tuple,
-    adaptive_interval: tuple,
-) -> dict:
+    fixed_interval: tuple[float, float],
+    adaptive_interval: tuple[float, float],
+) -> dict[str, float]:
     """Compare G-F Scores computed with fixed vs. adaptive intervals.
 
     Parameters
@@ -188,14 +283,16 @@ def validate_adaptive_vs_fixed(
     dict
         ``fixed_score``, ``adaptive_score``, ``abs_pct_diff``.
     """
-    fixed_score = compute_gf_score(
+    fixed_score: float = compute_gf_score(
         r_vals, purity_vals, fixed_interval[0], fixed_interval[1],
     )
-    adaptive_score = compute_gf_score(
+    adaptive_score: float = compute_gf_score(
         r_vals, purity_vals, adaptive_interval[0], adaptive_interval[1],
     )
     if abs(fixed_score) > 1e-12:
-        abs_pct_diff = abs(adaptive_score - fixed_score) / abs(fixed_score) * 100.0
+        abs_pct_diff: float = (
+            abs(adaptive_score - fixed_score) / abs(fixed_score) * 100.0
+        )
     else:
         abs_pct_diff = float("nan")
     return {
@@ -206,14 +303,15 @@ def validate_adaptive_vs_fixed(
 
 
 def cross_method_consistency(
-    all_purities: dict,
+    all_purities: dict[str, list[float]],
     r_vals: np.ndarray,
     random_baseline_purity: float,
     random_baseline_std: float,
     cv_threshold: float = 0.1,
     min_width: float = 0.15,
     significance_sigma: int = 2,
-) -> dict:
+    relaxed_cv: float = RELAXED_CV_DEFAULT,
+) -> dict[str, Any]:
     """Run adaptive interval on every method and assess consistency.
 
     Parameters
@@ -232,14 +330,17 @@ def cross_method_consistency(
         Minimum interval width.  Default 0.15.
     significance_sigma : int, optional
         Sigma above random baseline.  Default 2.
+    relaxed_cv : float, optional
+        Relaxed CV threshold.  Default ``RELAXED_CV_DEFAULT``.
 
     Returns
     -------
     dict
         ``intervals`` (per-method), ``r_min_values``, ``r_max_values``,
-        ``r_min_std``, ``r_max_std``, ``consensus_interval``.
+        ``r_min_std``, ``r_max_std``, ``consensus_interval``,
+        ``transparency``.
     """
-    intervals = {}
+    intervals: dict[str, dict[str, Any]] = {}
     for method, purity_list in all_purities.items():
         r_min, r_max, diag = find_adaptive_interval(
             r_vals, np.array(purity_list),
@@ -247,14 +348,14 @@ def cross_method_consistency(
             cv_threshold=cv_threshold,
             min_width=min_width,
             significance_sigma=significance_sigma,
+            relaxed_cv=relaxed_cv,
         )
         intervals[method] = {"r_min": r_min, "r_max": r_max, **diag}
 
-    r_min_values = [v["r_min"] for v in intervals.values()]
-    r_max_values = [v["r_max"] for v in intervals.values()]
+    r_min_values: list[float] = [v["r_min"] for v in intervals.values()]
+    r_max_values: list[float] = [v["r_max"] for v in intervals.values()]
 
-    consensus_r_min = float(np.median(r_min_values)) if r_min_values else FIXED_R_MIN
-    consensus_r_max = float(np.median(r_max_values)) if r_max_values else FIXED_R_MAX
+    transparency = compute_consensus_with_transparency(intervals)
 
     return {
         "intervals": intervals,
@@ -262,7 +363,8 @@ def cross_method_consistency(
         "r_max_values": r_max_values,
         "r_min_std": float(np.std(r_min_values)) if r_min_values else float("nan"),
         "r_max_std": float(np.std(r_max_values)) if r_max_values else float("nan"),
-        "consensus_interval": [consensus_r_min, consensus_r_max],
+        "consensus_interval": transparency["consensus_interval"],
+        "transparency": transparency,
     }
 
 
@@ -270,7 +372,7 @@ def cross_method_consistency(
 # I/O helpers
 # ---------------------------------------------------------------------------
 
-def _load_gf_curves(results_dir: Path) -> dict:
+def _load_gf_curves(results_dir: Path) -> dict[str, Any]:
     """Load pre-computed G-F curves from JSON (or pickle fallback)."""
     curves_file = results_dir / "gf_curves_200pts.json"
     if curves_file.exists():
@@ -285,7 +387,7 @@ def _load_gf_curves(results_dir: Path) -> dict:
     )
 
 
-def _load_scores(results_dir: Path) -> dict:
+def _load_scores(results_dir: Path) -> dict[str, Any]:
     """Load pre-computed G-F scores (fixed interval) from JSON."""
     scores_file = results_dir / "gf_scores.json"
     if not scores_file.exists():
@@ -294,7 +396,10 @@ def _load_scores(results_dir: Path) -> dict:
         return json.load(f)
 
 
-def _compute_random_baseline_std(gf_curves: dict, n_shuffles: int = 10) -> tuple:
+def _compute_random_baseline_std(
+    gf_curves: dict[str, Any],
+    n_shuffles: int = 10,
+) -> tuple[float, float]:
     """Extract random baseline mean and std from the curves data.
 
     The ``random_baseline_purity`` field in the curves JSON is a list of
@@ -320,21 +425,21 @@ def _compute_random_baseline_std(gf_curves: dict, n_shuffles: int = 10) -> tuple
     rb = gf_curves.get("random_baseline_purity", None)
     if rb is not None and len(rb) > 0:
         rb_arr = np.array(rb)
-        mean_val = float(np.mean(rb_arr))
+        mean_val: float = float(np.mean(rb_arr))
         # The stored curve is averaged over n_shuffles runs, so its
         # pointwise std underestimates the per-shuffle std by sqrt(n).
         # We use across-r std / sqrt(n_shuffles) as a conservative
         # estimate of the shuffle-to-shuffle standard error of the mean.
-        std_val = float(np.std(rb_arr, ddof=0)) / np.sqrt(n_shuffles)
+        std_val: float = float(np.std(rb_arr, ddof=0)) / np.sqrt(n_shuffles)
         return mean_val, std_val
-    return 0.30, 0.02  # conservative fallback
+    return FALLBACK_RB_MEAN, FALLBACK_RB_STD  # conservative fallback
 
 
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Data-driven adaptive unified interval determination",
     )
@@ -349,6 +454,10 @@ def main():
     parser.add_argument(
         "--significance-sigma", type=int, default=2,
         help="Number of sigma above random baseline (default: 2)",
+    )
+    parser.add_argument(
+        "--relaxed-cv", type=float, default=RELAXED_CV_DEFAULT,
+        help=f"Relaxed CV threshold for second pass (default: {RELAXED_CV_DEFAULT})",
     )
     parser.add_argument(
         "--no-consensus", action="store_true", default=False,
@@ -389,7 +498,7 @@ def main():
     # ------------------------------------------------------------------
     # Collect per-method purity curves
     # ------------------------------------------------------------------
-    all_purities = {}
+    all_purities: dict[str, list[float]] = {}
     for method in METHODS:
         key = f"{method}_purity"
         if key in gf_curves:
@@ -403,8 +512,8 @@ def main():
     # Per-method adaptive intervals
     # ------------------------------------------------------------------
     print("\n=== Adaptive Interval Determination ===")
-    adaptive_intervals = {}
-    diagnostics_all = {}
+    adaptive_intervals: dict[str, dict[str, Any]] = {}
+    diagnostics_all: dict[str, dict[str, Any]] = {}
 
     for method, purity_list in all_purities.items():
         r_min, r_max, diag = find_adaptive_interval(
@@ -413,6 +522,7 @@ def main():
             cv_threshold=args.cv_threshold,
             min_width=args.min_width,
             significance_sigma=args.significance_sigma,
+            relaxed_cv=args.relaxed_cv,
         )
         adaptive_intervals[method] = {
             "r_min": round(r_min, 4),
@@ -432,28 +542,54 @@ def main():
         )
 
     # ------------------------------------------------------------------
-    # Consensus interval
+    # Consensus interval (with transparency)
     # ------------------------------------------------------------------
-    consensus_interval = [FIXED_R_MIN, FIXED_R_MAX]
+    transparency = compute_consensus_with_transparency(diagnostics_all)
+    consensus_interval: list[float] = [GF_R_MIN, GF_R_MAX]
+
     if not args.no_consensus and adaptive_intervals:
+        consensus_interval = [
+            round(transparency["consensus_interval"][0], 4),
+            round(transparency["consensus_interval"][1], 4),
+        ]
+
+        # --- Prominent fallback-ratio banner ---
+        fb_ratio: float = transparency["fallback_ratio"]
+        fb_count: int = transparency["fallback_count"]
+        fb_total: int = transparency["total_count"]
+        print("\n" + "=" * 60)
+        print(f"  TRANSPARENCY: {fb_count}/{fb_total} methods fell back to "
+              f"fixed interval (fallback ratio = {fb_ratio:.2%})")
+        if fb_count > 0:
+            print(f"    Fallback methods : {transparency['fallback_methods']}")
+        if transparency["genuine_methods"]:
+            print(f"    Genuine methods : {transparency['genuine_methods']}")
+        if fb_ratio > 0.5:
+            print("  WARNING: majority of methods used fallback — "
+                  "consensus interval is unreliable!")
+        print("=" * 60)
+
         r_min_vals = [v["r_min"] for v in adaptive_intervals.values()]
         r_max_vals = [v["r_max"] for v in adaptive_intervals.values()]
-        consensus_r_min = float(np.median(r_min_vals))
-        consensus_r_max = float(np.median(r_max_vals))
-        consensus_interval = [round(consensus_r_min, 4), round(consensus_r_max, 4)]
         print(f"\n=== Consensus Interval ===")
-        print(f"  Median r_min: {consensus_r_min:.4f}  (std={np.std(r_min_vals):.4f})")
-        print(f"  Median r_max: {consensus_r_max:.4f}  (std={np.std(r_max_vals):.4f})")
-        print(f"  Consensus:    [{consensus_r_min:.4f}, {consensus_r_max:.4f}]")
-        print(f"  Fixed (paper): [{FIXED_R_MIN}, {FIXED_R_MAX}]")
+        print(f"  Median r_min: {np.median(r_min_vals):.4f}  "
+              f"(std={np.std(r_min_vals):.4f})")
+        print(f"  Median r_max: {np.median(r_max_vals):.4f}  "
+              f"(std={np.std(r_max_vals):.4f})")
+        print(f"  Consensus (genuine only): "
+              f"[{consensus_interval[0]:.4f}, {consensus_interval[1]:.4f}]")
+        print(f"  Fixed (paper):            "
+              f"[{GF_R_MIN}, {GF_R_MAX}]")
+        print(f"  Fallback ratio:           {fb_ratio:.2%}  "
+              f"({fb_count}/{fb_total})")
 
     # ------------------------------------------------------------------
     # G-F Score comparison: fixed vs adaptive
     # ------------------------------------------------------------------
     print("\n=== G-F Score Comparison (Fixed vs Adaptive) ===")
-    gf_scores_adaptive = {}
-    gf_scores_fixed = {}
-    comparison = {}
+    gf_scores_adaptive: dict[str, float] = {}
+    gf_scores_fixed: dict[str, float] = {}
+    comparison: dict[str, dict[str, float]] = {}
 
     for method, purity_list in all_purities.items():
         p_arr = np.array(purity_list)
@@ -464,7 +600,7 @@ def main():
         gf_scores_adaptive[method] = round(adaptive_score, 4)
 
         # Fixed score (recompute for consistency, or use saved)
-        fixed_score = compute_gf_score(r_vals, p_arr, FIXED_R_MIN, FIXED_R_MAX)
+        fixed_score = compute_gf_score(r_vals, p_arr, GF_R_MIN, GF_R_MAX)
         gf_scores_fixed[method] = round(fixed_score, 4)
 
         abs_pct = (
@@ -481,7 +617,7 @@ def main():
     header = f"  {'Method':<12s} {'Fixed':>8s} {'Adaptive':>10s} {'|Diff|%':>8s}"
     print(header)
     print("  " + "-" * (len(header) - 2))
-    pct_diffs = []
+    pct_diffs: list[float] = []
     for method in METHODS:
         if method not in comparison:
             continue
@@ -492,8 +628,8 @@ def main():
             f"{c['abs_pct_diff']:>7.2f}%"
         )
 
-    mean_abs_pct = float(np.mean(pct_diffs)) if pct_diffs else float("nan")
-    max_abs_pct = float(np.max(pct_diffs)) if pct_diffs else float("nan")
+    mean_abs_pct: float = float(np.mean(pct_diffs)) if pct_diffs else float("nan")
+    max_abs_pct: float = float(np.max(pct_diffs)) if pct_diffs else float("nan")
     print(f"\n  Mean |diff|: {mean_abs_pct:.2f}%")
     print(f"  Max  |diff|: {max_abs_pct:.2f}%")
 
@@ -505,12 +641,13 @@ def main():
         cv_threshold=args.cv_threshold,
         min_width=args.min_width,
         significance_sigma=args.significance_sigma,
+        relaxed_cv=args.relaxed_cv,
     )
 
     # ------------------------------------------------------------------
     # Human validation (optional)
     # ------------------------------------------------------------------
-    human_results = None
+    human_results: dict[str, Any] | None = None
     if args.human:
         human_pkl = results_dir / "human_gf_curves_200pts.pkl"
         if human_pkl.exists():
@@ -525,8 +662,8 @@ def main():
 
             # No random baseline stored for human data; use conservative
             # fallback estimate.
-            human_rb_mean = 0.30
-            human_rb_std = 0.02
+            human_rb_mean: float = FALLBACK_RB_MEAN
+            human_rb_std: float = FALLBACK_RB_STD
             human_rb = human_curves.get("random_baseline_purity", None)
             if human_rb is not None and len(human_rb) > 0:
                 human_rb_mean, human_rb_std = _compute_random_baseline_std(
@@ -534,8 +671,9 @@ def main():
                 )
             print(f"  Human random baseline: mean={human_rb_mean:.4f}, std={human_rb_std:.4f}")
 
-            human_methods = [m for m in METHODS if m in curves_dict]
-            human_adaptive = {}
+            human_methods: list[str] = [m for m in METHODS if m in curves_dict]
+            human_adaptive: dict[str, dict[str, Any]] = {}
+            human_diagnostics: dict[str, dict[str, Any]] = {}
             for method in human_methods:
                 p_list = curves_dict[method].get("purity", [])
                 if not p_list:
@@ -546,6 +684,7 @@ def main():
                     cv_threshold=args.cv_threshold,
                     min_width=args.min_width,
                     significance_sigma=args.significance_sigma,
+                    relaxed_cv=args.relaxed_cv,
                 )
                 human_adaptive[method] = {
                     "r_min": round(r_min_h, 4),
@@ -554,21 +693,31 @@ def main():
                     "width": round(diag_h["width"], 4),
                     "mean_purity": round(diag_h["mean_purity"], 4),
                 }
+                human_diagnostics[method] = {**human_adaptive[method], **diag_h}
                 print(
                     f"  {method:10s}  [{r_min_h:.4f}, {r_max_h:.4f}]  "
                     f"cv={diag_h['cv']:.4f}"
                 )
 
+            human_consensus: list[float] | None = None
             if human_adaptive:
-                h_r_mins = [v["r_min"] for v in human_adaptive.values()]
-                h_r_maxs = [v["r_max"] for v in human_adaptive.values()]
+                human_transparency = compute_consensus_with_transparency(
+                    human_diagnostics
+                )
                 human_consensus = [
-                    round(float(np.median(h_r_mins)), 4),
-                    round(float(np.median(h_r_maxs)), 4),
+                    round(human_transparency["consensus_interval"][0], 4),
+                    round(human_transparency["consensus_interval"][1], 4),
                 ]
-                print(f"  Human consensus: [{human_consensus[0]:.4f}, {human_consensus[1]:.4f}]")
-            else:
-                human_consensus = None
+                print(
+                    f"  Human consensus (genuine only): "
+                    f"[{human_consensus[0]:.4f}, {human_consensus[1]:.4f}]"
+                )
+                h_fb = human_transparency["fallback_ratio"]
+                print(
+                    f"  Human fallback ratio: {h_fb:.2%}  "
+                    f"({human_transparency['fallback_count']}/"
+                    f"{human_transparency['total_count']})"
+                )
 
             human_results = {
                 "adaptive_intervals": human_adaptive,
@@ -580,7 +729,7 @@ def main():
     # ------------------------------------------------------------------
     # Save results
     # ------------------------------------------------------------------
-    output = {
+    output: dict[str, Any] = {
         "adaptive_intervals": adaptive_intervals,
         "consensus_interval": consensus_interval,
         "gf_scores_adaptive": gf_scores_adaptive,
@@ -588,6 +737,13 @@ def main():
         "comparison": comparison,
         "mean_abs_pct_diff": round(mean_abs_pct, 2),
         "max_abs_pct_diff": round(max_abs_pct, 2),
+        "transparency": {
+            "fallback_ratio": round(transparency["fallback_ratio"], 4),
+            "fallback_count": transparency["fallback_count"],
+            "total_count": transparency["total_count"],
+            "genuine_methods": transparency["genuine_methods"],
+            "fallback_methods": transparency["fallback_methods"],
+        },
         "diagnostics": {
             m: {
                 k: (float(v) if isinstance(v, (np.floating, float)) else v)
@@ -599,6 +755,7 @@ def main():
             "cv_threshold": args.cv_threshold,
             "min_width": args.min_width,
             "significance_sigma": args.significance_sigma,
+            "relaxed_cv": args.relaxed_cv,
             "random_baseline_mean": round(rb_mean, 6),
             "random_baseline_std": round(rb_std, 6),
         },

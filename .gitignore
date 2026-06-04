@@ -38,5 +38,5 @@ MANIFEST.json
 # Windows artifacts
 nul
 
-# AI workspace (local only)
+# Development workspace (local only)
 _workspace/

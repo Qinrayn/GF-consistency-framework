@@ -1,104 +1,48 @@
 {
   "gf_scores": {
-    "DM": 0.6252450976698284,
-    "MDS": 0.5568047784037732,
-    "Spectral": 0.5881903561379765,
-    "DeepWalk": 0.4622091343469395,
-    "Node2Vec": 0.41526529890865754,
-    "VGAE": 0.24813152527735283,
-    "PCA": 0.5773132632478335,
-    "VGAE-feat": 0.4959734247688482,
-    "GraphSAGE": 0.3468,
-    "GAT": 0.2832,
-    "GIN": 0.0
+    "DM": 0.15518241816105013,
+    "MDS": 0.152155432912679,
+    "Spectral": 0.16332658400038436,
+    "DeepWalk": 0.1225356361238432,
+    "Node2Vec": 0.1511706117501923,
+    "VGAE": 0.06567018452344808,
+    "PCA": 0.13753060668252517,
+    "VGAE-feat": 0.12384417529354565,
+    "GraphSAGE": 0.069,
+    "GAT": 0.0694,
+    "GIN": 0.1217
   },
   "unified_interval": [
     0.05,
     0.422
   ],
-  "random_baseline": 0.5012012346647584,
-  "leiden_baseline_purity": 0.6886042692939245,
-  "geometric_margins": {
-    "DM": {
-      "d_intra": 0.3484364118519036,
-      "d_inter": 0.5509136325490053,
-      "gap": 0.20247722069710167
-    },
-    "MDS": {
-      "d_intra": 0.17897924368119122,
-      "d_inter": 0.5593799394551755,
-      "gap": 0.3804006957739843
-    },
-    "Spectral": {
-      "d_intra": 0.06210955447331464,
-      "d_inter": 0.5042531690773707,
-      "gap": 0.4421436146040561
-    },
-    "DeepWalk": {
-      "d_intra": 0.3635881806962773,
-      "d_inter": 0.3964467384185953,
-      "gap": 0.032858557722317994
-    },
-    "Node2Vec": {
-      "d_intra": 0.3708048454944766,
-      "d_inter": 0.4010824454947053,
-      "gap": 0.030277600000228666
-    },
-    "VGAE": {
-      "d_intra": 0.41152921319007874,
-      "d_inter": 0.4745570719242096,
-      "gap": 0.06302785873413086
-    },
-    "PCA": {
-      "d_intra": 0.36049351406983243,
-      "d_inter": 0.5228488276992617,
-      "gap": 0.16235531362942923
-    },
-    "VGAE-feat": {
-      "d_intra": 0.40051522850990295,
-      "d_inter": 0.4203106760978699,
-      "gap": 0.01979544758796692
-    }
-  },
+  "random_baseline": 0.1348021239146226,
   "link_prediction": {
     "DM": {
-      "auroc_mean": 0.7309423123866094,
-      "auroc_std": 0.013433428523692226
+      "auroc_mean": 0.7377500918753743,
+      "auroc_std": 0.009413784884937704
     },
     "MDS": {
-      "auroc_mean": 0.8028011894428762,
-      "auroc_std": 0.011791681517541591
+      "auroc_mean": 0.8042822592394108,
+      "auroc_std": 0.013339864022526035
     },
     "Spectral": {
-      "auroc_mean": 0.8331523821860513,
-      "auroc_std": 0.004431712176375177
+      "auroc_mean": 0.8191868676737263,
+      "auroc_std": 0.007737572130333778
     },
     "DeepWalk": {
-      "auroc_mean": 0.5362565907727083,
-      "auroc_std": 0.01874480859367892
+      "auroc_mean": 0.5178516947870457,
+      "auroc_std": 0.023623312287808434
     },
     "Node2Vec": {
-      "auroc_mean": 0.5361638916696466,
-      "auroc_std": 0.02069982661238962
+      "auroc_mean": 0.5249122998002484,
+      "auroc_std": 0.024942271177025747
     },
     "VGAE": {
-      "auroc_mean": 0.4971185454521178,
-      "auroc_std": 0.024082666727106343
-    },
-    "GraphSAGE": {
-      "auroc_mean": 0.684,
-      "auroc_std": 0.0163
-    },
-    "GAT": {
-      "auroc_mean": 0.5223,
-      "auroc_std": 0.015
-    },
-    "GIN": {
-      "auroc_mean": 0.5,
-      "auroc_std": 0.0
+      "auroc_mean": 0.4718174833372581,
+      "auroc_std": 0.008384802623731747
     }
   },
-  "spearman_rho_auroc_gf": 0.8285714285714287,
   "downstream_knn": {
     "DM": {
       "micro_f1_mean": 0.5127,
@@ -113,57 +57,43 @@
       "micro_f1_std": 0.0601
     },
     "DeepWalk": {
-      "micro_f1_mean": 0.1848,
-      "micro_f1_std": 0.042
+      "micro_f1_mean": 0.1855,
+      "micro_f1_std": 0.0793
     },
     "Node2Vec": {
-      "micro_f1_mean": 0.2025,
-      "micro_f1_std": 0.0651
+      "micro_f1_mean": 0.1431,
+      "micro_f1_std": 0.0683
     },
     "VGAE": {
-      "micro_f1_mean": 0.1757,
-      "micro_f1_std": 0.1093
-    },
-    "GraphSAGE": {
-      "micro_f1_mean": 0.2598,
-      "micro_f1_std": 0.0747
-    },
-    "GAT": {
-      "micro_f1_mean": 0.1844,
-      "micro_f1_std": 0.0314
-    },
-    "GIN": {
-      "micro_f1_mean": 0.2522,
-      "micro_f1_std": 0.0043
+      "micro_f1_mean": 0.2105,
+      "micro_f1_std": 0.0759
     }
   },
-  "knn_n_nodes": 119,
-  "knn_n_categories": 12,
   "plateau_width_200pts": {
     "DM": {
-      "W": 0.4598,
-      "r_min": 0.05,
-      "r_max": 0.5098
+      "W": 0.0,
+      "r_min": 0.0,
+      "r_max": 0.0
     },
     "MDS": {
-      "W": 0.3015,
-      "r_min": 0.05,
-      "r_max": 0.3515
+      "W": 0.0,
+      "r_min": 0.0,
+      "r_max": 0.0
     },
     "Spectral": {
-      "W": 0.2789,
-      "r_min": 0.05,
-      "r_max": 0.3289
+      "W": 0.0,
+      "r_min": 0.0,
+      "r_max": 0.0
     },
     "DeepWalk": {
-      "W": 0.2487,
-      "r_min": 0.05,
-      "r_max": 0.2987
+      "W": 0.0,
+      "r_min": 0.0,
+      "r_max": 0.0
     },
     "Node2Vec": {
-      "W": 0.0452,
-      "r_min": 0.05,
-      "r_max": 0.0952
+      "W": 0.0,
+      "r_min": 0.0,
+      "r_max": 0.0
     },
     "VGAE": {
       "W": 0.0,
@@ -171,82 +101,64 @@
       "r_max": 0.0
     },
     "PCA": {
-      "W": 0.3442,
-      "r_min": 0.05,
-      "r_max": 0.3942
+      "W": 0.0,
+      "r_min": 0.0,
+      "r_max": 0.0
     },
     "VGAE-feat": {
-      "W": 0.0879,
-      "r_min": 0.05,
-      "r_max": 0.1379
-    },
-    "GraphSAGE": {
-      "W": 0.0653
-    },
-    "GAT": {
-      "W": 0.0
-    },
-    "GIN": {
-      "W": 0.0
+      "W": 0.0,
+      "r_min": 0.0,
+      "r_max": 0.0
     }
   },
-  "bonferroni_n_significant": 11,
-  "bonferroni_n_significant_in_plateau": 5,
-  "randomization_original_max_purity": 0.9161946849446849,
-  "randomization_shuffled_max_purity": 0.8566368613789429,
-  "human_validation": {
-    "network": "STRING v12.0 human (9606)",
-    "network_nodes": 15882,
-    "network_edges": 236712,
-    "annotated_nodes": 14562,
-    "subsample_size": 2000,
-    "unified_interval": [
-      0.05,
-      0.2974747474747475
-    ],
-    "gf_scores": {
-      "DM": 0.5145311063069976,
-      "MDS": 0.41505648717396193,
-      "Spectral": 0.8113583918723812,
-      "DeepWalk": 0.8394613246813839,
-      "Node2Vec": 0.8518790639520326,
-      "VGAE": 0.26991828757027203
+  "leiden_baseline_purity": 0.6886042692939245,
+  "geometric_margins": {
+    "DM": {
+      "d_intra": 0.3484364118519035,
+      "d_inter": 0.5509136325490052,
+      "gap": 0.20247722069710167
     },
-    "plateau_widths": {
-      "DM": 0.20202020202020204,
-      "MDS": 0.2020202020202021,
-      "Spectral": 0.4797979797979799,
-      "DeepWalk": 0.4494949494949495,
-      "Node2Vec": 0.4494949494949495,
-      "VGAE": 0.36363636363636365
+    "MDS": {
+      "d_intra": 0.17897924368119122,
+      "d_inter": 0.5593799394551755,
+      "gap": 0.3804006957739843
     },
-    "ranking": [
-      [
-        "Node2Vec",
-        0.8518790639520326
-      ],
-      [
-        "DeepWalk",
-        0.8394613246813839
-      ],
-      [
-        "Spectral",
-        0.8113583918723812
-      ],
-      [
-        "DM",
-        0.5145311063069976
-      ],
-      [
-        "MDS",
-        0.41505648717396193
-      ],
-      [
-        "VGAE",
-        0.26991828757027203
-      ]
-    ],
-    "community_detection": "Louvain",
-    "n_r_points": 100
-  }
+    "Spectral": {
+      "d_intra": 0.06210955447331464,
+      "d_inter": 0.5042531690773707,
+      "gap": 0.4421436146040561
+    },
+    "DeepWalk": {
+      "d_intra": 0.4022217485120021,
+      "d_inter": 0.3927435952396382,
+      "gap": -0.009478153272363898
+    },
+    "Node2Vec": {
+      "d_intra": 0.4198967120201441,
+      "d_inter": 0.3987632622680697,
+      "gap": -0.02113344975207443
+    },
+    "VGAE": {
+      "d_intra": 0.4793546113256757,
+      "d_inter": 0.4683602657666133,
+      "gap": -0.010994345559062368
+    },
+    "PCA": {
+      "d_intra": 0.36049351406983243,
+      "d_inter": 0.5228488276992616,
+      "gap": 0.16235531362942912
+    },
+    "VGAE-feat": {
+      "d_intra": 0.5123807497282645,
+      "d_inter": 0.46560535361938593,
+      "gap": -0.0467753961088786
+    }
+  },
+  "spearman_rho_auroc_gf": 0.942857142857143,
+  "knn_n_nodes": 119,
+  "knn_n_categories": 12,
+  "bonferroni_n_significant": 9,
+  "bonferroni_n_significant_in_plateau": 0,
+  "randomization_original_max_purity": 0.24679606677244728,
+  "randomization_shuffled_max_purity": 0.22974401874388603
 }

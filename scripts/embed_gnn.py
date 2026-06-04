@@ -11,10 +11,14 @@ Results are saved to ``results/gnn_gf_scores.json``.
 Methods: GraphSAGE, GAT, GIN
 """
 
+from __future__ import annotations
+
 import sys
 import json
 import random
 import argparse
+from typing import Optional
+
 import numpy as np
 import networkx as nx
 from pathlib import Path
@@ -26,42 +30,214 @@ from utils import (
     compute_centrality_features, rescale_coordinates, save_embedding,
     compute_gf_curve, compute_gf_score, compute_plateau_width,
     precompute_distance_matrix,
+    check_embedding_collapse, align_embedding_to_nodes,
+    CLASSICAL_METHODS, ALL_CURATED_METHODS, GNN_METHODS, ALL_METHODS,
+    GF_R_MIN, GF_R_MAX, R_MIN, R_MAX, N_POINTS, TARGET_STD,
+    CV_FOLDS, K_NEIGHBORS, MIN_LABEL_COUNT, PLATEAU_PURITY_THRESHOLD,
 )
 
 # Seeds are set inside main() to avoid side-effects on import.
 
-# ---- Constants (match compute_gf.py) ----
-R_MIN = 0.05
-R_MAX = 0.55
-N_POINTS = 200
-GF_R_MIN = 0.05
-GF_R_MAX = 0.422
 
-# ---- Evaluation constants (match link_prediction.py / downstream_knn.py) ----
-CV_FOLDS = 5
-K_NEIGHBORS = 5
-MIN_LABEL_COUNT = 3
+# ============================================================
+# GNN Encoder Builders (with BatchNorm1d)
+# ============================================================
 
-GNN_METHODS = ["GraphSAGE", "GAT", "GIN"]
+def _build_sage_encoder(in_dim: int, hidden_dim: int, latent_dim: int,
+                        use_bn: bool = True):
+    """Build a 2-layer GraphSAGE encoder with optional BatchNorm.
+
+    Parameters
+    ----------
+    in_dim : int
+        Input feature dimensionality.
+    hidden_dim : int
+        Hidden layer dimensionality.
+    latent_dim : int
+        Output embedding dimensionality.
+    use_bn : bool
+        Whether to apply BatchNorm1d after each convolution layer.
+
+    Returns
+    -------
+    torch.nn.Module
+        A SAGEEncoder instance.
+    """
+    import torch.nn as nn
+    import torch.nn.functional as F_func
+    from torch_geometric.nn import SAGEConv
+
+    class SAGEEncoder(nn.Module):
+        """2-layer GraphSAGE encoder with mean aggregation."""
+
+        def __init__(self, in_dim: int, hidden_dim: int, latent_dim: int,
+                     use_bn: bool = True):
+            super().__init__()
+            self.conv1 = SAGEConv(in_dim, hidden_dim, aggr="mean")
+            self.conv2 = SAGEConv(hidden_dim, latent_dim, aggr="mean")
+            self.use_bn = use_bn
+            if use_bn:
+                self.bn1 = nn.BatchNorm1d(hidden_dim)
+                self.bn2 = nn.BatchNorm1d(latent_dim)
+
+        def forward(self, x, edge_index):
+            h = self.conv1(x, edge_index)
+            if self.use_bn:
+                h = self.bn1(h)
+            h = F_func.relu(h)
+            z = self.conv2(h, edge_index)
+            if self.use_bn:
+                z = self.bn2(z)
+            return z
+
+    return SAGEEncoder(in_dim, hidden_dim, latent_dim, use_bn)
+
+
+def _build_gat_encoder(in_dim: int, hidden_dim: int, latent_dim: int,
+                       use_bn: bool = True):
+    """Build a 2-layer GAT encoder with optional BatchNorm.
+
+    Parameters
+    ----------
+    in_dim : int
+        Input feature dimensionality.
+    hidden_dim : int
+        Hidden layer dimensionality.
+    latent_dim : int
+        Output embedding dimensionality.
+    use_bn : bool
+        Whether to apply BatchNorm1d after each convolution layer.
+
+    Returns
+    -------
+    torch.nn.Module
+        A GATEncoder instance.
+    """
+    import torch.nn as nn
+    import torch.nn.functional as F_func
+    from torch_geometric.nn import GATConv
+
+    class GATEncoder(nn.Module):
+        """2-layer GAT encoder with single attention head."""
+
+        def __init__(self, in_dim: int, hidden_dim: int, latent_dim: int,
+                     use_bn: bool = True):
+            super().__init__()
+            self.conv1 = GATConv(in_dim, hidden_dim, heads=1, concat=False)
+            self.conv2 = GATConv(hidden_dim, latent_dim, heads=1, concat=False)
+            self.use_bn = use_bn
+            if use_bn:
+                self.bn1 = nn.BatchNorm1d(hidden_dim)
+                self.bn2 = nn.BatchNorm1d(latent_dim)
+
+        def forward(self, x, edge_index):
+            h = self.conv1(x, edge_index)
+            if self.use_bn:
+                h = self.bn1(h)
+            h = F_func.relu(h)
+            z = self.conv2(h, edge_index)
+            if self.use_bn:
+                z = self.bn2(z)
+            return z
+
+    return GATEncoder(in_dim, hidden_dim, latent_dim, use_bn)
+
+
+def _build_gin_encoder(in_dim: int, hidden_dim: int, latent_dim: int,
+                       use_bn: bool = True):
+    """Build a 2-layer GIN encoder with optional BatchNorm.
+
+    Parameters
+    ----------
+    in_dim : int
+        Input feature dimensionality.
+    hidden_dim : int
+        Hidden layer dimensionality.
+    latent_dim : int
+        Output embedding dimensionality.
+    use_bn : bool
+        Whether to apply BatchNorm1d after each convolution layer.
+
+    Returns
+    -------
+    torch.nn.Module
+        A GINEncoder instance.
+    """
+    import torch.nn as nn
+    import torch.nn.functional as F_func
+    from torch_geometric.nn import GINConv
+
+    class GINEncoder(nn.Module):
+        """2-layer GIN encoder with learnable MLPs."""
+
+        def __init__(self, in_dim: int, hidden_dim: int, latent_dim: int,
+                     use_bn: bool = True):
+            super().__init__()
+            mlp1_layers = [
+                nn.Linear(in_dim, hidden_dim),
+                nn.ReLU(),
+                nn.Linear(hidden_dim, hidden_dim),
+            ]
+            if use_bn:
+                mlp1_layers.insert(1, nn.BatchNorm1d(hidden_dim))
+            mlp1 = nn.Sequential(*mlp1_layers)
+
+            mlp2_layers = [
+                nn.Linear(hidden_dim, hidden_dim),
+                nn.ReLU(),
+                nn.Linear(hidden_dim, latent_dim),
+            ]
+            if use_bn:
+                mlp2_layers.insert(1, nn.BatchNorm1d(hidden_dim))
+            mlp2 = nn.Sequential(*mlp2_layers)
+
+            self.conv1 = GINConv(mlp1)
+            self.conv2 = GINConv(mlp2)
+            self.use_bn = use_bn
+            if use_bn:
+                self.bn1 = nn.BatchNorm1d(hidden_dim)
+                self.bn2 = nn.BatchNorm1d(latent_dim)
+
+        def forward(self, x, edge_index):
+            h = self.conv1(x, edge_index)
+            if self.use_bn:
+                h = self.bn1(h)
+            h = F_func.relu(h)
+            z = self.conv2(h, edge_index)
+            if self.use_bn:
+                z = self.bn2(z)
+            return z
+
+    return GINEncoder(in_dim, hidden_dim, latent_dim, use_bn)
 
 
 # ============================================================
-# GNN Embedding Functions
+# Generic GNN Training Loop
 # ============================================================
 
-def graphsage_from_graph(G, hidden_dim=4, latent_dim=2, epochs=300,
-                         lr=0.01, features=None, seed=SEED):
-    """GraphSAGE embedding (2D) with 2-layer mean-aggregation SAGE.
+def _train_gnn_encoder(
+    G: nx.Graph,
+    encoder_builder,
+    hidden_dim: int = 16,
+    latent_dim: int = 2,
+    epochs: int = 300,
+    lr: float = 0.01,
+    features: Optional[np.ndarray] = None,
+    seed: int = SEED,
+) -> np.ndarray:
+    """Generic 2-layer GNN encoder training with BCE reconstruction loss.
 
-    Trains a 2-layer GraphSAGE encoder with BCE reconstruction loss
-    (inner-product decoder) and returns 2-D node embeddings.
+    Trains the encoder produced by *encoder_builder* using an inner-product
+    decoder and binary cross-entropy loss against the graph adjacency matrix.
 
     Parameters
     ----------
     G : networkx.Graph
         Input protein-protein interaction graph.
+    encoder_builder : callable
+        Factory ``(in_dim, hidden_dim, latent_dim, use_bn) -> nn.Module``.
     hidden_dim : int
-        Hidden layer dimensionality (default 4).
+        Hidden layer dimensionality (default 16).
     latent_dim : int
         Output embedding dimensionality (default 2).
     epochs : int
@@ -80,9 +256,7 @@ def graphsage_from_graph(G, hidden_dim=4, latent_dim=2, epochs=300,
         Embedding coordinates of shape ``(n, latent_dim)``.
     """
     import torch
-    import torch.nn as nn
     import torch.nn.functional as F
-    from torch_geometric.nn import SAGEConv
     from torch_geometric.utils import from_networkx
 
     torch.manual_seed(seed)
@@ -99,20 +273,7 @@ def graphsage_from_graph(G, hidden_dim=4, latent_dim=2, epochs=300,
         data.x = torch.eye(n)
         in_dim = n
 
-    class SAGEEncoder(nn.Module):
-        """2-layer GraphSAGE encoder with mean aggregation."""
-
-        def __init__(self, in_dim, hidden_dim, latent_dim):
-            super().__init__()
-            self.conv1 = SAGEConv(in_dim, hidden_dim, aggr="mean")
-            self.conv2 = SAGEConv(hidden_dim, latent_dim, aggr="mean")
-
-        def forward(self, x, edge_index):
-            h = F.relu(self.conv1(x, edge_index))
-            z = self.conv2(h, edge_index)
-            return z
-
-    model = SAGEEncoder(in_dim, hidden_dim, latent_dim)
+    model = encoder_builder(in_dim, hidden_dim, latent_dim, True)
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
 
     # Precompute adjacency target (matches VGAE pattern in utils.py)
@@ -138,8 +299,63 @@ def graphsage_from_graph(G, hidden_dim=4, latent_dim=2, epochs=300,
     return coords
 
 
-def gat_from_graph(G, hidden_dim=4, latent_dim=2, epochs=300,
-                   lr=0.01, features=None, seed=SEED):
+# ============================================================
+# GNN Embedding Functions
+# ============================================================
+
+def graphsage_from_graph(
+    G: nx.Graph,
+    hidden_dim: int = 16,
+    latent_dim: int = 2,
+    epochs: int = 300,
+    lr: float = 0.01,
+    features: Optional[np.ndarray] = None,
+    seed: int = SEED,
+) -> np.ndarray:
+    """GraphSAGE embedding (2D) with 2-layer mean-aggregation SAGE.
+
+    Trains a 2-layer GraphSAGE encoder with BCE reconstruction loss
+    (inner-product decoder) and returns 2-D node embeddings.
+
+    Parameters
+    ----------
+    G : networkx.Graph
+        Input protein-protein interaction graph.
+    hidden_dim : int
+        Hidden layer dimensionality (default 16).
+    latent_dim : int
+        Output embedding dimensionality (default 2).
+    epochs : int
+        Number of training epochs (default 300).
+    lr : float
+        Adam learning rate (default 0.01).
+    features : np.ndarray or None
+        Node feature matrix of shape ``(n, d)``.  If *None*, one-hot
+        identity features are used.
+    seed : int
+        Random seed for reproducibility.
+
+    Returns
+    -------
+    np.ndarray
+        Embedding coordinates of shape ``(n, latent_dim)``.
+    """
+    return _train_gnn_encoder(
+        G, _build_sage_encoder, hidden_dim=hidden_dim,
+        latent_dim=latent_dim, epochs=epochs, lr=lr,
+        features=features, seed=seed,
+    )
+
+
+def gat_from_graph(
+    G: nx.Graph,
+    hidden_dim: int = 16,
+    latent_dim: int = 2,
+    epochs: int = 300,
+    lr: float = 0.01,
+    features: Optional[np.ndarray] = None,
+    seed: int = SEED,
+) -> np.ndarray:
     """GAT embedding (2D) with 2-layer graph attention.
 
     Trains a 2-layer GAT encoder (single attention head per layer) with
@@ -150,7 +366,7 @@ def gat_from_graph(G, hidden_dim=4, latent_dim=2, epochs=300,
     G : networkx.Graph
         Input protein-protein interaction graph.
     hidden_dim : int
-        Hidden layer dimensionality (default 4).
+        Hidden layer dimensionality (default 16).
     latent_dim : int
         Output embedding dimensionality (default 2).
     epochs : int
@@ -168,67 +384,22 @@ def gat_from_graph(G, hidden_dim=4, latent_dim=2, epochs=300,
     np.ndarray
         Embedding coordinates of shape ``(n, latent_dim)``.
     """
-    import torch
-    import torch.nn as nn
-    import torch.nn.functional as F
-    from torch_geometric.nn import GATConv
-    from torch_geometric.utils import from_networkx
-
-    torch.manual_seed(seed)
-    np.random.seed(seed)
-
-    nodes = list(G.nodes())
-    n = len(nodes)
-    data = from_networkx(G)
-
-    if features is not None:
-        data.x = torch.tensor(features, dtype=torch.float32)
-        in_dim = features.shape[1]
-    else:
-        data.x = torch.eye(n)
-        in_dim = n
-
-    class GATEncoder(nn.Module):
-        """2-layer GAT encoder with single attention head."""
-
-        def __init__(self, in_dim, hidden_dim, latent_dim):
-            super().__init__()
-            self.conv1 = GATConv(in_dim, hidden_dim, heads=1, concat=False)
-            self.conv2 = GATConv(hidden_dim, latent_dim, heads=1, concat=False)
-
-        def forward(self, x, edge_index):
-            h = F.relu(self.conv1(x, edge_index))
-            z = self.conv2(h, edge_index)
-            return z
-
-    model = GATEncoder(in_dim, hidden_dim, latent_dim)
-    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-
-    # Precompute adjacency target
-    adj_target = torch.zeros(n, n)
-    ei = data.edge_index
-    adj_target[ei[0], ei[1]] = 1.0
-
-    for epoch in range(epochs):
-        optimizer.zero_grad()
-        z = model(data.x, data.edge_index)
-        adj_recon = torch.sigmoid(z @ z.T)
-        recon_loss = F.binary_cross_entropy(
-            adj_recon, adj_target, reduction="sum"
-        )
-        loss = recon_loss
-        loss.backward()
-        optimizer.step()
-
-    model.eval()
-    with torch.no_grad():
-        z = model(data.x, data.edge_index)
-        coords = z.numpy()
-    return coords
+    return _train_gnn_encoder(
+        G, _build_gat_encoder, hidden_dim=hidden_dim,
+        latent_dim=latent_dim, epochs=epochs, lr=lr,
+        features=features, seed=seed,
+    )
 
 
-def gin_from_graph(G, hidden_dim=4, latent_dim=2, epochs=300,
-                   lr=0.01, features=None, seed=SEED):
+def gin_from_graph(
+    G: nx.Graph,
+    hidden_dim: int = 16,
+    latent_dim: int = 2,
+    epochs: int = 300,
+    lr: float = 0.01,
+    features: Optional[np.ndarray] = None,
+    seed: int = SEED,
+) -> np.ndarray:
     """GIN embedding (2D) with 2-layer graph isomorphism network.
 
     Trains a 2-layer GIN encoder (each layer wraps a 2-layer MLP) with
@@ -239,7 +410,7 @@ def gin_from_graph(G, hidden_dim=4, latent_dim=2, epochs=300,
     G : networkx.Graph
         Input protein-protein interaction graph.
     hidden_dim : int
-        Hidden layer dimensionality (default 4).
+        Hidden layer dimensionality (default 16).
     latent_dim : int
         Output embedding dimensionality (default 2).
     epochs : int
@@ -257,114 +428,90 @@ def gin_from_graph(G, hidden_dim=4, latent_dim=2, epochs=300,
     np.ndarray
         Embedding coordinates of shape ``(n, latent_dim)``.
     """
-    import torch
-    import torch.nn as nn
-    import torch.nn.functional as F
-    from torch_geometric.nn import GINConv
-    from torch_geometric.utils import from_networkx
-
-    torch.manual_seed(seed)
-    np.random.seed(seed)
-
-    nodes = list(G.nodes())
-    n = len(nodes)
-    data = from_networkx(G)
-
-    if features is not None:
-        data.x = torch.tensor(features, dtype=torch.float32)
-        in_dim = features.shape[1]
-    else:
-        data.x = torch.eye(n)
-        in_dim = n
-
-    class GINEncoder(nn.Module):
-        """2-layer GIN encoder with learnable MLPs."""
-
-        def __init__(self, in_dim, hidden_dim, latent_dim):
-            super().__init__()
-            mlp1 = nn.Sequential(
-                nn.Linear(in_dim, hidden_dim),
-                nn.ReLU(),
-                nn.Linear(hidden_dim, hidden_dim),
-            )
-            mlp2 = nn.Sequential(
-                nn.Linear(hidden_dim, hidden_dim),
-                nn.ReLU(),
-                nn.Linear(hidden_dim, latent_dim),
-            )
-            self.conv1 = GINConv(mlp1)
-            self.conv2 = GINConv(mlp2)
-
-        def forward(self, x, edge_index):
-            h = F.relu(self.conv1(x, edge_index))
-            z = self.conv2(h, edge_index)
-            return z
-
-    model = GINEncoder(in_dim, hidden_dim, latent_dim)
-    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-
-    # Precompute adjacency target
-    adj_target = torch.zeros(n, n)
-    ei = data.edge_index
-    adj_target[ei[0], ei[1]] = 1.0
-
-    for epoch in range(epochs):
-        optimizer.zero_grad()
-        z = model(data.x, data.edge_index)
-        adj_recon = torch.sigmoid(z @ z.T)
-        recon_loss = F.binary_cross_entropy(
-            adj_recon, adj_target, reduction="sum"
-        )
-        loss = recon_loss
-        loss.backward()
-        optimizer.step()
-
-    model.eval()
-    with torch.no_grad():
-        z = model(data.x, data.edge_index)
-        coords = z.numpy()
-    return coords
+    return _train_gnn_encoder(
+        G, _build_gin_encoder, hidden_dim=hidden_dim,
+        latent_dim=latent_dim, epochs=epochs, lr=lr,
+        features=features, seed=seed,
+    )
 
 
 # ============================================================
 # High-level wrappers (match embed_all.py pattern)
 # ============================================================
 
-def embed_graphsage(G, nodes, features=None, hidden_dim=4, latent_dim=2,
-                    epochs=300, lr=0.01):
+def embed_graphsage(
+    G: nx.Graph,
+    nodes: list,
+    features: Optional[np.ndarray] = None,
+    hidden_dim: int = 16,
+    latent_dim: int = 2,
+    epochs: int = 300,
+    lr: float = 0.01,
+) -> np.ndarray:
     """GraphSAGE: 2-layer mean-aggregation SAGE -> 2D embedding."""
     coords = graphsage_from_graph(
         G, hidden_dim=hidden_dim, latent_dim=latent_dim,
         epochs=epochs, lr=lr, features=features, seed=SEED,
     )
-    return rescale_coordinates(coords, target_std=0.3)
+    collapse_info = check_embedding_collapse(coords, "GraphSAGE")
+    if collapse_info["collapsed"]:
+        print(f"  WARNING: GraphSAGE embedding collapsed: "
+              f"{collapse_info['reasons']}")
+    return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
-def embed_gat(G, nodes, features=None, hidden_dim=4, latent_dim=2,
-              epochs=300, lr=0.01):
+def embed_gat(
+    G: nx.Graph,
+    nodes: list,
+    features: Optional[np.ndarray] = None,
+    hidden_dim: int = 16,
+    latent_dim: int = 2,
+    epochs: int = 300,
+    lr: float = 0.01,
+) -> np.ndarray:
     """GAT: 2-layer graph attention -> 2D embedding."""
     coords = gat_from_graph(
         G, hidden_dim=hidden_dim, latent_dim=latent_dim,
         epochs=epochs, lr=lr, features=features, seed=SEED,
     )
-    return rescale_coordinates(coords, target_std=0.3)
+    collapse_info = check_embedding_collapse(coords, "GAT")
+    if collapse_info["collapsed"]:
+        print(f"  WARNING: GAT embedding collapsed: "
+              f"{collapse_info['reasons']}")
+    return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
-def embed_gin(G, nodes, features=None, hidden_dim=4, latent_dim=2,
-              epochs=300, lr=0.01):
+def embed_gin(
+    G: nx.Graph,
+    nodes: list,
+    features: Optional[np.ndarray] = None,
+    hidden_dim: int = 16,
+    latent_dim: int = 2,
+    epochs: int = 300,
+    lr: float = 0.01,
+) -> np.ndarray:
     """GIN: 2-layer graph isomorphism network -> 2D embedding."""
     coords = gin_from_graph(
         G, hidden_dim=hidden_dim, latent_dim=latent_dim,
         epochs=epochs, lr=lr, features=features, seed=SEED,
     )
-    return rescale_coordinates(coords, target_std=0.3)
+    collapse_info = check_embedding_collapse(coords, "GIN")
+    if collapse_info["collapsed"]:
+        print(f"  WARNING: GIN embedding collapsed: "
+              f"{collapse_info['reasons']}")
+    return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
 # ============================================================
 # Evaluation Helpers
 # ============================================================
 
-def compute_gf_curves_and_scores(method_coords, nodes, go_map, r_vals):
+def compute_gf_curves_and_scores(
+    method_coords: dict[str, np.ndarray],
+    nodes: list[str],
+    go_map: dict[str, list[str]],
+    r_vals: np.ndarray,
+) -> tuple[dict[str, list[float]], dict[str, float], dict[str, dict]]:
     """Compute G-F purity curves and G-F Scores for embedding methods.
 
     Parameters
@@ -403,14 +550,20 @@ def compute_gf_curves_and_scores(method_coords, nodes, go_map, r_vals):
         all_gf_scores[method] = score
         print(f"    G-F Score: {score:.4f}")
 
-        w = compute_plateau_width(r_vals, purities, threshold=0.5)
+        w = compute_plateau_width(
+            r_vals, purities, threshold=PLATEAU_PURITY_THRESHOLD
+        )
         all_plateau_widths[method] = {"W": round(w, 4)}
         print(f"    Plateau width W: {w:.4f}")
 
     return all_purities, all_gf_scores, all_plateau_widths
 
 
-def evaluate_link_prediction(method_coords, nodes, G):
+def evaluate_link_prediction(
+    method_coords: dict[str, np.ndarray],
+    nodes: list[str],
+    G: nx.Graph,
+) -> dict[str, dict]:
     """Link prediction AUROC with 5-fold CV logistic regression.
 
     Follows the same protocol as ``link_prediction.py``: Hadamard product
@@ -441,7 +594,7 @@ def evaluate_link_prediction(method_coords, nodes, G):
 
     # Generate negative samples (same count as positive edges)
     np.random.seed(SEED)
-    all_non_edges = []
+    all_non_edges: list[tuple[str, str]] = []
     max_neg = len(all_edges)
     neg_count = 0
     attempts = 0
@@ -454,9 +607,10 @@ def evaluate_link_prediction(method_coords, nodes, G):
             neg_count += 1
         attempts += 1
 
-    print(f"  Positive edges: {len(all_edges)}, Negative edges: {len(all_non_edges)}")
+    print(f"  Positive edges: {len(all_edges)}, "
+          f"Negative edges: {len(all_non_edges)}")
 
-    auroc_results = {}
+    auroc_results: dict[str, dict] = {}
 
     for method, coords in method_coords.items():
         print(f"  Evaluating {method} link prediction...")
@@ -504,7 +658,11 @@ def evaluate_link_prediction(method_coords, nodes, G):
     return auroc_results
 
 
-def evaluate_downstream_knn(method_coords, nodes, go_map):
+def evaluate_downstream_knn(
+    method_coords: dict[str, np.ndarray],
+    nodes: list[str],
+    go_map: dict[str, list[str]],
+) -> dict[str, dict]:
     """k-NN GO term prediction micro-F1 (5-fold CV, k=5).
 
     Follows the same protocol as ``downstream_knn.py``: most-frequent GO
@@ -530,7 +688,7 @@ def evaluate_downstream_knn(method_coords, nodes, go_map):
     from collections import Counter
 
     # Get most frequent GO term per protein
-    labels = {}
+    labels: dict[str, str] = {}
     for node, terms in go_map.items():
         if terms:
             term_counts = Counter(terms)
@@ -551,7 +709,7 @@ def evaluate_downstream_knn(method_coords, nodes, go_map):
     le = LabelEncoder()
     y = le.fit_transform(y_raw)
 
-    knn_results = {}
+    knn_results: dict[str, dict] = {}
 
     for method, coords in method_coords.items():
         print(f"  Evaluating {method} k-NN...")
@@ -583,7 +741,7 @@ def evaluate_downstream_knn(method_coords, nodes, go_map):
 # Main
 # ============================================================
 
-def main():
+def main() -> None:
     """Run GNN embeddings and G-F evaluation pipeline."""
     parser = argparse.ArgumentParser(
         description="Compute GNN embeddings (GraphSAGE, GAT, GIN) "
@@ -642,7 +800,7 @@ def main():
     features = compute_centrality_features(G, nodes)
 
     # ---- GNN embedding methods ----
-    methods = {
+    methods: dict[str, callable] = {
         "GraphSAGE": lambda: embed_graphsage(
             G, nodes, features=features,
             epochs=args.epochs, lr=args.lr,
@@ -657,7 +815,7 @@ def main():
         ),
     }
 
-    computed_coords = {}
+    computed_coords: dict[str, np.ndarray] = {}
 
     for method_name, embed_fn in methods.items():
         print(f"\nComputing {method_name}...")
@@ -671,6 +829,19 @@ def main():
                   f"shape={coords.shape}")
         except Exception as e:
             print(f"  {method_name} FAILED: {e}")
+
+    # ---- Post-embedding collapse detection ----
+    print("\n--- Embedding Collapse Check ---")
+    for method_name, coords in computed_coords.items():
+        collapse_info = check_embedding_collapse(coords, method_name)
+        if collapse_info["collapsed"]:
+            print(f"  ALERT: {method_name} embedding COLLAPSED!")
+            for reason in collapse_info["reasons"]:
+                print(f"    - {reason}")
+        else:
+            print(f"  {method_name}: OK "
+                  f"(median_dist={collapse_info['median_dist']:.4f}, "
+                  f"CV={collapse_info['cv']:.4f})")
 
     # ---- Print results table ----
     print("\n" + "=" * 60)
@@ -701,8 +872,8 @@ def main():
     )
 
     # 2. Link Prediction AUROC (only for curated 153-node network)
-    link_pred_results = {}
-    knn_results = {}
+    link_pred_results: dict[str, dict] = {}
+    knn_results: dict[str, dict] = {}
 
     if subset == "153":
         print("\n--- Link Prediction (5-fold CV) ---")

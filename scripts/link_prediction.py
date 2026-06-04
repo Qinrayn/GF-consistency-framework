@@ -3,12 +3,13 @@
 link_prediction.py
 Step 8: Link prediction using 5-fold CV with logistic regression.
 Input: node pair Hadamard product of embeddings.
-Expected ranking: MDS > Spectral > VGAE > DeepWalk > DM > Node2Vec
-Expected Spearman rho(AUROC, G-F Score) ≈ -0.771
+Expected ranking: Spectral > MDS > DM > DeepWalk ~ Node2Vec > VGAE
+Observed Spearman rho(AUROC, G-F Score) ~ +0.829 (positive: higher G-F score ~ higher AUROC)
 """
 
 import sys
 import json
+import math
 import random
 import numpy as np
 import networkx as nx
@@ -19,9 +20,14 @@ from sklearn.metrics import roc_auc_score
 from scipy import stats
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from utils import SEED, get_data_dir, get_results_dir, get_embeddings_dir, load_curated_network, load_embedding
+from utils import (SEED, CV_FOLDS, CLASSICAL_METHODS,
+                    get_data_dir, get_results_dir, get_embeddings_dir,
+                    load_curated_network, load_embedding)
 
-METHODS = ["DM", "MDS", "Spectral", "DeepWalk", "Node2Vec", "VGAE"]
+# Minimum number of methods required for a meaningful Spearman correlation
+MIN_METHODS_FOR_SPEARMAN: int = 5
+
+METHODS = CLASSICAL_METHODS
 
 
 def hadamard_product(emb_u, emb_v):
@@ -109,7 +115,7 @@ def main():
             y = np.array(labels)
             
             # 5-fold CV
-            skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=SEED)
+            skf = StratifiedKFold(n_splits=CV_FOLDS, shuffle=True, random_state=SEED)
             aurocs = []
             for train_idx, test_idx in skf.split(X, y):
                 X_train, X_test = X[train_idx], X[test_idx]
@@ -135,12 +141,14 @@ def main():
             auroc_list.append(auroc_results[method]["auroc_mean"])
             gf_list.append(gf_scores[method])
     
-    if len(auroc_list) >= 3:
+    if len(auroc_list) >= MIN_METHODS_FOR_SPEARMAN:
         rho, p_val = stats.spearmanr(auroc_list, gf_list)
         print(f"\nSpearman correlation (AUROC vs G-F Score): rho={rho:.4f}, p={p_val:.4f}")
     else:
-        rho, p_val = 0.0, 1.0
-        print("\nNot enough methods for Spearman correlation")
+        rho, p_val = math.nan, math.nan
+        print(f"\nWARNING: Only {len(auroc_list)} methods with both AUROC and G-F score "
+              f"(< {MIN_METHODS_FOR_SPEARMAN} required). "
+              f"Spearman correlation reported as NaN.")
     
     # Save results
     result = {

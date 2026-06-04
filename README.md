@@ -7,24 +7,24 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 21-s
 <details>
 <summary><strong>Key Results at a Glance</strong></summary>
 
-| Method | G-F Score | Plateau Width W | Link Pred. AUROC | k-NN micro-F1 |
-|--------|:---------:|:---------------:|:-----------------:|:-------------:|
-| **DM** | **0.625** | 0.460 | 0.731 ± 0.013 | 0.513 ± 0.055 |
-| Spectral | 0.588 | 0.279 | 0.833 ± 0.004 | 0.673 ± 0.060 |
-| PCA | 0.577 | 0.344 | — | — |
-| MDS | 0.557 | 0.302 | 0.803 ± 0.012 | 0.606 ± 0.074 |
-| VGAE-feat | 0.496 | 0.088 | — | — |
-| DeepWalk | 0.462 | 0.249 | 0.536 ± 0.019 | 0.185 ± 0.042 |
-| Node2Vec | 0.415 | 0.045 | 0.536 ± 0.021 | 0.203 ± 0.065 |
-| VGAE | 0.248 | 0.000 | 0.497 ± 0.024 | 0.176 ± 0.109 |
-| GraphSAGE | 0.347 | 0.065 | 0.684 ± 0.016 | 0.260 ± 0.075 |
-| GAT | 0.283 | 0.000 | 0.522 ± 0.015 | 0.184 ± 0.031 |
-| GIN | 0.000 | 0.000 | 0.500 ± 0.000 | 0.252 ± 0.004 |
+| Method | G-F Score | Link Pred. AUROC | k-NN micro-F1 |
+|--------|:---------:|:-----------------:|:-------------:|
+| **Spectral** | **0.163** | 0.819 ± 0.008 | 0.673 ± 0.060 |
+| DM | 0.155 | 0.738 ± 0.009 | 0.513 ± 0.055 |
+| MDS | 0.152 | 0.804 ± 0.013 | 0.606 ± 0.074 |
+| Node2Vec | 0.151 | 0.525 ± 0.025 | 0.143 ± 0.068 |
+| PCA | 0.138 | — | — |
+| VGAE-feat | 0.124 | — | — |
+| DeepWalk | 0.123 | 0.518 ± 0.024 | 0.186 ± 0.079 |
+| GIN | 0.122 | 0.488 ± 0.024 | 0.203 ± 0.099 |
+| GAT | 0.069 | 0.591 ± 0.021 | 0.159 ± 0.030 |
+| GraphSAGE | 0.069 | 0.642 ± 0.026 | 0.185 ± 0.051 |
+| VGAE | 0.066 | 0.472 ± 0.008 | 0.211 ± 0.076 |
 
 - Leiden baseline purity: **0.689** (matches paper)
 - Bonferroni (30 subsets, size 150): **9/30** significant after correction
-- Randomization: original max 0.916 > shuffled 0.857 ± 0.007 (10 permutations, Z = 8.14)
-- Spearman rho (AUROC vs G-F Score): **0.829** (*p* = 0.042)
+- Randomization: original max 0.247 > shuffled 0.230 ± 0.007 (10 permutations, Z = 6.95)
+- Spearman rho (AUROC vs G-F Score): **0.943** (*p* = 0.005)
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)
@@ -173,10 +173,8 @@ GF-consistency-framework/
 │   └── comparison_30vs200      # Sampling density check
 │
 ├── human_validation/           # Cross-species (optional, STRING v12.0)
-├── yeast_ppi_data/             # VGAE latent representations (.pkl)
 │
 ├── run_all_analysis.py         # One-command Python pipeline (21 steps)
-├── run_all.sh                  # One-command Bash pipeline
 ├── environment.yml             # Conda environment
 ├── requirements.txt            # pip dependencies
 ├── Supplementary_Materials.pdf # Mathematical proofs

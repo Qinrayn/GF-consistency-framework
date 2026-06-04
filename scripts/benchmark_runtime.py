@@ -698,6 +698,10 @@ def main():
     )
     args = parser.parse_args()
 
+    # Clear sys.argv so that imported main() functions with their own
+    # argparse do not choke on the benchmark's CLI flags.
+    sys.argv = [sys.argv[0]]
+
     run_full = args.run_full
     run_human = args.run_human
     n_repeat = args.n_repeat

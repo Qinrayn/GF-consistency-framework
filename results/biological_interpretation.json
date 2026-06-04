@@ -39,90 +39,11 @@
     }
   },
   "methods": {
-    "DM": {
-      "gf_score": 0.6252450976698284,
-      "level": 3,
-      "label": "Strong alignment",
-      "interpretation": "Can distinguish fine-grained functional submodules",
-      "best_go_cluster": {
-        "go_term": "GO:0006270",
-        "go_term_name": "DNA replication initiation",
-        "purity": 0.9285714285714286,
-        "n_nodes": 14,
-        "other_go_terms": [
-          {
-            "term": "GO:0000082",
-            "name": "G1/S transition of mitotic cell cycle",
-            "count": 9
-          },
-          {
-            "term": "GO:0006260",
-            "name": "DNA replication",
-            "count": 7
-          },
-          {
-            "term": "GO:0003677",
-            "name": "DNA binding",
-            "count": 6
-          },
-          {
-            "term": "GO:0004386",
-            "name": "helicase activity",
-            "count": 6
-          },
-          {
-            "term": "GO:0003887",
-            "name": "DNA-directed DNA polymerase activity",
-            "count": 3
-          },
-          {
-            "term": "GO:0006281",
-            "name": "DNA repair",
-            "count": 2
-          },
-          {
-            "term": "GO:0003697",
-            "name": "single-stranded DNA binding",
-            "count": 2
-          },
-          {
-            "term": "GO:0030337",
-            "name": "negative regulation of cell migration",
-            "count": 2
-          },
-          {
-            "term": "GO:0000278",
-            "name": "mitotic cell cycle",
-            "count": 2
-          },
-          {
-            "term": "GO:0006298",
-            "name": "DNA damage response, mismatch repair",
-            "count": 1
-          },
-          {
-            "term": "GO:0051301",
-            "name": "cell division",
-            "count": 1
-          },
-          {
-            "term": "GO:0031577",
-            "name": "spindle checkpoint signaling",
-            "count": 1
-          },
-          {
-            "term": "GO:0007049",
-            "name": "cell cycle",
-            "count": 1
-          }
-        ]
-      }
-    },
     "Spectral": {
-      "gf_score": 0.5881903561379765,
-      "level": 3,
-      "label": "Strong alignment",
-      "interpretation": "Can distinguish fine-grained functional submodules",
+      "gf_score": 0.16332658400038436,
+      "level": 1,
+      "label": "Weak alignment",
+      "interpretation": "Geometric structure poorly reflects functional modules; embedding cannot distinguish functional boundaries",
       "best_go_cluster": {
         "go_term": "GO:0006270",
         "go_term_name": "DNA replication initiation",
@@ -257,16 +178,16 @@
         ]
       }
     },
-    "PCA": {
-      "gf_score": 0.5773132632478335,
-      "level": 3,
-      "label": "Strong alignment",
-      "interpretation": "Can distinguish fine-grained functional submodules",
+    "DM": {
+      "gf_score": 0.15518241816105013,
+      "level": 1,
+      "label": "Weak alignment",
+      "interpretation": "Geometric structure poorly reflects functional modules; embedding cannot distinguish functional boundaries",
       "best_go_cluster": {
         "go_term": "GO:0006270",
         "go_term_name": "DNA replication initiation",
-        "purity": 1.0,
-        "n_nodes": 13,
+        "purity": 0.9285714285714286,
+        "n_nodes": 14,
         "other_go_terms": [
           {
             "term": "GO:0000082",
@@ -309,23 +230,38 @@
             "count": 2
           },
           {
+            "term": "GO:0000278",
+            "name": "mitotic cell cycle",
+            "count": 2
+          },
+          {
             "term": "GO:0006298",
             "name": "DNA damage response, mismatch repair",
             "count": 1
           },
           {
-            "term": "GO:0000278",
-            "name": "mitotic cell cycle",
+            "term": "GO:0051301",
+            "name": "cell division",
+            "count": 1
+          },
+          {
+            "term": "GO:0031577",
+            "name": "spindle checkpoint signaling",
+            "count": 1
+          },
+          {
+            "term": "GO:0007049",
+            "name": "cell cycle",
             "count": 1
           }
         ]
       }
     },
     "MDS": {
-      "gf_score": 0.5568047784037732,
-      "level": 3,
-      "label": "Strong alignment",
-      "interpretation": "Can distinguish fine-grained functional submodules",
+      "gf_score": 0.152155432912679,
+      "level": 1,
+      "label": "Weak alignment",
+      "interpretation": "Geometric structure poorly reflects functional modules; embedding cannot distinguish functional boundaries",
       "best_go_cluster": {
         "go_term": "GO:0051301",
         "go_term_name": "cell division",
@@ -400,81 +336,71 @@
         ]
       }
     },
-    "VGAE-feat": {
-      "gf_score": 0.4959734247688482,
-      "level": 2,
-      "label": "Moderate alignment",
-      "interpretation": "Can identify major functional categories (e.g., metabolism vs signal transduction)",
+    "Node2Vec": {
+      "gf_score": 0.1511706117501923,
+      "level": 1,
+      "label": "Weak alignment",
+      "interpretation": "Geometric structure poorly reflects functional modules; embedding cannot distinguish functional boundaries",
       "best_go_cluster": {
         "go_term": "GO:0000082",
         "go_term_name": "G1/S transition of mitotic cell cycle",
-        "purity": 0.2692307692307692,
-        "n_nodes": 78,
+        "purity": 0.2807017543859649,
+        "n_nodes": 57,
         "other_go_terms": [
-          {
-            "term": "GO:0006270",
-            "name": "DNA replication initiation",
-            "count": 19
-          },
           {
             "term": "GO:0051301",
             "name": "cell division",
-            "count": 17
+            "count": 14
+          },
+          {
+            "term": "GO:0006270",
+            "name": "DNA replication initiation",
+            "count": 14
           },
           {
             "term": "GO:0007049",
             "name": "cell cycle",
-            "count": 16
+            "count": 13
           },
           {
             "term": "GO:0000278",
             "name": "mitotic cell cycle",
-            "count": 14
-          },
-          {
-            "term": "GO:0006281",
-            "name": "DNA repair",
-            "count": 11
-          },
-          {
-            "term": "GO:0006355",
-            "name": "regulation of transcription, DNA-templated",
-            "count": 10
-          },
-          {
-            "term": "GO:0045944",
-            "name": "positive regulation of transcription from Pol II",
-            "count": 10
-          },
-          {
-            "term": "GO:0000086",
-            "name": "G2/M transition of mitotic cell cycle",
-            "count": 9
-          },
-          {
-            "term": "GO:0006260",
-            "name": "DNA replication",
-            "count": 9
-          },
-          {
-            "term": "GO:0004674",
-            "name": "protein serine/threonine kinase activity",
-            "count": 6
-          },
-          {
-            "term": "GO:0000077",
-            "name": "DNA damage checkpoint signaling",
-            "count": 6
+            "count": 13
           },
           {
             "term": "GO:0006886",
             "name": "intracellular protein transport",
+            "count": 7
+          },
+          {
+            "term": "GO:0006281",
+            "name": "DNA repair",
+            "count": 6
+          },
+          {
+            "term": "GO:0000086",
+            "name": "G2/M transition of mitotic cell cycle",
+            "count": 6
+          },
+          {
+            "term": "GO:0006260",
+            "name": "DNA replication",
             "count": 5
           },
           {
-            "term": "GO:0007095",
-            "name": "mitotic spindle assembly checkpoint",
+            "term": "GO:0006412",
+            "name": "translation",
             "count": 5
+          },
+          {
+            "term": "GO:0004674",
+            "name": "protein serine/threonine kinase activity",
+            "count": 4
+          },
+          {
+            "term": "GO:0031577",
+            "name": "spindle checkpoint signaling",
+            "count": 4
           },
           {
             "term": "GO:0007165",
@@ -482,38 +408,43 @@
             "count": 4
           },
           {
-            "term": "GO:0000750",
-            "name": "pheromone-dependent signal transduction",
-            "count": 4
-          },
-          {
-            "term": "GO:0006412",
-            "name": "translation",
-            "count": 4
-          },
-          {
-            "term": "GO:0000723",
-            "name": "telomere maintenance",
-            "count": 4
-          },
-          {
-            "term": "GO:0031145",
-            "name": "anaphase-promoting complex-dependent proteolysis",
-            "count": 4
-          },
-          {
-            "term": "GO:0003688",
-            "name": "DNA replication origin binding",
+            "term": "GO:0006310",
+            "name": "DNA recombination",
             "count": 4
           },
           {
             "term": "GO:0006904",
             "name": "vesicle-mediated transport",
+            "count": 4
+          },
+          {
+            "term": "GO:0031145",
+            "name": "anaphase-promoting complex-dependent proteolysis",
             "count": 3
           },
           {
-            "term": "GO:0030036",
-            "name": "actin cytoskeleton organization",
+            "term": "GO:0006355",
+            "name": "regulation of transcription, DNA-templated",
+            "count": 3
+          },
+          {
+            "term": "GO:0045944",
+            "name": "positive regulation of transcription from Pol II",
+            "count": 3
+          },
+          {
+            "term": "GO:0000750",
+            "name": "pheromone-dependent signal transduction",
+            "count": 3
+          },
+          {
+            "term": "GO:0000724",
+            "name": "double-strand break repair via HR",
+            "count": 3
+          },
+          {
+            "term": "GO:0046903",
+            "name": "secretion",
             "count": 3
           },
           {
@@ -522,18 +453,481 @@
             "count": 3
           },
           {
+            "term": "GO:0004386",
+            "name": "helicase activity",
+            "count": 3
+          },
+          {
+            "term": "GO:0003924",
+            "name": "GTPase activity",
+            "count": 3
+          },
+          {
+            "term": "GO:0003735",
+            "name": "structural constituent of ribosome",
+            "count": 3
+          },
+          {
+            "term": "GO:0005667",
+            "name": "transcription regulator complex",
+            "count": 3
+          },
+          {
+            "term": "GO:0003688",
+            "name": "DNA replication origin binding",
+            "count": 3
+          },
+          {
+            "term": "GO:0000077",
+            "name": "DNA damage checkpoint signaling",
+            "count": 2
+          },
+          {
+            "term": "GO:0007095",
+            "name": "mitotic spindle assembly checkpoint",
+            "count": 2
+          },
+          {
+            "term": "GO:0003887",
+            "name": "DNA-directed DNA polymerase activity",
+            "count": 2
+          },
+          {
+            "term": "GO:0007131",
+            "name": "reciprocal meiotic recombination",
+            "count": 2
+          },
+          {
+            "term": "GO:0016192",
+            "name": "vesicle-mediated transport",
+            "count": 2
+          },
+          {
+            "term": "GO:0007264",
+            "name": "small GTPase mediated signal transduction",
+            "count": 2
+          },
+          {
+            "term": "GO:0015031",
+            "name": "protein transport",
+            "count": 2
+          },
+          {
+            "term": "GO:0004930",
+            "name": "G protein-coupled receptor activity",
+            "count": 2
+          },
+          {
+            "term": "GO:0007186",
+            "name": "G protein-coupled receptor signaling pathway",
+            "count": 2
+          },
+          {
+            "term": "GO:0030036",
+            "name": "actin cytoskeleton organization",
+            "count": 2
+          },
+          {
+            "term": "GO:0006303",
+            "name": "double-strand break repair via NHEJ",
+            "count": 2
+          },
+          {
+            "term": "GO:0003689",
+            "name": "DNA clamp loader activity",
+            "count": 2
+          },
+          {
+            "term": "GO:0016567",
+            "name": "protein ubiquitination",
+            "count": 1
+          },
+          {
+            "term": "GO:0000723",
+            "name": "telomere maintenance",
+            "count": 1
+          },
+          {
+            "term": "GO:0006348",
+            "name": "chromatin silencing at telomere",
+            "count": 1
+          },
+          {
+            "term": "GO:0006338",
+            "name": "chromatin remodeling",
+            "count": 1
+          },
+          {
+            "term": "GO:0040029",
+            "name": "regulation of gene expression, epigenetic",
+            "count": 1
+          },
+          {
+            "term": "GO:0000186",
+            "name": "inactivation of MAPK activity",
+            "count": 1
+          },
+          {
+            "term": "GO:0004708",
+            "name": "MAP kinase kinase activity",
+            "count": 1
+          },
+          {
+            "term": "GO:0006568",
+            "name": "tryptophan metabolic process",
+            "count": 1
+          },
+          {
+            "term": "GO:0000162",
+            "name": "tryptophan biosynthetic process",
+            "count": 1
+          },
+          {
+            "term": "GO:0046208",
+            "name": "tRNA modification",
+            "count": 1
+          },
+          {
+            "term": "GO:0006895",
+            "name": "Golgi to ER retrograde transport",
+            "count": 1
+          },
+          {
+            "term": "GO:0008135",
+            "name": "translation factor activity",
+            "count": 1
+          },
+          {
+            "term": "GO:0003743",
+            "name": "translation initiation factor activity",
+            "count": 1
+          },
+          {
+            "term": "GO:0008630",
+            "name": "intrinsic apoptotic signaling pathway",
+            "count": 1
+          },
+          {
+            "term": "GO:0000281",
+            "name": "mitotic cytokinesis",
+            "count": 1
+          },
+          {
+            "term": "GO:0030048",
+            "name": "actin filament-based movement",
+            "count": 1
+          },
+          {
+            "term": "GO:0007010",
+            "name": "cytoskeleton organization",
+            "count": 1
+          },
+          {
+            "term": "GO:0000902",
+            "name": "cell morphogenesis",
+            "count": 1
+          },
+          {
+            "term": "GO:0005484",
+            "name": "SNAP receptor activity",
+            "count": 1
+          },
+          {
+            "term": "GO:0008234",
+            "name": "cysteine-type peptidase activity",
+            "count": 1
+          },
+          {
+            "term": "GO:0006368",
+            "name": "transcription elongation from RNA Pol II promoter",
+            "count": 1
+          },
+          {
+            "term": "GO:0051123",
+            "name": "RNA polymerase II transcription preinitiation complex",
+            "count": 1
+          },
+          {
+            "term": "GO:0006367",
+            "name": "transcription initiation from RNA Pol II promoter",
+            "count": 1
+          },
+          {
+            "term": "GO:0006357",
+            "name": "regulation of transcription from Pol II promoter",
+            "count": 1
+          },
+          {
+            "term": "GO:0015935",
+            "name": "small ribosomal subunit assembly",
+            "count": 1
+          },
+          {
+            "term": "GO:0090522",
+            "name": "tRNA thiolation",
+            "count": 1
+          },
+          {
+            "term": "GO:0022627",
+            "name": "cytosolic small ribosomal subunit",
+            "count": 1
+          },
+          {
+            "term": "GO:0030337",
+            "name": "negative regulation of cell migration",
+            "count": 1
+          },
+          {
+            "term": "GO:0000132",
+            "name": "establishment of mitotic spindle orientation",
+            "count": 1
+          },
+          {
+            "term": "GO:0022625",
+            "name": "cytosolic large ribosomal subunit",
+            "count": 1
+          },
+          {
+            "term": "GO:0003910",
+            "name": "DNA ligase (ATP) activity",
+            "count": 1
+          },
+          {
+            "term": "GO:0006351",
+            "name": "transcription, DNA-templated",
+            "count": 1
+          },
+          {
+            "term": "GO:0001056",
+            "name": "RNA polymerase III transcription",
+            "count": 1
+          },
+          {
+            "term": "GO:0006383",
+            "name": "poly(A)+ mRNA 3' end processing",
+            "count": 1
+          },
+          {
+            "term": "GO:0000105",
+            "name": "sulfur amino acid biosynthetic process",
+            "count": 1
+          },
+          {
+            "term": "GO:0008652",
+            "name": "cellular amino acid biosynthetic process",
+            "count": 1
+          },
+          {
+            "term": "GO:0006541",
+            "name": "glutamine metabolic process",
+            "count": 1
+          },
+          {
+            "term": "GO:0006414",
+            "name": "translational elongation",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "PCA": {
+      "gf_score": 0.13753060668252517,
+      "level": 1,
+      "label": "Weak alignment",
+      "interpretation": "Geometric structure poorly reflects functional modules; embedding cannot distinguish functional boundaries",
+      "best_go_cluster": {
+        "go_term": "GO:0006270",
+        "go_term_name": "DNA replication initiation",
+        "purity": 1.0,
+        "n_nodes": 13,
+        "other_go_terms": [
+          {
+            "term": "GO:0000082",
+            "name": "G1/S transition of mitotic cell cycle",
+            "count": 9
+          },
+          {
+            "term": "GO:0006260",
+            "name": "DNA replication",
+            "count": 7
+          },
+          {
+            "term": "GO:0003677",
+            "name": "DNA binding",
+            "count": 6
+          },
+          {
+            "term": "GO:0004386",
+            "name": "helicase activity",
+            "count": 6
+          },
+          {
+            "term": "GO:0003887",
+            "name": "DNA-directed DNA polymerase activity",
+            "count": 3
+          },
+          {
+            "term": "GO:0006281",
+            "name": "DNA repair",
+            "count": 2
+          },
+          {
+            "term": "GO:0003697",
+            "name": "single-stranded DNA binding",
+            "count": 2
+          },
+          {
+            "term": "GO:0030337",
+            "name": "negative regulation of cell migration",
+            "count": 2
+          },
+          {
+            "term": "GO:0006298",
+            "name": "DNA damage response, mismatch repair",
+            "count": 1
+          },
+          {
+            "term": "GO:0000278",
+            "name": "mitotic cell cycle",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "VGAE-feat": {
+      "gf_score": 0.12384417529354565,
+      "level": 1,
+      "label": "Weak alignment",
+      "interpretation": "Geometric structure poorly reflects functional modules; embedding cannot distinguish functional boundaries",
+      "best_go_cluster": {
+        "go_term": "GO:0000082",
+        "go_term_name": "G1/S transition of mitotic cell cycle",
+        "purity": 0.2714285714285714,
+        "n_nodes": 70,
+        "other_go_terms": [
+          {
+            "term": "GO:0006270",
+            "name": "DNA replication initiation",
+            "count": 17
+          },
+          {
+            "term": "GO:0051301",
+            "name": "cell division",
+            "count": 13
+          },
+          {
+            "term": "GO:0007049",
+            "name": "cell cycle",
+            "count": 12
+          },
+          {
+            "term": "GO:0006281",
+            "name": "DNA repair",
+            "count": 12
+          },
+          {
+            "term": "GO:0007165",
+            "name": "signal transduction",
+            "count": 9
+          },
+          {
+            "term": "GO:0000750",
+            "name": "pheromone-dependent signal transduction",
+            "count": 9
+          },
+          {
+            "term": "GO:0006260",
+            "name": "DNA replication",
+            "count": 8
+          },
+          {
+            "term": "GO:0000278",
+            "name": "mitotic cell cycle",
+            "count": 8
+          },
+          {
+            "term": "GO:0006355",
+            "name": "regulation of transcription, DNA-templated",
+            "count": 7
+          },
+          {
+            "term": "GO:0045944",
+            "name": "positive regulation of transcription from Pol II",
+            "count": 7
+          },
+          {
+            "term": "GO:0006412",
+            "name": "translation",
+            "count": 5
+          },
+          {
+            "term": "GO:0000077",
+            "name": "DNA damage checkpoint signaling",
+            "count": 5
+          },
+          {
+            "term": "GO:0000724",
+            "name": "double-strand break repair via HR",
+            "count": 5
+          },
+          {
+            "term": "GO:0006310",
+            "name": "DNA recombination",
+            "count": 5
+          },
+          {
+            "term": "GO:0000086",
+            "name": "G2/M transition of mitotic cell cycle",
+            "count": 4
+          },
+          {
+            "term": "GO:0007095",
+            "name": "mitotic spindle assembly checkpoint",
+            "count": 4
+          },
+          {
+            "term": "GO:0006366",
+            "name": "transcription from RNA polymerase II promoter",
+            "count": 4
+          },
+          {
+            "term": "GO:0000132",
+            "name": "establishment of mitotic spindle orientation",
+            "count": 3
+          },
+          {
+            "term": "GO:0030036",
+            "name": "actin cytoskeleton organization",
+            "count": 3
+          },
+          {
             "term": "GO:0003689",
             "name": "DNA clamp loader activity",
             "count": 3
           },
           {
-            "term": "GO:0006366",
-            "name": "transcription from RNA polymerase II promoter",
+            "term": "GO:0003924",
+            "name": "GTPase activity",
             "count": 3
           },
           {
-            "term": "GO:0031577",
-            "name": "spindle checkpoint signaling",
+            "term": "GO:0004674",
+            "name": "protein serine/threonine kinase activity",
+            "count": 3
+          },
+          {
+            "term": "GO:0003677",
+            "name": "DNA binding",
+            "count": 3
+          },
+          {
+            "term": "GO:0004386",
+            "name": "helicase activity",
+            "count": 3
+          },
+          {
+            "term": "GO:0000723",
+            "name": "telomere maintenance",
             "count": 3
           },
           {
@@ -552,43 +946,38 @@
             "count": 3
           },
           {
-            "term": "GO:0003887",
-            "name": "DNA-directed DNA polymerase activity",
+            "term": "GO:0000186",
+            "name": "inactivation of MAPK activity",
             "count": 3
           },
           {
-            "term": "GO:0000724",
-            "name": "double-strand break repair via HR",
+            "term": "GO:0030308",
+            "name": "negative regulation of cell growth",
             "count": 3
           },
           {
-            "term": "GO:0006310",
-            "name": "DNA recombination",
+            "term": "GO:0007131",
+            "name": "reciprocal meiotic recombination",
             "count": 3
           },
           {
-            "term": "GO:0005667",
-            "name": "transcription regulator complex",
+            "term": "GO:0031145",
+            "name": "anaphase-promoting complex-dependent proteolysis",
             "count": 3
           },
           {
             "term": "GO:0051085",
             "name": "cotranslational protein targeting to membrane",
-            "count": 2
-          },
-          {
-            "term": "GO:0042026",
-            "name": "protein refolding",
-            "count": 2
+            "count": 3
           },
           {
             "term": "GO:0006457",
             "name": "protein folding",
-            "count": 2
+            "count": 3
           },
           {
-            "term": "GO:0000132",
-            "name": "establishment of mitotic spindle orientation",
+            "term": "GO:0006886",
+            "name": "intracellular protein transport",
             "count": 2
           },
           {
@@ -597,8 +986,8 @@
             "count": 2
           },
           {
-            "term": "GO:0004386",
-            "name": "helicase activity",
+            "term": "GO:0003688",
+            "name": "DNA replication origin binding",
             "count": 2
           },
           {
@@ -607,18 +996,13 @@
             "count": 2
           },
           {
-            "term": "GO:0003924",
-            "name": "GTPase activity",
-            "count": 2
-          },
-          {
             "term": "GO:0007530",
             "name": "mating type determination",
             "count": 2
           },
           {
-            "term": "GO:0046903",
-            "name": "secretion",
+            "term": "GO:0003887",
+            "name": "DNA-directed DNA polymerase activity",
             "count": 2
           },
           {
@@ -627,18 +1011,48 @@
             "count": 2
           },
           {
-            "term": "GO:0006357",
-            "name": "regulation of transcription from Pol II promoter",
+            "term": "GO:0007186",
+            "name": "G protein-coupled receptor signaling pathway",
             "count": 2
           },
           {
-            "term": "GO:0015031",
-            "name": "protein transport",
+            "term": "GO:0007264",
+            "name": "small GTPase mediated signal transduction",
             "count": 2
           },
           {
-            "term": "GO:0006403",
-            "name": "RNA localization",
+            "term": "GO:0004709",
+            "name": "GO term GO:0004709",
+            "count": 2
+          },
+          {
+            "term": "GO:0003896",
+            "name": "DNA primase activity",
+            "count": 2
+          },
+          {
+            "term": "GO:0006269",
+            "name": "DNA replication, synthesis of RNA primer",
+            "count": 2
+          },
+          {
+            "term": "GO:0003735",
+            "name": "structural constituent of ribosome",
+            "count": 2
+          },
+          {
+            "term": "GO:0009408",
+            "name": "response to heat",
+            "count": 2
+          },
+          {
+            "term": "GO:0042026",
+            "name": "protein refolding",
+            "count": 2
+          },
+          {
+            "term": "GO:0006904",
+            "name": "vesicle-mediated transport",
             "count": 1
           },
           {
@@ -657,18 +1071,8 @@
             "count": 1
           },
           {
-            "term": "GO:0046835",
-            "name": "indole-containing compound metabolic process",
-            "count": 1
-          },
-          {
-            "term": "GO:0006012",
-            "name": "galactose metabolic process",
-            "count": 1
-          },
-          {
-            "term": "GO:0006006",
-            "name": "glucose metabolic process",
+            "term": "GO:0005667",
+            "name": "transcription regulator complex",
             "count": 1
           },
           {
@@ -712,38 +1116,13 @@
             "count": 1
           },
           {
-            "term": "GO:0000186",
-            "name": "inactivation of MAPK activity",
-            "count": 1
-          },
-          {
             "term": "GO:0004708",
             "name": "MAP kinase kinase activity",
             "count": 1
           },
           {
-            "term": "GO:0006568",
-            "name": "tryptophan metabolic process",
-            "count": 1
-          },
-          {
-            "term": "GO:0000162",
-            "name": "tryptophan biosynthetic process",
-            "count": 1
-          },
-          {
-            "term": "GO:0046208",
-            "name": "tRNA modification",
-            "count": 1
-          },
-          {
-            "term": "GO:0030308",
-            "name": "negative regulation of cell growth",
-            "count": 1
-          },
-          {
-            "term": "GO:0008630",
-            "name": "intrinsic apoptotic signaling pathway",
+            "term": "GO:0000133",
+            "name": "spindle orientation in bud neck",
             "count": 1
           },
           {
@@ -752,23 +1131,13 @@
             "count": 1
           },
           {
-            "term": "GO:0044205",
-            "name": "purine nucleoside salvage",
+            "term": "GO:0006357",
+            "name": "regulation of transcription from Pol II promoter",
             "count": 1
           },
           {
-            "term": "GO:0006206",
-            "name": "purine nucleobase metabolic process",
-            "count": 1
-          },
-          {
-            "term": "GO:0006221",
-            "name": "pyrimidine nucleotide biosynthetic process",
-            "count": 1
-          },
-          {
-            "term": "GO:0007264",
-            "name": "small GTPase mediated signal transduction",
+            "term": "GO:0015031",
+            "name": "protein transport",
             "count": 1
           },
           {
@@ -792,33 +1161,8 @@
             "count": 1
           },
           {
-            "term": "GO:0007131",
-            "name": "reciprocal meiotic recombination",
-            "count": 1
-          },
-          {
             "term": "GO:0008234",
             "name": "cysteine-type peptidase activity",
-            "count": 1
-          },
-          {
-            "term": "GO:0006368",
-            "name": "transcription elongation from RNA Pol II promoter",
-            "count": 1
-          },
-          {
-            "term": "GO:0051123",
-            "name": "RNA polymerase II transcription preinitiation complex",
-            "count": 1
-          },
-          {
-            "term": "GO:0006367",
-            "name": "transcription initiation from RNA Pol II promoter",
-            "count": 1
-          },
-          {
-            "term": "GO:0090522",
-            "name": "tRNA thiolation",
             "count": 1
           },
           {
@@ -832,13 +1176,13 @@
             "count": 1
           },
           {
-            "term": "GO:0003896",
-            "name": "DNA primase activity",
+            "term": "GO:0022627",
+            "name": "cytosolic small ribosomal subunit",
             "count": 1
           },
           {
-            "term": "GO:0006269",
-            "name": "DNA replication, synthesis of RNA primer",
+            "term": "GO:0006403",
+            "name": "RNA localization",
             "count": 1
           },
           {
@@ -867,580 +1211,62 @@
             "count": 1
           },
           {
-            "term": "GO:0009408",
-            "name": "response to heat",
+            "term": "GO:0009263",
+            "name": "deoxyribonucleotide biosynthetic process",
             "count": 1
           },
           {
-            "term": "GO:0006066",
-            "name": "alcohol metabolic process",
+            "term": "GO:0031577",
+            "name": "spindle checkpoint signaling",
             "count": 1
           },
           {
-            "term": "GO:0043453",
-            "name": "respiratory electron transport chain",
+            "term": "GO:0002181",
+            "name": "cytoplasmic translation",
             "count": 1
           },
           {
-            "term": "GO:0006067",
-            "name": "ethanol oxidation",
-            "count": 1
-          },
-          {
-            "term": "GO:0003735",
-            "name": "structural constituent of ribosome",
-            "count": 1
-          },
-          {
-            "term": "GO:0022625",
-            "name": "cytosolic large ribosomal subunit",
+            "term": "GO:0004871",
+            "name": "signal transducer activity",
             "count": 1
           }
         ]
       }
     },
     "DeepWalk": {
-      "gf_score": 0.4622091343469395,
-      "level": 2,
-      "label": "Moderate alignment",
-      "interpretation": "Can identify major functional categories (e.g., metabolism vs signal transduction)",
-      "best_go_cluster": {
-        "go_term": "GO:0006270",
-        "go_term_name": "DNA replication initiation",
-        "purity": 0.43243243243243246,
-        "n_nodes": 37,
-        "other_go_terms": [
-          {
-            "term": "GO:0000082",
-            "name": "G1/S transition of mitotic cell cycle",
-            "count": 14
-          },
-          {
-            "term": "GO:0006260",
-            "name": "DNA replication",
-            "count": 9
-          },
-          {
-            "term": "GO:0006281",
-            "name": "DNA repair",
-            "count": 8
-          },
-          {
-            "term": "GO:0006412",
-            "name": "translation",
-            "count": 5
-          },
-          {
-            "term": "GO:0003688",
-            "name": "DNA replication origin binding",
-            "count": 4
-          },
-          {
-            "term": "GO:0000278",
-            "name": "mitotic cell cycle",
-            "count": 4
-          },
-          {
-            "term": "GO:0007165",
-            "name": "signal transduction",
-            "count": 3
-          },
-          {
-            "term": "GO:0003697",
-            "name": "single-stranded DNA binding",
-            "count": 3
-          },
-          {
-            "term": "GO:0007049",
-            "name": "cell cycle",
-            "count": 3
-          },
-          {
-            "term": "GO:0003677",
-            "name": "DNA binding",
-            "count": 3
-          },
-          {
-            "term": "GO:0005667",
-            "name": "transcription regulator complex",
-            "count": 3
-          },
-          {
-            "term": "GO:0003689",
-            "name": "DNA clamp loader activity",
-            "count": 3
-          },
-          {
-            "term": "GO:0000077",
-            "name": "DNA damage checkpoint signaling",
-            "count": 3
-          },
-          {
-            "term": "GO:0007095",
-            "name": "mitotic spindle assembly checkpoint",
-            "count": 3
-          },
-          {
-            "term": "GO:0051301",
-            "name": "cell division",
-            "count": 3
-          },
-          {
-            "term": "GO:0000086",
-            "name": "G2/M transition of mitotic cell cycle",
-            "count": 3
-          },
-          {
-            "term": "GO:0003735",
-            "name": "structural constituent of ribosome",
-            "count": 3
-          },
-          {
-            "term": "GO:0006355",
-            "name": "regulation of transcription, DNA-templated",
-            "count": 3
-          },
-          {
-            "term": "GO:0045944",
-            "name": "positive regulation of transcription from Pol II",
-            "count": 3
-          },
-          {
-            "term": "GO:0000132",
-            "name": "establishment of mitotic spindle orientation",
-            "count": 2
-          },
-          {
-            "term": "GO:0030036",
-            "name": "actin cytoskeleton organization",
-            "count": 2
-          },
-          {
-            "term": "GO:0004386",
-            "name": "helicase activity",
-            "count": 2
-          },
-          {
-            "term": "GO:0004674",
-            "name": "protein serine/threonine kinase activity",
-            "count": 2
-          },
-          {
-            "term": "GO:0006303",
-            "name": "double-strand break repair via NHEJ",
-            "count": 2
-          },
-          {
-            "term": "GO:0000724",
-            "name": "double-strand break repair via HR",
-            "count": 2
-          },
-          {
-            "term": "GO:0006310",
-            "name": "DNA recombination",
-            "count": 2
-          },
-          {
-            "term": "GO:0003887",
-            "name": "DNA-directed DNA polymerase activity",
-            "count": 2
-          },
-          {
-            "term": "GO:0051085",
-            "name": "cotranslational protein targeting to membrane",
-            "count": 1
-          },
-          {
-            "term": "GO:0042026",
-            "name": "protein refolding",
-            "count": 1
-          },
-          {
-            "term": "GO:0006403",
-            "name": "RNA localization",
-            "count": 1
-          },
-          {
-            "term": "GO:0006457",
-            "name": "protein folding",
-            "count": 1
-          },
-          {
-            "term": "GO:0005085",
-            "name": "guanyl-nucleotide exchange factor activity",
-            "count": 1
-          },
-          {
-            "term": "GO:0000750",
-            "name": "pheromone-dependent signal transduction",
-            "count": 1
-          },
-          {
-            "term": "GO:0004707",
-            "name": "MAP kinase activity",
-            "count": 1
-          },
-          {
-            "term": "GO:0030337",
-            "name": "negative regulation of cell migration",
-            "count": 1
-          },
-          {
-            "term": "GO:0006298",
-            "name": "DNA damage response, mismatch repair",
-            "count": 1
-          },
-          {
-            "term": "GO:0006414",
-            "name": "translational elongation",
-            "count": 1
-          },
-          {
-            "term": "GO:0003924",
-            "name": "GTPase activity",
-            "count": 1
-          },
-          {
-            "term": "GO:0000145",
-            "name": "exocytosis",
-            "count": 1
-          },
-          {
-            "term": "GO:0006413",
-            "name": "translational initiation",
-            "count": 1
-          },
-          {
-            "term": "GO:0003743",
-            "name": "translation initiation factor activity",
-            "count": 1
-          },
-          {
-            "term": "GO:0022627",
-            "name": "cytosolic small ribosomal subunit",
-            "count": 1
-          },
-          {
-            "term": "GO:0003896",
-            "name": "DNA primase activity",
-            "count": 1
-          },
-          {
-            "term": "GO:0006269",
-            "name": "DNA replication, synthesis of RNA primer",
-            "count": 1
-          },
-          {
-            "term": "GO:0015935",
-            "name": "small ribosomal subunit assembly",
-            "count": 1
-          },
-          {
-            "term": "GO:0000723",
-            "name": "telomere maintenance",
-            "count": 1
-          },
-          {
-            "term": "GO:0006886",
-            "name": "intracellular protein transport",
-            "count": 1
-          },
-          {
-            "term": "GO:0046903",
-            "name": "secretion",
-            "count": 1
-          },
-          {
-            "term": "GO:0015031",
-            "name": "protein transport",
-            "count": 1
-          },
-          {
-            "term": "GO:0006066",
-            "name": "alcohol metabolic process",
-            "count": 1
-          },
-          {
-            "term": "GO:0043453",
-            "name": "respiratory electron transport chain",
-            "count": 1
-          },
-          {
-            "term": "GO:0006067",
-            "name": "ethanol oxidation",
-            "count": 1
-          },
-          {
-            "term": "GO:0022625",
-            "name": "cytosolic large ribosomal subunit",
-            "count": 1
-          }
-        ]
-      }
-    },
-    "Node2Vec": {
-      "gf_score": 0.41526529890865754,
-      "level": 2,
-      "label": "Moderate alignment",
-      "interpretation": "Can identify major functional categories (e.g., metabolism vs signal transduction)",
-      "best_go_cluster": {
-        "go_term": "GO:0006270",
-        "go_term_name": "DNA replication initiation",
-        "purity": 0.5,
-        "n_nodes": 28,
-        "other_go_terms": [
-          {
-            "term": "GO:0000082",
-            "name": "G1/S transition of mitotic cell cycle",
-            "count": 10
-          },
-          {
-            "term": "GO:0006260",
-            "name": "DNA replication",
-            "count": 9
-          },
-          {
-            "term": "GO:0006281",
-            "name": "DNA repair",
-            "count": 6
-          },
-          {
-            "term": "GO:0006412",
-            "name": "translation",
-            "count": 4
-          },
-          {
-            "term": "GO:0007165",
-            "name": "signal transduction",
-            "count": 3
-          },
-          {
-            "term": "GO:0003697",
-            "name": "single-stranded DNA binding",
-            "count": 3
-          },
-          {
-            "term": "GO:0003677",
-            "name": "DNA binding",
-            "count": 3
-          },
-          {
-            "term": "GO:0003689",
-            "name": "DNA clamp loader activity",
-            "count": 3
-          },
-          {
-            "term": "GO:0000278",
-            "name": "mitotic cell cycle",
-            "count": 3
-          },
-          {
-            "term": "GO:0000132",
-            "name": "establishment of mitotic spindle orientation",
-            "count": 2
-          },
-          {
-            "term": "GO:0030036",
-            "name": "actin cytoskeleton organization",
-            "count": 2
-          },
-          {
-            "term": "GO:0007049",
-            "name": "cell cycle",
-            "count": 2
-          },
-          {
-            "term": "GO:0004386",
-            "name": "helicase activity",
-            "count": 2
-          },
-          {
-            "term": "GO:0003688",
-            "name": "DNA replication origin binding",
-            "count": 2
-          },
-          {
-            "term": "GO:0000077",
-            "name": "DNA damage checkpoint signaling",
-            "count": 2
-          },
-          {
-            "term": "GO:0007095",
-            "name": "mitotic spindle assembly checkpoint",
-            "count": 2
-          },
-          {
-            "term": "GO:0051301",
-            "name": "cell division",
-            "count": 2
-          },
-          {
-            "term": "GO:0000086",
-            "name": "G2/M transition of mitotic cell cycle",
-            "count": 2
-          },
-          {
-            "term": "GO:0003735",
-            "name": "structural constituent of ribosome",
-            "count": 2
-          },
-          {
-            "term": "GO:0003887",
-            "name": "DNA-directed DNA polymerase activity",
-            "count": 2
-          },
-          {
-            "term": "GO:0006355",
-            "name": "regulation of transcription, DNA-templated",
-            "count": 2
-          },
-          {
-            "term": "GO:0045944",
-            "name": "positive regulation of transcription from Pol II",
-            "count": 2
-          },
-          {
-            "term": "GO:0051085",
-            "name": "cotranslational protein targeting to membrane",
-            "count": 1
-          },
-          {
-            "term": "GO:0042026",
-            "name": "protein refolding",
-            "count": 1
-          },
-          {
-            "term": "GO:0006403",
-            "name": "RNA localization",
-            "count": 1
-          },
-          {
-            "term": "GO:0006457",
-            "name": "protein folding",
-            "count": 1
-          },
-          {
-            "term": "GO:0005085",
-            "name": "guanyl-nucleotide exchange factor activity",
-            "count": 1
-          },
-          {
-            "term": "GO:0000750",
-            "name": "pheromone-dependent signal transduction",
-            "count": 1
-          },
-          {
-            "term": "GO:0004707",
-            "name": "MAP kinase activity",
-            "count": 1
-          },
-          {
-            "term": "GO:0005667",
-            "name": "transcription regulator complex",
-            "count": 1
-          },
-          {
-            "term": "GO:0030337",
-            "name": "negative regulation of cell migration",
-            "count": 1
-          },
-          {
-            "term": "GO:0006298",
-            "name": "DNA damage response, mismatch repair",
-            "count": 1
-          },
-          {
-            "term": "GO:0006414",
-            "name": "translational elongation",
-            "count": 1
-          },
-          {
-            "term": "GO:0003924",
-            "name": "GTPase activity",
-            "count": 1
-          },
-          {
-            "term": "GO:0004674",
-            "name": "protein serine/threonine kinase activity",
-            "count": 1
-          },
-          {
-            "term": "GO:0000145",
-            "name": "exocytosis",
-            "count": 1
-          },
-          {
-            "term": "GO:0006413",
-            "name": "translational initiation",
-            "count": 1
-          },
-          {
-            "term": "GO:0003743",
-            "name": "translation initiation factor activity",
-            "count": 1
-          },
-          {
-            "term": "GO:0022627",
-            "name": "cytosolic small ribosomal subunit",
-            "count": 1
-          },
-          {
-            "term": "GO:0003896",
-            "name": "DNA primase activity",
-            "count": 1
-          },
-          {
-            "term": "GO:0006269",
-            "name": "DNA replication, synthesis of RNA primer",
-            "count": 1
-          },
-          {
-            "term": "GO:0006303",
-            "name": "double-strand break repair via NHEJ",
-            "count": 1
-          },
-          {
-            "term": "GO:0000724",
-            "name": "double-strand break repair via HR",
-            "count": 1
-          },
-          {
-            "term": "GO:0006310",
-            "name": "DNA recombination",
-            "count": 1
-          },
-          {
-            "term": "GO:0000723",
-            "name": "telomere maintenance",
-            "count": 1
-          },
-          {
-            "term": "GO:0022625",
-            "name": "cytosolic large ribosomal subunit",
-            "count": 1
-          }
-        ]
-      }
-    },
-    "VGAE": {
-      "gf_score": 0.24813152527735283,
+      "gf_score": 0.1225356361238432,
       "level": 1,
       "label": "Weak alignment",
       "interpretation": "Geometric structure poorly reflects functional modules; embedding cannot distinguish functional boundaries",
       "best_go_cluster": {
-        "go_term": "GO:0006270",
-        "go_term_name": "DNA replication initiation",
-        "purity": 0.47619047619047616,
-        "n_nodes": 21,
+        "go_term": "GO:0000082",
+        "go_term_name": "G1/S transition of mitotic cell cycle",
+        "purity": 0.36666666666666664,
+        "n_nodes": 30,
         "other_go_terms": [
           {
-            "term": "GO:0000082",
-            "name": "G1/S transition of mitotic cell cycle",
+            "term": "GO:0006270",
+            "name": "DNA replication initiation",
             "count": 9
           },
           {
-            "term": "GO:0006260",
-            "name": "DNA replication",
+            "term": "GO:0007049",
+            "name": "cell cycle",
+            "count": 8
+          },
+          {
+            "term": "GO:0000278",
+            "name": "mitotic cell cycle",
+            "count": 8
+          },
+          {
+            "term": "GO:0051301",
+            "name": "cell division",
+            "count": 7
+          },
+          {
+            "term": "GO:0000086",
+            "name": "G2/M transition of mitotic cell cycle",
             "count": 6
           },
           {
@@ -1449,48 +1275,33 @@
             "count": 4
           },
           {
+            "term": "GO:0006260",
+            "name": "DNA replication",
+            "count": 4
+          },
+          {
+            "term": "GO:0006310",
+            "name": "DNA recombination",
+            "count": 3
+          },
+          {
+            "term": "GO:0006412",
+            "name": "translation",
+            "count": 3
+          },
+          {
+            "term": "GO:0005667",
+            "name": "transcription regulator complex",
+            "count": 3
+          },
+          {
             "term": "GO:0003688",
             "name": "DNA replication origin binding",
             "count": 3
           },
           {
-            "term": "GO:0006886",
-            "name": "intracellular protein transport",
-            "count": 2
-          },
-          {
-            "term": "GO:0007165",
-            "name": "signal transduction",
-            "count": 2
-          },
-          {
-            "term": "GO:0003697",
-            "name": "single-stranded DNA binding",
-            "count": 2
-          },
-          {
-            "term": "GO:0051301",
-            "name": "cell division",
-            "count": 2
-          },
-          {
-            "term": "GO:0006412",
-            "name": "translation",
-            "count": 2
-          },
-          {
-            "term": "GO:0003689",
-            "name": "DNA clamp loader activity",
-            "count": 2
-          },
-          {
-            "term": "GO:0005667",
-            "name": "transcription regulator complex",
-            "count": 2
-          },
-          {
-            "term": "GO:0006303",
-            "name": "double-strand break repair via NHEJ",
+            "term": "GO:0031577",
+            "name": "spindle checkpoint signaling",
             "count": 2
           },
           {
@@ -1499,9 +1310,59 @@
             "count": 2
           },
           {
-            "term": "GO:0006310",
-            "name": "DNA recombination",
+            "term": "GO:0006886",
+            "name": "intracellular protein transport",
             "count": 2
+          },
+          {
+            "term": "GO:0046903",
+            "name": "secretion",
+            "count": 2
+          },
+          {
+            "term": "GO:0006355",
+            "name": "regulation of transcription, DNA-templated",
+            "count": 2
+          },
+          {
+            "term": "GO:0045944",
+            "name": "positive regulation of transcription from Pol II",
+            "count": 2
+          },
+          {
+            "term": "GO:0007165",
+            "name": "signal transduction",
+            "count": 2
+          },
+          {
+            "term": "GO:0003735",
+            "name": "structural constituent of ribosome",
+            "count": 2
+          },
+          {
+            "term": "GO:0003924",
+            "name": "GTPase activity",
+            "count": 2
+          },
+          {
+            "term": "GO:0006303",
+            "name": "double-strand break repair via NHEJ",
+            "count": 2
+          },
+          {
+            "term": "GO:0003689",
+            "name": "DNA clamp loader activity",
+            "count": 2
+          },
+          {
+            "term": "GO:0004674",
+            "name": "protein serine/threonine kinase activity",
+            "count": 1
+          },
+          {
+            "term": "GO:0007131",
+            "name": "reciprocal meiotic recombination",
+            "count": 1
           },
           {
             "term": "GO:0006904",
@@ -1514,58 +1375,18 @@
             "count": 1
           },
           {
-            "term": "GO:0000132",
-            "name": "establishment of mitotic spindle orientation",
+            "term": "GO:0008630",
+            "name": "intrinsic apoptotic signaling pathway",
             "count": 1
           },
           {
-            "term": "GO:0030036",
-            "name": "actin cytoskeleton organization",
+            "term": "GO:0000077",
+            "name": "DNA damage checkpoint signaling",
             "count": 1
           },
           {
-            "term": "GO:0005085",
-            "name": "guanyl-nucleotide exchange factor activity",
-            "count": 1
-          },
-          {
-            "term": "GO:0030337",
-            "name": "negative regulation of cell migration",
-            "count": 1
-          },
-          {
-            "term": "GO:0006298",
-            "name": "DNA damage response, mismatch repair",
-            "count": 1
-          },
-          {
-            "term": "GO:0006413",
-            "name": "translational initiation",
-            "count": 1
-          },
-          {
-            "term": "GO:0003743",
-            "name": "translation initiation factor activity",
-            "count": 1
-          },
-          {
-            "term": "GO:0003735",
-            "name": "structural constituent of ribosome",
-            "count": 1
-          },
-          {
-            "term": "GO:0022627",
-            "name": "cytosolic small ribosomal subunit",
-            "count": 1
-          },
-          {
-            "term": "GO:0003896",
-            "name": "DNA primase activity",
-            "count": 1
-          },
-          {
-            "term": "GO:0006269",
-            "name": "DNA replication, synthesis of RNA primer",
+            "term": "GO:0007095",
+            "name": "mitotic spindle assembly checkpoint",
             "count": 1
           },
           {
@@ -1584,13 +1405,33 @@
             "count": 1
           },
           {
-            "term": "GO:0000086",
-            "name": "G2/M transition of mitotic cell cycle",
+            "term": "GO:0031145",
+            "name": "anaphase-promoting complex-dependent proteolysis",
             "count": 1
           },
           {
-            "term": "GO:0007049",
-            "name": "cell cycle",
+            "term": "GO:0015935",
+            "name": "small ribosomal subunit assembly",
+            "count": 1
+          },
+          {
+            "term": "GO:0030337",
+            "name": "negative regulation of cell migration",
+            "count": 1
+          },
+          {
+            "term": "GO:0007264",
+            "name": "small GTPase mediated signal transduction",
+            "count": 1
+          },
+          {
+            "term": "GO:0000132",
+            "name": "establishment of mitotic spindle orientation",
+            "count": 1
+          },
+          {
+            "term": "GO:0030036",
+            "name": "actin cytoskeleton organization",
             "count": 1
           },
           {
@@ -1599,43 +1440,446 @@
             "count": 1
           },
           {
-            "term": "GO:0046903",
-            "name": "secretion",
-            "count": 1
-          },
-          {
             "term": "GO:0015031",
             "name": "protein transport",
             "count": 1
           },
           {
+            "term": "GO:0022625",
+            "name": "cytosolic large ribosomal subunit",
+            "count": 1
+          },
+          {
+            "term": "GO:0003910",
+            "name": "DNA ligase (ATP) activity",
+            "count": 1
+          },
+          {
+            "term": "GO:0006351",
+            "name": "transcription, DNA-templated",
+            "count": 1
+          },
+          {
+            "term": "GO:0001056",
+            "name": "RNA polymerase III transcription",
+            "count": 1
+          },
+          {
+            "term": "GO:0006383",
+            "name": "poly(A)+ mRNA 3' end processing",
+            "count": 1
+          },
+          {
+            "term": "GO:0003677",
+            "name": "DNA binding",
+            "count": 1
+          },
+          {
+            "term": "GO:0004386",
+            "name": "helicase activity",
+            "count": 1
+          },
+          {
+            "term": "GO:0006414",
+            "name": "translational elongation",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "GIN": {
+      "gf_score": 0.1217,
+      "level": 1,
+      "label": "Weak alignment",
+      "interpretation": "Geometric structure poorly reflects functional modules; embedding cannot distinguish functional boundaries",
+      "best_go_cluster": {
+        "go_term": "N/A",
+        "go_term_name": "N/A",
+        "purity": 0.0,
+        "n_nodes": 0,
+        "other_go_terms": []
+      }
+    },
+    "GAT": {
+      "gf_score": 0.0694,
+      "level": 1,
+      "label": "Weak alignment",
+      "interpretation": "Geometric structure poorly reflects functional modules; embedding cannot distinguish functional boundaries",
+      "best_go_cluster": {
+        "go_term": "N/A",
+        "go_term_name": "N/A",
+        "purity": 0.0,
+        "n_nodes": 0,
+        "other_go_terms": []
+      }
+    },
+    "GraphSAGE": {
+      "gf_score": 0.069,
+      "level": 1,
+      "label": "Weak alignment",
+      "interpretation": "Geometric structure poorly reflects functional modules; embedding cannot distinguish functional boundaries",
+      "best_go_cluster": {
+        "go_term": "N/A",
+        "go_term_name": "N/A",
+        "purity": 0.0,
+        "n_nodes": 0,
+        "other_go_terms": []
+      }
+    },
+    "VGAE": {
+      "gf_score": 0.06567018452344808,
+      "level": 1,
+      "label": "Weak alignment",
+      "interpretation": "Geometric structure poorly reflects functional modules; embedding cannot distinguish functional boundaries",
+      "best_go_cluster": {
+        "go_term": "GO:0000082",
+        "go_term_name": "G1/S transition of mitotic cell cycle",
+        "purity": 0.2978723404255319,
+        "n_nodes": 47,
+        "other_go_terms": [
+          {
+            "term": "GO:0006270",
+            "name": "DNA replication initiation",
+            "count": 13
+          },
+          {
+            "term": "GO:0006281",
+            "name": "DNA repair",
+            "count": 10
+          },
+          {
+            "term": "GO:0051301",
+            "name": "cell division",
+            "count": 7
+          },
+          {
+            "term": "GO:0007049",
+            "name": "cell cycle",
+            "count": 7
+          },
+          {
+            "term": "GO:0007165",
+            "name": "signal transduction",
+            "count": 7
+          },
+          {
+            "term": "GO:0006260",
+            "name": "DNA replication",
+            "count": 6
+          },
+          {
+            "term": "GO:0006412",
+            "name": "translation",
+            "count": 5
+          },
+          {
             "term": "GO:0000278",
             "name": "mitotic cell cycle",
-            "count": 1
+            "count": 5
+          },
+          {
+            "term": "GO:0000750",
+            "name": "pheromone-dependent signal transduction",
+            "count": 4
+          },
+          {
+            "term": "GO:0003677",
+            "name": "DNA binding",
+            "count": 4
+          },
+          {
+            "term": "GO:0000077",
+            "name": "DNA damage checkpoint signaling",
+            "count": 4
+          },
+          {
+            "term": "GO:0000724",
+            "name": "double-strand break repair via HR",
+            "count": 4
+          },
+          {
+            "term": "GO:0006310",
+            "name": "DNA recombination",
+            "count": 4
           },
           {
             "term": "GO:0006355",
             "name": "regulation of transcription, DNA-templated",
-            "count": 1
+            "count": 4
           },
           {
             "term": "GO:0045944",
             "name": "positive regulation of transcription from Pol II",
+            "count": 4
+          },
+          {
+            "term": "GO:0000086",
+            "name": "G2/M transition of mitotic cell cycle",
+            "count": 3
+          },
+          {
+            "term": "GO:0000132",
+            "name": "establishment of mitotic spindle orientation",
+            "count": 3
+          },
+          {
+            "term": "GO:0004386",
+            "name": "helicase activity",
+            "count": 3
+          },
+          {
+            "term": "GO:0007095",
+            "name": "mitotic spindle assembly checkpoint",
+            "count": 3
+          },
+          {
+            "term": "GO:0051085",
+            "name": "cotranslational protein targeting to membrane",
+            "count": 2
+          },
+          {
+            "term": "GO:0006403",
+            "name": "RNA localization",
+            "count": 2
+          },
+          {
+            "term": "GO:0006457",
+            "name": "protein folding",
+            "count": 2
+          },
+          {
+            "term": "GO:0030036",
+            "name": "actin cytoskeleton organization",
+            "count": 2
+          },
+          {
+            "term": "GO:0003697",
+            "name": "single-stranded DNA binding",
+            "count": 2
+          },
+          {
+            "term": "GO:0004707",
+            "name": "MAP kinase activity",
+            "count": 2
+          },
+          {
+            "term": "GO:0003688",
+            "name": "DNA replication origin binding",
+            "count": 2
+          },
+          {
+            "term": "GO:0003689",
+            "name": "DNA clamp loader activity",
+            "count": 2
+          },
+          {
+            "term": "GO:0006414",
+            "name": "translational elongation",
+            "count": 2
+          },
+          {
+            "term": "GO:0003924",
+            "name": "GTPase activity",
+            "count": 2
+          },
+          {
+            "term": "GO:0004674",
+            "name": "protein serine/threonine kinase activity",
+            "count": 2
+          },
+          {
+            "term": "GO:0006303",
+            "name": "double-strand break repair via NHEJ",
+            "count": 2
+          },
+          {
+            "term": "GO:0007131",
+            "name": "reciprocal meiotic recombination",
+            "count": 2
+          },
+          {
+            "term": "GO:0003896",
+            "name": "DNA primase activity",
+            "count": 2
+          },
+          {
+            "term": "GO:0006269",
+            "name": "DNA replication, synthesis of RNA primer",
+            "count": 2
+          },
+          {
+            "term": "GO:0031145",
+            "name": "anaphase-promoting complex-dependent proteolysis",
+            "count": 2
+          },
+          {
+            "term": "GO:0000723",
+            "name": "telomere maintenance",
+            "count": 2
+          },
+          {
+            "term": "GO:0042026",
+            "name": "protein refolding",
             "count": 1
           },
           {
-            "term": "GO:0006066",
-            "name": "alcohol metabolic process",
+            "term": "GO:0005085",
+            "name": "guanyl-nucleotide exchange factor activity",
             "count": 1
           },
           {
-            "term": "GO:0043453",
-            "name": "respiratory electron transport chain",
+            "term": "GO:0046835",
+            "name": "indole-containing compound metabolic process",
             "count": 1
           },
           {
-            "term": "GO:0006067",
-            "name": "ethanol oxidation",
+            "term": "GO:0006012",
+            "name": "galactose metabolic process",
+            "count": 1
+          },
+          {
+            "term": "GO:0006006",
+            "name": "glucose metabolic process",
+            "count": 1
+          },
+          {
+            "term": "GO:0005667",
+            "name": "transcription regulator complex",
+            "count": 1
+          },
+          {
+            "term": "GO:0030337",
+            "name": "negative regulation of cell migration",
+            "count": 1
+          },
+          {
+            "term": "GO:0006298",
+            "name": "DNA damage response, mismatch repair",
+            "count": 1
+          },
+          {
+            "term": "GO:0000145",
+            "name": "exocytosis",
+            "count": 1
+          },
+          {
+            "term": "GO:0006417",
+            "name": "regulation of translation",
+            "count": 1
+          },
+          {
+            "term": "GO:0034198",
+            "name": "cellular response to amino acid starvation",
+            "count": 1
+          },
+          {
+            "term": "GO:0000133",
+            "name": "spindle orientation in bud neck",
+            "count": 1
+          },
+          {
+            "term": "GO:0007186",
+            "name": "G protein-coupled receptor signaling pathway",
+            "count": 1
+          },
+          {
+            "term": "GO:0000981",
+            "name": "regulation of transcription",
+            "count": 1
+          },
+          {
+            "term": "GO:0006357",
+            "name": "regulation of transcription from Pol II promoter",
+            "count": 1
+          },
+          {
+            "term": "GO:0000187",
+            "name": "activation of MAPK activity",
+            "count": 1
+          },
+          {
+            "term": "GO:0006413",
+            "name": "translational initiation",
+            "count": 1
+          },
+          {
+            "term": "GO:0003743",
+            "name": "translation initiation factor activity",
+            "count": 1
+          },
+          {
+            "term": "GO:0006974",
+            "name": "cellular response to DNA damage stimulus",
+            "count": 1
+          },
+          {
+            "term": "GO:0051865",
+            "name": "protein autophosphorylation",
+            "count": 1
+          },
+          {
+            "term": "GO:0043161",
+            "name": "proteasome-mediated ubiquitin-dependent catabolism",
+            "count": 1
+          },
+          {
+            "term": "GO:0006511",
+            "name": "ubiquitin-dependent protein catabolic process",
+            "count": 1
+          },
+          {
+            "term": "GO:0030308",
+            "name": "negative regulation of cell growth",
+            "count": 1
+          },
+          {
+            "term": "GO:0003746",
+            "name": "translation elongation factor activity",
+            "count": 1
+          },
+          {
+            "term": "GO:0000186",
+            "name": "inactivation of MAPK activity",
+            "count": 1
+          },
+          {
+            "term": "GO:0004709",
+            "name": "GO term GO:0004709",
+            "count": 1
+          },
+          {
+            "term": "GO:0006348",
+            "name": "chromatin silencing at telomere",
+            "count": 1
+          },
+          {
+            "term": "GO:0006338",
+            "name": "chromatin remodeling",
+            "count": 1
+          },
+          {
+            "term": "GO:0040029",
+            "name": "regulation of gene expression, epigenetic",
+            "count": 1
+          },
+          {
+            "term": "GO:0007264",
+            "name": "small GTPase mediated signal transduction",
+            "count": 1
+          },
+          {
+            "term": "GO:0003887",
+            "name": "DNA-directed DNA polymerase activity",
+            "count": 1
+          },
+          {
+            "term": "GO:0003735",
+            "name": "structural constituent of ribosome",
+            "count": 1
+          },
+          {
+            "term": "GO:0015935",
+            "name": "small ribosomal subunit assembly",
             "count": 1
           }
         ]

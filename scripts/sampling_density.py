@@ -13,13 +13,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from utils import (
-    SEED, get_data_dir, get_results_dir, get_embeddings_dir,
-    load_curated_network, load_embedding, compute_gf_curve,
-    compute_plateau_width, compute_gf_score,
+    SEED, R_MIN, R_MAX, GF_R_MIN, GF_R_MAX, CLASSICAL_METHODS,
+    PLATEAU_PURITY_THRESHOLD, get_data_dir, get_results_dir,
+    get_embeddings_dir, load_curated_network, load_embedding,
+    compute_gf_curve, compute_plateau_width, compute_gf_score,
 )
-
-R_MIN = 0.05
-R_MAX = 0.55
 
 
 def main():
@@ -32,7 +30,7 @@ def main():
     
     G, nodes, go_map = load_curated_network(data_dir)
     
-    methods = ["DM", "MDS", "Spectral", "DeepWalk", "Node2Vec", "VGAE"]
+    methods = CLASSICAL_METHODS
     grids = {"30": 30, "200": 200}
     
     results = {}
@@ -50,8 +48,9 @@ def main():
                 r_vals = np.linspace(R_MIN, R_MAX, n_pts)
                 purities, modularities = compute_gf_curve(aligned_coords, common, go_map, r_vals)
                 
-                gf_score = compute_gf_score(r_vals, purities, 0.05, 0.422)
-                plateau_w = compute_plateau_width(r_vals, purities, threshold=0.5)
+                gf_score = compute_gf_score(r_vals, purities, GF_R_MIN, GF_R_MAX)
+                plateau_w = compute_plateau_width(r_vals, purities,
+                                                 threshold=PLATEAU_PURITY_THRESHOLD)
                 
                 results[method][grid_name] = {
                     "n_points": n_pts,
