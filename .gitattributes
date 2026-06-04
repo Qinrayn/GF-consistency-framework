@@ -1,0 +1,35 @@
+# Git attributes for GF-consistency-framework
+# https://github.com/Qinrayn/GF-consistency-framework
+# Auto-detect text files
+* text=auto
+# Source code
+*.py    text eol=lf diff=python
+*.sh    text eol=lf
+*.yml   text eol=lf
+*.txt   text eol=lf
+*.md    text eol=lf
+*.json  text eol=lf
+*.csv   text eol=lf
+# Binary files
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.pdf   binary
+*.pkl   binary
+*.npy   binary
+*.npz   binary
+# Compressed data files (STRING, GOA)
+*.gz    binary
+*.zip   binary
+*.tar   binary
+*.tar.gz binary
+# Large data files - use Git LFS if available
+*.edgelist filter=lfs diff=lfs merge=lfs -text
+*.links.v12.0.txt.gz filter=lfs diff=lfs merge=lfs -text
+*.protein.aliases.v12.0.txt.gz filter=lfs diff=lfs merge=lfs -text
+*.gaf.gz filter=lfs diff=lfs merge=lfs -text
+*.obo filter=lfs diff=lfs merge=lfs -text
+# Documentation
+LICENSE text eol=lf
+README* text eol=lf

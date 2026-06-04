@@ -1,0 +1,56 @@
+{
+  "methods": [
+    "GraphSAGE",
+    "GAT",
+    "GIN"
+  ],
+  "gf_scores": {
+    "GraphSAGE": 0.3468,
+    "GAT": 0.2832,
+    "GIN": 0.0
+  },
+  "plateau_widths": {
+    "GraphSAGE": {
+      "W": 0.0653
+    },
+    "GAT": {
+      "W": 0.0
+    },
+    "GIN": {
+      "W": 0.0
+    }
+  },
+  "link_prediction": {
+    "GraphSAGE": {
+      "auroc_mean": 0.684,
+      "auroc_std": 0.0163
+    },
+    "GAT": {
+      "auroc_mean": 0.5223,
+      "auroc_std": 0.015
+    },
+    "GIN": {
+      "auroc_mean": 0.5,
+      "auroc_std": 0.0
+    }
+  },
+  "downstream_knn": {
+    "GraphSAGE": {
+      "micro_f1_mean": 0.2598,
+      "micro_f1_std": 0.0747
+    },
+    "GAT": {
+      "micro_f1_mean": 0.1844,
+      "micro_f1_std": 0.0314
+    },
+    "GIN": {
+      "micro_f1_mean": 0.2522,
+      "micro_f1_std": 0.0043
+    }
+  },
+  "spearman_rho_auroc_gf": 1.0,
+  "unified_interval": [
+    0.05,
+    0.422
+  ]
+}
