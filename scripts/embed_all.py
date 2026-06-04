@@ -14,7 +14,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from utils import (
-    SEED, get_data_dir, get_embeddings_dir, load_curated_network,
+    SEED, TARGET_STD, get_data_dir, get_embeddings_dir, load_curated_network,
     compute_centrality_features, rescale_coordinates, save_embedding,
     build_similarity_matrix, diffusion_map_from_similarity,
     classical_mds_from_distances, spectral_embedding_from_graph,
@@ -29,7 +29,7 @@ def embed_diffusion_map(G, nodes):
     features = compute_centrality_features(G, nodes)
     sim = build_similarity_matrix(features)
     coords = diffusion_map_from_similarity(sim)
-    return rescale_coordinates(coords, target_std=0.3)
+    return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
 def embed_mds(G, nodes):
@@ -44,13 +44,13 @@ def embed_mds(G, nodes):
                 D[i, j] = d
                 D[j, i] = d
     coords = classical_mds_from_distances(D)
-    return rescale_coordinates(coords, target_std=0.3)
+    return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
 def embed_spectral(G, nodes):
     """Spectral embedding from normalized Laplacian."""
     coords = spectral_embedding_from_graph(G, nodelist=nodes)
-    return rescale_coordinates(coords, target_std=0.3)
+    return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
 def embed_deepwalk(G, nodes, walk_length=20, walks_per_node=10, window=5):
@@ -58,7 +58,7 @@ def embed_deepwalk(G, nodes, walk_length=20, walks_per_node=10, window=5):
     coords = deepwalk_from_graph(G, walk_length=walk_length,
                                   walks_per_node=walks_per_node,
                                   window_size=window, seed=SEED)
-    return rescale_coordinates(coords, target_std=0.3)
+    return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
 def embed_node2vec(G, nodes, walk_length=20, walks_per_node=10, window=5, p=0.5, q=2.0):
@@ -66,14 +66,14 @@ def embed_node2vec(G, nodes, walk_length=20, walks_per_node=10, window=5, p=0.5,
     coords = node2vec_from_graph(G, walk_length=walk_length,
                                   walks_per_node=walks_per_node,
                                   window_size=window, p=p, q=q, seed=SEED)
-    return rescale_coordinates(coords, target_std=0.3)
+    return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
 def embed_vgae(G, nodes, features=None, hidden_dim=4, latent_dim=2, epochs=300, lr=0.01):
     """VGAE: Variational Graph Autoencoder with 2-layer GCN encoder."""
     coords = vgae_from_graph(G, hidden_dim=hidden_dim, latent_dim=latent_dim,
                               epochs=epochs, lr=lr, features=features, seed=SEED)
-    return rescale_coordinates(coords, target_std=0.3)
+    return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
 def embed_pca(G, nodes):
@@ -83,7 +83,7 @@ def embed_pca(G, nodes):
     cov = features_centered.T @ features_centered / (len(nodes) - 1)
     eigvals, eigvecs = np.linalg.eigh(cov)
     coords = features_centered @ eigvecs[:, -2:]
-    return rescale_coordinates(coords, target_std=0.3)
+    return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
 def main():

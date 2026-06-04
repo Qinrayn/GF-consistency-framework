@@ -12,82 +12,127 @@
   },
   "step_times_153": {
     "step_1_data_preprocessing": {
-      "time_s": 0.0091,
+      "time_s": 0.0087,
       "time_std_s": 0.0,
       "complexity": "O(V+E)"
     },
     "step_2_embeddings": {
       "DM": {
-        "time_s": 0.0526,
+        "time_s": 0.066,
         "time_std_s": 0.0,
         "complexity": "O(n^3)"
       },
       "MDS": {
-        "time_s": 0.0413,
+        "time_s": 0.0288,
         "time_std_s": 0.0,
         "complexity": "O(n^3)"
       },
       "Spectral": {
-        "time_s": 0.0081,
+        "time_s": 0.0077,
         "time_std_s": 0.0,
         "complexity": "O(n^3)"
       },
       "DeepWalk": {
-        "time_s": 0.3318,
+        "time_s": 0.3177,
         "time_std_s": 0.0,
         "complexity": "O(n*w*l)"
       },
       "Node2Vec": {
-        "time_s": 0.7391,
+        "time_s": 0.7132,
         "time_std_s": 0.0,
         "complexity": "O(n*w*l)"
       },
       "VGAE": {
-        "time_s": 5.0728,
+        "time_s": 4.1306,
         "time_std_s": 0.0,
         "complexity": "O(E*epochs)"
       },
       "VGAE-feat": {
-        "time_s": 1.1587,
+        "time_s": 1.1401,
         "time_std_s": 0.0,
         "complexity": "O(E*epochs)"
       },
       "PCA": {
-        "time_s": 0.0316,
+        "time_s": 0.0286,
         "time_std_s": 0.0,
         "complexity": "O(n*d^2)"
       },
-      "_total_s": 7.436
+      "_total_s": 6.4327
     },
     "step_3_gf_curves": {
       "per_method": {
         "DM": {
-          "time_s": 16.9421,
+          "time_s": 15.2525,
           "time_std_s": 0.0
         },
         "MDS": {
-          "time_s": 18.2335,
+          "time_s": 16.7127,
           "time_std_s": 0.0
         },
         "Spectral": {
-          "time_s": 26.8845,
+          "time_s": 25.7519,
           "time_std_s": 0.0
         },
         "DeepWalk": {
-          "time_s": 24.2636,
+          "time_s": 22.4693,
           "time_std_s": 0.0
         },
         "Node2Vec": {
-          "time_s": 24.363,
+          "time_s": 22.2784,
           "time_std_s": 0.0
         },
         "VGAE": {
-          "time_s": 26.1116,
+          "time_s": 23.9692,
           "time_std_s": 0.0
         }
       },
-      "time_s": 136.7983,
+      "time_s": 126.434,
       "complexity": "O(K*n^2*log(n))"
+    },
+    "step_4_leiden_baseline": {
+      "time_s": 0.3625,
+      "time_std_s": 0.0,
+      "complexity": "O(n*log(n))"
+    },
+    "step_5_subset_robustness": {
+      "time_s": 486.5686,
+      "time_std_s": 0.0,
+      "complexity": "O(S*(n^3 + K*n^2*log(n)))"
+    },
+    "step_7_geometric_analysis": {
+      "time_s": 0.0451,
+      "time_std_s": 0.0,
+      "complexity": "O(n^2)"
+    },
+    "step_8_link_prediction": {
+      "time_s": 0.1952,
+      "time_std_s": 0.0,
+      "complexity": "O(F*(n+E))"
+    },
+    "step_9_downstream_knn": {
+      "time_s": 0.1975,
+      "time_std_s": 0.0,
+      "complexity": "O(F*n*log(n))"
+    },
+    "step_10_randomization_control": {
+      "time_s": 200.1463,
+      "time_std_s": 0.0,
+      "complexity": "O(S*K*n^2*log(n))"
+    },
+    "step_11_sampling_density": {
+      "time_s": 147.0195,
+      "time_std_s": 0.0,
+      "complexity": "O(K_30*n^2*log(n) + K_200*n^2*log(n))"
+    },
+    "step_12_sensitivity_analysis": {
+      "time_s": 0.0076,
+      "time_std_s": 0.0,
+      "complexity": "O(K)"
+    },
+    "step_14_figure_generation": {
+      "time_s": 2.401,
+      "time_std_s": 0.0,
+      "complexity": "O(n_steps)"
     }
   },
   "theoretical_complexity": {
@@ -115,56 +160,56 @@
       200
     ],
     "times_s": [
-      4.1567,
-      8.3203,
-      16.7328
+      3.8528,
+      7.8703,
+      15.6329
     ],
     "time_per_point_ms": [
-      83.1346,
-      83.2031,
-      83.6641
+      77.0553,
+      78.7033,
+      78.1646
     ]
   },
-  "total_pipeline_time_s": 237.481,
+  "total_pipeline_time_s": 1057.804,
   "method_step_table": {
     "DM": {
       "embedding_complexity": "O(n^3)",
-      "embedding_time_s": 0.0526,
-      "gf_curve_time_s": 16.9421
+      "embedding_time_s": 0.066,
+      "gf_curve_time_s": 15.2525
     },
     "MDS": {
       "embedding_complexity": "O(n^3)",
-      "embedding_time_s": 0.0413,
-      "gf_curve_time_s": 18.2335
+      "embedding_time_s": 0.0288,
+      "gf_curve_time_s": 16.7127
     },
     "Spectral": {
       "embedding_complexity": "O(n^3)",
-      "embedding_time_s": 0.0081,
-      "gf_curve_time_s": 26.8845
+      "embedding_time_s": 0.0077,
+      "gf_curve_time_s": 25.7519
     },
     "DeepWalk": {
       "embedding_complexity": "O(n*w*l)",
-      "embedding_time_s": 0.3318,
-      "gf_curve_time_s": 24.2636
+      "embedding_time_s": 0.3177,
+      "gf_curve_time_s": 22.4693
     },
     "Node2Vec": {
       "embedding_complexity": "O(n*w*l)",
-      "embedding_time_s": 0.7391,
-      "gf_curve_time_s": 24.363
+      "embedding_time_s": 0.7132,
+      "gf_curve_time_s": 22.2784
     },
     "VGAE": {
       "embedding_complexity": "O(E*epochs)",
-      "embedding_time_s": 5.0728,
-      "gf_curve_time_s": 26.1116
+      "embedding_time_s": 4.1306,
+      "gf_curve_time_s": 23.9692
     },
     "VGAE-feat": {
       "embedding_complexity": "O(E*epochs)",
-      "embedding_time_s": 1.1587,
+      "embedding_time_s": 1.1401,
       "gf_curve_time_s": null
     },
     "PCA": {
       "embedding_complexity": "O(n*d^2)",
-      "embedding_time_s": 0.0316,
+      "embedding_time_s": 0.0286,
       "gf_curve_time_s": null
     }
   }

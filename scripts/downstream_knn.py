@@ -14,11 +14,11 @@ from pathlib import Path
 from collections import Counter
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from utils import SEED, get_data_dir, get_results_dir, get_embeddings_dir, load_curated_network, load_embedding
-
-MIN_LABEL_COUNT = 3
-K_NEIGHBORS = 5
-CV_FOLDS = 5
+from utils import (
+    SEED, CLASSICAL_METHODS, MIN_LABEL_COUNT, K_NEIGHBORS, CV_FOLDS,
+    get_data_dir, get_results_dir, get_embeddings_dir,
+    load_curated_network, load_embedding,
+)
 
 
 def main():
@@ -55,7 +55,7 @@ def main():
     y = le.fit_transform(y_raw)
     
     results = {}
-    methods = ["DM", "MDS", "Spectral", "DeepWalk", "Node2Vec", "VGAE"]
+    methods = CLASSICAL_METHODS
     
     for method in methods:
         print(f"\nEvaluating {method}...")

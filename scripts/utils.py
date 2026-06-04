@@ -1,41 +1,98 @@
 #!/usr/bin/env python3
-# ============================================================
-# G-F Consistency Framework - Utility Functions
-# ============================================================
-# Shared utilities for data loading, embedding, G-F curve
-# computation, and I/O.  All scripts in ``scripts/`` and
-# ``human_validation/`` import from this module.
-# ============================================================
+"""
+G-F Consistency Framework — Core Utilities
+==========================================
+Shared constants, data I/O, spatial graph construction, functional purity,
+G-F curve/score computation, centrality features, coordinate rescaling,
+and reusable embedding primitives.
+
+All pipeline scripts import from this module.
+"""
+
+from __future__ import annotations
 
 import json
 import gzip
 import random
 import logging
+from typing import Optional
+
 import numpy as np
 import networkx as nx
 from collections import Counter
 from pathlib import Path
+from scipy.spatial.distance import pdist, squareform
+from scipy.integrate import trapezoid
+from networkx.algorithms.community import greedy_modularity_communities, modularity
 
-SEED = 42
+# ============================================================
+# Project-wide Constants
+# ============================================================
 
-def get_project_root():
+SEED: int = 42
+
+# Integration interval for G-F Score (paper default)
+GF_R_MIN: float = 0.05
+GF_R_MAX: float = 0.422
+
+# Sampling grid for G-F curves
+R_MIN: float = 0.05
+R_MAX: float = 0.55
+N_POINTS: int = 200
+
+# Embedding standardisation target
+TARGET_STD: float = 0.3
+
+# Standardised method lists (single source of truth)
+CLASSICAL_METHODS: list[str] = [
+    "DM", "MDS", "Spectral", "DeepWalk", "Node2Vec", "VGAE",
+]
+ALL_CURATED_METHODS: list[str] = [
+    "DM", "MDS", "Spectral", "DeepWalk", "Node2Vec", "VGAE", "PCA", "VGAE-feat",
+]
+GNN_METHODS: list[str] = ["GraphSAGE", "GAT", "GIN"]
+ALL_METHODS: list[str] = ALL_CURATED_METHODS + GNN_METHODS
+
+# Evaluation constants
+CV_FOLDS: int = 5
+K_NEIGHBORS: int = 5
+MIN_LABEL_COUNT: int = 3
+STRING_MIN_SCORE: int = 700
+
+# Plateau detection
+PLATEAU_PURITY_THRESHOLD: float = 0.5
+
+# ============================================================
+# Directory Helpers
+# ============================================================
+
+def get_project_root() -> Path:
     return Path(__file__).resolve().parent.parent
 
-def get_data_dir():
+def get_data_dir() -> Path:
     return get_project_root() / "data"
 
-def get_results_dir():
+def get_results_dir() -> Path:
     return get_project_root() / "results"
 
-def get_figures_dir():
+def get_figures_dir() -> Path:
     return get_project_root() / "figures"
 
-def get_embeddings_dir():
+def get_embeddings_dir() -> Path:
     return get_project_root() / "embeddings"
 
-# ---- Data Loading ----
+# ============================================================
+# Data Loading
+# ============================================================
 
-def load_curated_network(data_dir=None):
+def load_curated_network(data_dir: Optional[Path] = None):
+    """Load the curated 153-node yeast PPI network with GO annotations.
+
+    Returns
+    -------
+    tuple of (nx.Graph, list[str], dict)
+        ``(graph, sorted_nodes, gene_go_map)``
+    """
     if data_dir is None:
         data_dir = get_data_dir()
     data_dir = Path(data_dir)
@@ -44,13 +101,13 @@ def load_curated_network(data_dir=None):
     edgelist_file = data_dir / "curated_153_ppi.edgelist"
     if not edgelist_file.exists():
         edgelist_file = data_dir / "yeast_ppi_final_clean.edgelist"
-    with open(edgelist_file, "r") as f:
+    with open(edgelist_file, "r", encoding="utf-8") as f:
         for line in f:
             parts = line.strip().split("\t")
             if len(parts) >= 2:
                 G.add_edge(parts[0], parts[1])
 
-    with open(data_dir / "gene_go_map.json") as f:
+    with open(data_dir / "gene_go_map.json", encoding="utf-8") as f:
         go_map = json.load(f)
 
     valid = sorted(set(G.nodes()) & set(go_map.keys()))
@@ -59,7 +116,9 @@ def load_curated_network(data_dir=None):
     return G, nodes, go_map
 
 
-def load_full_STRING_network(data_dir=None, min_score=700):
+def load_full_STRING_network(data_dir: Optional[Path] = None,
+                             min_score: int = STRING_MIN_SCORE) -> nx.Graph:
+    """Load the full yeast STRING v11.5 network (score >= *min_score*)."""
     if data_dir is None:
         data_dir = get_data_dir()
     data_dir = Path(data_dir)
@@ -68,16 +127,16 @@ def load_full_STRING_network(data_dir=None, min_score=700):
         raise FileNotFoundError(f"STRING file not found: {string_file}")
 
     G = nx.Graph()
-    with gzip.open(str(string_file), 'rt', encoding='utf-8') as f:
-        header = f.readline()
+    with gzip.open(str(string_file), "rt", encoding="utf-8") as f:
+        f.readline()  # skip header
         for line in f:
             parts = line.strip().split()
             if len(parts) != 3:
                 continue
             p1, p2, score = parts
             if int(score) >= min_score:
-                p1_clean = p1.split('.')[1]
-                p2_clean = p2.split('.')[1]
+                p1_clean = p1.split(".")[1]
+                p2_clean = p2.split(".")[1]
                 G.add_edge(p1_clean, p2_clean)
 
     if G.number_of_nodes() > 0:
@@ -86,7 +145,13 @@ def load_full_STRING_network(data_dir=None, min_score=700):
     return G
 
 
-def load_embedding(method, subset="153", embeddings_dir=None):
+# ============================================================
+# Embedding I/O
+# ============================================================
+
+def load_embedding(method: str, subset: str = "153",
+                   embeddings_dir: Optional[Path] = None):
+    """Load a pre-computed embedding (.npy + _nodes.json)."""
     if embeddings_dir is None:
         embeddings_dir = get_embeddings_dir()
     embeddings_dir = Path(embeddings_dir)
@@ -97,7 +162,7 @@ def load_embedding(method, subset="153", embeddings_dir=None):
     if npy_file.exists():
         coords = np.load(npy_file)
         if nodes_file.exists():
-            with open(nodes_file) as f:
+            with open(nodes_file, encoding="utf-8") as f:
                 nodes = json.load(f)
         else:
             nodes = [str(i) for i in range(len(coords))]
@@ -107,7 +172,7 @@ def load_embedding(method, subset="153", embeddings_dir=None):
     data_dir = get_data_dir()
     json_file = data_dir / f"embeddings_{method.lower()}.json"
     if json_file.exists():
-        with open(json_file) as f:
+        with open(json_file, encoding="utf-8") as f:
             pos = json.load(f)
         nodes = sorted(pos.keys())
         coords = np.array([pos[n] for n in nodes])
@@ -116,7 +181,10 @@ def load_embedding(method, subset="153", embeddings_dir=None):
     raise FileNotFoundError(f"No embedding found for {method}_{subset}")
 
 
-def save_embedding(coords, nodes, method, subset="153", embeddings_dir=None):
+def save_embedding(coords: np.ndarray, nodes: list, method: str,
+                   subset: str = "153",
+                   embeddings_dir: Optional[Path] = None) -> None:
+    """Save embedding coordinates and node labels."""
     if embeddings_dir is None:
         embeddings_dir = get_embeddings_dir()
     embeddings_dir = Path(embeddings_dir)
@@ -125,71 +193,120 @@ def save_embedding(coords, nodes, method, subset="153", embeddings_dir=None):
     with open(embeddings_dir / f"{method}_{subset}_nodes.json", "w") as f:
         json.dump(nodes, f)
 
-# ---- Spatial Graph Construction ----
 
-def precompute_distance_matrix(coords):
-    diff = coords[:, None, :] - coords[None, :, :]
-    return np.sqrt((diff ** 2).sum(axis=2))
+# ============================================================
+# Node Alignment
+# ============================================================
+
+def align_embedding_to_nodes(coords: np.ndarray, emb_nodes: list,
+                             target_nodes: list) -> tuple[np.ndarray, list]:
+    """Align embedding coordinates to a target node list.
+
+    Returns the subset of coordinates matching *target_nodes* and the
+    list of common nodes actually used.
+    """
+    node_to_idx = {n: i for i, n in enumerate(emb_nodes)}
+    common = [n for n in target_nodes if n in node_to_idx]
+    indices = [node_to_idx[n] for n in common]
+    return coords[indices], common
 
 
-def build_spatial_graph_fast(dist_matrix, r):
+# ============================================================
+# Spatial Graph Construction (Optimised)
+# ============================================================
+
+def precompute_distance_matrix(coords: np.ndarray) -> np.ndarray:
+    """Compute pairwise Euclidean distance matrix using scipy pdist.
+
+    Uses only the upper triangle (O(n^2/2) memory) and symmetrises.
+    """
+    n = coords.shape[0]
+    if n < 2:
+        return np.zeros((n, n))
+    return squareform(pdist(coords, metric="euclidean"))
+
+
+def build_spatial_graph_fast(dist_matrix: np.ndarray, r: float) -> nx.Graph:
+    """Build a spatial graph: edge (i, j) iff 0 < D[i,j] < r."""
     n = dist_matrix.shape[0]
     G_r = nx.Graph()
     G_r.add_nodes_from(range(n))
     mask = (dist_matrix < r) & (dist_matrix > 0)
     rows, cols = np.where(mask)
-    for i, j in zip(rows, cols):
-        if i < j:
-            G_r.add_edge(i, j)
+    # Only add upper-triangle edges to avoid duplicates
+    valid = rows < cols
+    edges = list(zip(rows[valid].tolist(), cols[valid].tolist()))
+    G_r.add_edges_from(edges)
     return G_r
 
-# ---- Functional Purity ----
 
-def functional_purity(communities, go_map, nodes):
+# ============================================================
+# Functional Purity (FIXED: denominator = total GO terms)
+# ============================================================
+
+def _community_purity(comm_node_names: list, go_map: dict) -> float:
+    """Compute functional purity for a single community.
+
+    Purity = (count of most-common GO term) / (total GO terms in community).
+    Returns 0.0 if no GO annotations are found.
+    Guarantees purity in [0, 1].
+    """
+    go_terms: list[str] = []
+    for node_name in comm_node_names:
+        if node_name in go_map:
+            go_terms.extend(go_map[node_name])
+    if not go_terms:
+        return 0.0
+    term_counts = Counter(go_terms)
+    most_common_count = term_counts.most_common(1)[0][1]
+    total_terms = len(go_terms)
+    return most_common_count / total_terms
+
+
+def functional_purity(communities, go_map: dict, nodes: list) -> float:
+    """Mean functional purity across all communities (index-based nodes)."""
     purities = []
     for comm in communities:
         if not comm:
             continue
         comm_list = list(comm)
-        go_terms = []
-        for idx in comm_list:
-            node_name = nodes[idx]
-            if node_name in go_map:
-                go_terms.extend(go_map[node_name])
-        if not go_terms:
-            purities.append(0.0)
-            continue
-        term_counts = Counter(go_terms)
-        most_common_count = term_counts.most_common(1)[0][1]
-        purities.append(most_common_count / len(comm_list))
+        comm_names = [nodes[idx] for idx in comm_list]
+        purities.append(_community_purity(comm_names, go_map))
     return float(np.mean(purities)) if purities else 0.0
 
 
-def functional_purity_named(communities, go_map):
+def functional_purity_named(communities, go_map: dict) -> float:
+    """Mean functional purity across all communities (named nodes)."""
     purities = []
     for comm in communities:
         if not comm:
             continue
-        comm_list = list(comm)
-        go_terms = []
-        for node_name in comm_list:
-            if node_name in go_map:
-                go_terms.extend(go_map[node_name])
-        if not go_terms:
-            purities.append(0.0)
-            continue
-        term_counts = Counter(go_terms)
-        most_common_count = term_counts.most_common(1)[0][1]
-        purities.append(most_common_count / len(comm_list))
+        purities.append(_community_purity(list(comm), go_map))
     return float(np.mean(purities)) if purities else 0.0
 
-# ---- G-F Curve Computation ----
 
-def compute_gf_curve(coords, nodes, go_map, r_vals):
-    from networkx.algorithms.community import greedy_modularity_communities, modularity
+# ============================================================
+# G-F Curve Computation
+# ============================================================
+
+def compute_gf_curve(coords: np.ndarray, nodes: list, go_map: dict,
+                     r_vals: np.ndarray) -> tuple[list[float], list[float]]:
+    """Compute the G-F purity and modularity curves.
+
+    Parameters
+    ----------
+    coords : (n, d) embedding coordinates
+    nodes : ordered node labels
+    go_map : gene -> [GO terms]
+    r_vals : distance thresholds to evaluate
+
+    Returns
+    -------
+    (purities, modularities) — two parallel lists of floats
+    """
     dist_matrix = precompute_distance_matrix(coords)
-    purities = []
-    modularities = []
+    purities: list[float] = []
+    modularities: list[float] = []
     for r in r_vals:
         G_r = build_spatial_graph_fast(dist_matrix, r)
         if G_r.number_of_edges() == 0:
@@ -204,10 +321,18 @@ def compute_gf_curve(coords, nodes, go_map, r_vals):
             modularities.append(0.0)
     return purities, modularities
 
-# ---- G-F Score ----
 
-def compute_gf_score(r_vals, purity_vals, r_min=0.05, r_max=0.422):
-    from scipy.integrate import trapezoid
+# ============================================================
+# G-F Score
+# ============================================================
+
+def compute_gf_score(r_vals, purity_vals,
+                     r_min: float = GF_R_MIN,
+                     r_max: float = GF_R_MAX) -> float:
+    """Compute the G-F Score as the mean purity over [r_min, r_max].
+
+    Uses the trapezoidal rule for numerical integration.
+    """
     r = np.asarray(r_vals)
     p = np.asarray(purity_vals)
     mask = (r >= r_min) & (r <= r_max)
@@ -215,11 +340,20 @@ def compute_gf_score(r_vals, purity_vals, r_min=0.05, r_max=0.422):
     p_sub = p[mask]
     if len(r_sub) < 2:
         return 0.0
-    return trapezoid(p_sub, r_sub) / (r_max - r_min)
+    return float(trapezoid(p_sub, r_sub) / (r_max - r_min))
 
-# ---- Centrality Features ----
 
-def compute_centrality_features(G, nodes=None):
+# ============================================================
+# Centrality Features
+# ============================================================
+
+def compute_centrality_features(G: nx.Graph,
+                                nodes: Optional[list] = None) -> np.ndarray:
+    """Compute 6 normalised centrality features for each node.
+
+    Features: degree, eigenvector, PageRank, clustering,
+    average neighbour degree, core number.
+    """
     if nodes is None:
         nodes = list(G.nodes())
     n = len(nodes)
@@ -244,20 +378,71 @@ def compute_centrality_features(G, nodes=None):
     features = features / norms
     return features
 
-# ---- Coordinate Rescaling ----
 
-def rescale_coordinates(coords, target_std=0.3):
+# ============================================================
+# Coordinate Rescaling
+# ============================================================
+
+def rescale_coordinates(coords: np.ndarray,
+                        target_std: float = TARGET_STD) -> np.ndarray:
+    """Rescale embedding coordinates to a target global standard deviation.
+
+    Note: this is NOT z-score standardisation (mean is not centred).
+    It only adjusts the scale so that all methods operate on a comparable
+    distance regime.
+    """
     current_std = np.std(coords)
     if current_std < 1e-10:
         return coords
     return coords / current_std * target_std
 
-def coords_to_dict(coords, nodes):
+
+def check_embedding_collapse(coords: np.ndarray,
+                             method_name: str = "") -> dict:
+    """Detect collapsed embeddings via pairwise distance statistics.
+
+    Returns a diagnostic dict with ``collapsed`` (bool) and details.
+    """
+    dists = pdist(coords)
+    if len(dists) == 0:
+        return {"collapsed": True, "method": method_name,
+                "reason": "empty or single-point embedding"}
+
+    median_d = float(np.median(dists))
+    mean_d = float(np.mean(dists))
+    std_d = float(np.std(dists))
+    cv = std_d / mean_d if mean_d > 1e-10 else 0.0
+
+    collapsed = False
+    reasons: list[str] = []
+    if median_d < 1e-6:
+        collapsed = True
+        reasons.append(f"median distance {median_d:.2e} ≈ 0 (point collapse)")
+    if cv < 0.01 and len(dists) > 10:
+        collapsed = True
+        reasons.append(f"distance CV = {cv:.4f} < 0.01 (all equidistant)")
+
+    return {
+        "collapsed": collapsed,
+        "method": method_name,
+        "median_dist": median_d,
+        "mean_dist": mean_d,
+        "cv": cv,
+        "reasons": reasons,
+    }
+
+
+def coords_to_dict(coords: np.ndarray, nodes: list) -> dict:
     return {nodes[i]: coords[i].tolist() for i in range(len(nodes))}
 
-# ---- Plateau Width ----
 
-def compute_plateau_width(r_vals, purity_vals, threshold=0.5):
+# ============================================================
+# Plateau Width
+# ============================================================
+
+def compute_plateau_width(r_vals, purity_vals,
+                          threshold: float = PLATEAU_PURITY_THRESHOLD) -> float:
+    """Width of the r-interval where purity >= threshold."""
     r = np.asarray(r_vals)
     p = np.asarray(purity_vals)
     mask = p >= threshold
@@ -267,9 +452,11 @@ def compute_plateau_width(r_vals, purity_vals, threshold=0.5):
     return float(r_plateau[-1] - r_plateau[0])
 
 
-# ---- Logging ----
+# ============================================================
+# Logging
+# ============================================================
 
-def setup_logging(name, level=logging.INFO):
+def setup_logging(name: str, level: int = logging.INFO) -> logging.Logger:
     """Return a configured logger with consistent format."""
     logger = logging.getLogger(name)
     if not logger.handlers:
@@ -283,17 +470,16 @@ def setup_logging(name, level=logging.INFO):
     return logger
 
 
-# ---- Reusable Embedding Functions ----
-# These wrap the per-method logic so that ``embed_all.py``,
-# ``full_network.py``, ``robustness.py`` and ``human_embed_all.py``
-# can share a single implementation.
+# ============================================================
+# Reusable Embedding Primitives
+# ============================================================
 
-def build_similarity_matrix(features):
+def build_similarity_matrix(features: np.ndarray) -> np.ndarray:
     """Inner-product similarity from normalised feature matrix."""
     return features @ features.T
 
 
-def diffusion_map_from_similarity(sim):
+def diffusion_map_from_similarity(sim: np.ndarray) -> np.ndarray:
     """Diffusion Map coordinates (2-D) from a similarity matrix."""
     row_sums = sim.sum(axis=1, keepdims=True)
     D_inv_sqrt = np.diag(1.0 / (np.sqrt(row_sums.flatten()) + 1e-10))
@@ -304,7 +490,7 @@ def diffusion_map_from_similarity(sim):
     return coords
 
 
-def classical_mds_from_distances(D):
+def classical_mds_from_distances(D: np.ndarray) -> np.ndarray:
     """Classical MDS (2-D) from a square distance matrix."""
     n = D.shape[0]
     D_sq = D ** 2
@@ -316,15 +502,17 @@ def classical_mds_from_distances(D):
     return coords
 
 
-def spectral_embedding_from_graph(G, nodelist=None):
+def spectral_embedding_from_graph(G: nx.Graph,
+                                 nodelist=None) -> np.ndarray:
     """Spectral embedding (2-D) from normalised Laplacian."""
     L = nx.normalized_laplacian_matrix(G, nodelist=nodelist).toarray()
     eigvals, eigvecs = np.linalg.eigh(L)
     return eigvecs[:, 1:3]
 
 
-def deepwalk_from_graph(G, walk_length=20, walks_per_node=10,
-                         window_size=5, dimensions=2, seed=SEED):
+def deepwalk_from_graph(G: nx.Graph, walk_length: int = 20,
+                        walks_per_node: int = 10, window_size: int = 5,
+                        dimensions: int = 2, seed: int = SEED) -> np.ndarray:
     """DeepWalk embedding via uniform random walks + SVD."""
     random.seed(seed)
     np.random.seed(seed)
@@ -351,13 +539,11 @@ def deepwalk_from_graph(G, walk_length=20, walks_per_node=10,
             if len(walk) >= 2:
                 walks.append(walk)
 
-    # Build co-occurrence representation
     if n > 1000:
-        # Sparse representation for large graphs — avoids n×n dense matrix
         from scipy.sparse import csr_matrix
         from scipy.sparse.linalg import svds
 
-        cooc_dict = {}
+        cooc_dict: dict[tuple[int, int], float] = {}
         for walk in walks:
             for i, ni in enumerate(walk):
                 for j in range(max(0, i - window_size),
@@ -371,12 +557,9 @@ def deepwalk_from_graph(G, walk_length=20, walks_per_node=10,
             rows.append(i)
             cols.append(j)
             vals.append(float(val))
-        cooc_sparse = csr_matrix(
-            (vals, (rows, cols)), shape=(n, n)
-        )
+        cooc_sparse = csr_matrix((vals, (rows, cols)), shape=(n, n))
         k = min(dimensions + 1, n - 1)
         U, S, _ = svds(cooc_sparse.astype(np.float64), k=k)
-        # svds returns singular values in ascending order; reverse
         idx = np.argsort(-S)
         U = U[:, idx]
         S = S[idx]
@@ -389,14 +572,14 @@ def deepwalk_from_graph(G, walk_length=20, walks_per_node=10,
                                min(len(walk), i + window_size + 1)):
                     if i != j:
                         cooc[ni, walk[j]] += 1
-
         U, S, _ = np.linalg.svd(cooc, full_matrices=False)
         return U[:, :dimensions] * np.sqrt(S[:dimensions])
 
 
-def node2vec_from_graph(G, walk_length=20, walks_per_node=10,
-                        window_size=5, dimensions=2, p=0.5, q=2.0,
-                        seed=SEED):
+def node2vec_from_graph(G: nx.Graph, walk_length: int = 20,
+                        walks_per_node: int = 10, window_size: int = 5,
+                        dimensions: int = 2, p: float = 0.5, q: float = 2.0,
+                        seed: int = SEED) -> np.ndarray:
     """Node2Vec embedding via biased random walks + SVD."""
     random.seed(seed)
     np.random.seed(seed)
@@ -440,13 +623,11 @@ def node2vec_from_graph(G, walk_length=20, walks_per_node=10,
             if len(walk) >= 2:
                 walks.append(walk)
 
-    # Build co-occurrence representation
     if n > 1000:
-        # Sparse representation for large graphs — avoids n×n dense matrix
         from scipy.sparse import csr_matrix
         from scipy.sparse.linalg import svds
 
-        cooc_dict = {}
+        cooc_dict: dict[tuple[int, int], float] = {}
         for walk in walks:
             for i, ni in enumerate(walk):
                 for j in range(max(0, i - window_size),
@@ -460,12 +641,9 @@ def node2vec_from_graph(G, walk_length=20, walks_per_node=10,
             rows.append(i)
             cols.append(j)
             vals.append(float(val))
-        cooc_sparse = csr_matrix(
-            (vals, (rows, cols)), shape=(n, n)
-        )
+        cooc_sparse = csr_matrix((vals, (rows, cols)), shape=(n, n))
         k = min(dimensions + 1, n - 1)
         U, S, _ = svds(cooc_sparse.astype(np.float64), k=k)
-        # svds returns singular values in ascending order; reverse
         idx = np.argsort(-S)
         U = U[:, idx]
         S = S[idx]
@@ -478,13 +656,14 @@ def node2vec_from_graph(G, walk_length=20, walks_per_node=10,
                                min(len(walk), i + window_size + 1)):
                     if i != j:
                         cooc_matrix[ni, walk[j]] += 1
-
         U, S, _ = np.linalg.svd(cooc_matrix, full_matrices=False)
         return U[:, :dimensions] * np.sqrt(S[:dimensions])
 
 
-def vgae_from_graph(G, hidden_dim=4, latent_dim=2, epochs=300,
-                    lr=0.01, features=None, seed=SEED):
+def vgae_from_graph(G: nx.Graph, hidden_dim: int = 4, latent_dim: int = 2,
+                    epochs: int = 300, lr: float = 0.01,
+                    features: Optional[np.ndarray] = None,
+                    seed: int = SEED) -> np.ndarray:
     """VGAE embedding (2-D latent) with 2-layer GCN encoder."""
     import torch
     import torch.nn as nn
@@ -520,19 +699,18 @@ def vgae_from_graph(G, hidden_dim=4, latent_dim=2, epochs=300,
     model = Encoder(in_dim, hidden_dim, latent_dim)
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
 
-    # Precompute adjacency target once (avoids redundant work per epoch)
     adj_target = torch.zeros(n, n)
     ei = data.edge_index
     adj_target[ei[0], ei[1]] = 1.0
 
-    for epoch in range(epochs):
+    for _ in range(epochs):
         optimizer.zero_grad()
         mu, logvar = model(data.x, data.edge_index)
         std = torch.exp(0.5 * logvar)
         eps = torch.randn_like(std)
         z = mu + eps * std
         adj_recon = torch.sigmoid(z @ z.T)
-        recon_loss = F.binary_cross_entropy(adj_recon, adj_target, reduction='sum')
+        recon_loss = F.binary_cross_entropy(adj_recon, adj_target, reduction="sum")
         kl_loss = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
         loss = recon_loss + kl_loss
         loss.backward()
@@ -543,8 +721,3 @@ def vgae_from_graph(G, hidden_dim=4, latent_dim=2, epochs=300,
         mu, _ = model(data.x, data.edge_index)
         coords = mu.numpy()
     return coords
-
-
-def standardize_coordinates(coords, target_std=0.3):
-    """Alias for :func:`rescale_coordinates`."""
-    return rescale_coordinates(coords, target_std=target_std)

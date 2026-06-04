@@ -308,6 +308,10 @@ def plot_figure6_human(results_dir, figures_dir):
     with open(human_file) as f:
         data = json.load(f)
 
+    if "r" not in data:
+        print("Figure 6: Human validation data missing 'r' key, skipping")
+        return
+
     r = np.array(data["r"])
 
     fig, ax = plt.subplots(figsize=(8, 5))

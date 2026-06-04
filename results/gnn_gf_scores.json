@@ -5,13 +5,13 @@
     "GIN"
   ],
   "gf_scores": {
-    "GraphSAGE": 0.3468,
-    "GAT": 0.2832,
-    "GIN": 0.0
+    "GraphSAGE": 0.069,
+    "GAT": 0.0694,
+    "GIN": 0.1217
   },
   "plateau_widths": {
     "GraphSAGE": {
-      "W": 0.0653
+      "W": 0.0
     },
     "GAT": {
       "W": 0.0
@@ -22,33 +22,33 @@
   },
   "link_prediction": {
     "GraphSAGE": {
-      "auroc_mean": 0.684,
-      "auroc_std": 0.0163
+      "auroc_mean": 0.6415,
+      "auroc_std": 0.0259
     },
     "GAT": {
-      "auroc_mean": 0.5223,
-      "auroc_std": 0.015
+      "auroc_mean": 0.5911,
+      "auroc_std": 0.0207
     },
     "GIN": {
-      "auroc_mean": 0.5,
-      "auroc_std": 0.0
+      "auroc_mean": 0.4884,
+      "auroc_std": 0.0236
     }
   },
   "downstream_knn": {
     "GraphSAGE": {
-      "micro_f1_mean": 0.2598,
-      "micro_f1_std": 0.0747
+      "micro_f1_mean": 0.1851,
+      "micro_f1_std": 0.051
     },
     "GAT": {
-      "micro_f1_mean": 0.1844,
-      "micro_f1_std": 0.0314
+      "micro_f1_mean": 0.1594,
+      "micro_f1_std": 0.0301
     },
     "GIN": {
-      "micro_f1_mean": 0.2522,
-      "micro_f1_std": 0.0043
+      "micro_f1_mean": 0.2033,
+      "micro_f1_std": 0.099
     }
   },
-  "spearman_rho_auroc_gf": 1.0,
+  "spearman_rho_auroc_gf": -1.0,
   "unified_interval": [
     0.05,
     0.422
