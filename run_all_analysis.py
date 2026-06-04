@@ -226,10 +226,16 @@ def main():
     if args.start_from <= 3:
         print_header("Step 3: Computing G-F Curves (200-point grid)")
         from scripts.compute_gf import main as gf_main
-        if run_step(gf_main, "G-F curve computation"):
-            completed += 1
-        else:
-            failed += 1
+        # Guard against sys.argv contamination from the master script's flags
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(gf_main, "G-F curve computation"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
 
     # Step 4: Leiden baseline
     if args.start_from <= 4:
@@ -242,12 +248,18 @@ def main():
 
     # Step 5: Robustness analysis
     if args.start_from <= 5:
-        print_header("Step 5: Robustness Analysis (10 random subsets)")
+        print_header("Step 5: Robustness Analysis (30 subsets x 5 sizes)")
         from scripts.robustness import main as robustness_main
-        if run_step(robustness_main, "Robustness analysis"):
-            completed += 1
-        else:
-            failed += 1
+        # Guard against sys.argv contamination from the master script's flags
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(robustness_main, "Robustness analysis"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
 
     # Step 6: Full network validation
     if args.start_from <= 6:
@@ -307,10 +319,16 @@ def main():
     if args.start_from <= 12:
         print_header("Step 12: G-F Score Sensitivity Analysis")
         from scripts.gf_score_sensitivity import main as sensitivity_main
-        if run_step(sensitivity_main, "G-F score sensitivity"):
-            completed += 1
-        else:
-            failed += 1
+        # Guard against sys.argv contamination from the master script's flags
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(sensitivity_main, "G-F score sensitivity"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
 
     # Step 13: Human cross-species validation (RESOURCE-INTENSIVE)
     if args.start_from <= 13:
@@ -329,10 +347,16 @@ def main():
     if args.start_from <= 14 and not args.skip_plots:
         print_header("Step 14: Generating Figures")
         from scripts.plot_figures import main as plot_main
-        if run_step(plot_main, "Figure generation"):
-            completed += 1
-        else:
-            failed += 1
+        # Guard against sys.argv contamination from the master script's flags
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(plot_main, "Figure generation"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
 
     # ---- Extended Analysis Steps (P0/P1/P2) ----
 
@@ -340,19 +364,29 @@ def main():
     if args.start_from <= 15 and not args.skip_gnn:
         print_header("Step 15: GNN Embeddings (GraphSAGE, GAT, GIN)")
         from scripts.embed_gnn import main as gnn_main
-        if run_step(gnn_main, "GNN embedding computation"):
-            completed += 1
-        else:
-            failed += 1
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(gnn_main, "GNN embedding computation"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
 
     # Step 16: Adaptive Unified Interval
     if args.start_from <= 16 and not args.skip_extended:
         print_header("Step 16: Adaptive Unified Interval")
         from scripts.adaptive_interval import main as adaptive_main
-        if run_step(adaptive_main, "Adaptive interval"):
-            completed += 1
-        else:
-            failed += 1
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(adaptive_main, "Adaptive interval"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
 
     # Step 17: Network Topology Analysis
     if args.start_from <= 17 and not args.skip_extended:
@@ -385,19 +419,29 @@ def main():
     if args.start_from <= 19 and not args.skip_extended:
         print_header("Step 19: GO Propagation & Validation Set Expansion")
         from scripts.go_propagation import main as go_prop_main
-        if run_step(go_prop_main, "GO propagation"):
-            completed += 1
-        else:
-            failed += 1
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(go_prop_main, "GO propagation"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
 
     # Step 20: Biological Interpretation
     if args.start_from <= 20 and not args.skip_extended:
         print_header("Step 20: Biological Interpretation")
         from scripts.biological_interpretation import main as bio_main
-        if run_step(bio_main, "Biological interpretation"):
-            completed += 1
-        else:
-            failed += 1
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(bio_main, "Biological interpretation"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
 
     # Step 21: Runtime Benchmark
     if args.start_from <= 21 and not args.skip_extended:
