@@ -1,0 +1,34 @@
+{
+  "description": "Downstream k-NN GO term prediction (5-fold CV)",
+  "n_nodes": 119,
+  "n_categories": 12,
+  "k": 5,
+  "cv_folds": 5,
+  "min_label_count": 3,
+  "results": {
+    "DM": {
+      "micro_f1_mean": 0.5127,
+      "micro_f1_std": 0.0553
+    },
+    "MDS": {
+      "micro_f1_mean": 0.6058,
+      "micro_f1_std": 0.0741
+    },
+    "Spectral": {
+      "micro_f1_mean": 0.6725,
+      "micro_f1_std": 0.0601
+    },
+    "DeepWalk": {
+      "micro_f1_mean": 0.1848,
+      "micro_f1_std": 0.042
+    },
+    "Node2Vec": {
+      "micro_f1_mean": 0.2025,
+      "micro_f1_std": 0.0651
+    },
+    "VGAE": {
+      "micro_f1_mean": 0.1757,
+      "micro_f1_std": 0.1093
+    }
+  }
+}

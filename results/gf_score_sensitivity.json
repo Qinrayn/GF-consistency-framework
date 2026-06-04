@@ -1,0 +1,75 @@
+{
+  "unified_interval": [
+    0.05,
+    0.4193
+  ],
+  "individual_intervals": {
+    "DM": [
+      0.05,
+      0.4193467336683417
+    ],
+    "MDS": [
+      0.05,
+      0.3113065326633166
+    ],
+    "Spectral": [
+      0.05,
+      0.08517587939698493
+    ],
+    "DeepWalk": [
+      0.05,
+      0.3138190954773869
+    ],
+    "Node2Vec": [
+      0.05,
+      0.30628140703517587
+    ],
+    "VGAE": null
+  },
+  "sensitivity_analysis": {
+    "DM_interval": {
+      "interval": [
+        0.05,
+        0.4193
+      ],
+      "scores": {
+        "DM": 0.6269,
+        "MDS": 0.5587,
+        "Spectral": 0.5903,
+        "DeepWalk": 0.4637,
+        "Node2Vec": 0.4165,
+        "VGAE": 0.2483
+      }
+    },
+    "MDS_interval": {
+      "interval": [
+        0.05,
+        0.3113
+      ],
+      "scores": {
+        "DM": 0.6599,
+        "MDS": 0.6458,
+        "Spectral": 0.661,
+        "DeepWalk": 0.5268,
+        "Node2Vec": 0.4714,
+        "VGAE": 0.252
+      }
+    },
+    "Node2Vec_interval": {
+      "interval": [
+        0.05,
+        0.3063
+      ],
+      "scores": {
+        "DM": 0.6619,
+        "MDS": 0.6484,
+        "Spectral": 0.6633,
+        "DeepWalk": 0.5284,
+        "Node2Vec": 0.4719,
+        "VGAE": 0.2521
+      }
+    }
+  },
+  "spearman_rho": 0.94,
+  "spearman_p": 0.0
+}

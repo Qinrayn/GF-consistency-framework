@@ -1,0 +1,127 @@
+{
+  "rank_table": [
+    {
+      "method": "Node2Vec",
+      "yeast_score": 0.41526529890865754,
+      "human_score": 0.8518790639520326,
+      "yeast_rank": 7,
+      "human_rank": 1,
+      "rank_change": 6,
+      "n_yeast_methods": 8,
+      "n_human_methods": 6
+    },
+    {
+      "method": "DeepWalk",
+      "yeast_score": 0.4622091343469395,
+      "human_score": 0.8394613246813839,
+      "yeast_rank": 6,
+      "human_rank": 2,
+      "rank_change": 4,
+      "n_yeast_methods": 8,
+      "n_human_methods": 6
+    },
+    {
+      "method": "DM",
+      "yeast_score": 0.6252450976698284,
+      "human_score": 0.5145311063069976,
+      "yeast_rank": 1,
+      "human_rank": 4,
+      "rank_change": -3,
+      "n_yeast_methods": 8,
+      "n_human_methods": 6
+    },
+    {
+      "method": "VGAE",
+      "yeast_score": 0.24813152527735283,
+      "human_score": 0.26991828757027203,
+      "yeast_rank": 8,
+      "human_rank": 6,
+      "rank_change": 2,
+      "n_yeast_methods": 8,
+      "n_human_methods": 6
+    },
+    {
+      "method": "MDS",
+      "yeast_score": 0.5568047784037732,
+      "human_score": 0.41505648717396193,
+      "yeast_rank": 4,
+      "human_rank": 5,
+      "rank_change": -1,
+      "n_yeast_methods": 8,
+      "n_human_methods": 6
+    },
+    {
+      "method": "Spectral",
+      "yeast_score": 0.5881903561379765,
+      "human_score": 0.8113583918723812,
+      "yeast_rank": 2,
+      "human_rank": 3,
+      "rank_change": -1,
+      "n_yeast_methods": 8,
+      "n_human_methods": 6
+    }
+  ],
+  "yeast_scores": {
+    "DM": 0.6252450976698284,
+    "MDS": 0.5568047784037732,
+    "Spectral": 0.5881903561379765,
+    "DeepWalk": 0.4622091343469395,
+    "Node2Vec": 0.41526529890865754,
+    "VGAE": 0.24813152527735283,
+    "PCA": 0.5773132632478335,
+    "VGAE-feat": 0.4959734247688482
+  },
+  "human_scores": {
+    "DM": 0.5145311063069976,
+    "MDS": 0.41505648717396193,
+    "Spectral": 0.8113583918723812,
+    "DeepWalk": 0.8394613246813839,
+    "Node2Vec": 0.8518790639520326,
+    "VGAE": 0.26991828757027203
+  },
+  "yeast_ranks": {
+    "DM": 1,
+    "Spectral": 2,
+    "PCA": 3,
+    "MDS": 4,
+    "VGAE-feat": 5,
+    "DeepWalk": 6,
+    "Node2Vec": 7,
+    "VGAE": 8
+  },
+  "human_ranks": {
+    "Node2Vec": 1,
+    "DeepWalk": 2,
+    "Spectral": 3,
+    "DM": 4,
+    "MDS": 5,
+    "VGAE": 6
+  },
+  "comparable_methods": [
+    "DM",
+    "DeepWalk",
+    "MDS",
+    "Node2Vec",
+    "Spectral",
+    "VGAE"
+  ],
+  "topology_analysis": {
+    "feature_differences_human_minus_yeast": {
+      "modularity_Q": 0.16201751066587572,
+      "average_clustering_coefficient": -0.2743830734121633,
+      "spectral_gap": -0.06668102692822934,
+      "degree_heterogeneity": 0.899531087563093,
+      "mixing_time": 204.41115412056308,
+      "assortativity": -0.029687570658083418
+    },
+    "correlations_with_rank_change": {
+      "modularity_Q": null,
+      "average_clustering_coefficient": null,
+      "spectral_gap": null,
+      "degree_heterogeneity": null,
+      "mixing_time": null,
+      "assortativity": null
+    },
+    "interpretation": "Random-walk methods (Node2Vec, DeepWalk) benefit from the human network's larger scale, higher connectivity, and different community structure.  On the small, dense yeast curated network (153 nodes), structural methods (DM, Spectral, MDS) outperform because they capture global topology directly.  On the large, sparse human network (~15k nodes), random-walk methods excel because they capture local neighbourhood patterns that align with functional modules at scale."
+  }
+}

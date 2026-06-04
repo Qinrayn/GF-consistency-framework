@@ -1,0 +1,30 @@
+======================================================================
+HUMAN PPI NETWORK - OUTLIER DETECTION REPORT
+Network: 15882 nodes, 236712 edges
+Outlier threshold: > 100 standard deviations
+======================================================================
+
+
+--- DM ---
+No outliers detected.
+
+--- MDS ---
+No outliers detected.
+
+--- Spectral ---
+No outliers detected.
+
+--- DeepWalk ---
+Outliers found: 1
+  Node: 9606.ENSP00000334051
+    Coordinates: (-38.4875, -2.3069)
+    Deviation: x=119.8考, y=9.5考
+
+--- Node2Vec ---
+Outliers found: 1
+  Node: 9606.ENSP00000334051
+    Coordinates: (-39.7013, -1.2220)
+    Deviation: x=121.4考, y=5.2考
+
+--- VGAE ---
+No outliers detected.

@@ -1,0 +1,171 @@
+{
+  "system_info": {
+    "cpu": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python_version": "3.13.9",
+    "python_implementation": "CPython",
+    "numpy_version": "2.4.6",
+    "scipy_version": "1.17.1",
+    "networkx_version": "3.6.1",
+    "matplotlib_version": "3.10.9",
+    "torch_version": "2.12.0+cpu"
+  },
+  "step_times_153": {
+    "step_1_data_preprocessing": {
+      "time_s": 0.0091,
+      "time_std_s": 0.0,
+      "complexity": "O(V+E)"
+    },
+    "step_2_embeddings": {
+      "DM": {
+        "time_s": 0.0526,
+        "time_std_s": 0.0,
+        "complexity": "O(n^3)"
+      },
+      "MDS": {
+        "time_s": 0.0413,
+        "time_std_s": 0.0,
+        "complexity": "O(n^3)"
+      },
+      "Spectral": {
+        "time_s": 0.0081,
+        "time_std_s": 0.0,
+        "complexity": "O(n^3)"
+      },
+      "DeepWalk": {
+        "time_s": 0.3318,
+        "time_std_s": 0.0,
+        "complexity": "O(n*w*l)"
+      },
+      "Node2Vec": {
+        "time_s": 0.7391,
+        "time_std_s": 0.0,
+        "complexity": "O(n*w*l)"
+      },
+      "VGAE": {
+        "time_s": 5.0728,
+        "time_std_s": 0.0,
+        "complexity": "O(E*epochs)"
+      },
+      "VGAE-feat": {
+        "time_s": 1.1587,
+        "time_std_s": 0.0,
+        "complexity": "O(E*epochs)"
+      },
+      "PCA": {
+        "time_s": 0.0316,
+        "time_std_s": 0.0,
+        "complexity": "O(n*d^2)"
+      },
+      "_total_s": 7.436
+    },
+    "step_3_gf_curves": {
+      "per_method": {
+        "DM": {
+          "time_s": 16.9421,
+          "time_std_s": 0.0
+        },
+        "MDS": {
+          "time_s": 18.2335,
+          "time_std_s": 0.0
+        },
+        "Spectral": {
+          "time_s": 26.8845,
+          "time_std_s": 0.0
+        },
+        "DeepWalk": {
+          "time_s": 24.2636,
+          "time_std_s": 0.0
+        },
+        "Node2Vec": {
+          "time_s": 24.363,
+          "time_std_s": 0.0
+        },
+        "VGAE": {
+          "time_s": 26.1116,
+          "time_std_s": 0.0
+        }
+      },
+      "time_s": 136.7983,
+      "complexity": "O(K*n^2*log(n))"
+    }
+  },
+  "theoretical_complexity": {
+    "embedding": {
+      "DM": "O(n^3)",
+      "MDS": "O(n^3)",
+      "Spectral": "O(n^3)",
+      "DeepWalk": "O(n*w*l)",
+      "Node2Vec": "O(n*w*l)",
+      "VGAE": "O(E*epochs)",
+      "VGAE-feat": "O(E*epochs)",
+      "PCA": "O(n*d^2)"
+    },
+    "distance_matrix": "O(n^2)",
+    "gf_curve": "O(K * (n^2 + Leiden))",
+    "gf_curve_detail": "O(K * n^2 * log(n))",
+    "leiden_community_detection": "O(n*log(n))",
+    "gf_score": "O(K)",
+    "total_pipeline": "O(n^3 + K*n^2*log(n))"
+  },
+  "scalability_gf_curves": {
+    "n_points": [
+      50,
+      100,
+      200
+    ],
+    "times_s": [
+      4.1567,
+      8.3203,
+      16.7328
+    ],
+    "time_per_point_ms": [
+      83.1346,
+      83.2031,
+      83.6641
+    ]
+  },
+  "total_pipeline_time_s": 237.481,
+  "method_step_table": {
+    "DM": {
+      "embedding_complexity": "O(n^3)",
+      "embedding_time_s": 0.0526,
+      "gf_curve_time_s": 16.9421
+    },
+    "MDS": {
+      "embedding_complexity": "O(n^3)",
+      "embedding_time_s": 0.0413,
+      "gf_curve_time_s": 18.2335
+    },
+    "Spectral": {
+      "embedding_complexity": "O(n^3)",
+      "embedding_time_s": 0.0081,
+      "gf_curve_time_s": 26.8845
+    },
+    "DeepWalk": {
+      "embedding_complexity": "O(n*w*l)",
+      "embedding_time_s": 0.3318,
+      "gf_curve_time_s": 24.2636
+    },
+    "Node2Vec": {
+      "embedding_complexity": "O(n*w*l)",
+      "embedding_time_s": 0.7391,
+      "gf_curve_time_s": 24.363
+    },
+    "VGAE": {
+      "embedding_complexity": "O(E*epochs)",
+      "embedding_time_s": 5.0728,
+      "gf_curve_time_s": 26.1116
+    },
+    "VGAE-feat": {
+      "embedding_complexity": "O(E*epochs)",
+      "embedding_time_s": 1.1587,
+      "gf_curve_time_s": null
+    },
+    "PCA": {
+      "embedding_complexity": "O(n*d^2)",
+      "embedding_time_s": 0.0316,
+      "gf_curve_time_s": null
+    }
+  }
+}
