@@ -285,7 +285,7 @@ def compute_all_embeddings(G):
     
     # ---- Write outlier report ----
     print(f"\nWriting outlier report to {OUTLIER_REPORT}...")
-    with open(OUTLIER_REPORT, 'w') as f:
+    with open(OUTLIER_REPORT, 'w', encoding='utf-8') as f:
         f.write("=" * 70 + "\n")
         f.write("HUMAN PPI NETWORK - OUTLIER DETECTION REPORT\n")
         f.write(f"Network: {G.number_of_nodes()} nodes, {G.number_of_edges()} edges\n")

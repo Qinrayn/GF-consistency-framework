@@ -986,8 +986,8 @@ def adaptive_vs_fixed_comparison(
     # Equivalence is concluded if BOTH one-sided tests reject at alpha=0.05
     tost_alpha = 0.05
     equivalent = (
-        (p_lower is not np.nan and p_lower < tost_alpha)
-        and (p_upper is not np.nan and p_upper < tost_alpha)
+        (not np.isnan(p_lower) and p_lower < tost_alpha)
+        and (not np.isnan(p_upper) and p_upper < tost_alpha)
     )
 
     tost_result = {
@@ -999,7 +999,7 @@ def adaptive_vs_fixed_comparison(
     }
 
     # --- Overall acceptance ---
-    accepted = mapd < equivalence_threshold and (rho is not np.nan and rho > 0.95)
+    accepted = mapd < equivalence_threshold and (not np.isnan(rho) and rho > 0.95)
 
     # --- Per-method details ---
     per_method = df[

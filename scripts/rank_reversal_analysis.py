@@ -217,15 +217,16 @@ def analyze_embedding_distances(G, coords, node_list, method_name, seed=SEED):
             if node in node_to_pos:
                 membership[node_to_pos[node]] = comm_id
 
-    # Pairwise Euclidean distances
-    diff = coords[:, None, :] - coords[None, :, :]
-    dist_matrix = np.sqrt((diff ** 2).sum(axis=2))
+    # Pairwise Euclidean distances — use scipy cdist for large networks
+    # to avoid O(n²·d) memory from numpy broadcasting.
+    from scipy.spatial.distance import cdist
 
     intra_dists = []
     inter_dists = []
     rng = np.random.RandomState(seed)
 
     if n <= 1000:
+        dist_matrix = cdist(coords, coords, metric='euclidean')
         # Exact enumeration
         for i in range(n):
             for j in range(i + 1, n):
@@ -235,25 +236,45 @@ def analyze_embedding_distances(G, coords, node_list, method_name, seed=SEED):
                     else:
                         inter_dists.append(dist_matrix[i, j])
     else:
-        # Sample pairs to keep memory / time bounded
+        # Sample pairs to keep memory / time bounded.
+        # Compute distances on-the-fly to avoid O(n²) matrix for large n.
         n_intra_target = min(MAX_SAMPLED_PAIRS, n * 10)
         n_inter_target = min(MAX_SAMPLED_PAIRS, n * 10)
 
         intra_count = 0
         inter_count = 0
         max_attempts = (n_intra_target + n_inter_target) * 20
+
+        # Pre-group indices by community for efficient sampling
+        comm_indices = {}
+        for idx, cid in membership.items():
+            comm_indices.setdefault(cid, []).append(idx)
+        comm_ids = list(comm_indices.keys())
+
         for _ in range(max_attempts):
-            i = rng.randint(0, n)
-            j = rng.randint(0, n)
-            if i >= j or i not in membership or j not in membership:
-                continue
-            if membership[i] == membership[j]:
+            if rng.random() < 0.5 and len(comm_ids) > 1:
+                # Try intra-module pair
+                cid = comm_ids[rng.randint(len(comm_ids))]
+                members = comm_indices[cid]
+                if len(members) < 2:
+                    continue
+                i, j = rng.choice(members, size=2, replace=False)
                 if intra_count < n_intra_target:
-                    intra_dists.append(dist_matrix[i, j])
+                    d = float(np.sqrt(np.sum((coords[i] - coords[j]) ** 2)))
+                    intra_dists.append(d)
                     intra_count += 1
             else:
+                # Try inter-module pair
+                if len(comm_ids) < 2:
+                    continue
+                c1, c2 = rng.choice(len(comm_ids), size=2, replace=False)
+                m1 = comm_indices[comm_ids[c1]]
+                m2 = comm_indices[comm_ids[c2]]
+                i = m1[rng.randint(len(m1))]
+                j = m2[rng.randint(len(m2))]
                 if inter_count < n_inter_target:
-                    inter_dists.append(dist_matrix[i, j])
+                    d = float(np.sqrt(np.sum((coords[i] - coords[j]) ** 2)))
+                    inter_dists.append(d)
                     inter_count += 1
             if (intra_count >= n_intra_target
                     and inter_count >= n_inter_target):
