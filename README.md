@@ -40,8 +40,17 @@ All metrics → [`results/final_results_summary.json`](results/final_results_sum
 conda env create -f environment.yml
 conda activate gf-consistency
 
+# Or install as a package
+pip install .
+
 # 2. Run full pipeline (≈ 60 min on standard laptop)
 python run_all_analysis.py
+
+# Or use the CLI entry point after pip install
+gf-consistency
+
+# Configuration: edit pipeline_config.yaml or pass via CLI
+python run_all_analysis.py --config my_config.yaml
 
 # Options:
 python run_all_analysis.py --run-human          # Include human validation
@@ -49,6 +58,8 @@ python run_all_analysis.py --start-from 3       # Resume from step 3
 python run_all_analysis.py --skip-plots         # Skip figure generation
 python run_all_analysis.py --skip-gnn           # Skip GNN embeddings (GraphSAGE/GAT/GIN)
 python run_all_analysis.py --skip-extended      # Skip extended analyses (Steps 17-21)
+python run_all_analysis.py --seed 123           # Override random seed
+python run_all_analysis.py --species human      # Target a different species
 ```
 
 Individual steps work standalone:
@@ -58,6 +69,36 @@ python scripts/compute_gf.py          # G-F curves only
 python scripts/link_prediction.py     # Link prediction only
 python scripts/plot_figures.py        # Regenerate figures from existing results
 ```
+
+---
+
+## Configuration
+
+All pipeline parameters can be customised via `pipeline_config.yaml` without editing any script:
+
+```yaml
+pipeline:
+  seed: 42
+  species: yeast          # yeast | human | ecoli | mouse
+  start_from: 1
+
+gf_score:
+  r_min: 0.05
+  r_max: 0.55
+  n_points: 200
+  gf_r_min: 0.05
+  gf_r_max: 0.422
+  plateau_relative_threshold: 0.80
+
+embeddings:
+  classical_methods: [DM, MDS, Spectral, DeepWalk, Node2Vec, VGAE]
+  gnn_methods: [GraphSAGE, GAT, GIN]
+  node2vec:
+    p: 0.5
+    q: 2.0
+```
+
+CLI flags (`--seed`, `--species`, `--start-from`, etc.) take precedence over config file values. Run `gf-consistency --help` for all options.
 
 ---
 
@@ -131,7 +172,7 @@ All embeddings standardized to **σ = 0.3** before G-F analysis.
 
 ```
 GF-consistency-framework/
-├── scripts/                    # 21-step analysis pipeline
+├── scripts/                    # 21-step analysis pipeline + extensions
 │   ├── data_preprocessing.py   # Load PPI + GO data
 │   ├── embed_all.py            # Compute 8 classical/NN embeddings
 │   ├── compute_gf.py           # G-F curves + scores
@@ -156,7 +197,18 @@ GF-consistency-framework/
 │   ├── statistical_analysis.py # Spearman, Wilcoxon, bootstrap, permutation
 │   ├── robustness_analysis.py  # Extended 30-subset convergence
 │   ├── visualization_helpers.py# Okabe-Ito colorblind-safe plotting
+│   ├── config_loader.py        # YAML configuration loader + validator
+│   ├── input_validator.py      # Pre-flight input validation
+│   ├── embed_hyperbolic.py     # Poincare Ball hyperbolic embeddings
+│   ├── multispecies_loader.py  # Multi-species dataset loader
+│   ├── temporal_network.py     # Dynamic/temporal PPI framework
+│   ├── pathway_analysis.py     # Pathway enrichment + cancer gene analysis
 │   └── utils.py                # Shared utilities
+│
+├── tests/                      # pytest test suite (51 tests)
+│   ├── conftest.py             # Shared fixtures
+│   ├── test_utils.py           # Core computation tests
+│   └── test_config_loader.py   # Config loader tests
 │
 ├── data/                       # Input data (STRING v11.5, GO)
 │   ├── *.edgelist              # PPI networks (curated 153, full, subsets)
@@ -175,6 +227,8 @@ GF-consistency-framework/
 ├── human_validation/           # Cross-species (optional, STRING v12.0)
 │
 ├── run_all_analysis.py         # One-command Python pipeline (21 steps)
+├── pipeline_config.yaml        # YAML configuration (all parameters)
+├── pyproject.toml              # Python package metadata
 ├── environment.yml             # Conda environment
 ├── requirements.txt            # pip dependencies
 ├── Supplementary_Materials.pdf # Mathematical proofs
@@ -212,8 +266,39 @@ Large files (`*.txt.gz`, `*.gaf.gz`) tracked via **Git LFS** — run `git lfs in
 | torch | ≥ 2.0 | VGAE encoder |
 | torch_geometric | ≥ 2.3 | GCN layers |
 | requests | ≥ 2.28 | STRING API fallback |
+| seaborn | ≥ 0.12 | Statistical visualization |
+| pyyaml | ≥ 6.0 | YAML configuration parsing |
 
 Full spec → [`requirements.txt`](requirements.txt) · [`environment.yml`](environment.yml)
+
+---
+
+## Extension Modules (v1.1+)
+
+Beyond the core 21-step pipeline, the framework provides extensible modules for advanced analyses:
+
+| Module | Description |
+|--------|-------------|
+| `embed_hyperbolic.py` | Poincare Ball embeddings via Riemannian SGD — suited for hierarchical PPI structures |
+| `multispecies_loader.py` | Species registry (yeast, human, *E. coli*, mouse) with STRING network + GAF parsing |
+| `temporal_network.py` | `TemporalNetwork` container for time-resolved PPI analysis (e.g., cell-cycle stages) |
+| `pathway_analysis.py` | Fisher's exact pathway enrichment, cancer gene association, consensus communities |
+| `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
+| `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
+
+New species can be registered at runtime:
+
+```python
+from scripts.multispecies_loader import register_species, load_species_dataset
+
+register_species("fly", {
+    "taxon_id": "7227",
+    "string_prefix": "7227",
+    "name": "Drosophila melanogaster",
+    "go_db": "gene_association.fb.gaf.gz",
+})
+G, nodes, go_map = load_species_dataset("fly", data_dir="data/fly")
+```
 
 ---
 
@@ -274,9 +359,7 @@ ORCID: [0009-0000-2769-467X](https://orcid.org/0009-0000-2769-467X)
 >              Protein Interaction Network Embeddings},
 >   author  = {Zhang, Yuhan},
 >   year    = {2026},
->   note    = {Reproducible pipeline: 11 methods, 21-step validation},
->   email   = {qinray@hotmail.com},
->   orcid   = {0009-0000-2769-467X}
+>   note    = {Reproducible pipeline: 11 methods, 21-step validation.},
 > }
 > ```
 
