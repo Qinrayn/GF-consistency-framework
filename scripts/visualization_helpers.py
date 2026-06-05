@@ -4,7 +4,7 @@ visualization_helpers.py
 
 Reusable plotting functions for the G-F Consistency Framework.
 
-All plots adhere to the journal *Bioinformatics* figure standards:
+All plots adhere to publication-quality figure standards:
 
 - Resolution: 300 dpi (PNG)
 - Font size: minimum 8pt for all text elements

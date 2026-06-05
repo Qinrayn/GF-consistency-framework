@@ -912,7 +912,7 @@ def generate_three_panel_figure(
     # ==================================================================
     ax_a = axes[0]
     ax_a.set_title(
-        "(A) Embedding Space Distribution", fontsize=11, fontweight="bold"
+        "(A) Embedding Space", fontsize=11, fontweight="bold"
     )
 
     # Draw background (non-cluster) nodes first
@@ -1089,9 +1089,9 @@ def generate_three_panel_figure(
     ax_c.axis("off")
 
     # ---- Save ----
-    fig.tight_layout(rect=[0, 0, 1, 0.95])
+    fig.tight_layout(rect=[0.03, 0, 1, 0.92])
     output_path = figures_dir / "FigS5_biological_case_study.png"
-    fig.savefig(str(output_path), dpi=300, bbox_inches="tight", pad_inches=0.3)
+    fig.savefig(str(output_path), dpi=300, bbox_inches="tight", pad_inches=0.5)
     plt.close(fig)
 
     return fig
@@ -1222,6 +1222,7 @@ def _draw_go_dag_panel(ax, dag):
             label, (x, y),
             textcoords="offset points", xytext=(x_offset, 0),
             fontsize=6.5, va="center", ha=ha_align,
+            clip_on=False,
             bbox=dict(boxstyle="round,pad=0.15", facecolor="white",
                       alpha=0.80, edgecolor="none"),
         )
@@ -1253,7 +1254,7 @@ def _draw_go_dag_panel(ax, dag):
         y_min, y_max = min(all_y), max(all_y)
         x_pad = max((x_max - x_min) * 0.35, 1.5)
         y_pad = max((y_max - y_min) * 0.15, 0.5)
-        ax.set_xlim(x_min - x_pad, x_max + x_pad * 3.0)
+        ax.set_xlim(x_min - x_pad, x_max + x_pad * 5.0)
         ax.set_ylim(y_min - y_pad, y_max + y_pad)
 
 

@@ -363,17 +363,38 @@ def plot_supplementary_30vs200(results_dir, figures_dir):
     if n_methods == 1:
         axes = [axes]
 
+    # Collect data first, then plot grouped bars
+    max_val = 0.0
     for ax, method in zip(axes, methods):
         mdata = data[method]
+        labels, heights, colors = [], [], []
         for grid_name in ["30", "200"]:
             if grid_name in mdata:
-                ax.bar(grid_name, mdata[grid_name]["plateau_width"],
-                       color='steelblue' if grid_name == "200" else 'coral')
+                labels.append(grid_name)
+                pw = mdata[grid_name]["plateau_width"]
+                heights.append(pw)
+                colors.append('steelblue' if grid_name == "200" else 'coral')
+                max_val = max(max_val, pw)
+        if heights:
+            ax.bar(labels, heights, color=colors, edgecolor='black',
+                   linewidth=0.5, width=0.5)
         ax.set_title(method)
         ax.set_ylabel('Plateau width W')
 
+    # Set consistent y-axis limits across all subplots
+    if max_val > 0:
+        for ax in axes:
+            ax.set_ylim(0, max_val * 1.2)
+
+    # Add legend
+    from matplotlib.patches import Patch
+    legend_elements = [Patch(facecolor='coral', edgecolor='black', label='30 pts'),
+                       Patch(facecolor='steelblue', edgecolor='black', label='200 pts')]
+    fig.legend(handles=legend_elements, loc='upper right', fontsize=9,
+               bbox_to_anchor=(0.98, 0.98))
+
     plt.suptitle('Plateau Width: 30-point vs 200-point Grid')
-    plt.tight_layout()
+    plt.tight_layout(rect=[0, 0, 0.95, 1])
     plt.savefig(figures_dir / "comparison_30vs200_points.png", dpi=300, bbox_inches='tight')
     plt.close()
     print("Supplementary 30vs200 comparison saved")
@@ -414,9 +435,13 @@ def plot_figure7_plateau_width(results_dir, figures_dir):
     bars = ax.bar(methods, widths, color=colors, edgecolor='black', linewidth=0.5)
 
     ax.set_ylabel('Plateau Width W')
-    ax.set_title('Plateau Width Across Embedding Methods (threshold = 0.5)')
+    ax.set_title('Plateau Width Across Embedding Methods\n(relative threshold = 80% of peak purity)')
     ax.set_xticks(range(len(methods)))
     ax.set_xticklabels(methods, rotation=45, ha='right')
+
+    # Ensure y-axis starts at 0 with headroom for labels
+    if max(widths) > 0:
+        ax.set_ylim(0, max(widths) * 1.15)
 
     for bar, val in zip(bars, widths):
         ax.text(bar.get_x() + bar.get_width()/2, bar.get_height(),
