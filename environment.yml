@@ -19,3 +19,4 @@ dependencies:
     - torch_geometric>=2.3.0
     - python-louvain>=0.16
     - seaborn>=0.12.0
+    - pyyaml>=6.0

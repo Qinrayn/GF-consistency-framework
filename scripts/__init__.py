@@ -33,9 +33,20 @@ go_propagation                Step 19: GO DAG True Path Rule expansion
 biological_interpretation     Step 20: 4-level G-F scale + case study
 benchmark_runtime             Step 21: Pipeline profiling + complexity
 
+Extension modules (v1.1+)
+--------------------------
+config_loader                 YAML configuration loader and validator
+input_validator               Pre-flight input validation and error handling
+embed_hyperbolic              Poincare Ball hyperbolic space embeddings
+multispecies_loader           Multi-species dataset loader (yeast, human, ...)
+temporal_network              Dynamic/temporal PPI network framework
+pathway_analysis              Pathway enrichment and cancer gene association
+
 Support modules
 ---------------
 statistical_analysis          Spearman, Wilcoxon, bootstrap, permutation tests
 robustness_analysis           Extended 30-subset convergence analysis
 visualization_helpers         Okabe-Ito colorblind-safe plotting utilities
 """
+
+__version__ = "1.1.0"

@@ -71,44 +71,60 @@
   },
   "plateau_width_200pts": {
     "DM": {
-      "W": 0.0,
-      "r_min": 0.0,
-      "r_max": 0.0
+      "W": 0.0829,
+      "r_min": 0.05,
+      "r_max": 0.1329,
+      "peak_purity": 0.2468,
+      "effective_threshold": 0.1974
     },
     "MDS": {
-      "W": 0.0,
-      "r_min": 0.0,
-      "r_max": 0.0
+      "W": 0.1457,
+      "r_min": 0.05,
+      "r_max": 0.1957,
+      "peak_purity": 0.2454,
+      "effective_threshold": 0.1963
     },
     "Spectral": {
-      "W": 0.0,
-      "r_min": 0.0,
-      "r_max": 0.0
+      "W": 0.103,
+      "r_min": 0.05,
+      "r_max": 0.153,
+      "peak_purity": 0.2558,
+      "effective_threshold": 0.2047
     },
     "DeepWalk": {
-      "W": 0.0,
-      "r_min": 0.0,
-      "r_max": 0.0
+      "W": 0.0905,
+      "r_min": 0.05,
+      "r_max": 0.1405,
+      "peak_purity": 0.1964,
+      "effective_threshold": 0.1571
     },
     "Node2Vec": {
-      "W": 0.0,
-      "r_min": 0.0,
-      "r_max": 0.0
+      "W": 0.0729,
+      "r_min": 0.0927,
+      "r_max": 0.1656,
+      "peak_purity": 0.2207,
+      "effective_threshold": 0.1765
     },
     "VGAE": {
-      "W": 0.0,
-      "r_min": 0.0,
-      "r_max": 0.0
+      "W": 0.0854,
+      "r_min": 0.05,
+      "r_max": 0.1354,
+      "peak_purity": 0.0828,
+      "effective_threshold": 0.0662
     },
     "PCA": {
-      "W": 0.0,
-      "r_min": 0.0,
-      "r_max": 0.0
+      "W": 0.0553,
+      "r_min": 0.05,
+      "r_max": 0.1053,
+      "peak_purity": 0.2306,
+      "effective_threshold": 0.1845
     },
     "VGAE-feat": {
-      "W": 0.0,
-      "r_min": 0.0,
-      "r_max": 0.0
+      "W": 0.5,
+      "r_min": 0.05,
+      "r_max": 0.55,
+      "peak_purity": 0.1442,
+      "effective_threshold": 0.1154
     }
   },
   "leiden_baseline_purity": 0.6886042692939245,
