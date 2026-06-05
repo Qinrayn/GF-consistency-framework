@@ -36,5 +36,13 @@
     "VGAE": 0.06567018452344808,
     "PCA": 0.13753060668252517,
     "VGAE-feat": 0.12384417529354565
+  },
+  "spearman_leave_one_out": {
+    "DM": 1.0,
+    "MDS": 1.0,
+    "Spectral": 0.9,
+    "DeepWalk": 0.9,
+    "Node2Vec": 0.9,
+    "VGAE": 0.9
   }
 }

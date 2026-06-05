@@ -4,7 +4,7 @@ link_prediction.py
 Step 8: Link prediction using 5-fold CV with logistic regression.
 Input: node pair Hadamard product of embeddings.
 Expected ranking: Spectral > MDS > DM > DeepWalk ~ Node2Vec > VGAE
-Observed Spearman rho(AUROC, G-F Score) ~ +0.829 (positive: higher G-F score ~ higher AUROC)
+Observed Spearman rho(AUROC, G-F Score) ~ +0.943 (positive: higher G-F score ~ higher AUROC)
 """
 
 import sys
@@ -149,13 +149,31 @@ def main():
         print(f"\nWARNING: Only {len(auroc_list)} methods with both AUROC and G-F score "
               f"(< {MIN_METHODS_FOR_SPEARMAN} required). "
               f"Spearman correlation reported as NaN.")
-    
+
+    # Leave-one-out sensitivity analysis
+    loo_results = {}
+    if len(auroc_list) >= MIN_METHODS_FOR_SPEARMAN:
+        method_names = [m for m in auroc_results if m in gf_scores]
+        loo_rhos = []
+        for excluded in method_names:
+            sub_auroc = [auroc_results[m]["auroc_mean"]
+                         for m in method_names if m != excluded]
+            sub_gf = [gf_scores[m] for m in method_names if m != excluded]
+            if len(sub_auroc) >= 4:
+                loo_rho, _ = stats.spearmanr(sub_auroc, sub_gf)
+                loo_results[excluded] = round(float(loo_rho), 4)
+                loo_rhos.append(float(loo_rho))
+        if loo_rhos:
+            print(f"  Leave-one-out: rho range [{min(loo_rhos):.4f}, "
+                  f"{max(loo_rhos):.4f}], mean={np.mean(loo_rhos):.4f}")
+
     # Save results
     result = {
         "auroc_results": auroc_results,
         "spearman_rho_auroc_gf": rho,
         "spearman_p_value": p_val,
         "gf_scores_used": gf_scores,
+        "spearman_leave_one_out": loo_results,
     }
     
     output_file = results_dir / "link_prediction.json"

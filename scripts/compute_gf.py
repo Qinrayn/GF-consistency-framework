@@ -21,7 +21,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from utils import (
     SEED, R_MIN, R_MAX, N_POINTS, GF_R_MIN, GF_R_MAX,
-    CLASSICAL_METHODS, PLATEAU_PURITY_THRESHOLD,
+    CLASSICAL_METHODS, PLATEAU_RELATIVE_THRESHOLD,
     get_data_dir, get_results_dir, get_embeddings_dir,
     load_curated_network, load_embedding, compute_gf_curve,
     compute_gf_score, compute_plateau_width, rescale_coordinates,
@@ -394,21 +394,17 @@ def main():
     plateau_file = results_dir / "plateau_width_v3_200pts.csv"
     with open(plateau_file, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["Method", "W", "r_min", "r_max", "GF_Score"])
+        writer.writerow(["Method", "W", "r_min", "r_max", "GF_Score",
+                          "peak_purity", "effective_threshold"])
         for method in all_purities:
-            w = compute_plateau_width(r_vals, all_purities[method],
-                                      threshold=PLATEAU_PURITY_THRESHOLD)
+            pw = compute_plateau_width(r_vals, all_purities[method],
+                                       relative_threshold=PLATEAU_RELATIVE_THRESHOLD)
             score = gf_scores.get(method, 0.0)
-            # Find r_min and r_max of plateau
-            p = np.array(all_purities[method])
-            mask = p >= PLATEAU_PURITY_THRESHOLD
-            if mask.any():
-                r_plateau = r_vals[mask]
-                r_min_p, r_max_p = float(r_plateau[0]), float(r_plateau[-1])
-            else:
-                r_min_p, r_max_p = 0.0, 0.0
-            writer.writerow([method, f"{w:.4f}", f"{r_min_p:.4f}",
-                             f"{r_max_p:.4f}", f"{score:.4f}"])
+            writer.writerow([method,
+                             f"{pw['W']:.4f}", f"{pw['r_min']:.4f}",
+                             f"{pw['r_max']:.4f}", f"{score:.4f}",
+                             f"{pw['peak_purity']:.4f}",
+                             f"{pw['effective_threshold']:.4f}"])
     print(f"Saved plateau widths to: {plateau_file}")
     
     # Print ranking

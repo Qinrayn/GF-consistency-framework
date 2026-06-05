@@ -170,6 +170,8 @@ def generate_final_summary(results_dir):
                     "W": float(row.get("W", 0)),
                     "r_min": float(row.get("r_min", 0)),
                     "r_max": float(row.get("r_max", 0)),
+                    "peak_purity": float(row.get("peak_purity", 0)),
+                    "effective_threshold": float(row.get("effective_threshold", 0)),
                 }
 
     # 7. Bonferroni results (with cross-validation)

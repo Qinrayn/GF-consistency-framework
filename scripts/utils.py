@@ -59,8 +59,8 @@ K_NEIGHBORS: int = 5
 MIN_LABEL_COUNT: int = 3
 STRING_MIN_SCORE: int = 700
 
-# Plateau detection
-PLATEAU_PURITY_THRESHOLD: float = 0.5
+# Plateau detection (relative threshold: fraction of peak purity)
+PLATEAU_RELATIVE_THRESHOLD: float = 0.80
 
 # ============================================================
 # Directory Helpers
@@ -441,15 +441,41 @@ def coords_to_dict(coords: np.ndarray, nodes: list) -> dict:
 # ============================================================
 
 def compute_plateau_width(r_vals, purity_vals,
-                          threshold: float = PLATEAU_PURITY_THRESHOLD) -> float:
-    """Width of the r-interval where purity >= threshold."""
-    r = np.asarray(r_vals)
-    p = np.asarray(purity_vals)
-    mask = p >= threshold
+                          relative_threshold: float = PLATEAU_RELATIVE_THRESHOLD) -> dict:
+    """Width of the r-interval where purity >= relative_threshold * peak_purity.
+
+    Uses a *relative* threshold so that the plateau is defined with respect
+    to each method's own peak purity rather than a fixed absolute cutoff.
+
+    Returns
+    -------
+    dict with keys W, r_min, r_max, peak_purity, effective_threshold.
+    Returns all-zero dict when no points exceed the threshold.
+    """
+    r = np.asarray(r_vals, dtype=float)
+    p = np.asarray(purity_vals, dtype=float)
+    if len(p) == 0:
+        return {"W": 0.0, "r_min": 0.0, "r_max": 0.0,
+                "peak_purity": 0.0, "effective_threshold": 0.0}
+
+    peak = float(p.max())
+    effective_thr = peak * relative_threshold
+
+    if peak <= 0.0 or effective_thr <= 0.0:
+        return {"W": 0.0, "r_min": 0.0, "r_max": 0.0,
+                "peak_purity": peak, "effective_threshold": effective_thr}
+
+    mask = p >= effective_thr
     if not mask.any():
-        return 0.0
+        return {"W": 0.0, "r_min": 0.0, "r_max": 0.0,
+                "peak_purity": peak, "effective_threshold": effective_thr}
+
     r_plateau = r[mask]
-    return float(r_plateau[-1] - r_plateau[0])
+    return {"W": float(r_plateau[-1] - r_plateau[0]),
+            "r_min": float(r_plateau[0]),
+            "r_max": float(r_plateau[-1]),
+            "peak_purity": peak,
+            "effective_threshold": float(effective_thr)}
 
 
 # ============================================================

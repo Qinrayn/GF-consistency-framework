@@ -3,13 +3,13 @@
     "30": {
       "n_points": 30,
       "gf_score": 0.1519719746032148,
-      "plateau_width": 0.0,
+      "plateau_width": 0.034482758620689655,
       "max_purity": 0.24629228325874664
     },
     "200": {
       "n_points": 200,
       "gf_score": 0.15518241816105013,
-      "plateau_width": 0.0,
+      "plateau_width": 0.08291457286432162,
       "max_purity": 0.24679606677244728
     }
   },
@@ -17,13 +17,13 @@
     "30": {
       "n_points": 30,
       "gf_score": 0.1501843702897099,
-      "plateau_width": 0.0,
+      "plateau_width": 0.13793103448275862,
       "max_purity": 0.24540671598071753
     },
     "200": {
       "n_points": 200,
       "gf_score": 0.152155432912679,
-      "plateau_width": 0.0,
+      "plateau_width": 0.14572864321608042,
       "max_purity": 0.24540671598071753
     }
   },
@@ -31,13 +31,13 @@
     "30": {
       "n_points": 30,
       "gf_score": 0.16292454708193496,
-      "plateau_width": 0.0,
+      "plateau_width": 0.10344827586206896,
       "max_purity": 0.25566903350487474
     },
     "200": {
       "n_points": 200,
       "gf_score": 0.16332658400038436,
-      "plateau_width": 0.0,
+      "plateau_width": 0.10301507537688441,
       "max_purity": 0.2558458553424948
     }
   },
@@ -45,13 +45,13 @@
     "30": {
       "n_points": 30,
       "gf_score": 0.12119230573805276,
-      "plateau_width": 0.0,
+      "plateau_width": 0.08620689655172413,
       "max_purity": 0.19089334518868417
     },
     "200": {
       "n_points": 200,
       "gf_score": 0.1225356361238432,
-      "plateau_width": 0.0,
+      "plateau_width": 0.09045226130653265,
       "max_purity": 0.1964363192928558
     }
   },
@@ -59,13 +59,13 @@
     "30": {
       "n_points": 30,
       "gf_score": 0.14898462916562588,
-      "plateau_width": 0.0,
+      "plateau_width": 0.13793103448275862,
       "max_purity": 0.20029584234559
     },
     "200": {
       "n_points": 200,
       "gf_score": 0.1511706117501923,
-      "plateau_width": 0.0,
+      "plateau_width": 0.07286432160804018,
       "max_purity": 0.22067720530835283
     }
   },
@@ -73,13 +73,13 @@
     "30": {
       "n_points": 30,
       "gf_score": 0.06428656912605707,
-      "plateau_width": 0.0,
+      "plateau_width": 0.08620689655172413,
       "max_purity": 0.08277011560336694
     },
     "200": {
       "n_points": 200,
       "gf_score": 0.06567018452344808,
-      "plateau_width": 0.0,
+      "plateau_width": 0.08542713567839195,
       "max_purity": 0.08277011560336694
     }
   }

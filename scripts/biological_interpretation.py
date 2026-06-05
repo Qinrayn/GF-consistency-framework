@@ -900,11 +900,11 @@ def generate_three_panel_figure(
         best_cluster_rank = all_clusters.index(best_cluster)
 
     # ---- Create figure ----
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+    fig, axes = plt.subplots(1, 3, figsize=(18, 7))
     fig.suptitle(
         f"Biological Case Study: {method} (G-F Score Level "
         f"{classify_gf_score(DEFAULT_GF_SCORES.get(method, 0.5))['level']})",
-        fontsize=14, fontweight="bold", y=1.02,
+        fontsize=14, fontweight="bold",
     )
 
     # ==================================================================
@@ -1089,9 +1089,9 @@ def generate_three_panel_figure(
     ax_c.axis("off")
 
     # ---- Save ----
-    fig.tight_layout(rect=[0, 0, 1, 0.97])
+    fig.tight_layout(rect=[0, 0, 1, 0.95])
     output_path = figures_dir / "FigS5_biological_case_study.png"
-    fig.savefig(str(output_path), dpi=300, bbox_inches="tight")
+    fig.savefig(str(output_path), dpi=300, bbox_inches="tight", pad_inches=0.3)
     plt.close(fig)
 
     return fig
