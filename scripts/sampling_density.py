@@ -14,7 +14,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from utils import (
     SEED, R_MIN, R_MAX, GF_R_MIN, GF_R_MAX, CLASSICAL_METHODS,
-    PLATEAU_PURITY_THRESHOLD, get_data_dir, get_results_dir,
+    PLATEAU_RELATIVE_THRESHOLD, get_data_dir, get_results_dir,
     get_embeddings_dir, load_curated_network, load_embedding,
     compute_gf_curve, compute_plateau_width, compute_gf_score,
 )
@@ -49,17 +49,17 @@ def main():
                 purities, modularities = compute_gf_curve(aligned_coords, common, go_map, r_vals)
                 
                 gf_score = compute_gf_score(r_vals, purities, GF_R_MIN, GF_R_MAX)
-                plateau_w = compute_plateau_width(r_vals, purities,
-                                                 threshold=PLATEAU_PURITY_THRESHOLD)
+                pw = compute_plateau_width(r_vals, purities,
+                                           relative_threshold=PLATEAU_RELATIVE_THRESHOLD)
                 
                 results[method][grid_name] = {
                     "n_points": n_pts,
                     "gf_score": gf_score,
-                    "plateau_width": plateau_w,
-                    "max_purity": max(purities),
+                    "plateau_width": pw["W"],
+                    "max_purity": pw["peak_purity"],
                 }
-                print(f"  {grid_name}-pt: GF={gf_score:.4f}, W={plateau_w:.4f}, "
-                      f"max_pur={max(purities):.4f}")
+                print(f"  {grid_name}-pt: GF={gf_score:.4f}, W={pw['W']:.4f}, "
+                      f"max_pur={pw['peak_purity']:.4f}")
         except Exception as e:
             print(f"  {method} FAILED: {e}")
     

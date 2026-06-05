@@ -243,6 +243,18 @@ Details → [`human_validation/README.md`](human_validation/README.md) · Figure
 
 ---
 
+## Limitations
+
+- **Network scale**: The primary ranking is based on a curated 153-node yeast subnetwork. Full-network (5,936 nodes) and cross-species (15,882 nodes) validations confirm general trends, but fine-grained method ordering may vary with network size.
+- **GO annotation bias**: G-F Score depends on GO annotation quality and coverage. Well-studied genes have richer annotations, potentially inflating purity for communities dominated by such genes.
+- **GO DAG propagation artifact**: True Path Rule expansion (Step 19) increases annotations from ~3.8 to ~28.9 terms/gene, causing community purity to approach 1.0 (G-F Score ≈ 0.9996). This is a known artifact of hierarchical expansion; the main results use pre-propagation annotations.
+- **Community detection**: Only greedy modularity optimization is used for distance-threshold communities. Alternative algorithms (Leiden, Louvain) may produce different purity profiles.
+- **2D projection**: All embeddings are standardized to σ = 0.3 and projected to 2D before G-F analysis. High-dimensional geometric properties may not be fully captured in 2D.
+- **Plateau width**: Defined as the r-interval where purity ≥ 80% of each method's peak (relative threshold). Methods with very flat purity curves may yield wide plateaus despite low absolute purity.
+- **Spearman correlation**: rho = 0.943 is based on n = 6 method-level observations (classical methods with both AUROC and G-F Score). Leave-one-out sensitivity analysis is provided in `results/link_prediction.json`.
+
+---
+
 ## Author
 
 **Yuhan Zhang (张宇涵)**  

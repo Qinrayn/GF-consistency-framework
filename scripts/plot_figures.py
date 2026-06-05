@@ -252,7 +252,7 @@ def plot_figure5_gf_scores(results_dir, figures_dir):
     methods = [methods[i] for i in sorted_idx]
     values = [values[i] for i in sorted_idx]
 
-    fig, ax = plt.subplots(figsize=(10, 5))
+    fig, ax = plt.subplots(figsize=(12, 5))
 
     # Use a distinct color palette — top method highlighted, rest graded
     palette = ['#4E79A7', '#76B7B2', '#59A14F', '#F28E2B', '#E15759', '#B07AA1', '#EDC948', '#FF9DA7', '#4C78A8', '#F58518', '#54A24B']
@@ -270,14 +270,14 @@ def plot_figure5_gf_scores(results_dir, figures_dir):
     ax.set_ylabel('G-F Score')
     ax.set_title(f'G-F Score Ranking (Interval: [{interval[0]:.3f}, {interval[1]:.3f}])')
     ax.set_xticks(range(len(methods)))
-    ax.set_xticklabels(methods, rotation=45, ha='right')
+    ax.set_xticklabels(methods, rotation=35, ha='right', fontsize=9)
 
     # Add value labels on bars
     for bar, val in zip(bars, values):
         ax.text(bar.get_x() + bar.get_width()/2, bar.get_height(),
-                f'{val:.3f}', ha='center', va='bottom', fontsize=10)
+                f'{val:.3f}', ha='center', va='bottom', fontsize=9)
 
-    plt.tight_layout()
+    plt.subplots_adjust(bottom=0.18)
     plt.savefig(figures_dir / "Fig5_GF_scores.png", dpi=300, bbox_inches='tight')
     plt.close()
     print("Figure 5 saved")

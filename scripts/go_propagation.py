@@ -1131,6 +1131,15 @@ def main():
         "mean_terms_per_gene_after": round(float(mean_terms_after), 4),
         "gf_score_curated_153": gf_curated,
         "gf_score_extended": gf_extended,
+        "gf_score_extended_note": (
+            "Extended G-F scores approach ~1.0 because True Path Rule "
+            "propagation adds all ancestor GO terms (avg %.1f terms/gene), "
+            "causing near-uniform community purity. This is an expected "
+            "artifact of hierarchical annotation expansion. The main G-F "
+            "scores in final_results_summary.json use the original "
+            "pre-propagation annotations and are not affected."
+            % float(mean_terms_after)
+        ),
         "subset_convergence": convergence,
     }
 

@@ -33,7 +33,7 @@ from utils import (
     check_embedding_collapse, align_embedding_to_nodes,
     CLASSICAL_METHODS, ALL_CURATED_METHODS, GNN_METHODS, ALL_METHODS,
     GF_R_MIN, GF_R_MAX, R_MIN, R_MAX, N_POINTS, TARGET_STD,
-    CV_FOLDS, K_NEIGHBORS, MIN_LABEL_COUNT, PLATEAU_PURITY_THRESHOLD,
+    CV_FOLDS, K_NEIGHBORS, MIN_LABEL_COUNT, PLATEAU_RELATIVE_THRESHOLD,
 )
 
 # Seeds are set inside main() to avoid side-effects on import.
@@ -550,11 +550,17 @@ def compute_gf_curves_and_scores(
         all_gf_scores[method] = score
         print(f"    G-F Score: {score:.4f}")
 
-        w = compute_plateau_width(
-            r_vals, purities, threshold=PLATEAU_PURITY_THRESHOLD
+        pw = compute_plateau_width(
+            r_vals, purities, relative_threshold=PLATEAU_RELATIVE_THRESHOLD
         )
-        all_plateau_widths[method] = {"W": round(w, 4)}
-        print(f"    Plateau width W: {w:.4f}")
+        all_plateau_widths[method] = {
+            "W": round(pw["W"], 4),
+            "r_min": round(pw["r_min"], 4),
+            "r_max": round(pw["r_max"], 4),
+            "peak_purity": round(pw["peak_purity"], 4),
+        }
+        print(f"    Plateau width W: {pw['W']:.4f} "
+              f"(peak purity: {pw['peak_purity']:.4f})")
 
     return all_purities, all_gf_scores, all_plateau_widths
 

@@ -11,13 +11,22 @@
   },
   "plateau_widths": {
     "GraphSAGE": {
-      "W": 0.0
+      "W": 0.098,
+      "r_min": 0.05,
+      "r_max": 0.148,
+      "peak_purity": 0.1065
     },
     "GAT": {
-      "W": 0.0
+      "W": 0.0477,
+      "r_min": 0.05,
+      "r_max": 0.0977,
+      "peak_purity": 0.1276
     },
     "GIN": {
-      "W": 0.0
+      "W": 0.0628,
+      "r_min": 0.05,
+      "r_max": 0.1128,
+      "peak_purity": 0.2147
     }
   },
   "link_prediction": {

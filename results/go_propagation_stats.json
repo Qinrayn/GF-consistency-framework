@@ -13,6 +13,7 @@
     "DM": 0.9996,
     "Spectral": 0.9996
   },
+  "gf_score_extended_note": "Extended G-F scores approach ~1.0 because True Path Rule propagation adds all ancestor GO terms (avg 28.9 terms/gene), causing near-uniform community purity. This is an expected artifact of hierarchical annotation expansion. The main G-F scores in final_results_summary.json use the original pre-propagation annotations and are not affected.",
   "subset_convergence": {
     "sizes": [
       30,
