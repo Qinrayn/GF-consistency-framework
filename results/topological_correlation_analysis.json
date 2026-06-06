@@ -1,0 +1,237 @@
+{
+  "methods": [
+    "DM",
+    "MDS",
+    "Spectral",
+    "DeepWalk",
+    "Node2Vec",
+    "VGAE",
+    "PCA",
+    "VGAE-feat",
+    "GraphSAGE",
+    "GAT",
+    "GIN"
+  ],
+  "correlation_table": [
+    {
+      "method": "DM",
+      "family": "Geometric",
+      "gf_score": 0.15518241816105013,
+      "topo_gf_score": 0.04942782972544893,
+      "topo_consistency": 0.09435461471096639,
+      "h1_features": 34,
+      "h1_max_persistence": 0.07508408278226852,
+      "h1_mean_persistence": 0.018845349769381917,
+      "h1_entropy": 2.9945655749007893,
+      "h1_complexity": 0.6407418921589851,
+      "h0_features": 152,
+      "h0_max_persistence": 2.5225851834201194
+    },
+    {
+      "method": "MDS",
+      "family": "Geometric",
+      "gf_score": 0.152155432912679,
+      "topo_gf_score": 0.05547072408626505,
+      "topo_consistency": 0.11556727188336557,
+      "h1_features": 23,
+      "h1_max_persistence": 0.10416756570339203,
+      "h1_mean_persistence": 0.01801778821517592,
+      "h1_entropy": 2.2464368272692146,
+      "h1_complexity": 0.41440912894904613,
+      "h0_features": 150,
+      "h0_max_persistence": 1.8315267284082368
+    },
+    {
+      "method": "Spectral",
+      "family": "Geometric",
+      "gf_score": 0.16332658400038436,
+      "topo_gf_score": 0.06322816390896038,
+      "topo_consistency": 0.01882997892183811,
+      "h1_features": 15,
+      "h1_max_persistence": 0.09610021114349365,
+      "h1_mean_persistence": 0.0090279725069801,
+      "h1_entropy": 1.2440583724633074,
+      "h1_complexity": 0.13541958760470152,
+      "h0_features": 151,
+      "h0_max_persistence": 2.2987626273446886
+    },
+    {
+      "method": "DeepWalk",
+      "family": "Random-walk",
+      "gf_score": 0.1225356361238432,
+      "topo_gf_score": 0.03880638786442182,
+      "topo_consistency": 0.3305559959605845,
+      "h1_features": 21,
+      "h1_max_persistence": 0.025974035263061523,
+      "h1_mean_persistence": 0.006675800219887779,
+      "h1_entropy": 2.506358715714563,
+      "h1_complexity": 0.14019180461764336,
+      "h0_features": 153,
+      "h0_max_persistence": 1.6018545913218545
+    },
+    {
+      "method": "Node2Vec",
+      "family": "Random-walk",
+      "gf_score": 0.1511706117501923,
+      "topo_gf_score": 0.04191837099934345,
+      "topo_consistency": 0.09077208564468275,
+      "h1_features": 19,
+      "h1_max_persistence": 0.04562555253505707,
+      "h1_mean_persistence": 0.00880822392278596,
+      "h1_entropy": 2.383787620373837,
+      "h1_complexity": 0.16735625453293324,
+      "h0_features": 153,
+      "h0_max_persistence": 1.8756495486165332
+    },
+    {
+      "method": "VGAE",
+      "family": "Deep Learning",
+      "gf_score": 0.06567018452344808,
+      "topo_gf_score": 0.031127381706245447,
+      "topo_consistency": 0.12416795089397452,
+      "h1_features": 7,
+      "h1_max_persistence": 0.005350158549845219,
+      "h1_mean_persistence": 0.0029449015855789185,
+      "h1_entropy": 1.810947284497491,
+      "h1_complexity": 0.02061431109905243,
+      "h0_features": 151,
+      "h0_max_persistence": 1.9321378469467163
+    },
+    {
+      "method": "PCA",
+      "family": "Geometric",
+      "gf_score": 0.13753060668252517,
+      "topo_gf_score": 0.04609786649259258,
+      "topo_consistency": 0.1995037026334797,
+      "h1_features": 28,
+      "h1_max_persistence": 0.04739276319742203,
+      "h1_mean_persistence": 0.014299585683537381,
+      "h1_entropy": 2.8669676045562724,
+      "h1_complexity": 0.40038839913904667,
+      "h0_features": 150,
+      "h0_max_persistence": 2.514007579454222
+    },
+    {
+      "method": "VGAE-feat",
+      "family": "Deep Learning",
+      "gf_score": 0.12384417529354565,
+      "topo_gf_score": 0.04123519301440666,
+      "topo_consistency": 0.2381376780052467,
+      "h1_features": 15,
+      "h1_max_persistence": 0.00837763026356697,
+      "h1_mean_persistence": 0.0023305644591649372,
+      "h1_entropy": 2.311140046757554,
+      "h1_complexity": 0.03495846688747406,
+      "h0_features": 152,
+      "h0_max_persistence": 3.6406216621398926
+    },
+    {
+      "method": "GraphSAGE",
+      "family": "GNN",
+      "gf_score": 0.069,
+      "topo_gf_score": 0.03374034866137377,
+      "topo_consistency": 0.18507733266304857,
+      "h1_features": 21,
+      "h1_max_persistence": 0.023150034248828888,
+      "h1_mean_persistence": 0.004941510923561596,
+      "h1_entropy": 2.5798068956439097,
+      "h1_complexity": 0.10377172939479351,
+      "h0_features": 153,
+      "h0_max_persistence": 1.123923420906067
+    },
+    {
+      "method": "GAT",
+      "family": "GNN",
+      "gf_score": 0.0694,
+      "topo_gf_score": 0.031767109969874835,
+      "topo_consistency": 0.0535123914100297,
+      "h1_features": 17,
+      "h1_max_persistence": 0.008064813911914825,
+      "h1_mean_persistence": 0.0029058200991986427,
+      "h1_entropy": 2.3533435046409967,
+      "h1_complexity": 0.04939894168637693,
+      "h0_features": 151,
+      "h0_max_persistence": 1.13021981716156
+    },
+    {
+      "method": "GIN",
+      "family": "GNN",
+      "gf_score": 0.1217,
+      "topo_gf_score": 0.038642275011274166,
+      "topo_consistency": 0.18385341280283665,
+      "h1_features": 17,
+      "h1_max_persistence": 0.08747728168964386,
+      "h1_mean_persistence": 0.014041047625462799,
+      "h1_entropy": 1.8013359431050566,
+      "h1_complexity": 0.23869780963286757,
+      "h0_features": 151,
+      "h0_max_persistence": 2.289090156555176
+    }
+  ],
+  "spearman_results": {
+    "topo_consistency": {
+      "label": "Topological Consistency",
+      "spearman_rho": -0.38181818181818183,
+      "p_value": 0.2465595757789701,
+      "significant_005": false,
+      "n": 11
+    },
+    "topo_gf_score": {
+      "label": "Topological GF Score",
+      "spearman_rho": 0.9727272727272729,
+      "p_value": 5.142177049049177e-07,
+      "significant_005": true,
+      "n": 11
+    },
+    "h1_features": {
+      "label": "H1 Features (count)",
+      "spearman_rho": 0.3707181178682718,
+      "p_value": 0.2617055695359194,
+      "significant_005": false,
+      "n": 11
+    },
+    "h1_max_persistence": {
+      "label": "H1 Max Persistence",
+      "spearman_rho": 0.7636363636363637,
+      "p_value": 0.006233059747904754,
+      "significant_005": true,
+      "n": 11
+    },
+    "h1_mean_persistence": {
+      "label": "H1 Mean Persistence",
+      "spearman_rho": 0.6545454545454547,
+      "p_value": 0.028864598957001903,
+      "significant_005": true,
+      "n": 11
+    },
+    "h1_entropy": {
+      "label": "H1 Persistence Entropy",
+      "spearman_rho": 0.03636363636363637,
+      "p_value": 0.9154683168905347,
+      "significant_005": false,
+      "n": 11
+    },
+    "h1_complexity": {
+      "label": "H1 Topological Complexity",
+      "spearman_rho": 0.6363636363636364,
+      "p_value": 0.0352869812200623,
+      "significant_005": true,
+      "n": 11
+    },
+    "h0_features": {
+      "label": "H0 Features (count)",
+      "spearman_rho": -0.1557713256101807,
+      "p_value": 0.6474132155584014,
+      "significant_005": false,
+      "n": 11
+    },
+    "h0_max_persistence": {
+      "label": "H0 Max Persistence",
+      "spearman_rho": 0.4909090909090909,
+      "p_value": 0.12520440713849548,
+      "significant_005": false,
+      "n": 11
+    }
+  },
+  "note": "Phase 3 analysis: topology-function duality in PPI embeddings"
+}
