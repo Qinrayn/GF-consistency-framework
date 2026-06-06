@@ -48,9 +48,9 @@ RESULTS_DIR = os.path.join(os.path.dirname(__file__), '..', 'results')
 FIGURES_DIR = os.path.join(os.path.dirname(__file__), '..', 'figures')
 
 METHODS = ['DM', 'MDS', 'Spectral', 'DeepWalk', 'Node2Vec', 'VGAE']
-SUBSAMPLE_SIZE = 500   # Smaller for feasible Ripser computation on H1
+SUBSAMPLE_SIZE = 2000  # Match human GF Score subsample size
 R_MIN_TOPO = 0.05
-R_MAX_TOPO = 0.55
+R_MAX_TOPO = 0.30      # Match human GF unified interval (~0.297)
 N_R_POINTS = 100
 
 METHOD_COLORS = {
@@ -163,14 +163,13 @@ def compute_persistence_statistics(diagrams):
 def compute_purity_at_r(coords, nodes, go_map, dist_matrix, r):
     """Compute functional purity at distance threshold r using Louvain."""
     import networkx as nx
+    from scipy.spatial import cKDTree
 
     n = len(nodes)
-    # Build spatial graph
-    edges = []
-    for i in range(n):
-        for j in range(i + 1, n):
-            if dist_matrix[i, j] <= r:
-                edges.append((i, j))
+    # Build spatial graph using KDTree (O(n log n) vs O(n^2))
+    tree = cKDTree(coords)
+    pairs = tree.query_pairs(r)
+    edges = list(pairs)
 
     if not edges:
         return 0.0
@@ -179,11 +178,7 @@ def compute_purity_at_r(coords, nodes, go_map, dist_matrix, r):
     G.add_nodes_from(range(n))
     G.add_edges_from(edges)
 
-    # Cap edges for performance
-    if len(edges) > 200000:
-        return 0.0
-
-    # Louvain community detection
+    # Louvain community detection (no edge cap)
     try:
         partition = nx.community.louvain_communities(G, seed=SEED)
     except Exception:
@@ -221,35 +216,35 @@ def topological_consistency_score(diagrams, purities, r_vals):
     """
     Compute topological consistency: alignment between topological
     transitions (birth/death events) and functional purity gradient.
+
+    Returns both combined (H0+H1) and H1-only scores.
+    H1-only is more meaningful since H0 events are trivial merges.
     """
-    # Collect all birth/death events from H0 and H1
-    events = []
-    for dim, dgm in enumerate(diagrams):
-        for birth, death in dgm:
-            if np.isfinite(death):
-                events.append(birth)
-                events.append(death)
-
-    if not events or len(purities) < 3:
-        return 0.0
-
-    events = np.array(events)
-
-    # Compute purity gradient
     dp_dr = np.gradient(purities, r_vals)
 
-    # For each event, measure the local purity gradient magnitude
-    consistency = 0.0
-    n_events = 0
-    for ev_r in events:
-        idx = np.argmin(np.abs(r_vals - ev_r))
-        consistency += abs(dp_dr[idx])
-        n_events += 1
+    def _score_from_events(event_r_values):
+        if len(event_r_values) == 0:
+            return 0.0
+        total = sum(abs(dp_dr[np.argmin(np.abs(r_vals - ev_r))])
+                    for ev_r in event_r_values)
+        return float(total / len(event_r_values))
 
-    if n_events > 0:
-        consistency /= n_events
+    # H0 events (connected components — trivial for any point cloud)
+    h0_events = []
+    for birth, death in diagrams[0]:
+        if np.isfinite(death):
+            h0_events.extend([birth, death])
 
-    return float(consistency)
+    # H1 events (loops — topologically meaningful)
+    h1_events = []
+    if len(diagrams) > 1:
+        for birth, death in diagrams[1]:
+            if np.isfinite(death):
+                h1_events.extend([birth, death])
+
+    combined = _score_from_events(h0_events + h1_events)
+    h1_only = _score_from_events(h1_events)
+    return combined, h1_only
 
 
 # ---- Main analysis ----
@@ -272,19 +267,19 @@ def analyze_method(method, coords, nodes, go_map, r_vals, rng):
     # Persistence statistics
     pstats = compute_persistence_statistics(diagrams)
 
-    # Purity curve (subsampled for speed: every 5th r value)
-    print(f"  [{method}] Computing purity curve (subsampled)...")
-    dist_matrix = np.sqrt(
-        np.sum((coords[:, None, :] - coords[None, :, :]) ** 2, axis=-1)
-    )
+    # Purity curve (subsampled: ~25 r points for speed)
+    print(f"  [{method}] Computing purity curve ({len(nodes)} nodes)...")
+    t1 = time.time()
 
-    step = max(1, len(r_vals) // 20)  # ~20 r points for purity
+    step = max(1, len(r_vals) // 25)
     r_sub = r_vals[::step]
     purities = []
     for r in r_sub:
-        p = compute_purity_at_r(coords, nodes, go_map, dist_matrix, r)
+        p = compute_purity_at_r(coords, nodes, go_map, None, r)
         purities.append(p)
     purities = np.array(purities)
+    t_purity = time.time() - t1
+    print(f"    Purity computed in {t_purity:.1f}s ({len(r_sub)} r-values)")
 
     # Interpolate to full r_vals
     from scipy.interpolate import interp1d
@@ -295,9 +290,13 @@ def analyze_method(method, coords, nodes, go_map, r_vals, rng):
     else:
         purities_full = np.full_like(r_vals, purities.mean() if len(purities) > 0 else 0.0)
 
-    # Topological consistency score
-    topo_cons = topological_consistency_score(diagrams, purities_full, r_vals)
-    print(f"    Topological consistency = {topo_cons:.4f}")
+    # Topological consistency score (combined + H1-only)
+    topo_cons_all, topo_cons_h1 = topological_consistency_score(
+        diagrams, purities_full, r_vals
+    )
+    print(f"    Topological consistency (all) = {topo_cons_all:.4f}")
+    print(f"    Topological consistency (H1)  = {topo_cons_h1:.4f}")
+    print(f"    Purity range: [{purities.min():.4f}, {purities.max():.4f}], std={purities.std():.4f}")
 
     return {
         'diagrams': diagrams,
@@ -305,7 +304,8 @@ def analyze_method(method, coords, nodes, go_map, r_vals, rng):
         'betti_1': betti_1.tolist(),
         'persistence_stats': pstats,
         'purities': purities_full.tolist(),
-        'topo_consistency': topo_cons,
+        'topo_consistency': topo_cons_all,
+        'topo_consistency_h1': topo_cons_h1,
         'r_vals': r_vals.tolist(),
         'ph_time_seconds': t_ph,
     }
@@ -371,15 +371,16 @@ def main():
 
     # ---- Summary ----
     print("\n" + "=" * 65)
-    print("  SUMMARY: Human PPI Topological Analysis")
+    print("  SUMMARY: Human PPI Topological Analysis (v2)")
     print("=" * 65)
-    print(f"{'Method':12s} {'GF Score':>10s} {'Topo Cons':>10s} {'H1 feat':>8s} "
-          f"{'H1 maxP':>10s} {'Max b1':>8s} {'Nodes':>6s}")
-    print("-" * 70)
+    print(f"{'Method':12s} {'GF Score':>10s} {'Cons(all)':>10s} {'Cons(H1)':>10s} "
+          f"{'H1 feat':>8s} {'H1 maxP':>10s} {'Max b1':>8s} {'Nodes':>6s}")
+    print("-" * 78)
 
     methods_list = []
     gf_list = []
-    tc_list = []
+    tc_all_list = []
+    tc_h1_list = []
 
     for method in METHODS:
         if method not in all_results:
@@ -389,29 +390,33 @@ def main():
         h1 = r['persistence_stats'].get('H1', {})
         b1_arr = np.array(r['betti_1'])
         print(f"{method:12s} {(gf or 0):10.4f} {r['topo_consistency']:10.4f} "
+              f"{r['topo_consistency_h1']:10.4f} "
               f"{h1.get('n_features', 0):8d} {h1.get('max_persistence', 0):10.4f} "
               f"{b1_arr.max():8d} {r['n_nodes']:6d}")
 
         if gf is not None:
             methods_list.append(method)
             gf_list.append(gf)
-            tc_list.append(r['topo_consistency'])
+            tc_all_list.append(r['topo_consistency'])
+            tc_h1_list.append(r['topo_consistency_h1'])
 
-    # Spearman correlation
+    # Spearman correlations
     if len(gf_list) >= 4:
-        rho, pval = stats.spearmanr(gf_list, tc_list)
-        print(f"\n  Spearman rho(GF, TopoCons) = {rho:+.4f}  (p = {pval:.4f})")
+        rho_all, p_all = stats.spearmanr(gf_list, tc_all_list)
+        rho_h1c, p_h1c = stats.spearmanr(gf_list, tc_h1_list)
+        print(f"\n  Spearman rho(GF, TopoCons_all) = {rho_all:+.4f}  (p = {p_all:.4f})")
+        print(f"  Spearman rho(GF, TopoCons_H1)  = {rho_h1c:+.4f}  (p = {p_h1c:.4f})")
 
-        # Also correlate H1 max persistence with GF
         h1_maxp = [all_results[m]['persistence_stats'].get('H1', {}).get('max_persistence', 0)
                     for m in methods_list]
         if np.std(h1_maxp) > 1e-12:
             rho_h1, p_h1 = stats.spearmanr(gf_list, h1_maxp)
-            print(f"  Spearman rho(GF, H1 maxP)  = {rho_h1:+.4f}  (p = {p_h1:.4f})")
+            print(f"  Spearman rho(GF, H1 maxP)      = {rho_h1:+.4f}  (p = {p_h1:.4f})")
         else:
             rho_h1, p_h1 = 0.0, 1.0
     else:
-        rho, pval = 0.0, 1.0
+        rho_all, p_all = 0.0, 1.0
+        rho_h1c, p_h1c = 0.0, 1.0
         rho_h1, p_h1 = 0.0, 1.0
 
     # ---- Save results ----
@@ -419,13 +424,13 @@ def main():
         'methods': list(all_results.keys()),
         'subsample_size': SUBSAMPLE_SIZE,
         'r_range': [R_MIN_TOPO, R_MAX_TOPO],
-        'spearman_gf_topo_cons': {'rho': float(rho), 'p': float(pval)},
+        'spearman_gf_topo_cons_all': {'rho': float(rho_all), 'p': float(p_all)},
+        'spearman_gf_topo_cons_h1': {'rho': float(rho_h1c), 'p': float(p_h1c)},
         'spearman_gf_h1_maxp': {'rho': float(rho_h1), 'p': float(p_h1)},
         'results': {}
     }
 
     for method, r in all_results.items():
-        # Convert diagrams to lists for JSON
         dgm_serializable = []
         for dgm in r['diagrams']:
             dgm_serializable.append(
@@ -435,6 +440,7 @@ def main():
             'n_nodes': r['n_nodes'],
             'gf_score': r['gf_score'],
             'topo_consistency': r['topo_consistency'],
+            'topo_consistency_h1': r['topo_consistency_h1'],
             'persistence_stats': r['persistence_stats'],
             'betti_0': r['betti_0'],
             'betti_1': r['betti_1'],
@@ -449,44 +455,63 @@ def main():
     print(f"\nSaved: {out_path}")
 
     # ---- Generate figure ----
-    generate_human_topo_figure(all_results, methods_list, gf_list, tc_list,
-                               rho, pval, rho_h1, p_h1)
+    generate_human_topo_figure(all_results, methods_list, gf_list,
+                               tc_all_list, tc_h1_list,
+                               rho_all, p_all, rho_h1c, p_h1c,
+                               rho_h1, p_h1)
 
     print("\nDone!")
 
 
-def generate_human_topo_figure(all_results, methods_list, gf_list, tc_list,
-                                rho, pval, rho_h1, p_h1):
-    """Generate Fig14: Human network topological validation scatter."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+def generate_human_topo_figure(all_results, methods_list, gf_list,
+                                tc_all_list, tc_h1_list,
+                                rho_all, p_all, rho_h1c, p_h1c,
+                                rho_h1, p_h1):
+    """Generate Fig14: Human network topological validation scatter (3 panels)."""
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 
-    # Panel A: Topological Consistency vs GF Score
+    # Panel A: Topo Consistency (all) vs GF Score
     ax = axes[0]
+    for m, gf, tc in zip(methods_list, gf_list, tc_all_list):
+        color = METHOD_COLORS.get(m, '#333333')
+        ax.scatter(gf, tc, c=color, s=120, edgecolors='black',
+                   linewidths=0.8, zorder=5)
+        ax.annotate(m, (gf, tc), textcoords="offset points",
+                    xytext=(8, 5), fontsize=9, fontweight='medium', color=color)
     if len(gf_list) >= 3:
-        for m, gf, tc in zip(methods_list, gf_list, tc_list):
-            color = METHOD_COLORS.get(m, '#333333')
-            ax.scatter(gf, tc, c=color, s=120, edgecolors='black',
-                       linewidths=0.8, zorder=5)
-            ax.annotate(m, (gf, tc), textcoords="offset points",
-                        xytext=(8, 5), fontsize=9, fontweight='medium',
-                        color=color)
-
-        # Trend line
-        slope, intercept, r_val, _, _ = stats.linregress(gf_list, tc_list)
+        slope, intercept, _, _, _ = stats.linregress(gf_list, tc_all_list)
         x_line = np.linspace(min(gf_list) * 0.9, max(gf_list) * 1.1, 50)
         ax.plot(x_line, slope * x_line + intercept, 'k--', alpha=0.3, linewidth=1.5)
-
     ax.set_xlabel('Human G-F Score', fontsize=12, fontweight='bold')
-    ax.set_ylabel('Topological Consistency', fontsize=12, fontweight='bold')
-    ax.set_title(f'(A) Human PPI: Topo Consistency vs GF Score\n'
-                 f'Spearman rho={rho:.3f}, p={pval:.3f}',
-                 fontsize=12, fontweight='bold')
+    ax.set_ylabel('Topological Consistency (all)', fontsize=12, fontweight='bold')
+    ax.set_title(f'(A) Topo Consistency (all) vs GF\n'
+                 f'rho={rho_all:.3f}, p={p_all:.3f}', fontsize=11, fontweight='bold')
     ax.grid(True, alpha=0.2)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
 
-    # Panel B: H1 Max Persistence vs GF Score
+    # Panel B: Topo Consistency (H1-only) vs GF Score
     ax = axes[1]
+    for m, gf, tc in zip(methods_list, gf_list, tc_h1_list):
+        color = METHOD_COLORS.get(m, '#333333')
+        ax.scatter(gf, tc, c=color, s=120, edgecolors='black',
+                   linewidths=0.8, zorder=5)
+        ax.annotate(m, (gf, tc), textcoords="offset points",
+                    xytext=(8, 5), fontsize=9, fontweight='medium', color=color)
+    if len(gf_list) >= 3 and np.std(tc_h1_list) > 1e-12:
+        slope, intercept, _, _, _ = stats.linregress(gf_list, tc_h1_list)
+        x_line = np.linspace(min(gf_list) * 0.9, max(gf_list) * 1.1, 50)
+        ax.plot(x_line, slope * x_line + intercept, 'k--', alpha=0.3, linewidth=1.5)
+    ax.set_xlabel('Human G-F Score', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Topological Consistency (H1 only)', fontsize=12, fontweight='bold')
+    ax.set_title(f'(B) Topo Consistency (H1) vs GF\n'
+                 f'rho={rho_h1c:.3f}, p={p_h1c:.3f}', fontsize=11, fontweight='bold')
+    ax.grid(True, alpha=0.2)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+
+    # Panel C: H1 Max Persistence vs GF Score
+    ax = axes[2]
     h1_maxp = [all_results[m]['persistence_stats'].get('H1', {}).get('max_persistence', 0)
                for m in methods_list]
     if len(gf_list) >= 3 and np.std(h1_maxp) > 1e-12:
@@ -504,14 +529,14 @@ def generate_human_topo_figure(all_results, methods_list, gf_list, tc_list,
 
     ax.set_xlabel('H1 Max Persistence', fontsize=12, fontweight='bold')
     ax.set_ylabel('Human G-F Score', fontsize=12, fontweight='bold')
-    ax.set_title(f'(B) Human PPI: H1 Persistence vs GF Score\n'
-                 f'Spearman rho={rho_h1:.3f}, p={p_h1:.3f}',
-                 fontsize=12, fontweight='bold')
+    ax.set_title(f'(C) H1 Max Persistence vs GF\n'
+                 f'rho={rho_h1:.3f}, p={p_h1:.3f}',
+                 fontsize=11, fontweight='bold')
     ax.grid(True, alpha=0.2)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
 
-    plt.suptitle('Human PPI Network: Topological Validation',
+    plt.suptitle(f'Human PPI Network: Topological Validation ({SUBSAMPLE_SIZE} nodes)',
                  fontsize=14, fontweight='bold', y=1.03)
     plt.tight_layout()
     fig_path = os.path.join(FIGURES_DIR, 'Fig14_human_topo_scatter.png')
