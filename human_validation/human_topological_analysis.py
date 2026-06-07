@@ -3,7 +3,7 @@
 human_topological_analysis.py
 ==============================
 
-Phase 4a: Validate the topology-function duality on the **human** PPI
+Cross-species validation: Validate the topology-function duality on the **human** PPI
 network.  Loads existing human embeddings (DM, MDS, Spectral, DeepWalk,
 Node2Vec, VGAE), subsamples annotated nodes, computes persistent homology
 via Ripser, and correlates topological metrics with human G-F Scores.
@@ -313,7 +313,7 @@ def analyze_method(method, coords, nodes, go_map, r_vals, rng):
 
 def main():
     print("=" * 65)
-    print("  Phase 4a: Human PPI Topological Validation")
+    print("  Human PPI Topological Validation")
     print("=" * 65)
 
     if not HAS_RIPSER:

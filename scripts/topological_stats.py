@@ -3,7 +3,7 @@
 topological_stats.py
 ====================
 
-Phase 3 statistical analysis: Spearman correlations between topological
+Statistical analysis: Spearman correlations between topological
 metrics and standard G-F Scores, plus the key scatter plot showing the
 topology-function duality.
 
@@ -376,7 +376,7 @@ def _json_default(obj):
 
 def main():
     print("=" * 65)
-    print("  Phase 3: Topological-Functional Correlation Analysis")
+    print("  Topological-Functional Correlation Analysis")
     print("=" * 65)
 
     # Load data
@@ -413,7 +413,7 @@ def main():
         'methods': [r['method'] for r in table],
         'correlation_table': table,
         'spearman_results': corr_results,
-        'note': 'Phase 3 analysis: topology-function duality in PPI embeddings',
+        'note': 'Topological correlation analysis: topology-function duality in PPI embeddings',
     }
     out_path = results_dir / 'topological_correlation_analysis.json'
     with open(out_path, 'w', encoding='utf-8') as f:

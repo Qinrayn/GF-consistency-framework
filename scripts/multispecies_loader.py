@@ -285,3 +285,47 @@ def load_species_dataset(
         meta["name"], len(valid_nodes), G.number_of_edges(),
     )
     return G, valid_nodes, go_map
+
+
+# ---------------------------------------------------------------------------
+# Pipeline entry point
+# ---------------------------------------------------------------------------
+
+def main():
+    """Validate multispecies loader by listing registered species.
+
+    For each registered species, checks whether the required data files
+    exist and reports network/annotation availability.
+    """
+    import json
+    from pathlib import Path
+    from scripts.utils import get_data_dir
+
+    data_dir = get_data_dir()
+    print("Registered species and data availability:")
+    print("-" * 60)
+
+    for name, meta in SPECIES_REGISTRY.items():
+        species_dir = data_dir / name
+        has_data = species_dir.exists()
+        string_file = species_dir / f"{meta['string_prefix']}.protein.links.v12.0.txt.gz" \
+            if has_data else None
+        has_string = string_file is not None and string_file.exists()
+
+        status_parts = []
+        if has_data:
+            status_parts.append(f"data dir: {species_dir}")
+        else:
+            status_parts.append("data dir: NOT FOUND")
+        status_parts.append(f"STRING file: {'YES' if has_string else 'NO'}")
+
+        status = " | ".join(status_parts)
+        tag = " [available]" if has_string else ""
+        print(f"  {name:10s} ({meta['name']:30s}) {status}{tag}")
+
+    print()
+    print("To run the pipeline on a different species:")
+    print("  python run_all_analysis.py --species human --run-human")
+    print()
+    print("Required data files should be placed in data/{species}/")
+    print("See README for download instructions.")

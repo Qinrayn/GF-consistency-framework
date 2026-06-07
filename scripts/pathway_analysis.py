@@ -377,3 +377,76 @@ def run_pathway_analysis(
         logger.info("Saved pathway analysis to %s", outfile)
 
     return all_results
+
+
+# ---------------------------------------------------------------------------
+# Pipeline entry point
+# ---------------------------------------------------------------------------
+
+def main():
+    """Run pathway enrichment on G-F communities at peak-purity threshold.
+
+    Loads the curated network, detects communities at the optimal distance
+    threshold (peak purity from G-F curves), and runs Fisher's exact
+    pathway enrichment for each community.
+
+    Saves: results/pathway_analysis.json
+    """
+    import sys
+    import numpy as np
+    from pathlib import Path
+    from networkx.algorithms.community import greedy_modularity_communities
+    from scripts.utils import (
+        SEED, get_data_dir, get_results_dir, get_embeddings_dir,
+        load_curated_network, load_embedding, precompute_distance_matrix,
+        build_spatial_graph_fast,
+        CLASSICAL_METHODS,
+    )
+
+    np.random.seed(SEED)
+    data_dir = get_data_dir()
+    results_dir = get_results_dir()
+    emb_dir = get_embeddings_dir()
+
+    # Load network and find best method by G-F score
+    print("Loading G-F scores to determine best method...")
+    gf_file = results_dir / "gf_scores.json"
+    if not gf_file.exists():
+        print("G-F scores not found. Run Step 3 (compute_gf.py) first.")
+        return
+    with open(gf_file) as f:
+        gf_data = json.load(f)
+    scores = gf_data.get("scores", {})
+    if not scores:
+        print("No G-F scores found. Step skipped.")
+        return
+
+    best_method = max(scores, key=scores.get)
+    print(f"Best method by G-F score: {best_method} ({scores[best_method]:.4f})")
+
+    # Load best method embedding and network
+    G, nodes, go_map = load_curated_network(data_dir)
+    coords, emb_nodes = load_embedding(best_method, "153", embeddings_dir=emb_dir)
+    common = sorted(set(emb_nodes) & set(nodes) & set(go_map.keys()))
+    idx = [emb_nodes.index(n) for n in common]
+    aligned = coords[idx]
+
+    # Find peak-purity threshold via a quick r-sweep
+    from scripts.utils import compute_gf_curve, R_MIN, R_MAX, N_POINTS
+    r_vals = np.linspace(R_MIN, R_MAX, N_POINTS)
+    purities, _ = compute_gf_curve(aligned, common, go_map, r_vals)
+    peak_idx = int(np.argmax(purities))
+    optimal_r = float(r_vals[peak_idx])
+    print(f"Peak purity r = {optimal_r:.4f} (purity = {purities[peak_idx]:.4f})")
+
+    # Detect communities at optimal r
+    D = precompute_distance_matrix(aligned)
+    G_r = build_spatial_graph_fast(D, optimal_r)
+    communities = list(greedy_modularity_communities(G_r))
+    comm_sets = [set(common[i] for i in c) for c in communities]
+    print(f"Detected {len(comm_sets)} communities at r = {optimal_r:.4f}")
+
+    # Run pathway enrichment
+    results = run_pathway_analysis(G, comm_sets, go_map, output_dir=results_dir)
+    n_enriched = len(results.get("community_enrichments", []))
+    print(f"Pathway enrichment complete: {n_enriched} communities with significant pathways")

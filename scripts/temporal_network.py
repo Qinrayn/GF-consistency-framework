@@ -324,3 +324,72 @@ def temporal_consistency_score(results: list[dict]) -> dict:
         "trend_slope": round(trend_slope, 6),
         "n_valid_snapshots": len(scores),
     }
+
+
+# ---------------------------------------------------------------------------
+# Pipeline entry point
+# ---------------------------------------------------------------------------
+
+def main():
+    """Run temporal G-F analysis if temporal PPI data is available.
+
+    Looks for time-stamped edgelist files in data/temporal/.
+    If no temporal data is found, the step is skipped gracefully.
+    """
+    import json
+    from pathlib import Path
+    from scripts.utils import (
+        SEED, get_data_dir, get_results_dir,
+    )
+
+    np.random.seed(SEED)
+    data_dir = get_data_dir()
+    results_dir = get_results_dir()
+    temporal_dir = data_dir / "temporal"
+
+    if not temporal_dir.exists():
+        print("No temporal PPI data found (data/temporal/ does not exist).")
+        print("Temporal analysis requires time-stamped edgelist files.")
+        print("Step skipped.")
+        return
+
+    # Look for edgelist files with timestamps
+    edgelist_files = sorted(temporal_dir.glob("*.edgelist"))
+    if not edgelist_files:
+        print("No temporal edgelist files found in data/temporal/.")
+        print("Expected format: timestamped edges with tab-separated columns.")
+        print("Step skipped.")
+        return
+
+    # Load GO annotations
+    go_map_file = data_dir / "gene_go_map.json"
+    if not go_map_file.exists():
+        print("GO annotation file not found. Step skipped.")
+        return
+    with open(go_map_file) as f:
+        go_map = json.load(f)
+
+    print(f"Found {len(edgelist_files)} temporal edgelist file(s)")
+
+    # Load temporal network
+    tn = load_temporal_edgelist(edgelist_files)
+    print(f"Loaded temporal network: {len(tn.snapshots)} snapshots")
+
+    # Run temporal G-F analysis
+    results = temporal_gf_analysis(tn, go_map)
+
+    # Compute consistency
+    consistency = temporal_consistency_score(results)
+    print(f"Temporal consistency: mean GF={consistency['mean_gf']:.4f}, "
+          f"CV={consistency['cv_gf']:.4f}")
+
+    # Save results
+    results_dir.mkdir(parents=True, exist_ok=True)
+    output = {
+        "snapshot_results": results,
+        "consistency": consistency,
+    }
+    out_file = results_dir / "temporal_gf_analysis.json"
+    with open(out_file, "w") as f:
+        json.dump(output, f, indent=2, default=str)
+    print(f"Saved temporal analysis to {out_file}")

@@ -1,6 +1,6 @@
 """
 Human PPI Network: Generate all six embeddings (DM, MDS, Spectral, DeepWalk, Node2Vec, VGAE)
-for the human STRING network (14,679 nodes).
+for the human STRING network (largest connected component).
 
 This script extends the existing human_validation scripts to cover all methods,
 matching the output format and standards used in scripts/embed_all.py.
@@ -24,7 +24,7 @@ from scripts.utils import (
     build_similarity_matrix, diffusion_map_from_similarity,
     classical_mds_from_distances, spectral_embedding_from_graph,
     deepwalk_from_graph, node2vec_from_graph, vgae_from_graph,
-    standardize_coordinates, SEED
+    rescale_coordinates, SEED
 )
 
 # ---- Configuration ----
@@ -178,14 +178,14 @@ def compute_all_embeddings(G):
         # Build similarity matrix and compute diffusion map
         sim_matrix = build_similarity_matrix(features)
         coords = diffusion_map_from_similarity(sim_matrix)
-        coords = standardize_coordinates(coords, TARGET_STD)
+        coords = rescale_coordinates(coords, TARGET_STD)
         
         # Outlier detection
         coords, clean_nodes, outliers = detect_and_remove_outliers(coords, node_list, 'DM')
         all_outliers['DM'] = outliers
         
         # Re-standardize after outlier removal
-        coords = standardize_coordinates(coords, TARGET_STD)
+        coords = rescale_coordinates(coords, TARGET_STD)
         
         embeddings['DM'] = (coords, clean_nodes)
         save_embedding(coords, clean_nodes, 'DM')
@@ -209,11 +209,11 @@ def compute_all_embeddings(G):
         dist_matrix[dist_matrix == float('inf')] = max_dist + 1
         
         coords = classical_mds_from_distances(dist_matrix)
-        coords = standardize_coordinates(coords, TARGET_STD)
+        coords = rescale_coordinates(coords, TARGET_STD)
         
         coords, clean_nodes, outliers = detect_and_remove_outliers(coords, node_list, 'MDS')
         all_outliers['MDS'] = outliers
-        coords = standardize_coordinates(coords, TARGET_STD)
+        coords = rescale_coordinates(coords, TARGET_STD)
         
         embeddings['MDS'] = (coords, clean_nodes)
         save_embedding(coords, clean_nodes, 'MDS')
@@ -224,11 +224,11 @@ def compute_all_embeddings(G):
     print("\n[3/6] Spectral Embedding...")
     try:
         coords = spectral_embedding_from_graph(G)
-        coords = standardize_coordinates(coords, TARGET_STD)
+        coords = rescale_coordinates(coords, TARGET_STD)
         
         coords, clean_nodes, outliers = detect_and_remove_outliers(coords, node_list, 'Spectral')
         all_outliers['Spectral'] = outliers
-        coords = standardize_coordinates(coords, TARGET_STD)
+        coords = rescale_coordinates(coords, TARGET_STD)
         
         embeddings['Spectral'] = (coords, clean_nodes)
         save_embedding(coords, clean_nodes, 'Spectral')
@@ -240,11 +240,11 @@ def compute_all_embeddings(G):
     try:
         coords = deepwalk_from_graph(G, walk_length=20, walks_per_node=10, 
                                       window_size=5, dimensions=2, seed=SEED)
-        coords = standardize_coordinates(coords, TARGET_STD)
+        coords = rescale_coordinates(coords, TARGET_STD)
         
         coords, clean_nodes, outliers = detect_and_remove_outliers(coords, node_list, 'DeepWalk')
         all_outliers['DeepWalk'] = outliers
-        coords = standardize_coordinates(coords, TARGET_STD)
+        coords = rescale_coordinates(coords, TARGET_STD)
         
         embeddings['DeepWalk'] = (coords, clean_nodes)
         save_embedding(coords, clean_nodes, 'DeepWalk')
@@ -256,11 +256,11 @@ def compute_all_embeddings(G):
     try:
         coords = node2vec_from_graph(G, walk_length=20, walks_per_node=10,
                                       window_size=5, dimensions=2, p=0.5, q=2.0, seed=SEED)
-        coords = standardize_coordinates(coords, TARGET_STD)
+        coords = rescale_coordinates(coords, TARGET_STD)
         
         coords, clean_nodes, outliers = detect_and_remove_outliers(coords, node_list, 'Node2Vec')
         all_outliers['Node2Vec'] = outliers
-        coords = standardize_coordinates(coords, TARGET_STD)
+        coords = rescale_coordinates(coords, TARGET_STD)
         
         embeddings['Node2Vec'] = (coords, clean_nodes)
         save_embedding(coords, clean_nodes, 'Node2Vec')
@@ -272,11 +272,11 @@ def compute_all_embeddings(G):
     try:
         coords = vgae_from_graph(G, hidden_dim=4, latent_dim=2, epochs=300, 
                                   lr=0.01, seed=SEED)
-        coords = standardize_coordinates(coords, TARGET_STD)
+        coords = rescale_coordinates(coords, TARGET_STD)
         
         coords, clean_nodes, outliers = detect_and_remove_outliers(coords, node_list, 'VGAE')
         all_outliers['VGAE'] = outliers
-        coords = standardize_coordinates(coords, TARGET_STD)
+        coords = rescale_coordinates(coords, TARGET_STD)
         
         embeddings['VGAE'] = (coords, clean_nodes)
         save_embedding(coords, clean_nodes, 'VGAE')

@@ -269,3 +269,71 @@ def compute_gf_curve_hyperbolic(
             modularities.append(0.0)
 
     return r_vals, purities, modularities
+
+
+# ---------------------------------------------------------------------------
+# Pipeline entry point
+# ---------------------------------------------------------------------------
+
+def main():
+    """Compute Poincare Ball embedding and hyperbolic G-F curve.
+
+    Saves:
+      - embeddings/hyperbolic_153.npy + _nodes.json
+      - results/hyperbolic_gf_curves.json
+    """
+    import json
+    from pathlib import Path
+    from scripts.utils import (
+        SEED, TARGET_STD, get_data_dir, get_embeddings_dir, get_results_dir,
+        load_curated_network, load_embedding, rescale_coordinates,
+        coords_to_dict,
+    )
+
+    np.random.seed(SEED)
+
+    data_dir = get_data_dir()
+    emb_dir = get_embeddings_dir()
+    results_dir = get_results_dir()
+    emb_dir.mkdir(parents=True, exist_ok=True)
+    results_dir.mkdir(parents=True, exist_ok=True)
+
+    # Load network
+    print("Loading curated network...")
+    G, nodes, go_map = load_curated_network(data_dir)
+
+    # Compute Poincare Ball embedding
+    print("Computing Poincare Ball embedding (dim=2, epochs=300)...")
+    coords = poincare_ball_embedding(G, nodes, dim=2, epochs=300, lr=0.01)
+
+    # Save embedding
+    emb_file = emb_dir / "hyperbolic_153.npy"
+    nodes_file = emb_dir / "hyperbolic_153_nodes.json"
+    np.save(emb_file, coords)
+    with open(nodes_file, "w") as f:
+        json.dump(nodes, f)
+    print(f"  Saved embedding to {emb_file}")
+
+    # Compute hyperbolic G-F curve
+    print("Computing hyperbolic G-F curve...")
+    common_nodes = sorted(set(nodes) & set(go_map.keys()))
+    node_indices = [nodes.index(n) for n in common_nodes]
+    aligned_coords = coords[node_indices]
+
+    r_vals, purities, modularities = compute_gf_curve_hyperbolic(
+        aligned_coords, common_nodes, go_map,
+    )
+
+    # Save results
+    output = {
+        "method": "hyperbolic",
+        "r_values": r_vals.tolist(),
+        "purity": purities,
+        "modularity": modularities,
+        "n_nodes": len(common_nodes),
+    }
+    out_file = results_dir / "hyperbolic_gf_curves.json"
+    with open(out_file, "w") as f:
+        json.dump(output, f, indent=2)
+    print(f"  Saved G-F curves to {out_file}")
+    print(f"  Purity range: [{min(purities):.3f}, {max(purities):.3f}]")

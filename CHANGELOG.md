@@ -5,7 +5,25 @@ All notable changes to the G-F Consistency Framework are documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0] — 2026-06-05
+## [1.1.1] — 2026-06-08
+
+### Added
+- Mathematical proofs (Propositions 1-2, Theorems 1-4) in Supplementary_Materials.txt
+- Topological analysis integration (Steps 22-23): persistent homology via Ripser, Betti curves, topological statistics
+- Extension module pipeline integration (Steps 24-26): hyperbolic embedding, pathway enrichment, statistical summary
+- `--skip-topological` CLI flag
+
+### Fixed
+- `human_embed_all.py` import error: `standardize_coordinates` → `rescale_coordinates`
+- README: corrected Supplementary_Materials description (PDF contains figures, not proofs)
+- Renamed `yeast_ppi_5966.edgelist` → `yeast_ppi_5936.edgelist` (correct node count)
+- Randomization test standard deviation in README (0.007 → 0.002)
+
+### Changed
+- Extension modules now integrated into `run_all_analysis.py` (Steps 22-26)
+- Pipeline expanded from 21 steps to 26 steps
+
+## [1.1.0] — 2026-06-02
 
 ### Added
 - **YAML Configuration System** (`pipeline_config.yaml` + `scripts/config_loader.py`): users can now customise all pipeline parameters (species, methods, intervals, thresholds, paths) via a single YAML file without editing script source code. Supports deep merge, validation, and CLI overrides.
@@ -25,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Pipeline banner now shows version, species, and seed
 - `scripts/__init__.py` updated with extension module documentation
 
-## [1.0.0] — 2026-06-05
+## [1.0.0] — 2026-05-20
 
 ### Added
 - Complete 21-step reproducible analysis pipeline for G-F consistency evaluation

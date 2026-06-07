@@ -26,8 +26,7 @@ Dependencies
 - pandas >= 2.0
 - matplotlib >= 3.7
 
-Author: G-F Consistency Framework Team
-Date: 2026-06-04
+Author: Yuhan Zhang
 """
 
 from __future__ import annotations

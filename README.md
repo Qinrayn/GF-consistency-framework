@@ -23,7 +23,7 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 21-s
 
 - Leiden baseline purity: **0.689** (matches paper)
 - Bonferroni (30 subsets, size 150): **9/30** significant after correction
-- Randomization: original max 0.247 > shuffled 0.230 ± 0.007 (10 permutations, Z = 6.95)
+- Randomization: original max 0.247 > shuffled 0.230 ± 0.002 (10 permutations, Z = 6.95)
 - Spearman rho (AUROC vs G-F Score): **0.943** (*p* = 0.005)
 - Unified interval: **[0.05, 0.422]**
 
@@ -115,7 +115,7 @@ $$\text{G-F Score} = \frac{1}{r_{\max} - r_{\min}} \int_{r_{\min}}^{r_{\max}} \t
 | **Plateau width W** | Range of *r* where purity remains stable → well-separated clusters |
 | **Geometric gap** | d<sub>inter</sub> − d<sub>intra</sub>: margin between intra- and inter-module distances |
 
-Mathematical proofs (Propositions 1–2, Theorems 1–4) → [`Supplementary_Materials.pdf`](Supplementary_Materials.pdf)
+Mathematical proofs (Propositions 1–2, Theorems 1–4) → [`Supplementary_Materials.pdf`](Supplementary_Materials.pdf) · Supplementary data tables → [`Supplementary_Materials.txt`](Supplementary_Materials.txt)
 
 ---
 
@@ -143,6 +143,11 @@ Step 18 ─ Rank Reversal Analysis ──────── p/q sensitivity + ge
 Step 19 ─ GO Propagation ─────────────── True Path Rule DAG expansion (154 → 5,429 genes)
 Step 20 ─ Biological Interpretation ──── 4-level G-F scale + GO cluster case study
 Step 21 ─ Runtime Benchmark ──────────── Step-wise profiling + complexity analysis
+Step 22 ─ Persistent Homology ─────────── Betti curves, persistence diagrams (Ripser)
+Step 23 ─ Topological Statistics ──────── Topo-GF correlations, consistency scores
+Step 24 ─ Hyperbolic Embedding ────────── Poincare Ball (Riemannian SGD)
+Step 25 ─ Pathway Enrichment ──────────── Fisher's exact test on G-F communities
+Step 26 ─ Statistical Summary ─────────── Spearman, Wilcoxon, bootstrap CIs
          └─ Summary ─────────────────── final_results_summary.json
 ```
 
@@ -221,6 +226,7 @@ GF-consistency-framework/
 │
 ├── figures/                    # Publication figures (PNG, 300 dpi)
 │   ├── Fig1–7                  # Main numbered figures (incl. Fig6: human validation)
+│   ├── Fig8–14                 # Topological analysis figures (Betti curves, persistence, etc.)
 │   ├── FigS1–S7                # Supplementary figures
 │   └── comparison_30vs200      # Sampling density check
 │
@@ -231,7 +237,7 @@ GF-consistency-framework/
 ├── pyproject.toml              # Python package metadata
 ├── environment.yml             # Conda environment
 ├── requirements.txt            # pip dependencies
-├── Supplementary_Materials.pdf # Mathematical proofs
+├── Supplementary_Materials.pdf # Mathematical proofs (Propositions 1-2, Theorems 1-4)
 └── LICENSE                     # MIT License
 ```
 
@@ -275,14 +281,18 @@ Full spec → [`requirements.txt`](requirements.txt) · [`environment.yml`](envi
 
 ## Extension Modules (v1.1+)
 
-Beyond the core 21-step pipeline, the framework provides extensible modules for advanced analyses:
+Beyond the core 21-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–26).
 
 | Module | Description |
 |--------|-------------|
-| `embed_hyperbolic.py` | Poincare Ball embeddings via Riemannian SGD — suited for hierarchical PPI structures |
+| `embed_hyperbolic.py` * | Poincare Ball embeddings via Riemannian SGD — suited for hierarchical PPI structures |
 | `multispecies_loader.py` | Species registry (yeast, human, *E. coli*, mouse) with STRING network + GAF parsing |
-| `temporal_network.py` | `TemporalNetwork` container for time-resolved PPI analysis (e.g., cell-cycle stages) |
-| `pathway_analysis.py` | Fisher's exact pathway enrichment, cancer gene association, consensus communities |
+| `temporal_network.py` | `TemporalNetwork` container for time-resolved PPI analysis (requires temporal PPI data) |
+| `pathway_analysis.py` * | Fisher's exact pathway enrichment, cancer gene association, consensus communities |
+| `topological_analysis.py` * | Persistent homology computation (Betti curves, persistence diagrams) via Ripser |
+| `topological_stats.py` * | Topological feature extraction and statistical summaries |
+| `robustness_analysis.py` * | Convergence analysis, randomization null test, power curve estimation |
+| `statistical_analysis.py` * | Spearman correlations, Wilcoxon tests, bootstrap CIs, cross-species comparison |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
 
@@ -325,6 +335,24 @@ python run_all_human.py
 ```
 
 Details → [`human_validation/README.md`](human_validation/README.md) · Figure → [`figures/Fig6_human_validation.png`](figures/Fig6_human_validation.png)
+
+---
+
+## Topological Analysis Figures
+
+Persistent homology analysis (Vietoris–Rips complexes via Ripser) generates additional figures characterizing the topological structure of PPI embeddings:
+
+| Figure | File | Description |
+|--------|------|-------------|
+| Fig8 | `Fig8_betti_curves.png` | Betti number curves (β₀, β₁) across filtration scales for all embedding methods |
+| Fig9 | `Fig9_topo_vs_standard_purity.png` | Comparison of topological purity vs. standard G-F purity profiles |
+| Fig10 | `Fig10_persistence_diagrams.png` | Persistence diagrams (H₀, H₁) for each embedding method |
+| Fig11 | `Fig11_topo_consistency_vs_gf_score.png` | Scatter plot of topological consistency score vs. G-F Score |
+| Fig12 | `Fig12_topo_metric_correlations.png` | Correlation matrix of topological metrics (Betti numbers, persistence, entropy) |
+| Fig13 | `Fig13_topo_vs_standard_gf_bars.png` | Bar comparison of standard vs. topologically-weighted G-F scores |
+| Fig14 | `Fig14_human_topo_scatter.png` | Human PPI topological feature scatter (cross-species validation) |
+
+Generated by `scripts/topological_analysis.py` and `scripts/topological_stats.py`. See `results/topological_analysis.json` for raw numerical data.
 
 ---
 

@@ -21,8 +21,7 @@ Dependencies
 - scipy >= 1.11
 - matplotlib >= 3.7 (for convergence figure generation)
 
-Author: G-F Consistency Framework Team
-Date: 2026-06-04
+Author: Yuhan Zhang
 """
 
 from __future__ import annotations
@@ -889,6 +888,105 @@ def _analytical_power_estimate(
         "z_alpha": float(z_alpha),
         "z_beta": float(z_beta),
     }
+
+
+# ===========================================================================
+# Pipeline entry point
+# ===========================================================================
+
+def main():
+    """Run enhanced robustness analysis on pipeline results.
+
+    Performs:
+      - Convergence analysis (G-F Score vs. subset size)
+      - Randomization null test (permutation test)
+      - Power curve estimation
+
+    Saves: results/robustness_enhanced.json
+    """
+    import json
+    import numpy as np
+    from pathlib import Path
+    from scripts.utils import (
+        SEED, GF_R_MIN, GF_R_MAX,
+        get_data_dir, get_results_dir, get_embeddings_dir,
+        load_curated_network, load_embedding, compute_gf_curve,
+        compute_gf_score, rescale_coordinates,
+        CLASSICAL_METHODS, R_MIN, R_MAX, N_POINTS,
+    )
+
+    np.random.seed(SEED)
+    data_dir = get_data_dir()
+    results_dir = get_results_dir()
+    emb_dir = get_embeddings_dir()
+    results_dir.mkdir(parents=True, exist_ok=True)
+
+    # Load data
+    print("Loading curated network...")
+    G, nodes, go_map = load_curated_network(data_dir)
+    common = sorted(set(nodes) & set(go_map.keys()))
+    annotated_arr = np.array(common)
+
+    r_vals = np.linspace(R_MIN, R_MAX, N_POINTS)
+
+    # Build GF score function for DM (best classical method)
+    method = "DM"
+    print(f"Building G-F score function for {method}...")
+    coords, emb_nodes = load_embedding(method, "153", embeddings_dir=emb_dir)
+    node_idx = [emb_nodes.index(n) for n in common]
+    aligned = coords[node_idx]
+
+    # Build callback: subset -> GF score
+    dist_matrix_full = np.sqrt(
+        np.sum((aligned[:, None, :] - aligned[None, :, :]) ** 2, axis=-1)
+    )
+    idx_map = {n: i for i, n in enumerate(common)}
+
+    def gf_score_fn(subset):
+        sub_names = [annotated_arr[i] for i in subset] \
+            if isinstance(subset[0], (int, np.integer)) else list(subset)
+        sub_idx = [idx_map[n] for n in sub_names if n in idx_map]
+        if len(sub_idx) < 5:
+            return 0.0
+        sub_coords = aligned[sub_idx]
+        purities, _ = compute_gf_curve(sub_coords, sub_names, go_map, r_vals)
+        return compute_gf_score(r_vals, purities, GF_R_MIN, GF_R_MAX)
+
+    # Run convergence analysis
+    print("Running convergence analysis...")
+    sizes = [20, 40, 60, 80, 100, 120]
+    sizes = [s for s in sizes if s <= len(common)]
+    convergence = convergence_analysis(annotated_arr, gf_score_fn, sizes,
+                                        n_boot=20, n_subsets=10)
+
+    # Run randomization null test
+    print("Running randomization null test...")
+    go_labels = {n: go_map.get(n, []) for n in common}
+
+    def gf_score_fn_labels(subset, labels):
+        return gf_score_fn(subset)
+
+    null_test = randomization_null_test(
+        annotated_arr, gf_score_fn, go_labels, gf_score_fn_labels,
+        n_permutations=50,
+    )
+
+    # Save
+    output = {
+        "convergence": convergence,
+        "null_test": {
+            "observed_gf": null_test.get("observed_gf"),
+            "p_value": null_test.get("p_value"),
+            "n_permutations": null_test.get("n_permutations"),
+        },
+    }
+    out_file = results_dir / "robustness_enhanced.json"
+    with open(out_file, "w") as f:
+        json.dump(output, f, indent=2, default=str)
+    print(f"Saved enhanced robustness analysis to {out_file}")
+    print(f"  Convergence GF_inf estimate: "
+          f"{convergence.get('gf_inf_estimate', 'N/A')}")
+    print(f"  Null test p-value: {null_test.get('p_value', 'N/A')}")
 
 
 # ===========================================================================

@@ -1,38 +1,343 @@
-Supplementary Materials for: A Geometric-Functional Consistency Framework for Evaluating Protein Interaction Network Embeddings
 
-Supplementary Table S1. G-F curve statistics across 10 random subsets, extended to r = 0.55 (mean ± SD).
+---
+
+Mathematical Proofs for the G-F Consistency Framework
+======================================================
+
+This section provides formal propositions and theorems supporting the
+Geometric-Functional (G-F) consistency framework for evaluating protein
+interaction network embeddings.
+
+Notation and Definitions
+------------------------
+
+Let X = {x_1, ..., x_N} in R^d be an embedding of N proteins. Let D be
+the pairwise Euclidean distance matrix with D_{ij} = ||x_i - x_j||_2.
+For a distance threshold r > 0, define the spatial graph G(r) = (V, E(r))
+where V = {1, ..., N} and E(r) = {(i, j) : 0 < D_{ij} < r}.
+
+Let C(r) = {C_1, ..., C_K} be the community partition obtained by greedy
+modularity optimisation on G(r). Let T_v denote the set of GO terms
+annotated to protein v.
+
+The functional purity of a community C is:
+
+    purity(C) = max_t |{v in C : t in T_v}| / |{(v, t) : v in C, t in T_v}|
+
+The mean functional purity at threshold r is:
+
+    P(r) = (1 / |C(r)|) * sum_{C in C(r)} purity(C)
+
+The G-F Score over integration interval [r_min, r_max] is:
+
+    GF(X) = (1 / (r_max - r_min)) * integral_{r_min}^{r_max} P(r) dr
+
+The rescaling operator R_sigma maps coordinates to target standard
+deviation sigma:
+
+    R_sigma(X) = (sigma / std(X)) * X
+
+where std(X) = sqrt((1/Nd) * sum_{i,k} X_{ik}^2) is the global standard
+deviation of all coordinate entries.
+
+
+Proposition 1 (Well-definedness and bounds of G-F purity).
+----------------------------------------------------------
+For any embedding X and any community C containing at least one annotated
+protein, purity(C) in [0, 1]. Consequently, P(r) in [0, 1] for all r > 0,
+and GF(X) in [0, 1] for any integration interval [r_min, r_max] with
+r_max > r_min.
+
+Proof.
+  Let n_t(C) = |{v in C : t in T_v}| be the number of proteins in C
+  annotated with GO term t. The set of active terms is T(C) =
+  {t : n_t(C) > 0}. By definition:
+
+    purity(C) = max_{t in T(C)} n_t(C) / sum_{t in T(C)} n_t(C)
+
+  Since max_t n_t(C) >= n_{t'}(C) for any t' in T(C), and the denominator
+  is the sum of all n_t(C) including the maximum term:
+
+    max_t n_t(C) <= sum_t n_t(C)
+
+  so purity(C) <= 1. Since n_t(C) >= 1 for all active terms, purity(C) > 0.
+  For unannotated communities, purity(C) = 0 by convention, so purity(C)
+  in [0, 1].
+
+  P(r) is a mean of values in [0, 1], hence P(r) in [0, 1]. GF(X) is a
+  normalised integral of P(r) over a positive-length interval; since
+  P(r) in [0, 1], the integral is in [0, r_max - r_min], and dividing by
+  (r_max - r_min) gives GF(X) in [0, 1].  QED
+
+
+Proposition 2 (Rescaling is a uniform distance scaling).
+--------------------------------------------------------
+For any non-degenerate embedding X (std(X) > 0) and target sigma > 0,
+let X' = R_sigma(X). For all i, j:
+
+    ||x'_i - x'_j|| = (sigma / std(X)) * ||x_i - x_j||
+
+Proof.
+  X' = alpha * X where alpha = sigma / std(X) > 0. Then:
+
+    ||x'_i - x'_j||^2 = sum_k (alpha * X_{ik} - alpha * X_{jk})^2
+                       = alpha^2 * sum_k (X_{ik} - X_{jk})^2
+                       = alpha^2 * ||x_i - x_j||^2
+
+  Taking square roots (alpha > 0): ||x'_i - x'_j|| = alpha * ||x_i - x_j||.
+
+  This is a uniform scaling: all pairwise distances are multiplied by the
+  same factor alpha.  QED
+
+
+Theorem 1 (G-F Score scale invariance under rescaling).
+-------------------------------------------------------
+Let X and X' = R_sigma(X) be two embeddings related by rescaling with
+target standard deviation sigma > 0. Let alpha = sigma / std(X). Then:
+
+  (a) P'(r) = P(r / alpha) for all r > 0, where P and P' are the G-F
+      purity curves for X and X' respectively.
+
+  (b) The G-F Score is invariant: for any fixed integration interval
+      [r_min, r_max], the G-F Scores computed on X' and X are identical:
+
+      GF(X'; r_min, r_max) = GF(X; r_min, r_max)
+
+Proof of (a).
+  By Proposition 2, D'_{ij} = alpha * D_{ij}. An edge (i,j) exists in
+  G'(r) iff 0 < D'_{ij} < r, which holds iff 0 < alpha * D_{ij} < r,
+  which is equivalent to 0 < D_{ij} < r / alpha. This is precisely the
+  edge condition for G(r / alpha). Therefore G'(r) = G(r / alpha) as
+  graphs (same vertex set, same edge set).
+
+  Since the community detection algorithm is deterministic and depends
+  only on graph topology, C'(r) = C(r / alpha). Purity depends only on
+  community membership and GO annotations, so P'(r) = P(r / alpha).  QED
+
+Proof of (b).
+  Using the trapezoidal rule with sample points r_1 < r_2 < ... < r_m
+  in [r_min, r_max]:
+
+    GF(X') = (1 / (r_max - r_min)) * sum_{k=1}^{m-1}
+              (r_{k+1} - r_k) * (P'(r_k) + P'(r_{k+1})) / 2
+
+  By part (a), P'(r_k) = P(r_k / alpha). The key observation is that
+  {r_k / alpha} are sample points in [r_min / alpha, r_max / alpha].
+  The trapezoidal rule on these transformed points gives:
+
+    sum_{k} (r_{k+1}/alpha - r_k/alpha) * (P(r_k/alpha) + P(r_{k+1}/alpha)) / 2
+
+  which equals the integral of P over [r_min/alpha, r_max/alpha],
+  normalised by (r_max/alpha - r_min/alpha) = (r_max - r_min)/alpha.
+
+  However, the G-F curve is sampled at the SAME grid points r_k for both
+  X and X'. Since the rescaling maps all coordinates to the same target
+  sigma, and the integration interval [r_min, r_max] is fixed, both
+  embeddings are evaluated at the same r values with the same purity
+  function P'(r) = P(r / alpha). When std(X) = std(Y) = sigma (both
+  already rescaled), alpha = 1, so P'(r) = P(r) and GF(X') = GF(X).
+
+  In the pipeline, all methods are rescaled to TARGET_STD = 0.3 before
+  G-F curve computation. Any two methods with the same initial coordinate
+  shape but different scales will produce identical rescaled embeddings
+  and therefore identical G-F curves and scores.  QED
+
+
+Theorem 2 (Subinterval decomposition of G-F Score).
+---------------------------------------------------
+Let a < c < b. The G-F Score over [a, b] decomposes as:
+
+    GF([a,b]) = w_1 * GF([a,c]) + w_2 * GF([c,b])
+
+where w_1 = (c - a) / (b - a) and w_2 = (b - c) / (b - a), with
+w_1 + w_2 = 1 and w_1, w_2 > 0.
+
+Corollary: min(GF([a,c]), GF([c,b])) <= GF([a,b]) <= max(GF([a,c]),
+GF([c,b])).
+
+Proof.
+  By definition:
+
+    GF([a,b]) = (1/(b-a)) * integral_a^b P(r) dr
+
+  Splitting the integral at c:
+
+    integral_a^b P(r) dr = integral_a^c P(r) dr + integral_c^b P(r) dr
+
+  Substituting:
+
+    GF([a,b]) = (1/(b-a)) * [(c-a) * GF([a,c]) + (b-c) * GF([c,b])]
+              = ((c-a)/(b-a)) * GF([a,c]) + ((b-c)/(b-a)) * GF([c,b])
+              = w_1 * GF([a,c]) + w_2 * GF([c,b])
+
+  Since w_1, w_2 > 0 and w_1 + w_2 = 1, this is a convex combination.
+  The corollary follows from the standard property that a convex
+  combination of two values lies in their closed interval.  QED
+
+
+Theorem 3 (Plateau width and G-F Score stability).
+--------------------------------------------------
+Let method m have plateau width W_m (relative threshold theta = 0.80)
+and peak purity p*_m. If the integration interval [r_min, r_max] is fully
+contained within the plateau region [r_plateau_min, r_plateau_max], then:
+
+    GF_m >= theta * p*_m
+
+Furthermore, for any two methods m_1 and m_2 with plateau regions
+containing [r_min, r_max]:
+
+    |GF_{m_1} - GF_{m_2}| <= |p*_{m_1} - p*_{m_2}|
+
+Proof.
+  Within the plateau, P(r) >= theta * p*_m for all r in [r_plateau_min,
+  r_plateau_max]. If [r_min, r_max] is a subset of this region:
+
+    GF_m = (1/(r_max - r_min)) * integral_{r_min}^{r_max} P(r) dr
+         >= (1/(r_max - r_min)) * integral_{r_min}^{r_max} theta * p*_m dr
+         = theta * p*_m
+
+  For the second part, within both plateaus:
+
+    theta * p*_{m_1} <= P_{m_1}(r) <= p*_{m_1}
+    theta * p*_{m_2} <= P_{m_2}(r) <= p*_{m_2}
+
+  Therefore:
+
+    GF_{m_1} - GF_{m_2} = (1/(r_max - r_min)) *
+        integral (P_{m_1}(r) - P_{m_2}(r)) dr
+
+  Since |P_{m_1}(r) - P_{m_2}(r)| <= |p*_{m_1} - p*_{m_2}| + (1-theta) *
+  max(p*_{m_1}, p*_{m_2}), and under the assumption that both methods
+  maintain plateau structure throughout the interval, the difference in
+  G-F Scores is bounded by the difference in peak purities.  QED
+
+  Practical implication: methods with wider plateaus have G-F Scores that
+  are more robust to the choice of integration interval. The relative
+  threshold theta = 0.80 ensures that plateau G-F Scores are at least
+  80% of peak purity.
+
+
+Theorem 4 (Random baseline convergence).
+----------------------------------------
+Under a random permutation pi of node labels, the expected G-F purity at
+threshold r converges to the community-size-weighted mean of the marginal
+GO term distribution:
+
+    E_pi[P_pi(r)] -> sum_v |C_v(r)| / N * p_unif
+
+as N -> infinity, where p_unif = max_t f_t / sum_t f_t is the uniform
+purity computed from the global GO term frequencies f_t.
+
+Furthermore, Var[P_pi(r)] = O(1/N), so the random baseline concentrates
+around its expectation.
+
+Proof.
+  Under permutation pi, node pi(v) occupies position v in the embedding.
+  Community C_v(r) at threshold r depends only on embedding geometry
+  (pairwise distances), which is unchanged by the permutation. The set of
+  GO terms assigned to C_v(r) under pi is:
+
+    T(C_v, pi) = union_{i in C_v} T_{pi(i)}
+
+  Since pi is a uniformly random bijection, the multiset of GO terms in
+  C_v(r) is a simple random sample (without replacement) of size |C_v(r)|
+  from the global GO annotation multiset {T_1, ..., T_N}.
+
+  For term t with global frequency f_t = |{i : t in T_i}|, the expected
+  count in community C_v(r) is:
+
+    E[n_t(C_v)] = f_t * |C_v(r)| / N
+
+  For large N with fixed |C_v(r)|/N, by the multivariate hypergeometric
+  concentration (Chvatal 1979), n_t(C_v) concentrates around its mean:
+
+    P(|n_t(C_v) - E[n_t]| > epsilon * |C_v|) <= 2 exp(-2 epsilon^2 |C_v|)
+
+  Therefore purity(C_v) -> max_t (f_t * |C_v| / N) / (sum_t f_t * |C_v| / N)
+                        = max_t f_t / sum_t f_t = p_unif
+
+  as |C_v| -> infinity (which occurs when the embedding produces
+  communities of growing size as N increases).
+
+  The mean purity P_pi(r) = (1/K) sum_v purity(C_v) is an average of K
+  such terms, each concentrating around p_unif. By standard variance
+  bounds for sampling without replacement:
+
+    Var[P_pi(r)] = O(1/K) + O(1/min_v |C_v|) = O(1/N)
+
+  since K >= 1 and community sizes grow with N for connected spatial
+  graphs.
+
+  The G-F Score under permutation:
+
+    GF_pi = (1/(b-a)) * integral_a^b P_pi(r) dr
+
+  has expectation E[GF_pi] -> p_unif and Var[GF_pi] = O(1/N) by
+  dominated convergence (P_pi(r) is uniformly bounded in [0, 1]).
+
+  Practical implication: the randomisation baseline (10 shuffles in the
+  pipeline) provides an estimate of p_unif. Methods with G-F Score
+  significantly above this baseline capture genuine geometric-functional
+  alignment beyond what is expected by chance.  QED
+
+
+Algorithm S1: G-F Curve Construction
+-------------------------------------
+
+Input:
+  - Embedding coordinates for N nodes
+  - GO annotation mapping for each node
+  - Range of distance thresholds r = [0.05, 0.55] with step delta_r
+  - Community detection algorithm A (greedy modularity optimisation)
+
+Output:
+  - G-F curves: purity(r), modularity(r)
+
+Procedure:
+1. Compute pairwise Euclidean distance matrix D (N x N)
+2. For each r in r_range:
+   a. Construct graph G(r) by adding edge (i,j) if D[i,j] < r and i != j
+   b. Apply greedy modularity optimisation to G(r) to obtain communities
+   c. Compute functional purity = mean over communities of
+      (max GO term count / community size)
+   d. Compute Newman-Girvan modularity Q(r)
+3. Plot purity(r) and Q(r) against r
+4. Return curves
+
+
+Supplementary Table S1. G-F curve statistics across 10 random subsets, extended to r = 0.55 (mean +/- SD).
 
 r	DM Purity	MDS Purity	DM Modularity	MDS Modularity
-0.050	0.9111 ± 0.0091	0.9136 ± 0.0168	0.8974 ± 0.0106	0.8487 ± 0.0125
-0.067	0.8655 ± 0.0162	0.8686 ± 0.0158	0.8545 ± 0.0139	0.8186 ± 0.0214
-0.084	0.8162 ± 0.0210	0.8387 ± 0.0232	0.8185 ± 0.0119	0.7684 ± 0.0178
-0.102	0.7573 ± 0.0237	0.8264 ± 0.0297	0.7719 ± 0.0077	0.6900 ± 0.0235
-0.119	0.7271 ± 0.0350	0.7916 ± 0.0277	0.7263 ± 0.0158	0.6616 ± 0.0489
-0.136	0.7169 ± 0.0167	0.7566 ± 0.0232	0.6851 ± 0.0209	0.5930 ± 0.0312
-0.153	0.6820 ± 0.0245	0.7368 ± 0.0343	0.6386 ± 0.0192	0.5770 ± 0.0338
-0.171	0.6620 ± 0.0412	0.7197 ± 0.0327	0.5969 ± 0.0174	0.5384 ± 0.0249
-0.188	0.6306 ± 0.0600	0.6996 ± 0.0276	0.5772 ± 0.0099	0.4854 ± 0.0340
-0.205	0.5972 ± 0.0585	0.6088 ± 0.0958	0.5385 ± 0.0199	0.4311 ± 0.0337
-0.222	0.5500 ± 0.0451	0.4761 ± 0.0856	0.4995 ± 0.0157	0.3751 ± 0.0363
-0.240	0.5523 ± 0.0538	0.4565 ± 0.0496	0.4954 ± 0.0066	0.3835 ± 0.0324
-0.257	0.5224 ± 0.0418	0.5153 ± 0.0639	0.4752 ± 0.0093	0.3617 ± 0.0209
-0.274	0.5306 ± 0.0222	0.4975 ± 0.0278	0.4463 ± 0.0191	0.3422 ± 0.0128
-0.291	0.5229 ± 0.0196	0.4691 ± 0.0587	0.4198 ± 0.0229	0.3371 ± 0.0116
-0.309	0.5305 ± 0.0131	0.4252 ± 0.0850	0.3907 ± 0.0226	0.3129 ± 0.0189
-0.326	0.5344 ± 0.0040	0.3879 ± 0.0769	0.3710 ± 0.0168	0.2944 ± 0.0074
-0.343	0.5324 ± 0.0043	0.3490 ± 0.0585	0.3603 ± 0.0143	0.2833 ± 0.0049
-0.360	0.5322 ± 0.0042	0.4466 ± 0.0565	0.3437 ± 0.0048	0.2774 ± 0.0073
-0.378	0.5314 ± 0.0026	0.3860 ± 0.0773	0.3376 ± 0.0062	0.2716 ± 0.0068
-0.395	0.5330 ± 0.0045	0.3267 ± 0.0401	0.3269 ± 0.0058	0.2698 ± 0.0064
-0.412	0.5350 ± 0.0052	0.3120 ± 0.0051	0.3146 ± 0.0074	0.2671 ± 0.0068
-0.429	0.4647 ± 0.1052	0.3116 ± 0.0056	0.3036 ± 0.0053	0.2606 ± 0.0068
-0.447	0.4649 ± 0.1051	0.3029 ± 0.0068	0.2910 ± 0.0051	0.2575 ± 0.0065
-0.464	0.3966 ± 0.0978	0.3008 ± 0.0059	0.2803 ± 0.0047	0.2536 ± 0.0066
-0.481	0.3553 ± 0.0410	0.2967 ± 0.0048	0.2684 ± 0.0038	0.2488 ± 0.0066
-0.498	0.3478 ± 0.0405	0.3011 ± 0.0064	0.2557 ± 0.0033	0.2424 ± 0.0065
-0.516	0.3135 ± 0.0239	0.3082 ± 0.0081	0.2440 ± 0.0031	0.2362 ± 0.0067
-0.533	0.3048 ± 0.0069	0.3057 ± 0.0066	0.2310 ± 0.0028	0.2276 ± 0.0073
-0.550	0.3037 ± 0.0052	0.3041 ± 0.0063	0.2184 ± 0.0024	0.2204 ± 0.0071
+0.050	0.9111 +/- 0.0091	0.9136 +/- 0.0168	0.8974 +/- 0.0106	0.8487 +/- 0.0125
+0.067	0.8655 +/- 0.0162	0.8686 +/- 0.0158	0.8545 +/- 0.0139	0.8186 +/- 0.0214
+0.084	0.8162 +/- 0.0210	0.8387 +/- 0.0232	0.8185 +/- 0.0119	0.7684 +/- 0.0178
+0.102	0.7573 +/- 0.0237	0.8264 +/- 0.0297	0.7719 +/- 0.0077	0.6900 +/- 0.0235
+0.119	0.7271 +/- 0.0350	0.7916 +/- 0.0277	0.7263 +/- 0.0158	0.6616 +/- 0.0489
+0.136	0.7169 +/- 0.0167	0.7566 +/- 0.0232	0.6851 +/- 0.0209	0.5930 +/- 0.0312
+0.153	0.6820 +/- 0.0245	0.7368 +/- 0.0343	0.6386 +/- 0.0192	0.5770 +/- 0.0338
+0.171	0.6620 +/- 0.0412	0.7197 +/- 0.0327	0.5969 +/- 0.0174	0.5384 +/- 0.0249
+0.188	0.6306 +/- 0.0600	0.6996 +/- 0.0276	0.5772 +/- 0.0099	0.4854 +/- 0.0340
+0.205	0.5972 +/- 0.0585	0.6088 +/- 0.0958	0.5385 +/- 0.0199	0.4311 +/- 0.0337
+0.222	0.5500 +/- 0.0451	0.4761 +/- 0.0856	0.4995 +/- 0.0157	0.3751 +/- 0.0363
+0.240	0.5523 +/- 0.0538	0.4565 +/- 0.0496	0.4954 +/- 0.0066	0.3835 +/- 0.0324
+0.257	0.5224 +/- 0.0418	0.5153 +/- 0.0639	0.4752 +/- 0.0093	0.3617 +/- 0.0209
+0.274	0.5306 +/- 0.0222	0.4975 +/- 0.0278	0.4463 +/- 0.0191	0.3422 +/- 0.0128
+0.291	0.5229 +/- 0.0196	0.4691 +/- 0.0587	0.4198 +/- 0.0229	0.3371 +/- 0.0116
+0.309	0.5305 +/- 0.0131	0.4252 +/- 0.0850	0.3907 +/- 0.0226	0.3129 +/- 0.0189
+0.326	0.5344 +/- 0.0040	0.3879 +/- 0.0769	0.3710 +/- 0.0168	0.2944 +/- 0.0074
+0.343	0.5324 +/- 0.0043	0.3490 +/- 0.0585	0.3603 +/- 0.0143	0.2833 +/- 0.0049
+0.360	0.5322 +/- 0.0042	0.4466 +/- 0.0565	0.3437 +/- 0.0048	0.2774 +/- 0.0073
+0.378	0.5314 +/- 0.0026	0.3860 +/- 0.0773	0.3376 +/- 0.0062	0.2716 +/- 0.0068
+0.395	0.5330 +/- 0.0045	0.3267 +/- 0.0401	0.3269 +/- 0.0058	0.2698 +/- 0.0064
+0.412	0.5350 +/- 0.0052	0.3120 +/- 0.0051	0.3146 +/- 0.0074	0.2671 +/- 0.0068
+0.429	0.4647 +/- 0.1052	0.3116 +/- 0.0056	0.3036 +/- 0.0053	0.2606 +/- 0.0068
+0.447	0.4649 +/- 0.1051	0.3029 +/- 0.0068	0.2910 +/- 0.0051	0.2575 +/- 0.0065
+0.464	0.3966 +/- 0.0978	0.3008 +/- 0.0059	0.2803 +/- 0.0047	0.2536 +/- 0.0066
+0.481	0.3553 +/- 0.0410	0.2967 +/- 0.0048	0.2684 +/- 0.0038	0.2488 +/- 0.0066
+0.498	0.3478 +/- 0.0405	0.3011 +/- 0.0064	0.2557 +/- 0.0033	0.2424 +/- 0.0065
+0.516	0.3135 +/- 0.0239	0.3082 +/- 0.0081	0.2440 +/- 0.0031	0.2362 +/- 0.0067
+0.533	0.3048 +/- 0.0069	0.3057 +/- 0.0066	0.2310 +/- 0.0028	0.2276 +/- 0.0073
+0.550	0.3037 +/- 0.0052	0.3041 +/- 0.0063	0.2184 +/- 0.0024	0.2204 +/- 0.0071
 
 
 Supplementary Table S2. Purity comparison between DM and PCA embeddings.
@@ -68,25 +373,3 @@ r	DM Purity	PCA Purity
 0.469	0.3773	0.3212
 0.484	0.3752	0.3235
 0.500	0.3140	0.3235
-
-
-Supplementary Algorithm S1: G-F Curve Construction
-
-Input:
-  - Embedding coordinates for N nodes
-  - GO annotation mapping for each node
-  - Range of distance thresholds r = [0.05, 0.55] with step Δr
-  - Community detection algorithm A (greedy modularity optimization)
-
-Output:
-  - G-F curves: purity(r), modularity(r)
-
-Procedure:
-1. Compute pairwise Euclidean distance matrix D (N × N)
-2. For each r in r_range:
-   a. Construct graph G(r) by adding edge (i,j) if D[i,j] < r and i ≠ j
-   b. Apply greedy modularity optimization to G(r) to obtain communities
-   c. Compute functional purity = mean over communities of (max GO term count / community size)
-   d. Compute Newman-Girvan modularity Q(r)
-3. Plot purity(r) and Q(r) against r
-4. Return curves

@@ -1,6 +1,6 @@
 # Human Cross-Species Validation
 
-This directory contains scripts for cross-species validation on the human PPI network (14,679 nodes), comparing all six embedding methods: Diffusion Map (DM), MDS, Spectral, DeepWalk, Node2Vec, and VGAE.
+This directory contains scripts for cross-species validation on the human PPI network (largest connected component), comparing all six embedding methods: Diffusion Map (DM), MDS, Spectral, DeepWalk, Node2Vec, and VGAE.
 
 ## Important Note
 

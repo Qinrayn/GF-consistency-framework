@@ -22,8 +22,7 @@ Dependencies
 - pandas >= 2.0
 - scipy >= 1.11
 
-Author: G-F Consistency Framework Team
-Date: 2026-06-04
+Author: Yuhan Zhang
 """
 
 from __future__ import annotations
@@ -1017,6 +1016,119 @@ def adaptive_vs_fixed_comparison(
         "accepted": accepted,
         "per_method": per_method,
     }
+
+
+# ===========================================================================
+# Pipeline entry point
+# ===========================================================================
+
+def main():
+    """Run statistical analysis on pipeline results.
+
+    Loads G-F scores, link prediction AUROC, and downstream k-NN results,
+    then computes:
+      - Spearman correlations between G-F Score and downstream metrics
+      - Bootstrap confidence intervals
+      - Wilcoxon pairwise comparisons
+
+    Saves: results/statistical_analysis_summary.json
+    """
+    import json
+    from pathlib import Path
+    from scripts.utils import (
+        SEED, get_results_dir,
+    )
+
+    np.random.seed(SEED)
+    results_dir = get_results_dir()
+
+    # Load G-F scores
+    gf_file = results_dir / "gf_scores.json"
+    if not gf_file.exists():
+        print("G-F scores not found. Run Step 3 (compute_gf.py) first.")
+        return
+    with open(gf_file) as f:
+        gf_data = json.load(f)
+    gf_scores = gf_data.get("scores", {})
+
+    # Merge GNN scores
+    gnn_file = results_dir / "gnn_gf_scores.json"
+    if gnn_file.exists():
+        with open(gnn_file) as f:
+            gnn_data = json.load(f)
+        gf_scores.update(gnn_data.get("gf_scores", {}))
+
+    if not gf_scores:
+        print("No G-F scores available. Step skipped.")
+        return
+
+    # Load link prediction AUROC
+    lp_file = results_dir / "link_prediction.json"
+    auroc = {}
+    if lp_file.exists():
+        with open(lp_file) as f:
+            lp_data = json.load(f)
+        if isinstance(lp_data, dict):
+            for method, vals in lp_data.get("auroc_results", lp_data).items():
+                if isinstance(vals, dict) and "auroc_mean" in vals:
+                    auroc[method] = vals["auroc_mean"]
+
+    # Load downstream k-NN
+    knn_file = results_dir / "downstream_knn.json"
+    knn_f1 = {}
+    if knn_file.exists():
+        with open(knn_file) as f:
+            knn_data = json.load(f)
+        for method, vals in knn_data.items():
+            if isinstance(vals, dict) and "micro_f1_mean" in vals:
+                knn_f1[method] = vals["micro_f1_mean"]
+
+    # Build comparison data
+    methods = sorted(gf_scores.keys())
+    rows = []
+    for m in methods:
+        row = {"method": m, "gf_score": gf_scores[m], "species": "yeast"}
+        if m in auroc:
+            row["auroc"] = auroc[m]
+        if m in knn_f1:
+            row["knn_f1"] = knn_f1[m]
+        rows.append(row)
+
+    df = pd.DataFrame(rows)
+
+    # Run analyses
+    output = {}
+
+    # G-F score comparison table
+    comparison = compute_gf_score_comparison(df)
+    output["score_comparison"] = comparison.to_dict(orient="records") \
+        if hasattr(comparison, "to_dict") else str(comparison)
+
+    # Spearman correlation (G-F vs AUROC)
+    if "auroc" in df.columns and df["auroc"].notna().sum() >= 3:
+        spearman = spearman_correlation_analysis(df, "gf_score", "auroc")
+        output["spearman_gf_vs_auroc"] = spearman
+        print(f"Spearman(GF, AUROC): rho={spearman.get('rho', 'N/A')}, "
+              f"p={spearman.get('p_value', 'N/A')}")
+
+    # Spearman correlation (G-F vs k-NN)
+    if "knn_f1" in df.columns and df["knn_f1"].notna().sum() >= 3:
+        spearman_knn = spearman_correlation_analysis(df, "gf_score", "knn_f1")
+        output["spearman_gf_vs_knn"] = spearman_knn
+        print(f"Spearman(GF, k-NN): rho={spearman_knn.get('rho', 'N/A')}, "
+              f"p={spearman_knn.get('p_value', 'N/A')}")
+
+    # Wilcoxon pairwise
+    if len(methods) >= 2:
+        wilcoxon = wilcoxon_pairwise_comparison(df, "method", "gf_score")
+        output["wilcoxon_pairwise"] = wilcoxon.to_dict(orient="records") \
+            if hasattr(wilcoxon, "to_dict") else str(wilcoxon)
+
+    # Save
+    out_file = results_dir / "statistical_analysis_summary.json"
+    with open(out_file, "w") as f:
+        json.dump(output, f, indent=2, default=str)
+    print(f"Saved statistical analysis to {out_file}")
 
 
 # ===========================================================================

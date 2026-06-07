@@ -3,7 +3,7 @@
 """
 Master script to run all analyses for the G-F consistency framework.
 
-Version: 1.1.0
+Version: 1.1.1
 
 This script orchestrates the complete analysis pipeline:
 1.  Data preprocessing
@@ -11,15 +11,15 @@ This script orchestrates the complete analysis pipeline:
 3.  G-F curve computation (200-point grid)
 4.  Leiden baseline
 5.  Robustness analysis (30 subsets x 5 size levels)
-6.  Full network validation (5,966 nodes)
+6.  Full network validation (5,936 nodes)
 7.  Geometric analysis
 8.  Link prediction (5-fold CV)
 9.  Downstream k-NN evaluation
 10. Randomization control
 11. Sampling density verification
 12. G-F score sensitivity analysis
-13. Figure generation
-14. Final results summary
+13. Human cross-species validation (optional)
+14. Figure generation
 15. GNN embeddings (GraphSAGE, GAT, GIN)
 16. Adaptive unified interval
 17. Network topology analysis (cross-species)
@@ -27,19 +27,25 @@ This script orchestrates the complete analysis pipeline:
 19. GO propagation (True Path Rule DAG expansion)
 20. Biological interpretation (4-level G-F scale + case study)
 21. Runtime benchmark (step-wise profiling + complexity)
+22. Persistent homology / topological analysis
+23. Topological statistics & correlation
+24. Hyperbolic embedding (Poincare Ball)
+25. Pathway enrichment analysis
+26. Statistical analysis summary
 
 Usage:
     python run_all_analysis.py                         # Skip human validation
     python run_all_analysis.py --run-human              # Include human validation
     python run_all_analysis.py --skip-plots             # Skip figure generation
     python run_all_analysis.py --skip-gnn               # Skip GNN embeddings
-    python run_all_analysis.py --skip-extended          # Skip Steps 17-21
+    python run_all_analysis.py --skip-extended          # Skip Steps 16-21
+    python run_all_analysis.py --skip-topological       # Skip Steps 22-23
     python run_all_analysis.py --start-from 3           # Start from step 3
     python run_all_analysis.py --config my_config.yaml  # Custom config file
     gf-consistency --config pipeline_config.yaml        # Via pip entry point
 """
 
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 
 import sys
 import json
@@ -240,11 +246,13 @@ def main():
     parser.add_argument("--skip-plots", action="store_true",
                         help="Skip figure generation")
     parser.add_argument("--start-from", type=int, default=None,
-                        help="Start from a specific step (1-21)")
+                        help="Start from a specific step (1-26)")
     parser.add_argument("--skip-gnn", action="store_true",
                         help="Skip GNN embedding computation (Step 15)")
     parser.add_argument("--skip-extended", action="store_true",
-                        help="Skip extended analysis steps (16-21)")
+                        help="Skip extended analysis steps (16-21, 24-26)")
+    parser.add_argument("--skip-topological", action="store_true",
+                        help="Skip topological analysis steps (22-23)")
     parser.add_argument("--seed", type=int, default=None,
                         help="Override random seed")
     parser.add_argument("--species", type=str, default=None,
@@ -272,6 +280,7 @@ def main():
     skip_plots = args.skip_plots or pipeline_cfg.get("skip_plots", False)
     skip_gnn = args.skip_gnn or pipeline_cfg.get("skip_gnn", False)
     skip_extended = args.skip_extended or pipeline_cfg.get("skip_extended", False)
+    skip_topological = args.skip_topological or pipeline_cfg.get("skip_topological", False)
     start_from = args.start_from if args.start_from is not None else pipeline_cfg.get("start_from", 1)
     seed = args.seed if args.seed is not None else pipeline_cfg.get("seed", 42)
     species = args.species or pipeline_cfg.get("species", "yeast")
@@ -290,7 +299,9 @@ def main():
     if skip_gnn:
         print("  GNN embeddings: SKIPPED")
     if skip_extended:
-        print("  Extended analysis (Steps 16-21): SKIPPED")
+        print("  Extended analysis (Steps 16-21, 24-26): SKIPPED")
+    if skip_topological:
+        print("  Topological analysis (Steps 22-23): SKIPPED")
     print()
 
     # ---- Pre-flight validation ----
@@ -441,7 +452,7 @@ def main():
 
     # Step 13: Human cross-species validation (RESOURCE-INTENSIVE)
     if start_from <= 13:
-        print_header("Step 13: Human Cross-Species Validation (14,679 nodes)")
+        print_header("Step 13: Human Cross-Species Validation")
         if run_human:
             from scripts.human_validation import main as human_main
             if run_step(human_main, "Human validation"):
@@ -563,6 +574,76 @@ def main():
             completed += 1
         else:
             failed += 1
+
+    # Step 22: Persistent Homology / Topological Analysis
+    if start_from <= 22 and not skip_topological:
+        print_header("Step 22: Persistent Homology (Topological Analysis)")
+        from scripts.topological_analysis import main as topo_analysis_main
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(topo_analysis_main, "Persistent homology analysis"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
+
+    # Step 23: Topological Statistics & Correlation
+    if start_from <= 23 and not skip_topological:
+        print_header("Step 23: Topological Statistics & Correlation")
+        from scripts.topological_stats import main as topo_stats_main
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(topo_stats_main, "Topological statistics"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
+
+    # Step 24: Hyperbolic Embedding (Poincare Ball)
+    if start_from <= 24 and not skip_extended:
+        print_header("Step 24: Hyperbolic Embedding (Poincare Ball)")
+        from scripts.embed_hyperbolic import main as hyperbolic_main
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(hyperbolic_main, "Hyperbolic embedding"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
+
+    # Step 25: Pathway Enrichment Analysis
+    if start_from <= 25 and not skip_extended:
+        print_header("Step 25: Pathway Enrichment Analysis")
+        from scripts.pathway_analysis import main as pathway_main
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(pathway_main, "Pathway enrichment"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
+
+    # Step 26: Statistical Analysis Summary
+    if start_from <= 26 and not skip_extended:
+        print_header("Step 26: Statistical Analysis Summary")
+        from scripts.statistical_analysis import main as stat_main
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(stat_main, "Statistical analysis"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
 
     # Generate final summary
     results_dir = Path(__file__).parent / "results"
