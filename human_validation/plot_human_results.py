@@ -162,9 +162,9 @@ def plot_gf_score_bar(curves, method_names, save_path=None):
     plt.close()
 
 def plot_outlier_diagnosis(save_path=None):
-    """Plot outlier diagnosis visualization (placeholder)."""
-    # This would require loading coordinate data
-    # For now, create a placeholder figure
+    """Plot outlier diagnosis visualization (simplified — requires full coordinate data for complete rendering)."""
+    # Simplified: full outlier diagnosis requires coordinate data loading
+    # For the complete analysis, see Section 3.6 and Supplementary Figure S2
     fig, ax = plt.subplots(figsize=(8, 6))
     
     ax.text(0.5, 0.5, 

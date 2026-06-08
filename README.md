@@ -43,7 +43,10 @@ conda activate gf-consistency
 # Or install as a package
 pip install .
 
-# 2. Run full pipeline (≈ 60 min on standard laptop)
+# 2. Pull large data files (tracked via Git LFS)
+git lfs pull
+
+# 3. Run full pipeline (≈ 60 min on standard laptop)
 python run_all_analysis.py
 
 # Or use the CLI entry point after pip install
@@ -249,7 +252,7 @@ GF-consistency-framework/
 |---------|--------|:-----:|-------|
 | Yeast PPI | STRING v11.5 | 5,936 | Score ≥ 700, curated |
 | Yeast GO | SGD GAF | 153 annotated (5,429 after GO DAG propagation) | BP terms, level ≥ 3 |
-| Human PPI | STRING v12.0 | 15,882 | Cross-species (largest CC) |
+| Human PPI | STRING v12.0 | 15,882 (14,679 in largest CC) | Cross-species validation |
 | Human GO | GOA Human GAF | 16,818 annotated | BP terms |
 
 Large files (`*.txt.gz`, `*.gaf.gz`) tracked via **Git LFS** — run `git lfs install` before cloning.
@@ -314,7 +317,7 @@ G, nodes, go_map = load_species_dataset("fly", data_dir="data/fly")
 
 ## Human PPI Validation
 
-Cross-species validation on STRING v12.0 human interactome (15,882 nodes in largest CC, 236,712 edges; 14,562 with BP GO annotations). G-F curves computed on 2,000-node subsample using Louvain community detection (100 r-points in [0.05, 0.55]):
+Cross-species validation on STRING v12.0 human interactome (~15,882 nodes after score ≥ 700 filtering; 14,679 in largest CC, 236,712 edges; 14,562 with BP GO annotations). G-F curves computed on 2,000-node subsample using Louvain community detection (100 r-points in [0.05, 0.55]):
 
 | Method | G-F Score | Plateau Width W | Peak Purity |
 |--------|:---------:|:---------------:|:-----------:|

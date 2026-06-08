@@ -1,35 +1,8 @@
 """
 visualization_helpers.py
-========================
-
-Reusable plotting functions for the G-F Consistency Framework.
-
-All plots adhere to publication-quality figure standards:
-
-- Resolution: 300 dpi (PNG)
-- Font size: minimum 8pt for all text elements
-- Color palette: colorblind-safe Okabe-Ito palette
-- Line width: minimum 1.0 pt
-- Marker size: minimum 20 pt^2
-
-This module provides:
-
-- ``plot_gf_curves_comparison()``: Multi-method G-F purity curves
-- ``plot_spearman_scatter()``: Correlation scatter plot with regression line
-- ``plot_convergence_with_ci()``: Sample size convergence with CI shading
-- ``plot_topology_radar()``: Cross-species topology radar chart
-- ``plot_runtime_breakdown()``: Pipeline runtime stacked bar chart
-
-Dependencies
-------------
-- numpy >= 1.24
-- pandas >= 2.0
-- matplotlib >= 3.7
-
-Author: Yuhan Zhang
+Publication-quality plotting functions for the G-F Consistency Framework.
+Okabe-Ito colorblind-safe palette, 300 dpi PNG output.
 """
-
-from __future__ import annotations
 
 import warnings
 from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
@@ -140,63 +113,30 @@ def plot_gf_curves_comparison(
     figsize: Optional[Tuple[float, float]] = None,
     save_path: Optional[str] = None,
 ) -> plt.Figure:
-    """
-    Plot G-F purity curves for all embedding methods across species.
-
-    Creates a multi-panel figure (one panel per species) showing the
-    G-F purity curve f(t) for each method as a function of the distance
-    threshold t.
+    """Plot G-F purity curves for all embedding methods across species.
 
     Parameters
     ----------
     curves_data : dict
-        Nested dictionary: ``{species: {method: purity_values}}``.
-        ``purity_values`` is a 1D numpy array of length ``len(thresholds)``.
+        {species: {method: purity_values}}.
     thresholds : np.ndarray
-        1D array of distance threshold values (x-axis).
-    species_panels : list of str or None
-        Species names to include as panels. If None, uses all keys in
-        ``curves_data``.
-    fixed_intervals : dict or None
-        ``{species: (t_low, t_high)}`` for drawing vertical dashed lines
-        marking the fixed interval boundaries.
-    random_baseline : dict or None
-        ``{species: float}`` for drawing a horizontal dashed line at the
-        random baseline purity level.
-    highlight_methods : list of str or None
-        Methods to highlight with thicker lines. If None, all methods
-        are drawn with equal weight.
-    figsize : tuple or None
-        Figure size (width, height) in inches. Defaults to (8, 3.5) for
-        two panels.
-    save_path : str or None
-        If provided, saves the figure to this file path (PNG, 300 dpi).
+        Distance threshold values (x-axis).
+    species_panels : list of str, optional
+        Species to include. Defaults to all keys in curves_data.
+    fixed_intervals : dict, optional
+        {species: (t_low, t_high)} for vertical dashed lines.
+    random_baseline : dict, optional
+        {species: float} for horizontal dashed baseline.
+    highlight_methods : list of str, optional
+        Methods drawn with thicker lines.
+    figsize : tuple, optional
+        Figure size in inches.
+    save_path : str, optional
+        Path to save figure (PNG, 300 dpi).
 
     Returns
     -------
     matplotlib.figure.Figure
-        The generated figure object.
-
-    Examples
-    --------
-    >>> import numpy as np
-    >>> t = np.linspace(0, 1, 200)
-    >>> curves = {
-    ...     "yeast": {
-    ...         "DM": 0.3 + 0.3 * np.exp(-((t - 0.2) / 0.1) ** 2),
-    ...         "Node2Vec": 0.25 + 0.2 * np.exp(-((t - 0.3) / 0.15) ** 2),
-    ...     },
-    ...     "human": {
-    ...         "DM": 0.2 + 0.25 * np.exp(-((t - 0.15) / 0.08) ** 2),
-    ...         "Node2Vec": 0.3 + 0.35 * np.exp(-((t - 0.15) / 0.1) ** 2),
-    ...     },
-    ... }
-    >>> fig = plot_gf_curves_comparison(
-    ...     curves, t,
-    ...     fixed_intervals={"yeast": (0.05, 0.422), "human": (0.05, 0.297)},
-    ...     random_baseline={"yeast": 0.12, "human": 0.08},
-    ... )
-    >>> # fig.savefig("gf_curves_comparison.png", dpi=300)
     """
     _setup_plot_style()
 
@@ -310,8 +250,7 @@ def plot_spearman_scatter(
     figsize: Optional[Tuple[float, float]] = None,
     save_path: Optional[str] = None,
 ) -> plt.Figure:
-    """
-    Create a scatter plot of downstream metric vs. G-F Score with regression line.
+    """Scatter plot of downstream metric vs. G-F Score with regression line.
 
     Parameters
     ----------
@@ -322,40 +261,25 @@ def plot_spearman_scatter(
     metric_col : str, default="auroc"
         Column for downstream metric (y-axis).
     method_col : str, default="method"
-        Column for method identifiers (used for point labels).
+        Column for method identifiers (point labels).
     species_col : str or None, default="species"
-        Column for species (used for color coding). If None, all points
-        are the same color.
-    rho : float or None
-        Pre-computed Spearman rho for annotation. If None, computed internally.
-    pvalue : float or None
+        Column for species color coding. None for uniform color.
+    rho : float, optional
+        Pre-computed Spearman rho for annotation.
+    pvalue : float, optional
         Pre-computed p-value for annotation.
-    ci : tuple or None
-        95% CI for rho, e.g., (0.45, 0.89).
-    metric_label : str or None
-        Human-readable label for the y-axis metric. Defaults to the
-        column name in uppercase.
-    figsize : tuple or None
+    ci : tuple, optional
+        95% CI for rho.
+    metric_label : str, optional
+        Y-axis label. Defaults to column name in uppercase.
+    figsize : tuple, optional
         Figure size in inches.
-    save_path : str or None
-        File path to save the figure.
+    save_path : str, optional
+        Path to save figure.
 
     Returns
     -------
     matplotlib.figure.Figure
-        The generated figure object.
-
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> import numpy as np
-    >>> rng = np.random.default_rng(42)
-    >>> df = pd.DataFrame({
-    ...     "method": [f"M{i}" for i in range(11)],
-    ...     "gf_score": np.linspace(0.3, 0.7, 11),
-    ...     "auroc": np.linspace(0.5, 0.9, 11) + rng.normal(0, 0.03, 11),
-    ... })
-    >>> fig = plot_spearman_scatter(df, species_col=None)
     """
     _setup_plot_style()
 
@@ -493,17 +417,12 @@ def plot_convergence_with_ci(
     figsize: Optional[Tuple[float, float]] = None,
     save_path: Optional[str] = None,
 ) -> plt.Figure:
-    """
-    Plot G-F Score convergence as a function of validation subset size.
-
-    Shows the mean G-F Score with 95% CI shading at each subset size,
-    optionally with a horizontal reference line at the full-set G-F Score.
+    """Plot G-F Score convergence vs. validation subset size with 95% CI shading.
 
     Parameters
     ----------
     stats_df : pd.DataFrame
-        DataFrame with per-size statistics. Must contain columns for
-        size, mean, and CI bounds.
+        Per-size statistics with columns for size, mean, and CI bounds.
     size_col : str, default="size"
         Column for subset sizes (x-axis).
     mean_col : str, default="mean"
@@ -512,35 +431,20 @@ def plot_convergence_with_ci(
         Column for lower CI bound.
     ci_upper_col : str, default="ci_upper"
         Column for upper CI bound.
-    full_set_gf : float or None
-        Full-set G-F Score value for a horizontal reference line.
-    method_groups : dict or None
-        If provided, overlay multiple convergence curves (one per method).
-        Keys are method names; values are DataFrames like ``stats_df``.
+    full_set_gf : float, optional
+        Full-set G-F Score for horizontal reference line.
+    method_groups : dict, optional
+        {method_name: DataFrame} to overlay multiple convergence curves.
     log_x : bool, default=True
-        If True, use logarithmic x-axis for subset sizes.
-    figsize : tuple or None
+        Use logarithmic x-axis.
+    figsize : tuple, optional
         Figure size in inches.
-    save_path : str or None
-        File path to save the figure.
+    save_path : str, optional
+        Path to save figure.
 
     Returns
     -------
     matplotlib.figure.Figure
-        The generated figure object.
-
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> import numpy as np
-    >>> sizes = [50, 100, 200, 500, 1000]
-    >>> df = pd.DataFrame({
-    ...     "size": sizes,
-    ...     "mean": [0.52, 0.54, 0.545, 0.549, 0.550],
-    ...     "ci_lower": [0.45, 0.50, 0.52, 0.535, 0.543],
-    ...     "ci_upper": [0.59, 0.58, 0.57, 0.563, 0.557],
-    ... })
-    >>> fig = plot_convergence_with_ci(df, full_set_gf=0.55)
     """
     _setup_plot_style()
 
@@ -637,58 +541,24 @@ def plot_topology_radar(
     figsize: Optional[Tuple[float, float]] = None,
     save_path: Optional[str] = None,
 ) -> plt.Figure:
-    """
-    Create a radar (spider) chart comparing network topology metrics between species.
+    """Radar (spider) chart comparing network topology metrics between species.
 
     Parameters
     ----------
     metrics : dict
-        ``{species: {metric_name: value}}`` dictionary. For example:
-        ``{"yeast": {"modularity": 0.45, "spectral_gap": 0.12, ...}, ...}``.
-    metric_labels : dict or None
-        ``{metric_name: display_label}`` for axis labels. If None, uses
-        the metric names directly.
+        {species: {metric_name: value}}.
+    metric_labels : dict, optional
+        {metric_name: display_label} for axis labels.
     normalize : bool, default=True
-        If True, normalize each metric to [0, 1] range across species
-        for visual comparability.
-    figsize : tuple or None
+        Normalize each metric to [0, 1] across species.
+    figsize : tuple, optional
         Figure size in inches.
-    save_path : str or None
-        File path to save the figure.
+    save_path : str, optional
+        Path to save figure.
 
     Returns
     -------
     matplotlib.figure.Figure
-        The generated figure object.
-
-    Notes
-    -----
-    For metrics where "higher is better" for embedding (e.g., modularity),
-    the value is used directly. For metrics where "lower is better"
-    (e.g., mixing time), the value is inverted (1 - normalized) so that
-    all axes point outward in the "more impactful" direction.
-
-    Examples
-    --------
-    >>> metrics = {
-    ...     "yeast": {
-    ...         "modularity": 0.45,
-    ...         "spectral_gap": 0.12,
-    ...         "clustering": 0.35,
-    ...         "diameter": 8,
-    ...         "assortativity": -0.05,
-    ...         "degree_gini": 0.55,
-    ...     },
-    ...     "human": {
-    ...         "modularity": 0.52,
-    ...         "spectral_gap": 0.08,
-    ...         "clustering": 0.28,
-    ...         "diameter": 12,
-    ...         "assortativity": 0.02,
-    ...         "degree_gini": 0.62,
-    ...     },
-    ... }
-    >>> fig = plot_topology_radar(metrics)
     """
     _setup_plot_style()
 
@@ -816,43 +686,26 @@ def plot_runtime_breakdown(
     figsize: Optional[Tuple[float, float]] = None,
     save_path: Optional[str] = None,
 ) -> plt.Figure:
-    """
-    Create a stacked bar chart of pipeline runtime breakdown by step.
+    """Stacked bar chart of pipeline runtime breakdown by step.
 
     Parameters
     ----------
     runtime_data : pd.DataFrame
-        DataFrame where each row is a method (or method-species combination)
-        and columns contain wall-clock times (in seconds) for each pipeline step.
+        Each row is a method; columns contain wall-clock times (seconds).
     method_col : str, default="method"
         Column for method names (x-axis categories).
-    step_cols : list of str or None
-        Columns for pipeline step runtimes. If None, all numeric columns
-        except ``method_col`` and ``species_col`` are used.
+    step_cols : list of str, optional
+        Columns for pipeline step runtimes. Defaults to all numeric columns.
     species_col : str or None, default="species"
         If present, groups bars by species.
-    figsize : tuple or None
+    figsize : tuple, optional
         Figure size in inches.
-    save_path : str or None
-        File path to save the figure.
+    save_path : str, optional
+        Path to save figure.
 
     Returns
     -------
     matplotlib.figure.Figure
-        The generated figure object.
-
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> df = pd.DataFrame({
-    ...     "method": ["DM", "Spectral", "PCA", "Node2Vec", "GraphSAGE"],
-    ...     "Load & Standardize": [0.1, 0.1, 0.1, 0.1, 0.1],
-    ...     "Distance Matrix": [2.5, 2.5, 2.5, 2.5, 2.5],
-    ...     "Neighborhood Graph": [15.0, 15.0, 15.0, 15.0, 15.0],
-    ...     "Leiden Detection": [120.0, 120.0, 120.0, 120.0, 120.0],
-    ...     "Purity & Integration": [1.0, 1.0, 1.0, 1.0, 1.0],
-    ... })
-    >>> fig = plot_runtime_breakdown(df)
     """
     _setup_plot_style()
 
@@ -967,44 +820,28 @@ def plot_time_accuracy_tradeoff(
     figsize: Optional[Tuple[float, float]] = None,
     save_path: Optional[str] = None,
 ) -> plt.Figure:
-    """
-    Plot the tradeoff between computational cost and G-F Score accuracy.
-
-    Dual y-axis plot: accuracy (left) and wall-clock time (right) as
-    functions of the number of sampling points K.
+    """Dual y-axis plot: accuracy and wall-clock time vs. number of sampling points K.
 
     Parameters
     ----------
     data : pd.DataFrame
-        DataFrame with columns for sampling points, accuracy, and time.
+        DataFrame with sampling points, accuracy, and time columns.
     sampling_col : str, default="n_sampling_points"
         Column for number of sampling points (x-axis).
     accuracy_col : str, default="accuracy_pct"
         Column for accuracy percentage (left y-axis).
     time_col : str, default="wall_time_seconds"
         Column for wall-clock time (right y-axis).
-    elbow_point : int or None
-        If provided, draws a vertical dashed line at the elbow point
-        (minimum K achieving > 99% accuracy).
-    figsize : tuple or None
+    elbow_point : int, optional
+        Draw vertical dashed line at the elbow point.
+    figsize : tuple, optional
         Figure size in inches.
-    save_path : str or None
-        File path to save the figure.
+    save_path : str, optional
+        Path to save figure.
 
     Returns
     -------
     matplotlib.figure.Figure
-        The generated figure object.
-
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> df = pd.DataFrame({
-    ...     "n_sampling_points": [50, 100, 150, 200, 300, 400, 500],
-    ...     "accuracy_pct": [96.5, 98.8, 99.5, 99.8, 99.95, 99.99, 100.0],
-    ...     "wall_time_seconds": [30, 60, 90, 120, 180, 240, 300],
-    ... })
-    >>> fig = plot_time_accuracy_tradeoff(df, elbow_point=150)
     """
     _setup_plot_style()
 

@@ -1,31 +1,8 @@
 """
 statistical_analysis.py
-=======================
-
-Core statistical functions for the G-F Consistency Framework.
-
-This module implements the primary statistical analyses described in the
-G-F Consistency Framework analysis report (03_analysis_report.md), including:
-
-- G-F Score comparison across 11 embedding methods x 2 species
-- Spearman rank correlation between G-F Score and downstream task metrics
-- Wilcoxon signed-rank tests for pairwise method comparisons
-- Bootstrap confidence intervals for G-F Score estimation
-- Permutation test for cross-species rank reversal significance
-
-All functions accept pandas DataFrames as input and return structured results
-(dictionaries or DataFrames). All random operations use seed=42 by default.
-
-Dependencies
-------------
-- numpy >= 1.24
-- pandas >= 2.0
-- scipy >= 1.11
-
-Author: Yuhan Zhang
+Core statistical analyses: G-F Score comparison, Spearman correlation,
+Wilcoxon pairwise tests, bootstrap CIs, and permutation tests.
 """
-
-from __future__ import annotations
 
 import warnings
 from itertools import combinations
@@ -55,52 +32,28 @@ def compute_gf_score_comparison(
     auroc_col: Optional[str] = "auroc",
     f1_col: Optional[str] = "knn_f1",
 ) -> Dict[str, Any]:
-    """
-    Compile and compare G-F Scores across all methods and species.
+    """Compare G-F Scores across methods and species.
 
     Parameters
     ----------
     gf_scores : pd.DataFrame
-        DataFrame containing G-F Scores and optional downstream metrics.
-        Required columns: `method_col`, `species_col`, `gf_col`.
-        Optional columns: `auroc_col`, `f1_col`.
-    method_col : str, default="method"
-        Column name for the embedding method identifier.
-    species_col : str, default="species"
-        Column name for the species identifier (e.g., "yeast", "human").
-    gf_col : str, default="gf_score"
-        Column name for the G-F Score value.
-    auroc_col : str or None, default="auroc"
-        Column name for link prediction AUROC. If None, AUROC is not included.
-    f1_col : str or None, default="knn_f1"
-        Column name for k-NN classification F1. If None, F1 is not included.
+        DataFrame with G-F Scores and optional downstream metrics.
+    method_col : str
+        Column for embedding method identifier.
+    species_col : str
+        Column for species identifier.
+    gf_col : str
+        Column for G-F Score value.
+    auroc_col : str or None
+        Column for link prediction AUROC (None to skip).
+    f1_col : str or None
+        Column for k-NN F1 (None to skip).
 
     Returns
     -------
     dict
-        A dictionary with the following keys:
-
-        - ``"comparison_table"`` : pd.DataFrame
-            Pivot table with methods as rows, species as columns for G-F Scores,
-            plus rank columns (``rank_{species}``) and ``delta_rank`` columns.
-        - ``"rank_correlation"`` : float
-            Spearman rho between yeast and human method rankings.
-        - ``"rank_correlation_pvalue"`` : float
-            Two-sided p-value for the rank correlation.
-        - ``"summary_stats"`` : pd.DataFrame
-            Per-species summary statistics (mean, std, min, max, range of GF Scores).
-
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> data = {
-    ...     "method": ["DM", "DM", "Spectral", "Spectral"],
-    ...     "species": ["yeast", "human", "yeast", "human"],
-    ...     "gf_score": [0.625, 0.410, 0.580, 0.450],
-    ... }
-    >>> df = pd.DataFrame(data)
-    >>> result = compute_gf_score_comparison(df)
-    >>> result["comparison_table"]
+        Keys: comparison_table, rank_correlation, rank_correlation_pvalue,
+        summary_stats.
     """
     # --- Build pivot table for G-F Scores ---
     pivot = gf_scores.pivot_table(
@@ -193,60 +146,30 @@ def spearman_correlation_analysis(
     n_bootstrap: int = 1000,
     random_seed: int = 42,
 ) -> Dict[str, Any]:
-    """
-    Compute Spearman rank correlation between G-F Score and a downstream metric.
-
-    Performs correlation analysis with:
-    - Point estimate of Spearman rho
-    - Two-sided p-value (t-approximation)
-    - 95% bootstrap confidence interval (percentile method)
-    - Per-species and pooled analyses
+    """Spearman rank correlation between G-F Score and a downstream metric.
 
     Parameters
     ----------
     data : pd.DataFrame
-        DataFrame with at least `gf_col` and `metric_col` columns.
-        If `species_col` is provided, per-species analyses are also computed.
-    gf_col : str, default="gf_score"
-        Column name for G-F Score values.
-    metric_col : str, default="auroc"
-        Column name for the downstream metric (e.g., "auroc" or "knn_f1").
-    method_col : str, default="method"
-        Column name for method identifiers (used for labeling).
-    species_col : str or None, default="species"
-        Column name for species identifiers. If None, only pooled analysis is run.
-    n_bootstrap : int, default=1000
-        Number of bootstrap resamples for confidence interval estimation.
-    random_seed : int, default=42
-        Random seed for reproducibility of bootstrap resampling.
+        DataFrame with gf_col and metric_col columns.
+    gf_col : str
+        Column for G-F Score values.
+    metric_col : str
+        Column for the downstream metric.
+    method_col : str
+        Column for method identifiers.
+    species_col : str or None
+        Column for species identifiers (None for pooled only).
+    n_bootstrap : int
+        Number of bootstrap resamples for CI.
+    random_seed : int
+        Seed for reproducibility.
 
     Returns
     -------
     dict
-        A dictionary with the following keys:
-
-        - ``"pooled"`` : dict
-            Pooled analysis results with keys ``"rho"``, ``"pvalue"``,
-            ``"ci_lower"``, ``"ci_upper"``, ``"n"``.
-        - ``"per_species"`` : dict
-            Per-species results (only if `species_col` is provided).
-            Keys are species names; values are dicts like ``"pooled"``.
-        - ``"interpretation"`` : str
-            Qualitative interpretation of the pooled correlation strength.
-
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> import numpy as np
-    >>> np.random.seed(42)
-    >>> df = pd.DataFrame({
-    ...     "method": [f"M{i}" for i in range(11)] * 2,
-    ...     "species": ["yeast"] * 11 + ["human"] * 11,
-    ...     "gf_score": np.random.uniform(0.3, 0.7, 22),
-    ...     "auroc": np.random.uniform(0.5, 0.9, 22),
-    ... })
-    >>> result = spearman_correlation_analysis(df, metric_col="auroc")
-    >>> print(f"Pooled rho: {result['pooled']['rho']:.3f}")
+        Keys: pooled (rho, pvalue, CI, n), per_species (if species_col
+        given), interpretation.
     """
     rng = np.random.default_rng(random_seed)
 
@@ -331,77 +254,31 @@ def wilcoxon_pairwise_comparison(
     alpha: float = 0.05,
     random_seed: int = 42,
 ) -> Dict[str, Any]:
-    """
-    Perform pairwise Wilcoxon signed-rank tests between all embedding methods.
-
-    For each pair of methods, tests whether the G-F Score difference is
-    statistically significant. Applies Benjamini-Hochberg FDR correction
-    across all pairwise comparisons.
-
-    When only a small number of paired observations are available (e.g.,
-    2 species), an optional bootstrap augmentation resamples the validation
-    set to increase statistical power.
+    """Pairwise Wilcoxon signed-rank tests between all methods with FDR correction.
 
     Parameters
     ----------
     gf_scores : pd.DataFrame
-        DataFrame with columns for method identifiers and G-F Scores.
-        Each row represents one observation (e.g., one species or one
-        bootstrap replicate).
-    method_col : str, default="method"
-        Column name for method identifiers.
-    gf_col : str, default="gf_score"
-        Column name for G-F Score values.
-    bootstrap_col : str or None, default=None
-        If provided, column identifying bootstrap replicates. Observations
-        with the same value in this column are treated as paired.
-    n_bootstrap_augment : int, default=1000
-        Number of bootstrap augmentations when the number of natural pairs
-        is too small (< 6) for meaningful Wilcoxon testing.
-    alpha : float, default=0.05
+        DataFrame with method identifiers and G-F Scores.
+    method_col : str
+        Column for method identifiers.
+    gf_col : str
+        Column for G-F Score values.
+    bootstrap_col : str or None
+        Column identifying bootstrap replicates for pairing.
+    n_bootstrap_augment : int
+        Bootstrap augmentations when natural pairs < 6.
+    alpha : float
         Significance level for FDR correction.
-    random_seed : int, default=42
-        Random seed for bootstrap augmentation reproducibility.
+    random_seed : int
+        Seed for bootstrap augmentation.
 
     Returns
     -------
     dict
-        A dictionary with the following keys:
-
-        - ``"pairwise_results"`` : pd.DataFrame
-            DataFrame with columns: ``method_a``, ``method_b``, ``W``
-            (Wilcoxon statistic), ``pvalue`` (raw), ``pvalue_fdr``
-            (FDR-corrected), ``effect_size`` (rank biserial correlation),
-            ``significant`` (bool after FDR correction), ``n_pairs``.
-        - ``"n_comparisons"`` : int
-            Total number of pairwise comparisons performed.
-        - ``"n_significant"`` : int
-            Number of significant comparisons after FDR correction.
-        - ``"fdr_threshold"`` : float
-            The effective FDR threshold (largest rejected p-value).
-
-    Notes
-    -----
-    The matched-pairs rank biserial correlation is computed as:
-
-    .. math::
-
-        r_{rb} = 1 - \\frac{4W}{n(n+1)}
-
-    where W is the smaller of W+ and W- from the signed-rank test, and n
-    is the number of non-zero differences.
-
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> data = {
-    ...     "method": ["DM"] * 2 + ["Spectral"] * 2 + ["PCA"] * 2,
-    ...     "species": ["yeast", "human"] * 3,
-    ...     "gf_score": [0.625, 0.410, 0.580, 0.450, 0.550, 0.420],
-    ... }
-    >>> df = pd.DataFrame(data)
-    >>> result = wilcoxon_pairwise_comparison(df)
-    >>> result["pairwise_results"][["method_a", "method_b", "pvalue_fdr"]]
+        Keys: pairwise_results (DataFrame with W, pvalue, pvalue_fdr,
+        effect_size, significant), n_comparisons, n_significant,
+        fdr_threshold.
     """
     rng = np.random.default_rng(random_seed)
 
@@ -574,56 +451,30 @@ def bootstrap_confidence_intervals(
     ci_level: float = 95.0,
     random_seed: int = 42,
 ) -> pd.DataFrame:
-    """
-    Compute bootstrap confidence intervals for G-F Scores by group.
-
-    For each group (method x species combination), resamples the observations
-    with replacement and computes the percentile-based confidence interval.
+    """Bootstrap percentile confidence intervals for G-F Scores by group.
 
     Parameters
     ----------
     data : pd.DataFrame
         DataFrame containing the values to bootstrap.
-    value_col : str, default="gf_score"
-        Column name for the numeric values to estimate.
-    group_col : str, default="method"
-        Column name for grouping (each group gets its own CI).
-    species_col : str or None, default="species"
-        If provided, creates sub-groups within each species.
-    n_bootstrap : int, default=1000
+    value_col : str
+        Column for numeric values to estimate.
+    group_col : str
+        Column for grouping.
+    species_col : str or None
+        Creates sub-groups within each species if provided.
+    n_bootstrap : int
         Number of bootstrap resamples.
-    ci_level : float, default=95.0
-        Confidence level (percentage, e.g., 95.0 for 95% CI).
-    random_seed : int, default=42
-        Random seed for reproducibility.
+    ci_level : float
+        Confidence level as percentage (e.g. 95.0).
+    random_seed : int
+        Seed for reproducibility.
 
     Returns
     -------
     pd.DataFrame
-        DataFrame with columns:
-
-        - ``group_col`` : method identifier
-        - ``species_col`` : species identifier (if provided)
-        - ``"mean"`` : sample mean
-        - ``"std"`` : sample standard deviation
-        - ``"ci_lower"`` : lower bound of the CI
-        - ``"ci_upper"`` : upper bound of the CI
-        - ``"ci_width"`` : width of the CI (ci_upper - ci_lower)
-        - ``"n_obs"`` : number of observations in the group
-        - ``"se"`` : standard error of the mean
-
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> import numpy as np
-    >>> rng = np.random.default_rng(42)
-    >>> df = pd.DataFrame({
-    ...     "method": np.repeat(["DM", "Spectral", "PCA"], 30),
-    ...     "species": np.tile(np.repeat(["yeast", "human"], 15), 3),
-    ...     "gf_score": rng.uniform(0.3, 0.7, 90),
-    ... })
-    >>> ci_df = bootstrap_confidence_intervals(df)
-    >>> ci_df[["method", "species", "mean", "ci_lower", "ci_upper"]]
+        Columns: group_col, species_col (if given), mean, std,
+        ci_lower, ci_upper, ci_width, n_obs, se.
     """
     rng = np.random.default_rng(random_seed)
     alpha = 1.0 - ci_level / 100.0
@@ -703,76 +554,29 @@ def permutation_test_rank_reversal(
     n_permutations: int = 10000,
     random_seed: int = 42,
 ) -> Dict[str, Any]:
-    """
-    Test the statistical significance of cross-species rank reversal.
-
-    Uses a permutation test to assess whether the observed rank shift
-    pattern (specifically the differential rank shift between focal methods)
-    is unlikely under the null hypothesis of exchangeable species labels.
-
-    The test statistic is the absolute difference in rank shifts between
-    the two focal methods:
-
-    .. math::
-
-        T = |\\Delta R_{\\text{method1}} - \\Delta R_{\\text{method2}}|
-
-    where :math:`\\Delta R = R_{\\text{species2}} - R_{\\text{species1}}`.
+    """Permutation test for cross-species rank reversal significance.
 
     Parameters
     ----------
     comparison_table : pd.DataFrame
-        DataFrame with method identifiers and rank columns for each species.
-        Expected to have columns like ``rank_yeast`` and ``rank_human``.
-    method_col : str, default="method"
-        Column name for method identifiers.
+        DataFrame with method identifiers and per-species rank columns.
+    method_col : str
+        Column for method identifiers.
     rank_cols : list of str or None
-        Two column names for the per-species ranks (e.g., ["rank_yeast", "rank_human"]).
-        If None, auto-detected from columns starting with "rank_".
+        Two per-species rank columns (auto-detected if None).
     focal_methods : list of str or None
-        Two method names to compare (e.g., ["Node2Vec", "DeepWalk"]).
-        If None, defaults to the two methods with the largest absolute
-        rank shift difference.
-    n_permutations : int, default=10000
-        Number of permutations for the null distribution.
-    random_seed : int, default=42
-        Random seed for reproducibility.
+        Two methods to compare (auto-selected if None).
+    n_permutations : int
+        Number of permutations.
+    random_seed : int
+        Seed for reproducibility.
 
     Returns
     -------
     dict
-        A dictionary with the following keys:
-
-        - ``"T_observed"`` : float
-            Observed test statistic.
-        - ``"p_value"`` : float
-            Permutation p-value.
-        - ``"null_distribution"`` : np.ndarray
-            Array of test statistics under the null (length ``n_permutations``).
-        - ``"focal_methods"`` : list of str
-            The two methods compared.
-        - ``"rank_shift_method1"`` : float
-            Rank shift for the first focal method.
-        - ``"rank_shift_method2"`` : float
-            Rank shift for the second focal method.
-        - ``"effect_size_ci"`` : tuple
-            95% bootstrap CI for the test statistic.
-        - ``"all_rank_shifts"`` : pd.DataFrame
-            Rank shifts for all methods.
-
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> table = pd.DataFrame({
-    ...     "method": ["DM", "Spectral", "PCA", "MDS", "DeepWalk",
-    ...                "Node2Vec", "VGAE", "VGAE-feat"],
-    ...     "rank_yeast": [1, 2, 3, 4, 6, 7, 5, 8],
-    ...     "rank_human": [3, 4, 5, 6, 2, 1, 7, 8],
-    ... })
-    >>> result = permutation_test_rank_reversal(
-    ...     table, focal_methods=["Node2Vec", "DeepWalk"]
-    ... )
-    >>> print(f"T_obs={result['T_observed']:.2f}, p={result['p_value']:.4f}")
+        Keys: T_observed, p_value, null_distribution, focal_methods,
+        rank_shift_method1, rank_shift_method2, effect_size_ci,
+        all_rank_shifts.
     """
     rng = np.random.default_rng(random_seed)
 
@@ -872,68 +676,28 @@ def adaptive_vs_fixed_comparison(
     gf_adaptive_col: str = "gf_adaptive",
     equivalence_threshold: float = 0.05,
 ) -> Dict[str, Any]:
-    """
-    Compare G-F Scores from adaptive vs. fixed interval strategies.
-
-    Performs:
-    1. Paired Wilcoxon signed-rank test on the differences.
-    2. Mean Absolute Percentage Difference (MAPD) computation.
-    3. Spearman rank correlation between fixed and adaptive rankings.
-    4. Two One-Sided Tests (TOST) for equivalence.
+    """Compare G-F Scores from adaptive vs. fixed interval strategies.
 
     Parameters
     ----------
     data : pd.DataFrame
-        DataFrame with columns for method, species, fixed G-F Score, and
-        adaptive G-F Score.
-    method_col : str, default="method"
-        Column name for method identifiers.
-    species_col : str, default="species"
-        Column name for species identifiers.
-    gf_fixed_col : str, default="gf_fixed"
-        Column name for fixed-interval G-F Scores.
-    gf_adaptive_col : str, default="gf_adaptive"
-        Column name for adaptive-interval G-F Scores.
-    equivalence_threshold : float, default=0.05
-        Absolute threshold for TOST equivalence test. Also used as the
-        acceptance criterion for MAPD (as a fraction, i.e., 5%).
+        DataFrame with method, species, fixed and adaptive G-F Score columns.
+    method_col : str
+        Column for method identifiers.
+    species_col : str
+        Column for species identifiers.
+    gf_fixed_col : str
+        Column for fixed-interval G-F Scores.
+    gf_adaptive_col : str
+        Column for adaptive-interval G-F Scores.
+    equivalence_threshold : float
+        Absolute threshold for TOST and MAPD acceptance.
 
     Returns
     -------
     dict
-        A dictionary with:
-
-        - ``"wilcoxon"`` : dict
-            Wilcoxon test results (W, pvalue, effect_size).
-        - ``"mapd"`` : float
-            Mean Absolute Percentage Difference (as a fraction, not percent).
-        - ``"max_apd"`` : float
-            Maximum Absolute Percentage Difference.
-        - ``"spearman_rho"`` : float
-            Rank correlation between fixed and adaptive scores.
-        - ``"spearman_pvalue"`` : float
-            P-value for the rank correlation.
-        - ``"kendall_tau"`` : float
-            Kendall's tau-b between fixed and adaptive rankings.
-        - ``"tost"`` : dict
-            TOST results: ``"t_lower"``, ``"p_lower"``, ``"t_upper"``,
-            ``"p_upper"``, ``"equivalent"`` (bool).
-        - ``"accepted"`` : bool
-            Overall acceptance: MAPD < threshold AND rho > 0.95.
-        - ``"per_method"`` : pd.DataFrame
-            Per-method-species comparison details.
-
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> df = pd.DataFrame({
-    ...     "method": ["DM", "DM", "Spectral", "Spectral"],
-    ...     "species": ["yeast", "human", "yeast", "human"],
-    ...     "gf_fixed": [0.625, 0.410, 0.580, 0.450],
-    ...     "gf_adaptive": [0.618, 0.405, 0.575, 0.448],
-    ... })
-    >>> result = adaptive_vs_fixed_comparison(df)
-    >>> print(f"MAPD: {result['mapd']:.4f}, Accepted: {result['accepted']}")
+        Keys: wilcoxon, mapd, max_apd, spearman_rho, spearman_pvalue,
+        kendall_tau, tost, accepted, per_method.
     """
     df = data.copy()
     df["diff"] = df[gf_adaptive_col] - df[gf_fixed_col]

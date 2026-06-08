@@ -7,7 +7,7 @@ Computes basic topology, degree distribution, modularity, random walk
 properties, and community structure for:
   - Yeast curated 153-node network
   - Yeast full STRING network (~5,936 nodes)
-  - Human STRING network (~15,882 nodes)
+  - Human STRING network (~15,882 nodes before CC extraction; 14,679 in largest CC)
 
 Output:
   - results/network_topology_comparison.json
@@ -383,7 +383,8 @@ def generate_radar_chart(all_metrics, figures_dir):
     Parameters
     ----------
     all_metrics : dict
-        Must contain keys ``"yeast_curated_153"`` and ``"human_15882"``.
+        Must contain keys ``"yeast_curated_153"`` and ``"human_15882"``
+    (the latter is aliased from the dynamic ``human_{n}`` key in main()).
     figures_dir : Path
         Directory where the figure will be saved.
     """
@@ -447,8 +448,9 @@ def generate_radar_chart(all_metrics, figures_dir):
             label='Yeast (curated 153)', markersize=7)
     ax.fill(angles, yeast_plot, alpha=0.15, color=yeast_color)
 
+    human_n = all_metrics[human_key].get('n_nodes', '')
     ax.plot(angles, human_plot, 's-', linewidth=2.5, color=human_color,
-            label='Human (15882)', markersize=7)
+            label=f'Human ({human_n})', markersize=7)
     ax.fill(angles, human_plot, alpha=0.15, color=human_color)
 
     ax.set_xticks(angles[:-1])

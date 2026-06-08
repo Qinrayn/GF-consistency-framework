@@ -3,7 +3,7 @@
 human_validation.py
 Step 13: Human PPI cross-species validation.
 - Load STRING v12.0 human PPI (score >= 700)
-- Compute DM and Node2Vec on full 14,679-node network
+- Compute DM and Node2Vec on full human PPI network (14,679 nodes in largest CC; ~15,882 before CC extraction)
 - Evaluate G-F curves on GO-annotated nodes
 - Detect and remove Node2Vec outlier (ENSP00000334051, x ≈ -40.75)
 - Compare original vs cleaned curves

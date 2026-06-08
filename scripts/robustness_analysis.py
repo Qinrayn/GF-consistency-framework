@@ -1,33 +1,10 @@
 """
 robustness_analysis.py
-======================
-
-Robustness and convergence analysis functions for the G-F Consistency Framework.
-
-This module implements:
-
-- Subset robustness experiments (30 random subsets x 5 sizes)
-- G-F Score convergence analysis with 95% bootstrap confidence intervals
-- Randomization null tests (observed G-F Scores vs. shuffled GO label null distribution)
-- Power curve estimation for sample size determination
-
-All functions accept structured inputs and return DataFrames or dictionaries.
-All random operations use seed=42 by default.
-
-Dependencies
-------------
-- numpy >= 1.24
-- pandas >= 2.0
-- scipy >= 1.11
-- matplotlib >= 3.7 (for convergence figure generation)
-
-Author: Yuhan Zhang
+Subset robustness, convergence, and randomization null tests for G-F Scores.
 """
 
-from __future__ import annotations
-
 import warnings
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
@@ -47,65 +24,29 @@ def subset_robustness_experiment(
     stratify_by_degree: bool = False,
     node_degrees: Optional[np.ndarray] = None,
 ) -> pd.DataFrame:
-    """
-    Evaluate G-F Score robustness across random subsets of validation nodes.
-
-    For each combination of subset size and trial, draws a random subset
-    of annotated nodes and computes the G-F Score. This establishes how
-    sensitive the G-F Score is to the specific composition of the validation set.
+    """Evaluate G-F Score robustness across random subsets of validation nodes.
 
     Parameters
     ----------
     annotated_nodes : np.ndarray
-        Array of node identifiers in the expanded validation set.
-        Shape: (N_total,), where N_total >= 1000.
+        Node identifiers in the expanded validation set.
     gf_score_fn : callable
-        Function that accepts a subset of node identifiers (np.ndarray)
-        and returns the G-F Score (float). This should wrap the existing
-        G-F Score computation pipeline.
+        Function that accepts a subset of node identifiers and returns the G-F Score.
     subset_sizes : list of int or None
-        List of subset sizes to evaluate. If None, defaults to
-        [50, 100, 200, 500, 1000].
+        Subset sizes to evaluate. Defaults to [50, 100, 200, 500, 1000].
     n_subsets : int, default=30
         Number of random subsets per size level.
     random_seed : int, default=42
-        Base random seed. Each subset uses seed = random_seed + trial_index.
+        Base random seed.
     stratify_by_degree : bool, default=False
-        If True, stratify subset selection by degree quartile to ensure
-        representative degree distribution in each subset.
+        If True, stratify subset selection by degree quartile.
     node_degrees : np.ndarray or None
-        Node degrees corresponding to `annotated_nodes`. Required if
-        `stratify_by_degree` is True.
+        Node degrees corresponding to `annotated_nodes`. Required if stratifying.
 
     Returns
     -------
     pd.DataFrame
-        DataFrame with columns:
-
-        - ``"size"`` : subset size
-        - ``"trial"`` : trial index (0 to n_subsets - 1)
-        - ``"gf_score"`` : computed G-F Score
-        - ``"subset_seed"`` : random seed used for this subset
-        - ``"n_actual"`` : actual number of nodes used (may differ from
-          requested size if fewer nodes are available)
-
-    Notes
-    -----
-    Total number of G-F Score computations: len(subset_sizes) * n_subsets.
-    With default parameters: 5 sizes * 30 subsets = 150 computations.
-
-    Examples
-    --------
-    >>> import numpy as np
-    >>> nodes = np.arange(1000)
-    >>> def mock_gf_fn(subset):
-    ...     # Simulated G-F Score: base + noise proportional to 1/sqrt(n)
-    ...     rng = np.random.default_rng(42)
-    ...     return 0.55 + rng.normal(0, 0.1 / np.sqrt(len(subset)))
-    >>> result = subset_robustness_experiment(
-    ...     nodes, mock_gf_fn, subset_sizes=[50, 100, 200]
-    ... )
-    >>> result.groupby("size")["gf_score"].agg(["mean", "std", "count"])
+        DataFrame with columns: size, trial, gf_score, subset_seed, n_actual.
     """
     if subset_sizes is None:
         subset_sizes = [50, 100, 200, 500, 1000]
@@ -193,17 +134,14 @@ def convergence_analysis(
     ci_level: float = 95.0,
     random_seed: int = 42,
 ) -> Dict[str, Any]:
-    """
-    Analyze G-F Score convergence as a function of validation subset size.
+    """Analyze G-F Score convergence as a function of validation subset size.
 
-    Computes per-size statistics (mean, std, CV, CI) and fits an asymptotic
-    convergence model: GF(s) = GF_inf - A * s^{-alpha}.
+    Computes per-size statistics and fits an asymptotic convergence model.
 
     Parameters
     ----------
     subset_results : pd.DataFrame
-        Output from :func:`subset_robustness_experiment`. Must contain columns
-        ``"size"`` and ``"gf_score"``.
+        Output from subset_robustness_experiment. Must contain size and gf_score columns.
     n_bootstrap : int, default=1000
         Number of bootstrap resamples for CI estimation.
     ci_level : float, default=95.0
@@ -214,38 +152,8 @@ def convergence_analysis(
     Returns
     -------
     dict
-        A dictionary with:
-
-        - ``"per_size_stats"`` : pd.DataFrame
-            Per-size statistics: ``size``, ``mean``, ``std``, ``cv``,
-            ``ci_lower``, ``ci_upper``, ``ci_width``, ``n_trials``.
-        - ``"convergence_fit"`` : dict
-            Fitted convergence model parameters: ``gf_inf`` (asymptotic GF),
-            ``A`` (amplitude), ``alpha`` (rate), ``r_squared``.
-        - ``"convergence_size"`` : int or None
-            Smallest subset size where CV < 0.05. None if no size meets criterion.
-        - ``"convergence_curve_data"`` : pd.DataFrame
-            Full data for plotting the convergence curve.
-
-    Notes
-    -----
-    The convergence model GF(s) = GF_inf - A * s^{-alpha} is fit via
-    nonlinear least squares (scipy.optimize.curve_fit). If the fit fails
-    to converge, a simpler model GF(s) = GF_inf - A / s is used instead.
-
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> import numpy as np
-    >>> rng = np.random.default_rng(42)
-    >>> rows = []
-    >>> for size in [50, 100, 200, 500, 1000]:
-    ...     for trial in range(30):
-    ...         gf = 0.55 + rng.normal(0, 0.5 / np.sqrt(size))
-    ...         rows.append({"size": size, "trial": trial, "gf_score": gf})
-    >>> df = pd.DataFrame(rows)
-    >>> result = convergence_analysis(df)
-    >>> result["per_size_stats"][["size", "mean", "cv"]]
+        Dictionary with per_size_stats, convergence_fit, convergence_size,
+        and convergence_curve_data.
     """
     rng = np.random.default_rng(random_seed)
     alpha_ci = 1.0 - ci_level / 100.0
@@ -416,25 +324,18 @@ def randomization_null_test(
     n_permutations: int = 1000,
     random_seed: int = 42,
 ) -> Dict[str, Any]:
-    """
-    Test whether an observed G-F Score is significantly above chance.
+    """Test whether an observed G-F Score is significantly above chance.
 
-    Generates a null distribution by permuting (shuffling) the GO term
-    labels across nodes, which preserves the label frequency distribution
-    but destroys any structure-function mapping. The observed G-F Score
-    is then compared against this null distribution.
+    Generates a null distribution by permuting GO term labels across nodes.
 
     Parameters
     ----------
     gf_observed : float
         The observed G-F Score computed with true GO annotations.
     go_labels : np.ndarray
-        Array of GO term labels for each node. Shape: (N,).
-        Labels can be strings, integers, or any hashable type.
+        Array of GO term labels for each node.
     gf_score_fn_with_labels : callable
-        Function that accepts a (possibly permuted) array of GO labels
-        and returns the G-F Score. This function should use the same
-        embedding and pipeline as the original computation.
+        Function that accepts a (possibly permuted) array of GO labels and returns the G-F Score.
     n_permutations : int, default=1000
         Number of label permutations to generate the null distribution.
     random_seed : int, default=42
@@ -443,50 +344,8 @@ def randomization_null_test(
     Returns
     -------
     dict
-        A dictionary with:
-
-        - ``"gf_observed"`` : float
-            The observed G-F Score.
-        - ``"null_distribution"`` : np.ndarray
-            Array of null G-F Scores (length ``n_permutations``).
-        - ``"null_mean"`` : float
-            Mean of the null distribution.
-        - ``"null_std"`` : float
-            Standard deviation of the null distribution.
-        - ``"p_value"`` : float
-            Permutation p-value: proportion of null scores >= observed.
-        - ``"z_score"`` : float
-            Standardized effect size: (observed - null_mean) / null_std.
-        - ``"null_ci_95"`` : tuple
-            95% interval of the null distribution (2.5th, 97.5th percentiles).
-        - ``"significant"`` : bool
-            True if p_value < 0.05 AND z_score > 2.0.
-        - ``"null_percentile"`` : float
-            Percentile rank of the observed score within the null distribution.
-
-    Notes
-    -----
-    The p-value is computed with the +1/+1 correction to avoid p = 0:
-
-    .. math::
-
-        \\hat{p} = \\frac{1 + \\#\\{b : GF_{null}^{(b)} \\geq GF_{obs}\\}}{1 + B}
-
-    Examples
-    --------
-    >>> import numpy as np
-    >>> labels = np.array(["GO:001", "GO:002", "GO:001", "GO:003"] * 50)
-    >>> def mock_gf_with_labels(lbls):
-    ...     # Returns higher score when labels have structure
-    ...     unique, counts = np.unique(lbls, return_counts=True)
-    ...     return float(np.max(counts) / len(lbls))
-    >>> result = randomization_null_test(
-    ...     gf_observed=0.55,
-    ...     go_labels=labels,
-    ...     gf_score_fn_with_labels=mock_gf_with_labels,
-    ...     n_permutations=100,
-    ... )
-    >>> print(f"p={result['p_value']:.3f}, z={result['z_score']:.2f}")
+        Dictionary with gf_observed, null_distribution, null_mean, null_std,
+        p_value, z_score, null_ci_95, significant, and null_percentile.
     """
     rng = np.random.default_rng(random_seed)
 
@@ -565,65 +424,25 @@ def power_curve_estimation(
     target_power: float = 0.80,
     random_seed: int = 42,
 ) -> Dict[str, Any]:
-    """
-    Estimate power curves for G-F Score discrimination as a function of sample size.
-
-    For each pair of methods with a meaningful G-F Score difference, computes
-    the empirical power of the Wilcoxon signed-rank test at each subset size.
-    The power is the proportion of subsets where the test correctly rejects
-    the null hypothesis.
+    """Estimate power curves for G-F Score discrimination as a function of sample size.
 
     Parameters
     ----------
     subset_results : pd.DataFrame
-        Output from :func:`subset_robustness_experiment`. Must contain columns
-        ``"size"``, ``"trial"``, and ``"gf_score"``. Optionally a method
-        column if comparing across methods.
+        Output from subset_robustness_experiment. Must contain size, trial, and gf_score columns.
     method_col : str or None
         If provided, computes power for discriminating between methods.
-        If None, computes power for detecting a deviation from a reference
-        value (the mean G-F Score at the largest subset size).
     alpha : float, default=0.05
         Significance level for the statistical test.
     target_power : float, default=0.80
-        Target statistical power (80%).
+        Target statistical power.
     random_seed : int, default=42
-        Random seed (not used directly, but kept for API consistency).
+        Random seed (kept for API consistency).
 
     Returns
     -------
     dict
-        A dictionary with:
-
-        - ``"power_curves"`` : pd.DataFrame
-            DataFrame with columns: ``size``, ``power``, ``n_tests``,
-            and optionally ``method_a``, ``method_b``.
-        - ``"minimum_sample_size"`` : int or None
-            Smallest subset size achieving target power. None if no size
-            meets the criterion.
-        - ``"analytical_estimate"`` : dict
-            Analytical sample size estimate based on observed effect sizes
-            and the standard paired t-test power formula.
-
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> import numpy as np
-    >>> rng = np.random.default_rng(42)
-    >>> rows = []
-    >>> for size in [50, 100, 200, 500, 1000]:
-    ...     for trial in range(30):
-    ...         rows.append({
-    ...             "size": size, "trial": trial,
-    ...             "method": "DM", "gf_score": 0.55 + rng.normal(0, 0.5/np.sqrt(size)),
-    ...         })
-    ...         rows.append({
-    ...             "size": size, "trial": trial,
-    ...             "method": "PCA", "gf_score": 0.50 + rng.normal(0, 0.5/np.sqrt(size)),
-    ...         })
-    >>> df = pd.DataFrame(rows)
-    >>> result = power_curve_estimation(df, method_col="method")
-    >>> result["power_curves"][["size", "power"]]
+        Dictionary with power_curves, minimum_sample_size, and analytical_estimate.
     """
     sizes = sorted(subset_results["size"].unique())
 

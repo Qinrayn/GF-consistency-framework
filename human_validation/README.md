@@ -132,7 +132,7 @@ When using the human validation results, please cite:
          Protein Interaction Network Embeddings},
   author={Zhang, Yuhan},
   year={2026},
-  note={Human validation: 14,679 nodes, 6 methods}
+  note={Human validation: ~15,882 nodes (14,679 in largest CC), 6 methods}
 }
 ```
 

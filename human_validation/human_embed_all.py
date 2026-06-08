@@ -76,7 +76,7 @@ def load_go_annotations():
     Load GO biological process annotations for human proteins.
     Uses STRING alias file to map to UniProt, then loads GOA annotations.
     For this experiment, we use a simplified approach: load annotations from
-    the data directory if available, otherwise use a placeholder.
+    the data directory if available, otherwise return an empty dict.
     """
     # Try to load from existing processed data
     go_file = os.path.join(os.path.dirname(__file__), '..', 'data', 'human_go_annotations.json')
@@ -84,7 +84,7 @@ def load_go_annotations():
         with open(go_file, 'r') as f:
             return json.load(f)
     
-    # Placeholder: return empty dict (GF computation will use network structure only)
+    # Fallback: return empty dict (GF computation will use network structure only)
     print("  Warning: No GO annotations file found. Using empty annotations.")
     return {}
 
