@@ -59,13 +59,11 @@ def embed_mds_subset(G, nodes):
     """MDS embedding for a subset graph."""
     n = len(nodes)
     lengths = dict(nx.shortest_path_length(G))
+    node_to_idx = {u: i for i, u in enumerate(nodes)}
     D = np.zeros((n, n))
-    for i, u in enumerate(nodes):
-        for j, v in enumerate(nodes):
-            if j >= i:
-                d = lengths[u].get(v, n)
-                D[i, j] = d
-                D[j, i] = d
+    for u, dists in lengths.items():
+        i = node_to_idx[u]
+        D[i, :] = [dists.get(v, n) for v in nodes]
     coords = classical_mds_from_distances(D)
     return rescale_coordinates(coords, target_std=0.3)
 

@@ -24,6 +24,8 @@ def compute_geometric_margins(coords, nodes, go_map):
     
     d_intra: average Euclidean distance between nodes sharing the same most-frequent GO term.
     d_inter: average Euclidean distance between nodes from different modules.
+
+    Optimised: uses vectorised NumPy indexing instead of nested Python loops.
     """
     from collections import Counter
     
@@ -45,29 +47,35 @@ def compute_geometric_margins(coords, nodes, go_map):
     # Compute pairwise distances using the optimised utility
     dist_matrix = precompute_distance_matrix(coords)
     
-    # d_intra: average distance within modules
+    # d_intra: vectorised — extract within-module distances via fancy indexing
     intra_dists = []
     for term, member_indices in modules.items():
         if len(member_indices) < 2:
             continue
-        for i_idx in range(len(member_indices)):
-            for j_idx in range(i_idx + 1, len(member_indices)):
-                intra_dists.append(dist_matrix[member_indices[i_idx], member_indices[j_idx]])
+        idx = np.asarray(member_indices)
+        # Extract upper-triangle distances for this module
+        iu = np.triu_indices(len(idx), k=1)
+        intra_dists.append(dist_matrix[idx[iu[0]], idx[iu[1]]])
     
-    d_intra = float(np.mean(intra_dists)) if intra_dists else 0.0
+    if intra_dists:
+        d_intra = float(np.mean(np.concatenate(intra_dists)))
+    else:
+        d_intra = 0.0
     
-    # d_inter: average distance between modules
+    # d_inter: vectorised — extract between-module distances
     inter_dists = []
     module_keys = list(modules.keys())
     for m1_idx in range(len(module_keys)):
+        members1 = np.asarray(modules[module_keys[m1_idx]])
         for m2_idx in range(m1_idx + 1, len(module_keys)):
-            members1 = modules[module_keys[m1_idx]]
-            members2 = modules[module_keys[m2_idx]]
-            for i in members1:
-                for j in members2:
-                    inter_dists.append(dist_matrix[i, j])
+            members2 = np.asarray(modules[module_keys[m2_idx]])
+            # Broadcast to get all pairwise distances between two modules
+            inter_dists.append(dist_matrix[np.ix_(members1, members2)].ravel())
     
-    d_inter = float(np.mean(inter_dists)) if inter_dists else 0.0
+    if inter_dists:
+        d_inter = float(np.mean(np.concatenate(inter_dists)))
+    else:
+        d_inter = 0.0
     
     return {
         "d_intra": d_intra,
@@ -94,9 +102,10 @@ def main():
         print(f"\nComputing geometric margins for {method}...")
         try:
             coords, emb_nodes = load_embedding(method, "153", embeddings_dir=emb_dir)
-            # Align
+            # Align using dict lookup (O(1) per node)
             common = sorted(set(emb_nodes) & set(nodes))
-            idx_map = [emb_nodes.index(n) for n in common]
+            emb_map = {n: i for i, n in enumerate(emb_nodes)}
+            idx_map = [emb_map[n] for n in common]
             aligned_coords = coords[idx_map]
             
             margins = compute_geometric_margins(aligned_coords, common, go_map)

@@ -24,25 +24,35 @@ from utils import (
 # Seeds are set inside main() to avoid side-effects on import.
 
 
-def embed_diffusion_map(G, nodes):
-    """Diffusion Map: 6 centrality features -> similarity -> Markov -> eigendecomposition."""
-    features = compute_centrality_features(G, nodes)
+def embed_diffusion_map(G, nodes, features=None):
+    """Diffusion Map: 6 centrality features -> similarity -> Markov -> eigendecomposition.
+
+    Parameters
+    ----------
+    features : np.ndarray, optional
+        Pre-computed centrality features.  When *None*, they are computed
+        internally (backward compatible).
+    """
+    if features is None:
+        features = compute_centrality_features(G, nodes)
     sim = build_similarity_matrix(features)
     coords = diffusion_map_from_similarity(sim)
     return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
 def embed_mds(G, nodes):
-    """Classical MDS on shortest-path distances."""
+    """Classical MDS on shortest-path distances.
+
+    Optimised: uses vectorised NumPy filling instead of nested Python loops.
+    """
     n = len(nodes)
     lengths = dict(nx.shortest_path_length(G))
-    D = np.zeros((n, n))
-    for i, u in enumerate(nodes):
-        for j, v in enumerate(nodes):
-            if j >= i:
-                d = lengths[u].get(v, n)
-                D[i, j] = d
-                D[j, i] = d
+    node_to_idx = {u: i for i, u in enumerate(nodes)}
+    D = np.full((n, n), n, dtype=float)  # default = disconnected
+    for u, dists in lengths.items():
+        i = node_to_idx[u]
+        for v, d in dists.items():
+            D[i, node_to_idx[v]] = d
     coords = classical_mds_from_distances(D)
     return rescale_coordinates(coords, target_std=TARGET_STD)
 
@@ -76,9 +86,17 @@ def embed_vgae(G, nodes, features=None, hidden_dim=4, latent_dim=2, epochs=300, 
     return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
-def embed_pca(G, nodes):
-    """PCA control: PCA on 6 centrality features."""
-    features = compute_centrality_features(G, nodes)
+def embed_pca(G, nodes, features=None):
+    """PCA control: PCA on 6 centrality features.
+
+    Parameters
+    ----------
+    features : np.ndarray, optional
+        Pre-computed centrality features.  When *None*, they are computed
+        internally (backward compatible).
+    """
+    if features is None:
+        features = compute_centrality_features(G, nodes)
     features_centered = features - features.mean(axis=0)
     cov = features_centered.T @ features_centered / (len(nodes) - 1)
     eigvals, eigvecs = np.linalg.eigh(cov)
@@ -105,14 +123,14 @@ def main():
     
     # Compute all embeddings
     methods = {
-        "DM": lambda: embed_diffusion_map(G, nodes),
+        "DM": lambda: embed_diffusion_map(G, nodes, features=features),
         "MDS": lambda: embed_mds(G, nodes),
         "Spectral": lambda: embed_spectral(G, nodes),
         "DeepWalk": lambda: embed_deepwalk(G, nodes),
         "Node2Vec": lambda: embed_node2vec(G, nodes),
         "VGAE": lambda: embed_vgae(G, nodes, features=None),
         "VGAE-feat": lambda: embed_vgae(G, nodes, features=features),
-        "PCA": lambda: embed_pca(G, nodes),
+        "PCA": lambda: embed_pca(G, nodes, features=features),
     }
     
     for method_name, embed_fn in methods.items():

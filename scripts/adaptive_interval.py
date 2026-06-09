@@ -107,41 +107,52 @@ def find_adaptive_interval(
         random_baseline_purity + significance_sigma * random_baseline_std
     )
 
+    # ---- Pre-compute prefix sums for O(1) mean / std queries ----
+    cumsum_p = np.concatenate(([0.0], np.cumsum(p)))
+    cumsum_p2 = np.concatenate(([0.0], np.cumsum(p * p)))
+
     def _evaluate_candidates(cv_thresh: float) -> list[dict[str, Any]]:
-        """Slide windows of varying width across the r-axis and collect
-        all candidates satisfying the three constraints."""
-        candidates: list[dict[str, Any]] = []
-        # Step through all possible left boundaries
-        for i in range(n):
-            for j in range(i + 1, n):
-                r_min_cand = r[i]
-                r_max_cand = r[j]
-                width = r_max_cand - r_min_cand
-                if width < min_width:
-                    continue
+        """Vectorised sliding-window search over all (i, j) pairs."""
+        # Build upper-triangle index grids (j > i)
+        idx_i, idx_j = np.triu_indices(n, k=1)
 
-                p_sub = p[i:j + 1]
-                mean_p: float = float(np.mean(p_sub))
-                std_p: float = float(np.std(p_sub, ddof=0))
+        # Width constraint
+        widths = r[idx_j] - r[idx_i]
+        valid = widths >= min_width
 
-                # CV constraint (guard against zero mean)
-                if mean_p < 1e-12:
-                    continue
-                cv: float = std_p / mean_p
-                if cv > cv_thresh:
-                    continue
+        if not np.any(valid):
+            return []
 
-                # Significance constraint
-                if mean_p <= significance_threshold:
-                    continue
+        vi = idx_i[valid]
+        vj = idx_j[valid]
+        vw = widths[valid]
+        counts = (vj - vi + 1).astype(float)
 
-                candidates.append({
-                    "r_min": float(r_min_cand),
-                    "r_max": float(r_max_cand),
-                    "cv": cv,
-                    "width": width,
-                    "mean_purity": mean_p,
-                })
+        # O(1) mean / std via prefix sums
+        sums = cumsum_p[vj + 1] - cumsum_p[vi]
+        sums2 = cumsum_p2[vj + 1] - cumsum_p2[vi]
+        means = sums / counts
+        variances = np.maximum(sums2 / counts - means ** 2, 0.0)
+        stds = np.sqrt(variances)
+
+        # CV constraint (guard against zero mean)
+        cv_mask = (means >= 1e-12) & (stds / np.where(means >= 1e-12, means, 1.0) <= cv_thresh)
+
+        # Significance constraint
+        sig_mask = means > significance_threshold
+
+        final = cv_mask & sig_mask
+
+        candidates: list[dict[str, Any]] = [
+            {
+                "r_min": float(r[vi[k]]),
+                "r_max": float(r[vj[k]]),
+                "cv": float(stds[k] / means[k]),
+                "width": float(vw[k]),
+                "mean_purity": float(means[k]),
+            }
+            for k in np.flatnonzero(final)
+        ]
         return candidates
 
     # --- First pass: strict CV threshold ---

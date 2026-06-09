@@ -122,8 +122,9 @@ def main():
             save_embedding(coords, nodes_full, method_name, "full", emb_dir)
             print(f"  Saved {method_name} full embedding: {coords.shape}")
             
-            # Evaluate on annotated subset only
-            ann_indices = [nodes_full.index(n) for n in annotated_nodes]
+            # Evaluate on annotated subset only (dict lookup O(1))
+            full_node_map = {n: i for i, n in enumerate(nodes_full)}
+            ann_indices = [full_node_map[n] for n in annotated_nodes]
             subset_coords = coords[ann_indices]
             purities, modularities = compute_gf_curve(
                 subset_coords, annotated_nodes, go_map, r_vals

@@ -351,6 +351,9 @@ def compute_topo_gf_curve(coords, nodes, go_map, r_vals):
     Betti numbers are computed via persistent homology (exact), not
     via the Euler formula (which overcounts in dense graphs).
 
+    Optimised: community detection is run once per unique graph
+    structure and the result is reused for both purity and modularity.
+
     Parameters
     ----------
     coords : np.ndarray, shape (n, 2)
@@ -365,6 +368,7 @@ def compute_topo_gf_curve(coords, nodes, go_map, r_vals):
         beta_0, beta_1}``
     """
     dist_matrix = precompute_distance_matrix(coords)
+    n = dist_matrix.shape[0]
 
     # ---- Compute persistent homology ONCE for the full point cloud ----
     # This gives exact Betti numbers at every r via birth/death pairs.
@@ -372,42 +376,90 @@ def compute_topo_gf_curve(coords, nodes, go_map, r_vals):
     diagrams = compute_persistent_homology(coords, max_dim=1, max_radius=max_r)
     betti_curves = compute_betti_curves(diagrams, r_vals)
 
-    standard_purities = []
-    topo_purities = []
-    modularities = []
-    beta_0_curve = []
-    beta_1_curve = []
+    # Pre-sort upper-triangle edges by distance (incremental graph build)
+    iu = np.triu_indices(n, k=1)
+    edge_dists = dist_matrix[iu]
+    sort_idx = np.argsort(edge_dists)
+    sorted_rows = iu[0][sort_idx]
+    sorted_cols = iu[1][sort_idx]
+    sorted_d = edge_dists[sort_idx]
 
-    for i, r in enumerate(r_vals):
-        result = compute_topological_purity_at_r(
-            coords, nodes, go_map, dist_matrix, r
-        )
-        standard_purities.append(result["standard_purity"])
-        topo_purities.append(result["topo_purity"])
+    r_order = np.argsort(r_vals)
+    n_r = len(r_vals)
+    std_pur = [0.0] * n_r
+    topo_pur = [0.0] * n_r
+    mods = [0.0] * n_r
+    beta_0_arr = [0] * n_r
+    beta_1_arr = [0] * n_r
 
-        # Use EXACT Betti numbers from persistent homology
-        beta_0_curve.append(int(betti_curves[0][i]) if 0 in betti_curves else 0)
-        beta_1_curve.append(int(betti_curves[1][i]) if 1 in betti_curves else 0)
+    from networkx.algorithms.community import greedy_modularity_communities
+    from networkx.algorithms.community import modularity as nx_modularity
+    from utils import _community_purity
 
-        # Modularity (same as standard)
-        G_r = build_spatial_graph_fast(dist_matrix, r)
-        if G_r.number_of_edges() > 0:
-            from networkx.algorithms.community import greedy_modularity_communities
-            from networkx.algorithms.community import modularity as nx_modularity
-            communities = list(greedy_modularity_communities(G_r))
-            if len(communities) > 1:
-                modularities.append(nx_modularity(G_r, communities))
-            else:
-                modularities.append(0.0)
+    G_r = nx.Graph()
+    G_r.add_nodes_from(range(n))
+    edge_ptr = 0
+    n_edges_total = len(sorted_d)
+    _cache = {}  # n_edges -> (standard_purity, topo_purity, modularity)
+
+    for rank, orig_idx in enumerate(r_order):
+        r = float(r_vals[orig_idx])
+
+        # Incrementally add edges with distance < r
+        while edge_ptr < n_edges_total and sorted_d[edge_ptr] < r:
+            G_r.add_edge(int(sorted_rows[edge_ptr]), int(sorted_cols[edge_ptr]))
+            edge_ptr += 1
+
+        ne = G_r.number_of_edges()
+        if ne == 0:
+            beta_0_arr[orig_idx] = G_r.number_of_nodes()
+            continue
+
+        # Betti numbers from persistent homology (exact)
+        beta_0_arr[orig_idx] = int(betti_curves[0][orig_idx]) if 0 in betti_curves else 0
+        beta_1_arr[orig_idx] = int(betti_curves[1][orig_idx]) if 1 in betti_curves else 0
+
+        if ne in _cache:
+            sp, tp, m = _cache[ne]
         else:
-            modularities.append(0.0)
+            # Community detection (run ONCE per unique graph)
+            communities = list(greedy_modularity_communities(G_r))
+            sp = functional_purity(communities, go_map, nodes)
+
+            # Topological purity (triangle-weighted)
+            weighted_purities = []
+            for comm in communities:
+                comm_list = sorted(comm)
+                comm_names = [nodes[idx] for idx in comm_list]
+                comm_purity = _community_purity(comm_names, go_map)
+                G_comm = G_r.subgraph(comm_list)
+                n_tri = _count_triangles(G_comm)
+                max_tri = max(len(comm_list) * (len(comm_list) - 1) *
+                              (len(comm_list) - 2) / 6, 1)
+                topo_w = 1.0 + np.log1p(n_tri) / np.log1p(max_tri)
+                weighted_purities.append(comm_purity * topo_w)
+
+            if weighted_purities:
+                mean_w = float(np.mean(weighted_purities))
+                tp = min(mean_w / 2.0, 1.0)
+            else:
+                tp = 0.0
+
+            # Modularity
+            m = nx_modularity(G_r, communities) if len(communities) > 1 else 0.0
+
+            _cache[ne] = (sp, tp, m)
+
+        std_pur[orig_idx] = sp
+        topo_pur[orig_idx] = tp
+        mods[orig_idx] = m
 
     return {
-        "standard_purities": standard_purities,
-        "topo_purities": topo_purities,
-        "modularities": modularities,
-        "beta_0": beta_0_curve,
-        "beta_1": beta_1_curve,
+        "standard_purities": std_pur,
+        "topo_purities": topo_pur,
+        "modularities": mods,
+        "beta_0": beta_0_arr,
+        "beta_1": beta_1_arr,
     }
 
 
@@ -708,7 +760,8 @@ def main():
                 print(f"    SKIP: only {len(common)} common nodes")
                 continue
 
-            idx_map = [emb_nodes.index(n) for n in common]
+            emb_node_map = {n: i for i, n in enumerate(emb_nodes)}
+            idx_map = [emb_node_map[n] for n in common]
             aligned_coords = coords[idx_map]
             aligned_coords = rescale_coordinates(aligned_coords)
 

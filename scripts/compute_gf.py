@@ -183,10 +183,10 @@ def main():
         print(f"\nComputing G-F curve for {method}...")
         try:
             coords, emb_nodes = load_embedding(method, "153", embeddings_dir=emb_dir)
-            # Align nodes: embedding might use different order
-            # Ensure nodes match go_map
-            common_nodes = sorted(set(emb_nodes) & set(nodes) & set(go_map.keys()))
-            node_indices = [emb_nodes.index(n) for n in common_nodes]
+            # Align nodes using dict lookup (O(1) per node)
+            node_to_idx = {n: i for i, n in enumerate(emb_nodes)}
+            common_nodes = sorted(set(node_to_idx) & set(nodes) & set(go_map))
+            node_indices = [node_to_idx[n] for n in common_nodes]
             aligned_coords = coords[node_indices]
             
             purities, modularities = compute_gf_curve(aligned_coords, common_nodes, go_map, r_vals)
@@ -201,8 +201,9 @@ def main():
     print("\nComputing PCA comparison...")
     try:
         pca_coords, pca_nodes = load_embedding("PCA", "153", embeddings_dir=emb_dir)
-        common_nodes_pca = sorted(set(pca_nodes) & set(nodes) & set(go_map.keys()))
-        node_indices_pca = [pca_nodes.index(n) for n in common_nodes_pca]
+        pca_map = {n: i for i, n in enumerate(pca_nodes)}
+        common_nodes_pca = sorted(set(pca_map) & set(nodes) & set(go_map))
+        node_indices_pca = [pca_map[n] for n in common_nodes_pca]
         aligned_pca = pca_coords[node_indices_pca]
         pca_purities, pca_modularities = compute_gf_curve(aligned_pca, common_nodes_pca, go_map, r_vals)
         all_purities["PCA"] = pca_purities
@@ -214,8 +215,9 @@ def main():
     print("\nComputing VGAE-feat G-F curve...")
     try:
         vgae_feat_coords, vgae_feat_nodes = load_embedding("VGAE-feat", "153", embeddings_dir=emb_dir)
-        common_nodes_vf = sorted(set(vgae_feat_nodes) & set(nodes) & set(go_map.keys()))
-        node_indices_vf = [vgae_feat_nodes.index(n) for n in common_nodes_vf]
+        vf_map = {n: i for i, n in enumerate(vgae_feat_nodes)}
+        common_nodes_vf = sorted(set(vf_map) & set(nodes) & set(go_map))
+        node_indices_vf = [vf_map[n] for n in common_nodes_vf]
         aligned_vf = vgae_feat_coords[node_indices_vf]
         vf_purities, vf_modularities = compute_gf_curve(aligned_vf, common_nodes_vf, go_map, r_vals)
         all_purities["VGAE-feat"] = vf_purities
@@ -228,8 +230,9 @@ def main():
     random_baseline_std = None
     try:
         dm_coords, dm_nodes = load_embedding("DM", "153", embeddings_dir=emb_dir)
-        common_nodes_dm = sorted(set(dm_nodes) & set(nodes) & set(go_map.keys()))
-        dm_indices = [dm_nodes.index(n) for n in common_nodes_dm]
+        dm_node_map = {n: i for i, n in enumerate(dm_nodes)}
+        common_nodes_dm = sorted(set(dm_node_map) & set(nodes) & set(go_map))
+        dm_indices = [dm_node_map[n] for n in common_nodes_dm]
         aligned_dm = dm_coords[dm_indices]
 
         if args.adaptive_interval:

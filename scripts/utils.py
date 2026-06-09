@@ -293,6 +293,12 @@ def compute_gf_curve(coords: np.ndarray, nodes: list, go_map: dict,
                      r_vals: np.ndarray) -> tuple[list[float], list[float]]:
     """Compute the G-F purity and modularity curves.
 
+    Optimised implementation:
+    - Edges are sorted by distance once; graphs are built incrementally.
+    - Community detection results are cached when the graph structure
+      (edge count) has not changed between consecutive *r* thresholds.
+    - Numerical output is **identical** to the naive per-r rebuild.
+
     Parameters
     ----------
     coords : (n, d) embedding coordinates
@@ -305,21 +311,56 @@ def compute_gf_curve(coords: np.ndarray, nodes: list, go_map: dict,
     (purities, modularities) — two parallel lists of floats
     """
     dist_matrix = precompute_distance_matrix(coords)
-    purities: list[float] = []
-    modularities: list[float] = []
-    for r in r_vals:
-        G_r = build_spatial_graph_fast(dist_matrix, r)
-        if G_r.number_of_edges() == 0:
-            purities.append(0.0)
-            modularities.append(0.0)
+    n = dist_matrix.shape[0]
+
+    # Pre-sort all unique upper-triangle edges by distance
+    iu = np.triu_indices(n, k=1)
+    edge_dists = dist_matrix[iu]
+    sort_idx = np.argsort(edge_dists)
+    sorted_rows = iu[0][sort_idx]
+    sorted_cols = iu[1][sort_idx]
+    sorted_d = edge_dists[sort_idx]
+
+    # Process r values in ascending order; map back to original order
+    r_order = np.argsort(r_vals)
+    purities_out: list[float] = [0.0] * len(r_vals)
+    mods_out: list[float] = [0.0] * len(r_vals)
+
+    G_r = nx.Graph()
+    G_r.add_nodes_from(range(n))
+    edge_ptr = 0
+    n_edges_total = len(sorted_d)
+
+    # Cache: keyed by edge count (graph structure only changes when edges are added)
+    _cache: dict[int, tuple[list, float]] = {}  # n_edges -> (communities, mod)
+
+    for rank, orig_idx in enumerate(r_order):
+        r = float(r_vals[orig_idx])
+
+        # Incrementally add edges with distance < r
+        while edge_ptr < n_edges_total and sorted_d[edge_ptr] < r:
+            G_r.add_edge(int(sorted_rows[edge_ptr]), int(sorted_cols[edge_ptr]))
+            edge_ptr += 1
+
+        ne = G_r.number_of_edges()
+        if ne == 0:
+            # purities_out / mods_out already initialised to 0.0
             continue
-        communities = list(greedy_modularity_communities(G_r))
-        purities.append(functional_purity(communities, go_map, nodes))
-        if len(communities) > 1:
-            modularities.append(modularity(G_r, communities))
+
+        if ne in _cache:
+            communities, mod_val = _cache[ne]
         else:
-            modularities.append(0.0)
-    return purities, modularities
+            communities = list(greedy_modularity_communities(G_r))
+            if len(communities) > 1:
+                mod_val = modularity(G_r, communities)
+            else:
+                mod_val = 0.0
+            _cache[ne] = (communities, mod_val)
+
+        purities_out[orig_idx] = functional_purity(communities, go_map, nodes)
+        mods_out[orig_idx] = mod_val
+
+    return purities_out, mods_out
 
 
 # ============================================================
