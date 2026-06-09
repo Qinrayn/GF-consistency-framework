@@ -856,6 +856,7 @@ def generate_three_panel_figure(
     figures_dir.mkdir(parents=True, exist_ok=True)
 
     coords = rescale_coordinates(coords)
+    node_to_idx = {n: i for i, n in enumerate(nodes)}
 
     # ---- Identify the representative (best) cluster ----
     best_cluster = cluster_info["best_cluster"]
@@ -1038,7 +1039,7 @@ def generate_three_panel_figure(
             continue
         x, y = full_pos[node_name]
         # Find which community this node belongs to
-        node_idx = nodes.index(node_name) if node_name in nodes else -1
+        node_idx = node_to_idx.get(node_name, -1)
         if node_idx in cluster_membership:
             rank = cluster_membership[node_idx]
             c = cluster_colors[rank]
