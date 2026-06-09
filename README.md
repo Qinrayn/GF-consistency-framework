@@ -21,7 +21,8 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 21-s
 | GraphSAGE | 0.069 | 0.642 ± 0.026 | 0.185 ± 0.051 |
 | VGAE | 0.066 | 0.472 ± 0.008 | 0.211 ± 0.076 |
 
-- Leiden baseline purity: **0.180** (consistent with G-F curve formula)
+- Leiden baseline purity: **0.180** (same formula as G-F curve: most-common GO term / total GO terms)
+- Leiden baseline ≈ best G-F Score (0.180 vs 0.163), indicating spatial embeddings capture functional structure at a level comparable to graph-based community detection
 - Bonferroni (30 subsets, size 150): **9/30** significant after correction
 - Randomization: original max 0.247 > shuffled 0.230 ± 0.002 (10 permutations, Z = 6.95)
 - Spearman rho (AUROC vs G-F Score): **0.943** (*p* = 0.005)
