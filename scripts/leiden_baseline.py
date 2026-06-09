@@ -9,10 +9,9 @@ import sys
 import json
 import numpy as np
 from pathlib import Path
-from collections import Counter
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from utils import SEED, get_data_dir, get_results_dir, load_curated_network
+from utils import SEED, get_data_dir, get_results_dir, load_curated_network, _community_purity
 
 def main():
     import igraph as ig
@@ -40,19 +39,11 @@ def main():
     partition = g.community_leiden(objective_function="modularity", n_iterations=10)
     print(f"Leiden communities: {len(partition)}")
     
-    # Compute functional purity
+    # Compute functional purity (consistent with utils._community_purity)
     purities = []
     for cluster in partition:
         cluster_nodes = [rev[i] for i in cluster]
-        go_terms = []
-        for node_name in cluster_nodes:
-            if node_name in go_map:
-                go_terms.extend(go_map[node_name])
-        if go_terms:
-            cnt = Counter(go_terms)
-            purities.append(cnt.most_common(1)[0][1] / len(cluster_nodes))
-        else:
-            purities.append(0.0)
+        purities.append(_community_purity(cluster_nodes, go_map))
     
     baseline_purity = float(np.mean(purities))
     print(f"Leiden baseline purity: {baseline_purity:.4f}")

@@ -194,7 +194,8 @@ def compute_modularity_metrics(G):
 
         node_list = list(G.nodes())
         node_map = {i: node_list[i] for i in range(len(node_list))}
-        edges_idx = [(node_list.index(u), node_list.index(v))
+        node_to_idx = {n: i for i, n in enumerate(node_list)}
+        edges_idx = [(node_to_idx[u], node_to_idx[v])
                      for u, v in G.edges()]
         ig_graph = ig.Graph(n=len(node_list), edges=edges_idx,
                             directed=False)

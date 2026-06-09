@@ -4,6 +4,7 @@ Subset robustness, convergence, and randomization null tests for G-F Scores.
 """
 
 import warnings
+import zlib
 from typing import Any, Callable, Dict, List, Optional
 
 import numpy as np
@@ -87,7 +88,7 @@ def subset_robustness_experiment(
                 for q_idx in q_indices:
                     q_size = max(1, int(round(size * len(q_idx) / n_total)))
                     q_size = min(q_size, len(q_idx))
-                    trial_rng = np.random.default_rng(seed + hash(tuple(q_idx)))
+                    trial_rng = np.random.default_rng(seed + zlib.crc32(str(q_idx).encode()) % 100000)
                     chosen = trial_rng.choice(q_idx, size=q_size, replace=False)
                     subset_indices.extend(chosen)
                 # Trim or pad to exact size
@@ -752,7 +753,8 @@ def main():
     method = "DM"
     print(f"Building G-F score function for {method}...")
     coords, emb_nodes = load_embedding(method, "153", embeddings_dir=emb_dir)
-    node_idx = [emb_nodes.index(n) for n in common]
+    emb_node_to_idx = {n: i for i, n in enumerate(emb_nodes)}
+    node_idx = [emb_node_to_idx[n] for n in common]
     aligned = coords[node_idx]
 
     # Build callback: subset -> GF score

@@ -873,8 +873,10 @@ def main():
                 )
                 # Align nodes
                 common = sorted(set(emb_nodes) & set(nodes_yeast))
-                emb_idx = [emb_nodes.index(n) for n in common]
-                yeast_idx = [nodes_yeast.index(n) for n in common]
+                emb_node_to_idx = {n: i for i, n in enumerate(emb_nodes)}
+                yeast_node_to_idx = {n: i for i, n in enumerate(nodes_yeast)}
+                emb_idx = [emb_node_to_idx[n] for n in common]
+                yeast_idx = [yeast_node_to_idx[n] for n in common]
                 aligned_coords = coords[emb_idx]
 
                 # Build subgraph of common nodes for community detection
@@ -930,7 +932,8 @@ def main():
                     common = sorted(
                         set(emb_nodes) & set(human_nodes)
                     )
-                    emb_idx = [emb_nodes.index(n) for n in common]
+                    emb_node_to_idx = {n: i for i, n in enumerate(emb_nodes)}
+                    emb_idx = [emb_node_to_idx[n] for n in common]
                     aligned_coords = h_coords[emb_idx]
 
                     result = analyze_embedding_distances(

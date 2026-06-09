@@ -1481,7 +1481,8 @@ def main():
                 method, "153", embeddings_dir=emb_dir
             )
             common = sorted(set(emb_nodes) & set(nodes) & set(go_map.keys()))
-            idx_map = [emb_nodes.index(n) for n in common]
+            emb_node_to_idx = {n: i for i, n in enumerate(emb_nodes)}
+            idx_map = [emb_node_to_idx[n] for n in common]
             aligned_coords = coords[idx_map]
 
             result = analyze_go_term_clusters(
@@ -1567,7 +1568,8 @@ def main():
                 case_method, "153", embeddings_dir=emb_dir
             )
             common = sorted(set(emb_nodes) & set(nodes) & set(go_map.keys()))
-            idx_map = [emb_nodes.index(n) for n in common]
+            emb_node_to_idx = {n: i for i, n in enumerate(emb_nodes)}
+            idx_map = [emb_node_to_idx[n] for n in common]
             aligned_coords = coords[idx_map]
 
             cluster_info = method_clusters.get(case_method, {})

@@ -15,6 +15,7 @@ import csv
 import pickle
 import random
 import argparse
+import zlib
 import numpy as np
 from pathlib import Path
 
@@ -40,7 +41,7 @@ def compute_random_baseline(coords, nodes, go_map, r_vals, n_shuffles=10,
         each embedding method gets an independent baseline.  When *None*,
         the original global seed offset is used (backward compatible).
     """
-    method_offset = hash(method) % 10000 if method else 0
+    method_offset = zlib.crc32(method.encode()) % 10000 if method else 0
     n = len(nodes)
     all_purities = []
     for s in range(n_shuffles):
@@ -87,7 +88,7 @@ def compute_random_baseline_with_stats(coords, nodes, go_map, r_vals,
         *std_of_mean* is the sample standard deviation of the
         per-shuffle mean purities.
     """
-    method_offset = hash(method) % 10000 if method else 0
+    method_offset = zlib.crc32(method.encode()) % 10000 if method else 0
     n = len(nodes)
     all_purities = []
     for s in range(n_shuffles):

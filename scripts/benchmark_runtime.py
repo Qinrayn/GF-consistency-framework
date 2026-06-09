@@ -528,7 +528,8 @@ def bench_full_network_key_steps(n_repeat):
             sim = build_similarity_matrix(features)
             coords_full = diffusion_map_from_similarity(sim)
             coords_full = rescale_coordinates(coords_full, target_std=0.3)
-            ann_idx = [nodes_full.index(n) for n in annotated]
+            nodes_full_to_idx = {n: i for i, n in enumerate(nodes_full)}
+            ann_idx = [nodes_full_to_idx[n] for n in annotated]
             sub_coords = coords_full[ann_idx]
 
             r_vals = np.linspace(R_MIN, R_MAX, N_POINTS_DEFAULT)
@@ -1040,7 +1041,8 @@ def main():
     print("-" * 60)
     # Use DM coords on 153-node network
     common_dm = sorted(set(dm_nodes) & set(nodes) & set(go_map.keys()))
-    dm_idx = [dm_nodes.index(n) for n in common_dm]
+    dm_node_to_idx = {n: i for i, n in enumerate(dm_nodes)}
+    dm_idx = [dm_node_to_idx[n] for n in common_dm]
     aligned_dm = dm_coords[dm_idx]
 
     scal_data = scalability_experiment(

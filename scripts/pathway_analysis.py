@@ -428,7 +428,8 @@ def main():
     G, nodes, go_map = load_curated_network(data_dir)
     coords, emb_nodes = load_embedding(best_method, "153", embeddings_dir=emb_dir)
     common = sorted(set(emb_nodes) & set(nodes) & set(go_map.keys()))
-    idx = [emb_nodes.index(n) for n in common]
+    emb_node_to_idx = {n: i for i, n in enumerate(emb_nodes)}
+    idx = [emb_node_to_idx[n] for n in common]
     aligned = coords[idx]
 
     # Find peak-purity threshold via a quick r-sweep

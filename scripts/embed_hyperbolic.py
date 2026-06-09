@@ -317,7 +317,8 @@ def main():
     # Compute hyperbolic G-F curve
     print("Computing hyperbolic G-F curve...")
     common_nodes = sorted(set(nodes) & set(go_map.keys()))
-    node_indices = [nodes.index(n) for n in common_nodes]
+    node_to_idx = {n: i for i, n in enumerate(nodes)}
+    node_indices = [node_to_idx[n] for n in common_nodes]
     aligned_coords = coords[node_indices]
 
     r_vals, purities, modularities = compute_gf_curve_hyperbolic(

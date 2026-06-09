@@ -34,7 +34,8 @@ def main():
     print("Loading DM embedding...")
     dm_coords, dm_nodes = load_embedding("DM", "153", embeddings_dir=emb_dir)
     common = sorted(set(dm_nodes) & set(nodes))
-    idx_map = [dm_nodes.index(n) for n in common]
+    dm_node_to_idx = {n: i for i, n in enumerate(dm_nodes)}
+    idx_map = [dm_node_to_idx[n] for n in common]
     aligned_coords = dm_coords[idx_map]
     
     # Compute original G-F curve

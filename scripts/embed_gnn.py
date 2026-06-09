@@ -538,7 +538,8 @@ def compute_gf_curves_and_scores(
     for method, coords in method_coords.items():
         print(f"  Computing G-F curve for {method}...")
         common_nodes = sorted(set(nodes) & set(go_map.keys()))
-        node_indices = [nodes.index(n) for n in common_nodes]
+        node_to_idx = {n: i for i, n in enumerate(nodes)}
+        node_indices = [node_to_idx[n] for n in common_nodes]
         aligned_coords = coords[node_indices]
 
         purities, _ = compute_gf_curve(
