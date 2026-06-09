@@ -5,6 +5,20 @@ All notable changes to the G-F Consistency Framework are documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- `robustness_analysis.py` main(): corrected function call signatures for `convergence_analysis()` and `randomization_null_test()` to match current API
+- `human_gf_all.py`: replaced hardcoded fallback node count (15882) and fragile `dir()` check with `len(nodes)` from the actual embedding
+- `network_topology_analysis.py`: parameterised `human_key` in `generate_radar_chart()` instead of hardcoding `"human_15882"`
+- Human PPI node count references unified across all files (~15,882 after score filtering; 14,679 in largest CC)
+- AI-style docstrings simplified in `robustness_analysis.py`, `statistical_analysis.py`, `visualization_helpers.py` (~550 lines removed)
+- Replaced "placeholder" wording with "fallback"/"simplified" in human validation scripts
+- Manuscript (`format_manuscript.py`): node count consistency, AI-tone softening, small-sample caveat added
+
+### Added
+- README Quick Start: `git lfs pull` step for large data files
+
 ## [1.1.1] — 2026-06-08
 
 ### Added

@@ -373,7 +373,7 @@ def compute_all_metrics(G, label="network"):
 
 # ---- Visualisation ----
 
-def generate_radar_chart(all_metrics, figures_dir):
+def generate_radar_chart(all_metrics, figures_dir, human_key="human_15882"):
     """Generate a radar chart comparing normalised topology metrics.
 
     Two polygons are drawn: yeast curated (blue) and human (orange),
@@ -383,10 +383,12 @@ def generate_radar_chart(all_metrics, figures_dir):
     Parameters
     ----------
     all_metrics : dict
-        Must contain keys ``"yeast_curated_153"`` and ``"human_15882"``
-    (the latter is aliased from the dynamic ``human_{n}`` key in main()).
+        Must contain keys ``"yeast_curated_153"`` and the key specified
+        by *human_key*.
     figures_dir : Path
         Directory where the figure will be saved.
+    human_key : str
+        Key in *all_metrics* for the human network.
     """
     import matplotlib
     matplotlib.use('Agg')
@@ -402,7 +404,6 @@ def generate_radar_chart(all_metrics, figures_dir):
     ]
 
     yeast_key = "yeast_curated_153"
-    human_key = "human_15882"
 
     if yeast_key not in all_metrics or human_key not in all_metrics:
         print("  Skipping radar chart: missing yeast or human metrics.")
@@ -572,9 +573,9 @@ def main():
     if yeast_key in all_metrics and human_key is not None:
         # Use the canonical key for the radar chart
         chart_metrics = dict(all_metrics)
-        chart_metrics["human_15882"] = all_metrics[human_key]
+        chart_metrics[human_key] = all_metrics[human_key]
         print("\nGenerating radar chart...")
-        generate_radar_chart(chart_metrics, figures_dir)
+        generate_radar_chart(chart_metrics, figures_dir, human_key=human_key)
     else:
         print("\nSkipping radar chart (need both yeast and human metrics).")
 

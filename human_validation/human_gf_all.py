@@ -279,7 +279,7 @@ def main():
 
     # Also save to the main results summary location
     human_summary = {
-        'network_nodes': int(coords.shape[0]) if 'coords' in dir() else 15882,
+        'network_nodes': len(nodes) if nodes is not None else 0,
         'subsample_size': SUBSAMPLE_SIZE,
         'n_methods': len(all_results),
         'methods': list(all_results.keys()),

@@ -771,22 +771,31 @@ def main():
         purities, _ = compute_gf_curve(sub_coords, sub_names, go_map, r_vals)
         return compute_gf_score(r_vals, purities, GF_R_MIN, GF_R_MAX)
 
-    # Run convergence analysis
-    print("Running convergence analysis...")
+    # Run subset robustness experiment
+    print("Running subset robustness experiment...")
     sizes = [20, 40, 60, 80, 100, 120]
     sizes = [s for s in sizes if s <= len(common)]
-    convergence = convergence_analysis(annotated_arr, gf_score_fn, sizes,
-                                        n_boot=20, n_subsets=10)
+    subset_df = subset_robustness_experiment(
+        annotated_arr, gf_score_fn,
+        subset_sizes=sizes, n_subsets=10,
+    )
+
+    # Run convergence analysis
+    print("Running convergence analysis...")
+    convergence = convergence_analysis(subset_df, n_bootstrap=20)
 
     # Run randomization null test
     print("Running randomization null test...")
-    go_labels = {n: go_map.get(n, []) for n in common}
+    go_labels_arr = np.array([go_map.get(n, "") for n in common])
+    gf_observed = gf_score_fn(annotated_arr)
 
-    def gf_score_fn_labels(subset, labels):
-        return gf_score_fn(subset)
+    def gf_score_fn_labels(permuted_labels):
+        return gf_score_fn(annotated_arr)
 
     null_test = randomization_null_test(
-        annotated_arr, gf_score_fn, go_labels, gf_score_fn_labels,
+        gf_observed=gf_observed,
+        go_labels=go_labels_arr,
+        gf_score_fn_with_labels=gf_score_fn_labels,
         n_permutations=50,
     )
 
