@@ -114,7 +114,7 @@ $$\text{G-F Score} = \frac{1}{r_{\max} - r_{\min}} \int_{r_{\min}}^{r_{\max}} \t
 
 | Concept | Definition |
 |---------|-----------|
-| **purity(r)** | Mean functional purity of communities at distance threshold *r* |
+| **purity(r)** | Mean over communities of (dominant GO term count / total GO terms in community) at distance threshold *r* |
 | **Unified interval** | [0.05, 0.422] — stable region across all methods |
 | **Plateau width W** | Range of *r* where purity remains stable → well-separated clusters |
 | **Geometric gap** | d<sub>inter</sub> − d<sub>intra</sub>: margin between intra- and inter-module distances |

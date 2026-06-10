@@ -18,9 +18,9 @@ human_validation/
 |---- README.md                           # This file
 |---- human_embed_all.py                  # Generate all 6 embeddings (DM, MDS, Spectral, DW, N2V, VGAE)
 |---- human_gf_all.py                     # Compute G-F curves, scores, and plateau widths for all methods
-|---- 12_human_ppi_validation.py        # Legacy: DM + Node2Vec with Louvain (quick validation)
-|---- 12d_human_n2v_cleaned_scan.py     # Legacy: Node2Vec outlier detection and cleaning
-|---- 12e_human_dm_quick.py              # Legacy: DM quick scan with Leiden
+|---- human_topological_analysis.py      # Persistent homology and topological statistics
+|---- plot_human_results.py              # Generate comparison figures
+|---- run_all_human.py                   # One-command runner (embed + G-F)
 |---- [Data files - generated on first run]
     |---- 9606.protein.links.v12.0.txt.gz    # STRING PPI network
     |---- goa_human.gaf.gz                   # GO annotations
@@ -40,13 +40,6 @@ python human_embed_all.py
 
 # Step 2: Compute G-F curves and scores
 python human_gf_all.py
-```
-
-### Option 2: Quick DM + Node2Vec Only
-
-```bash
-cd human_validation
-python 12_human_ppi_validation.py
 ```
 
 ## Method Comparison
