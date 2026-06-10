@@ -610,7 +610,7 @@ def _compute_gf_curve_fast(coords, nodes, go_map, r_vals):
                 continue
             term_counts = Counter(all_terms)
             most_common_count = term_counts.most_common(1)[0][1]
-            comm_purities.append(most_common_count / len(comm))
+            comm_purities.append(most_common_count / len(all_terms))
 
         purity = float(np.mean(comm_purities)) if comm_purities else 0.0
         purities.append(purity)

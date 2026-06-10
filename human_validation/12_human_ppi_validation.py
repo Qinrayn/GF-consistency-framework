@@ -274,6 +274,8 @@ def fast_purity(G_comm, go_map):
         if not all_terms:
             continue
         most_common = Counter(all_terms).most_common(1)[0][1]
+        # NOTE: Uses old purity formula (most_common / cluster_size).
+        # See utils._community_purity for the current standard (most_common / total_GO_terms).
         purities.append(most_common / len(nodes))
     
     return np.mean(purities) if purities else 0.0

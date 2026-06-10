@@ -184,32 +184,28 @@ def compute_purity_at_r(coords, nodes, go_map, dist_matrix, r):
     except Exception:
         return 0.0
 
-    # Compute purity
-    total_purity = 0.0
-    total_size = 0
+    # Compute purity (consistent with utils._community_purity)
+    purities = []
     for community in partition:
         comm_list = list(community)
-        size = len(comm_list)
-        if size < 2:
+        if len(comm_list) < 2:
             continue
 
         # Count GO term frequencies
-        term_counts = {}
-        n_annotated = 0
+        all_terms = []
         for idx in comm_list:
             node = nodes[idx]
             if node in go_map and go_map[node]:
-                n_annotated += 1
-                for term in go_map[node]:
-                    term_counts[term] = term_counts.get(term, 0) + 1
+                all_terms.extend(go_map[node])
 
-        if n_annotated > 0 and term_counts:
+        if all_terms:
+            term_counts = {}
+            for term in all_terms:
+                term_counts[term] = term_counts.get(term, 0) + 1
             max_count = max(term_counts.values())
-            purity = max_count / n_annotated
-            total_purity += purity * size
-            total_size += size
+            purities.append(max_count / len(all_terms))
 
-    return total_purity / total_size if total_size > 0 else 0.0
+    return float(sum(purities) / len(purities)) if purities else 0.0
 
 
 def topological_consistency_score(diagrams, purities, r_vals):

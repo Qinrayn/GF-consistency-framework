@@ -5,6 +5,7 @@ Okabe-Ito colorblind-safe palette, 300 dpi PNG output.
 """
 
 import warnings
+import zlib
 from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
 
 import matplotlib
@@ -90,8 +91,8 @@ def _get_method_style(method: str) -> Dict[str, Any]:
     """Get plot style for a method, with fallback to default."""
     if method in METHOD_STYLES:
         return METHOD_STYLES[method]
-    # Fallback: cycle through palette
-    idx = hash(method) % len(OKABE_ITO_PALETTE)
+    # Fallback: cycle through palette (deterministic via zlib.crc32)
+    idx = zlib.crc32(method.encode()) % len(OKABE_ITO_PALETTE)
     return {
         "color": OKABE_ITO_PALETTE[idx],
         "marker": "o",

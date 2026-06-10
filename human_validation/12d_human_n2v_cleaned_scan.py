@@ -131,6 +131,8 @@ def leiden_purity_fast(pairs, nodes_subset, go_map):
         for node in cluster_nodes:
             cnt.update(go_map.get(node, []))
         if cnt:
+            # NOTE: Uses old purity formula (most_common / cluster_size).
+            # See utils._community_purity for the current standard (most_common / total_GO_terms).
             purities.append(cnt.most_common(1)[0][1] / len(cluster_nodes))
     return np.mean(purities) if purities else 0.0
 
