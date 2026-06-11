@@ -34,13 +34,14 @@ This script orchestrates the complete analysis pipeline:
 26. Statistical analysis summary
 27. Metric comparison (G-F Score vs link pred AUC + k-NN F1)
 28. Bootstrap correlations (95% CI for key Spearman correlations)
+29. Semantic purity & similarity analysis (IC-weighted + Resnik + DAG diagnostics)
 
 Usage:
     python run_all_analysis.py                         # Skip human validation
     python run_all_analysis.py --run-human              # Include human validation
     python run_all_analysis.py --skip-plots             # Skip figure generation
     python run_all_analysis.py --skip-gnn               # Skip GNN embeddings
-    python run_all_analysis.py --skip-extended          # Skip Steps 16-21
+    python run_all_analysis.py --skip-extended          # Skip Steps 16-21, 24-29
     python run_all_analysis.py --skip-topological       # Skip Steps 22-23
     python run_all_analysis.py --start-from 3           # Start from step 3
     python run_all_analysis.py --config my_config.yaml  # Custom config file
@@ -245,6 +246,18 @@ def generate_final_summary(results_dir):
         if "bootstrap_correlations" in data:
             summary["bootstrap_correlations"] = data["bootstrap_correlations"]
 
+    # 11. Semantic purity analysis (Step 29)
+    sp_file = results_dir / "semantic_purity_analysis.json"
+    if sp_file.exists():
+        with open(sp_file) as f:
+            data = json.load(f)
+        if "gf_scores" in data:
+            summary["semantic_purity_scores"] = data["gf_scores"]
+        if "correlations" in data:
+            summary["semantic_purity_correlations"] = data["correlations"]
+        if "dag_inflation" in data:
+            summary["dag_inflation"] = data["dag_inflation"]
+
     # Save
     output_file = results_dir / "final_results_summary.json"
     with open(output_file, "w") as f:
@@ -264,11 +277,11 @@ def main():
     parser.add_argument("--skip-plots", action="store_true",
                         help="Skip figure generation")
     parser.add_argument("--start-from", type=int, default=None,
-                        help="Start from a specific step (1-28)")
+                        help="Start from a specific step (1-29)")
     parser.add_argument("--skip-gnn", action="store_true",
                         help="Skip GNN embedding computation (Step 15)")
     parser.add_argument("--skip-extended", action="store_true",
-                        help="Skip extended analysis steps (16-21, 24-28)")
+                        help="Skip extended analysis steps (16-21, 24-29)")
     parser.add_argument("--skip-topological", action="store_true",
                         help="Skip topological analysis steps (22-23)")
     parser.add_argument("--seed", type=int, default=None,
@@ -317,7 +330,7 @@ def main():
     if skip_gnn:
         print("  GNN embeddings: SKIPPED")
     if skip_extended:
-        print("  Extended analysis (Steps 16-21, 24-28): SKIPPED")
+        print("  Extended analysis (Steps 16-21, 24-29): SKIPPED")
     if skip_topological:
         print("  Topological analysis (Steps 22-23): SKIPPED")
     print()
@@ -690,6 +703,19 @@ def main():
                 failed += 1
         finally:
             sys.argv = _saved_argv
+
+    # Step 29: Semantic Purity & Similarity Analysis (IC-weighted, Resnik, DAG diagnostics)
+    if start_from <= 29 and not skip_extended:
+        print_header("Step 29: Semantic Purity & Similarity Analysis")
+        semantic_cmd = [sys.executable,
+                        str(Path(__file__).parent / "scripts" / "semantic_similarity_analysis.py")]
+        def run_semantic():
+            import subprocess
+            subprocess.run(semantic_cmd, check=True)
+        if run_step(run_semantic, "Semantic purity analysis"):
+            completed += 1
+        else:
+            failed += 1
 
     # Generate final summary
     results_dir = Path(__file__).parent / "results"

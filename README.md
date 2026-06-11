@@ -2,7 +2,7 @@
 
 **A Geometric-Functional Consistency Framework for Evaluating Protein Interaction Network Embeddings**
 
-Complete reproduction of the experimental pipeline: 11 embedding methods · 28-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
+Complete reproduction of the experimental pipeline: 11 embedding methods · 29-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
 
 <details>
 <summary><strong>Key Results at a Glance</strong></summary>
@@ -27,6 +27,8 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 28-s
 - Randomization: original max 0.247 > shuffled 0.230 ± 0.002 (10 permutations, Z = 6.95)
 - Spearman rho (G-F Score vs Link Pred AUC): **+0.591** (*P* = 0.056, 95% CI [−0.09, 0.88], n = 11)
 - Spearman rho (G-F Score vs k-NN F1): **+0.609** (*P* = 0.047, 95% CI [−0.05, 0.92], n = 11)
+- Spearman rho (standard vs IC-weighted purity): **ρ = +0.964** (*P* < 0.001) — IC-weighting preserves rankings while suppressing DAG inflation
+- Spearman rho (standard vs semantic purity): **ρ = +0.491** (*P* = 0.125) — semantic (Resnik) captures complementary coherence signal
 - H1 max persistence vs G-F Score: **ρ = +0.764** (*P* = 0.006, 95% CI [0.27, 0.97])
 - Unified interval: **[0.05, 0.422]**
 
@@ -63,7 +65,7 @@ python run_all_analysis.py --run-human          # Include human validation
 python run_all_analysis.py --start-from 3       # Resume from step 3
 python run_all_analysis.py --skip-plots         # Skip figure generation
 python run_all_analysis.py --skip-gnn           # Skip GNN embeddings (GraphSAGE/GAT/GIN)
-python run_all_analysis.py --skip-extended      # Skip extended analyses (Steps 16-21, 24-28)
+python run_all_analysis.py --skip-extended      # Skip extended analyses (Steps 16-21, 24-29)
 python run_all_analysis.py --seed 123           # Override random seed
 python run_all_analysis.py --species human      # Target a different species
 ```
@@ -156,6 +158,7 @@ Step 25 ─ Pathway Enrichment ──────────── Fisher's exa
 Step 26 ─ Statistical Summary ─────────── Spearman, Wilcoxon, bootstrap CIs
 Step 27 ─ Metric Comparison ────────────── G-F Score vs link prediction AUC + k-NN F1
 Step 28 ─ Bootstrap Correlations ───────── 95% CI for key Spearman correlations (10k resamples)
+Step 29 ─ Semantic Purity Analysis ─────── IC-weighted + Resnik semantic purity + DAG inflation diagnosis
          └─ Summary ─────────────────── final_results_summary.json
 ```
 
@@ -185,7 +188,7 @@ All embeddings standardized to **σ = 0.3** before G-F analysis.
 
 ```
 GF-consistency-framework/
-├── scripts/                    # 28-step analysis pipeline + extensions
+├── scripts/                    # 29-step analysis pipeline + extensions
 │   ├── data_preprocessing.py   # Load PPI + GO data
 │   ├── embed_all.py            # Compute 8 classical/NN embeddings
 │   ├── compute_gf.py           # G-F curves + scores
@@ -218,6 +221,8 @@ GF-consistency-framework/
 │   ├── pathway_analysis.py     # Pathway enrichment + cancer gene analysis
 │   ├── metric_comparison.py    # G-F Score vs link prediction AUC + k-NN F1 (Step 27)
 │   ├── bootstrap_correlations.py # Bootstrap 95% CI for Spearman correlations (Step 28)
+│   ├── semantic_purity.py      # IC-weighted + Resnik semantic purity core library (Step 29)
+│   ├── semantic_similarity_analysis.py  # 3-variant purity comparison + DAG diagnostics (Step 29)
 │   └── utils.py                # Shared utilities
 │
 ├── tests/                      # pytest test suite (51 tests)
@@ -237,12 +242,13 @@ GF-consistency-framework/
 ├── figures/                    # Publication figures (PNG, 300 dpi)
 │   ├── Fig1–14                 # Main figures (G-F curves, topology, human validation)
 │   ├── Fig15                   # Metric comparison scatter (G-F vs link pred vs k-NN)
+│   ├── Fig16                   # Semantic purity comparison (standard, IC-weighted, Resnik)
 │   ├── FigS1–S7                # Supplementary figures
 │   └── FigS8                   # Sampling density comparison
 │
 ├── human_validation/           # Cross-species (optional, STRING v12.0)
 │
-├── run_all_analysis.py         # One-command Python pipeline (28 steps)
+├── run_all_analysis.py         # One-command Python pipeline (29 steps)
 ├── pipeline_config.yaml        # YAML configuration (all parameters)
 ├── pyproject.toml              # Python package metadata
 ├── environment.yml             # Conda environment
@@ -291,7 +297,7 @@ Full spec → [`requirements.txt`](requirements.txt) · [`environment.yml`](envi
 
 ## Extension Modules (v1.1+)
 
-Beyond the core 28-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–28).
+Beyond the core 29-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–29).
 
 | Module | Description |
 |--------|-------------|
@@ -305,6 +311,8 @@ Beyond the core 28-step pipeline, the framework provides extensible modules for 
 | `statistical_analysis.py` * | Spearman correlations, Wilcoxon tests, bootstrap CIs, cross-species comparison |
 | `metric_comparison.py` * | G-F Score vs link prediction AUC and k-NN node classification F1 across all 11 methods |
 | `bootstrap_correlations.py` * | Bootstrap 95% CI for key Spearman correlations (10,000 resamples) |
+| `semantic_purity.py` * | IC-weighted purity and Resnik MICA semantic similarity for GO DAG–aware community evaluation |
+| `semantic_similarity_analysis.py` * | Robustness check: 3-variant G-F score comparison + DAG inflation diagnostics (Fig 16) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
 
@@ -400,7 +408,7 @@ ORCID: [0009-0000-2769-467X](https://orcid.org/0009-0000-2769-467X)
 >              Protein Interaction Network Embeddings},
 >   author  = {Zhang, Yuhan},
 >   year    = {2026},
->   note    = {Reproducible pipeline: 11 methods, 28-step validation.},
+>   note    = {Reproducible pipeline: 11 methods, 29-step validation.},
 > }
 > ```
 

@@ -10,10 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - `metric_comparison.py`: G-F Score vs link prediction AUC and k-NN node classification F1 across all 11 embedding methods (Step 27)
 - `bootstrap_correlations.py`: bootstrap 95% CI for key Spearman correlations with 10,000 resamples (Step 28)
-- `metric_comparison.json` and `bootstrap_correlations.json` in results/
-- Figure 15 (`metric_comparison_scatter.png`): three-panel scatter plot comparing G-F Score with traditional metrics
-- Steps 27-28 integrated into `run_all_analysis.py` pipeline (metric comparison + bootstrap correlations)
-- `generate_final_summary()` now merges metric comparison and bootstrap correlation results
+- `semantic_purity.py`: IC-weighted purity and Resnik MICA semantic similarity — addresses DAG expansion inflation and provides GO DAG–aware community evaluation (Step 29)
+- `semantic_similarity_analysis.py`: robustness check comparing 3 purity variants (standard, IC-weighted, Resnik semantic) across all 11 methods with DAG inflation diagnostics (Step 29)
+- `semantic_purity_analysis.json` and `Fig16_semantic_purity_comparison.png` in results/ and figures/
+- Steps 27-29 integrated into `run_all_analysis.py` pipeline
+- `generate_final_summary()` now merges metric comparison, bootstrap correlation, and semantic purity results
 
 ### Changed
 - `Supplementary_Materials.txt`: added correct Table S3 (embedding hyperparameters matching actual code, all 2D output), synced with submission version
@@ -24,11 +25,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - README: updated Key Results table with all 11 methods' link prediction AUC and k-NN F1, updated Spearman correlations to n=11 with bootstrap CIs, corrected Embedding Methods table (all 2D output, accurate hyperparameters), added Steps 27-28 to Pipeline Overview, added new scripts to Project Structure and Extension Modules
 
 ### Fixed
-- `run_all_analysis.py`: integrated Steps 27-28 (metric_comparison, bootstrap_correlations); updated `--start-from` range (1-28) and `--skip-extended` scope (Steps 16-21, 24-28)
+- `run_all_analysis.py`: integrated Steps 27-29 (metric_comparison, bootstrap_correlations, semantic_purity); updated `--start-from` range (1-29) and `--skip-extended` scope (Steps 16-21, 24-29)
 - `Supplementary_Materials.txt` Algorithm S1 step 2c: corrected purity formula from `(max GO term count / community size)` to `(max GO term count / total GO terms in community)`
 - `data_preprocessing.py`: corrected filename from `yeast_ppi_5966.edgelist` to `yeast_ppi_5936.edgelist` (docstring + code)
-- README: corrected all "21-step" references to "28-step" to match actual pipeline scope
-- `scripts/__init__.py`: added Steps 22-28 module section (topological, pathway, statistical, metric comparison, bootstrap correlations); removed duplicate entries from Extension modules
+- README: corrected all "21-step" references to "29-step" to match actual pipeline scope
+- `scripts/__init__.py`: added Steps 22-29 module section; removed duplicate entries from Extension modules
 
 ## [1.2.0] — 2026-06-11
 

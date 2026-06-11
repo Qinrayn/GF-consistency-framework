@@ -1,7 +1,7 @@
 """
 scripts/ — G-F Consistency Framework analysis pipeline.
 
-This package contains the 28-step reproducible analysis pipeline for
+This package contains the 29-step reproducible analysis pipeline for
 evaluating protein interaction network embeddings via geometric-functional
 consistency.
 
@@ -42,6 +42,8 @@ pathway_analysis              Step 25: Pathway enrichment and cancer gene associ
 statistical_analysis          Step 26: Spearman, Wilcoxon, bootstrap, permutation tests
 metric_comparison             Step 27: G-F Score vs link prediction AUC + k-NN F1
 bootstrap_correlations        Step 28: Bootstrap 95% CI for key Spearman correlations
+semantic_purity               Step 29: IC-weighted + Resnik semantic purity (core library)
+semantic_similarity_analysis  Step 29: Robustness check — 3-variant GF comparison + DAG diagnostics
 
 Extension modules (v1.1+)
 --------------------------
