@@ -32,6 +32,8 @@ This script orchestrates the complete analysis pipeline:
 24. Hyperbolic embedding (Poincare Ball)
 25. Pathway enrichment analysis
 26. Statistical analysis summary
+27. Metric comparison (G-F Score vs link pred AUC + k-NN F1)
+28. Bootstrap correlations (95% CI for key Spearman correlations)
 
 Usage:
     python run_all_analysis.py                         # Skip human validation
@@ -227,6 +229,22 @@ def generate_final_summary(results_dir):
         summary["randomization_original_max_purity"] = data.get("original_max_purity")
         summary["randomization_shuffled_max_purity"] = data.get("shuffled_max_purity")
 
+    # 9. Metric comparison (Step 27)
+    mc_file = results_dir / "metric_comparison.json"
+    if mc_file.exists():
+        with open(mc_file) as f:
+            data = json.load(f)
+        if "correlations" in data:
+            summary["metric_comparison"] = data["correlations"]
+
+    # 10. Bootstrap correlations (Step 28)
+    bc_file = results_dir / "bootstrap_correlations.json"
+    if bc_file.exists():
+        with open(bc_file) as f:
+            data = json.load(f)
+        if "bootstrap_correlations" in data:
+            summary["bootstrap_correlations"] = data["bootstrap_correlations"]
+
     # Save
     output_file = results_dir / "final_results_summary.json"
     with open(output_file, "w") as f:
@@ -246,11 +264,11 @@ def main():
     parser.add_argument("--skip-plots", action="store_true",
                         help="Skip figure generation")
     parser.add_argument("--start-from", type=int, default=None,
-                        help="Start from a specific step (1-26)")
+                        help="Start from a specific step (1-28)")
     parser.add_argument("--skip-gnn", action="store_true",
                         help="Skip GNN embedding computation (Step 15)")
     parser.add_argument("--skip-extended", action="store_true",
-                        help="Skip extended analysis steps (16-21, 24-26)")
+                        help="Skip extended analysis steps (16-21, 24-28)")
     parser.add_argument("--skip-topological", action="store_true",
                         help="Skip topological analysis steps (22-23)")
     parser.add_argument("--seed", type=int, default=None,
@@ -299,7 +317,7 @@ def main():
     if skip_gnn:
         print("  GNN embeddings: SKIPPED")
     if skip_extended:
-        print("  Extended analysis (Steps 16-21, 24-26): SKIPPED")
+        print("  Extended analysis (Steps 16-21, 24-28): SKIPPED")
     if skip_topological:
         print("  Topological analysis (Steps 22-23): SKIPPED")
     print()
@@ -639,6 +657,34 @@ def main():
         sys.argv = [sys.argv[0]]
         try:
             if run_step(stat_main, "Statistical analysis"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
+
+    # Step 27: Metric Comparison (G-F Score vs Link Pred AUC + k-NN F1)
+    if start_from <= 27 and not skip_extended:
+        print_header("Step 27: Metric Comparison")
+        from scripts.metric_comparison import main as metric_main
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(metric_main, "Metric comparison"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
+
+    # Step 28: Bootstrap Correlations (95% CI for key Spearman correlations)
+    if start_from <= 28 and not skip_extended:
+        print_header("Step 28: Bootstrap Correlations")
+        from scripts.bootstrap_correlations import main as bootstrap_main
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(bootstrap_main, "Bootstrap correlations"):
                 completed += 1
             else:
                 failed += 1

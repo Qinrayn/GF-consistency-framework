@@ -299,7 +299,7 @@ Procedure:
    a. Construct graph G(r) by adding edge (i,j) if D[i,j] < r and i != j
    b. Apply greedy modularity optimisation to G(r) to obtain communities
    c. Compute functional purity = mean over communities of
-      (max GO term count / community size)
+      (max GO term count / total GO terms in community)
    d. Compute Newman-Girvan modularity Q(r)
 3. Plot purity(r) and Q(r) against r
 4. Return curves

@@ -2,7 +2,7 @@
 """
 data_preprocessing.py
 Step 1: Prepare all data files from raw STRING data.
-- Generate yeast_ppi_5966.edgelist (full STRING network, score >= 700)
+- Generate yeast_ppi_5936.edgelist (full STRING network, score >= 700)
 - Generate curated_153_ppi.edgelist (curated subgraph)
 - Generate 10 random 150-node subset edgelists
 """
@@ -30,7 +30,7 @@ def main():
     print(f"Full network: {G_full.number_of_nodes()} nodes, {G_full.number_of_edges()} edges")
     
     # Save full edgelist
-    full_edgelist = data_dir / "yeast_ppi_5966.edgelist"
+    full_edgelist = data_dir / "yeast_ppi_5936.edgelist"
     with open(full_edgelist, "w") as f:
         for u, v in G_full.edges():
             f.write(f"{u}\t{v}\n")

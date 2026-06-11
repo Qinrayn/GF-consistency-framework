@@ -2,7 +2,7 @@
 
 **A Geometric-Functional Consistency Framework for Evaluating Protein Interaction Network Embeddings**
 
-Complete reproduction of the experimental pipeline: 11 embedding methods · 21-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
+Complete reproduction of the experimental pipeline: 11 embedding methods · 28-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
 
 <details>
 <summary><strong>Key Results at a Glance</strong></summary>
@@ -63,7 +63,7 @@ python run_all_analysis.py --run-human          # Include human validation
 python run_all_analysis.py --start-from 3       # Resume from step 3
 python run_all_analysis.py --skip-plots         # Skip figure generation
 python run_all_analysis.py --skip-gnn           # Skip GNN embeddings (GraphSAGE/GAT/GIN)
-python run_all_analysis.py --skip-extended      # Skip extended analyses (Steps 17-21)
+python run_all_analysis.py --skip-extended      # Skip extended analyses (Steps 16-21, 24-28)
 python run_all_analysis.py --seed 123           # Override random seed
 python run_all_analysis.py --species human      # Target a different species
 ```
@@ -185,7 +185,7 @@ All embeddings standardized to **σ = 0.3** before G-F analysis.
 
 ```
 GF-consistency-framework/
-├── scripts/                    # 21-step analysis pipeline + extensions
+├── scripts/                    # 28-step analysis pipeline + extensions
 │   ├── data_preprocessing.py   # Load PPI + GO data
 │   ├── embed_all.py            # Compute 8 classical/NN embeddings
 │   ├── compute_gf.py           # G-F curves + scores
@@ -242,7 +242,7 @@ GF-consistency-framework/
 │
 ├── human_validation/           # Cross-species (optional, STRING v12.0)
 │
-├── run_all_analysis.py         # One-command Python pipeline (21 steps)
+├── run_all_analysis.py         # One-command Python pipeline (28 steps)
 ├── pipeline_config.yaml        # YAML configuration (all parameters)
 ├── pyproject.toml              # Python package metadata
 ├── environment.yml             # Conda environment
@@ -291,7 +291,7 @@ Full spec → [`requirements.txt`](requirements.txt) · [`environment.yml`](envi
 
 ## Extension Modules (v1.1+)
 
-Beyond the core 21-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–26).
+Beyond the core 28-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–28).
 
 | Module | Description |
 |--------|-------------|
@@ -400,7 +400,7 @@ ORCID: [0009-0000-2769-467X](https://orcid.org/0009-0000-2769-467X)
 >              Protein Interaction Network Embeddings},
 >   author  = {Zhang, Yuhan},
 >   year    = {2026},
->   note    = {Reproducible pipeline: 11 methods, 21-step validation.},
+>   note    = {Reproducible pipeline: 11 methods, 28-step validation.},
 > }
 > ```
 

@@ -1,7 +1,7 @@
 """
 scripts/ — G-F Consistency Framework analysis pipeline.
 
-This package contains the 21-step reproducible analysis pipeline for
+This package contains the 28-step reproducible analysis pipeline for
 evaluating protein interaction network embeddings via geometric-functional
 consistency.
 
@@ -33,18 +33,25 @@ go_propagation                Step 19: GO DAG True Path Rule expansion
 biological_interpretation     Step 20: 4-level G-F scale + case study
 benchmark_runtime             Step 21: Pipeline profiling + complexity
 
+Modules (Steps 22-28: topological, pathway, and statistical analyses)
+---------------------------------------------------------------------
+topological_analysis          Step 22: Persistent homology (Betti curves, Ripser)
+topological_stats             Step 23: Topological feature extraction + statistics
+embed_hyperbolic              Step 24: Poincare Ball hyperbolic space embeddings
+pathway_analysis              Step 25: Pathway enrichment and cancer gene association
+statistical_analysis          Step 26: Spearman, Wilcoxon, bootstrap, permutation tests
+metric_comparison             Step 27: G-F Score vs link prediction AUC + k-NN F1
+bootstrap_correlations        Step 28: Bootstrap 95% CI for key Spearman correlations
+
 Extension modules (v1.1+)
 --------------------------
 config_loader                 YAML configuration loader and validator
 input_validator               Pre-flight input validation and error handling
-embed_hyperbolic              Poincare Ball hyperbolic space embeddings
 multispecies_loader           Multi-species dataset loader (yeast, human, ...)
 temporal_network              Dynamic/temporal PPI network framework
-pathway_analysis              Pathway enrichment and cancer gene association
 
 Support modules
 ---------------
-statistical_analysis          Spearman, Wilcoxon, bootstrap, permutation tests
 robustness_analysis           Extended 30-subset convergence analysis
 visualization_helpers         Okabe-Ito colorblind-safe plotting utilities
 """
