@@ -1,7 +1,7 @@
 """
 scripts/ — G-F Consistency Framework analysis pipeline.
 
-This package contains the 29-step reproducible analysis pipeline for
+This package contains the 32-step reproducible analysis pipeline for
 evaluating protein interaction network embeddings via geometric-functional
 consistency.
 
@@ -45,6 +45,12 @@ bootstrap_correlations        Step 28: Bootstrap 95% CI for key Spearman correla
 semantic_purity               Step 29: IC-weighted + Resnik semantic purity (core library)
 semantic_similarity_analysis  Step 29: Robustness check — 3-variant GF comparison + DAG diagnostics
 
+Modules (Steps 30-32: cross-species, scale, and stability analyses)
+--------------------------------------------------------------------
+cross_species_consistency     Step 30: Yeast vs human rank concordance (Spearman, Kendall W)
+scale_gradient                Step 31: Scale-dependent topology coupling (500-4000 nodes)
+bootstrap_stability           Step 32: Bootstrap CI for G-F Score rankings (30 resamples)
+
 Extension modules (v1.1+)
 --------------------------
 config_loader                 YAML configuration loader and validator
@@ -58,4 +64,4 @@ robustness_analysis           Extended 30-subset convergence analysis
 visualization_helpers         Okabe-Ito colorblind-safe plotting utilities
 """
 
-__version__ = "1.2.0"
+__version__ = "1.3.0"

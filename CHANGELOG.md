@@ -13,23 +13,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `semantic_purity.py`: IC-weighted purity and Resnik MICA semantic similarity — addresses DAG expansion inflation and provides GO DAG–aware community evaluation (Step 29)
 - `semantic_similarity_analysis.py`: robustness check comparing 3 purity variants (standard, IC-weighted, Resnik semantic) across all 11 methods with DAG inflation diagnostics (Step 29)
 - `semantic_purity_analysis.json` and `Fig16_semantic_purity_comparison.png` in results/ and figures/
-- Steps 27-29 integrated into `run_all_analysis.py` pipeline
-- `generate_final_summary()` now merges metric comparison, bootstrap correlation, and semantic purity results
+- `cross_species_consistency.py`: cross-species rank concordance analysis — yeast vs human Spearman correlation + Kendall W + rank shift analysis (Step 30)
+- `scale_gradient.py`: scale-dependent topology coupling — subsamples yeast STRING network at 500/1000/2000/4000 nodes and measures G-F Score stability across scales (Step 31)
+- `bootstrap_stability.py`: bootstrap stability analysis — 30 resamples with 80% sampling to compute 95% CI, CV, and pairwise rank stability for all 11 methods (Step 32)
+- `cross_species_consistency.json`, `scale_gradient.json`, `bootstrap_stability.json` and Figs 17-19 in results/ and figures/
+- Steps 27-32 integrated into `run_all_analysis.py` pipeline
+- `generate_final_summary()` now merges metric comparison, bootstrap correlation, semantic purity, cross-species, scale gradient, and bootstrap stability results
 
 ### Changed
 - `Supplementary_Materials.txt`: added correct Table S3 (embedding hyperparameters matching actual code, all 2D output), synced with submission version
 - `requirements.lock.txt`: converted from UTF-16 LE to UTF-8 encoding
 - Renamed `comparison_30vs200_points.png` to `FigS8_sampling_density_comparison.png` for naming consistency
 - `final_results_summary.json`: corrected stale Leiden baseline purity (0.689 → 0.180)
-- Version unified to 1.2.0 across `pyproject.toml`, `scripts/__init__.py`, `run_all_analysis.py`
-- README: updated Key Results table with all 11 methods' link prediction AUC and k-NN F1, updated Spearman correlations to n=11 with bootstrap CIs, corrected Embedding Methods table (all 2D output, accurate hyperparameters), added Steps 27-28 to Pipeline Overview, added new scripts to Project Structure and Extension Modules
+- Version unified to 1.3.0 across `pyproject.toml`, `scripts/__init__.py`, `run_all_analysis.py`
+- README: updated to "32-step" pipeline; added Steps 30-32 to Pipeline Overview, Project Structure, and Extension Modules table; updated `--skip-extended` scope
+- `pipeline_config.yaml`: updated `start_from` range (1-32) and `skip_extended` scope (Steps 16-21, 24-32)
 
 ### Fixed
-- `run_all_analysis.py`: integrated Steps 27-29 (metric_comparison, bootstrap_correlations, semantic_purity); updated `--start-from` range (1-29) and `--skip-extended` scope (Steps 16-21, 24-29)
+- `run_all_analysis.py`: integrated Steps 27-32; updated `--start-from` range (1-32) and `--skip-extended` scope (Steps 16-21, 24-32)
 - `Supplementary_Materials.txt` Algorithm S1 step 2c: corrected purity formula from `(max GO term count / community size)` to `(max GO term count / total GO terms in community)`
 - `data_preprocessing.py`: corrected filename from `yeast_ppi_5966.edgelist` to `yeast_ppi_5936.edgelist` (docstring + code)
-- README: corrected all "21-step" references to "29-step" to match actual pipeline scope
-- `scripts/__init__.py`: added Steps 22-29 module section; removed duplicate entries from Extension modules
+- README: corrected all step count references to "32-step" to match actual pipeline scope
+- `scripts/__init__.py`: added Steps 22-32 module sections; version bumped to 1.3.0
 
 ## [1.2.0] — 2026-06-11
 

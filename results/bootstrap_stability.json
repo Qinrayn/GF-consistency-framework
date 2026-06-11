@@ -1,0 +1,366 @@
+{
+  "n_bootstrap": 30,
+  "sample_fraction": 0.8,
+  "n_genes": 153,
+  "n_points": 100,
+  "gf_r_interval": [
+    0.05,
+    0.422
+  ],
+  "observed_scores": {
+    "DM": 0.5511456267592232,
+    "DeepWalk": 0.403221199232571,
+    "GAT": 0.2139936562056931,
+    "GIN": 0.42643398935897553,
+    "GraphSAGE": 0.22494540657034337,
+    "MDS": 0.464248208704187,
+    "Node2Vec": 0.4881813453112802,
+    "PCA": 0.5180984355133786,
+    "Spectral": 0.41019911907038353,
+    "VGAE": 0.229663054950351,
+    "VGAE-feat": 0.40057372904547006
+  },
+  "bootstrap_stats": {
+    "DM": {
+      "observed": 0.5511456267592232,
+      "boot_mean": 0.5577934026650071,
+      "boot_std": 0.05297949478823114,
+      "ci_95": [
+        0.46089993714129346,
+        0.637531275791729
+      ],
+      "cv": 0.09498049732231942,
+      "n_resamples": 30
+    },
+    "DeepWalk": {
+      "observed": 0.403221199232571,
+      "boot_mean": 0.39100332308317454,
+      "boot_std": 0.05903227157673,
+      "ci_95": [
+        0.2925457425737062,
+        0.4849484901169827
+      ],
+      "cv": 0.150976393528432,
+      "n_resamples": 30
+    },
+    "GAT": {
+      "observed": 0.2139936562056931,
+      "boot_mean": 0.22572766486274096,
+      "boot_std": 0.028995961869628096,
+      "ci_95": [
+        0.1852257936174973,
+        0.283486858634357
+      ],
+      "cv": 0.1284555080444383,
+      "n_resamples": 30
+    },
+    "GIN": {
+      "observed": 0.42643398935897553,
+      "boot_mean": 0.4424180367903485,
+      "boot_std": 0.05331355055962696,
+      "ci_95": [
+        0.3532745883560481,
+        0.5404451176923952
+      ],
+      "cv": 0.12050492097113796,
+      "n_resamples": 30
+    },
+    "GraphSAGE": {
+      "observed": 0.22494540657034337,
+      "boot_mean": 0.2347407704747204,
+      "boot_std": 0.02879812658514188,
+      "ci_95": [
+        0.19083358513005969,
+        0.2888160060721156
+      ],
+      "cv": 0.12268054896004184,
+      "n_resamples": 30
+    },
+    "MDS": {
+      "observed": 0.464248208704187,
+      "boot_mean": 0.4915982248812113,
+      "boot_std": 0.02322968331107136,
+      "ci_95": [
+        0.4585116350598114,
+        0.533538241711261
+      ],
+      "cv": 0.04725339135771804,
+      "n_resamples": 30
+    },
+    "Node2Vec": {
+      "observed": 0.4881813453112802,
+      "boot_mean": 0.43594783021530936,
+      "boot_std": 0.06353381988412626,
+      "ci_95": [
+        0.3063271808170128,
+        0.5267624318775214
+      ],
+      "cv": 0.1457372086305549,
+      "n_resamples": 30
+    },
+    "PCA": {
+      "observed": 0.5180984355133786,
+      "boot_mean": 0.5119087355013204,
+      "boot_std": 0.06320813582682558,
+      "ci_95": [
+        0.3917114548171122,
+        0.5918038766716048
+      ],
+      "cv": 0.12347539989706337,
+      "n_resamples": 30
+    },
+    "Spectral": {
+      "observed": 0.41019911907038353,
+      "boot_mean": 0.4240550390902895,
+      "boot_std": 0.036592685972803636,
+      "ci_95": [
+        0.34980703235124894,
+        0.49623162153558265
+      ],
+      "cv": 0.08629230312014367,
+      "n_resamples": 30
+    },
+    "VGAE": {
+      "observed": 0.229663054950351,
+      "boot_mean": 0.24366724732966002,
+      "boot_std": 0.027775981966195348,
+      "ci_95": [
+        0.2053838058814591,
+        0.30566693672754863
+      ],
+      "cv": 0.11399144641141255,
+      "n_resamples": 30
+    },
+    "VGAE-feat": {
+      "observed": 0.40057372904547006,
+      "boot_mean": 0.3740624209422867,
+      "boot_std": 0.07332737099951439,
+      "ci_95": [
+        0.24605100704899147,
+        0.4551027208576972
+      ],
+      "cv": 0.19602977175520103,
+      "n_resamples": 30
+    }
+  },
+  "method_ranking": [
+    "DM",
+    "PCA",
+    "MDS",
+    "GIN",
+    "Node2Vec",
+    "Spectral",
+    "DeepWalk",
+    "VGAE-feat",
+    "VGAE",
+    "GraphSAGE",
+    "GAT"
+  ],
+  "pairwise_rank_stability": {
+    "DM": {
+      "DM": 0.5,
+      "PCA": 0.9,
+      "MDS": 0.8333333333333334,
+      "GIN": 0.9333333333333333,
+      "Node2Vec": 0.9333333333333333,
+      "Spectral": 0.9333333333333333,
+      "DeepWalk": 1.0,
+      "VGAE-feat": 1.0,
+      "VGAE": 1.0,
+      "GraphSAGE": 1.0,
+      "GAT": 1.0
+    },
+    "PCA": {
+      "DM": 0.1,
+      "PCA": 0.5,
+      "MDS": 0.6333333333333333,
+      "GIN": 0.7666666666666667,
+      "Node2Vec": 0.8,
+      "Spectral": 0.8666666666666667,
+      "DeepWalk": 0.9,
+      "VGAE-feat": 0.8,
+      "VGAE": 1.0,
+      "GraphSAGE": 1.0,
+      "GAT": 1.0
+    },
+    "MDS": {
+      "DM": 0.16666666666666666,
+      "PCA": 0.36666666666666664,
+      "MDS": 0.5,
+      "GIN": 0.8333333333333334,
+      "Node2Vec": 0.7333333333333333,
+      "Spectral": 1.0,
+      "DeepWalk": 0.9333333333333333,
+      "VGAE-feat": 1.0,
+      "VGAE": 1.0,
+      "GraphSAGE": 1.0,
+      "GAT": 1.0
+    },
+    "GIN": {
+      "DM": 0.06666666666666667,
+      "PCA": 0.23333333333333334,
+      "MDS": 0.16666666666666666,
+      "GIN": 0.5,
+      "Node2Vec": 0.5666666666666667,
+      "Spectral": 0.6666666666666666,
+      "DeepWalk": 0.9,
+      "VGAE-feat": 0.8666666666666667,
+      "VGAE": 1.0,
+      "GraphSAGE": 1.0,
+      "GAT": 1.0
+    },
+    "Node2Vec": {
+      "DM": 0.06666666666666667,
+      "PCA": 0.2,
+      "MDS": 0.26666666666666666,
+      "GIN": 0.43333333333333335,
+      "Node2Vec": 0.5,
+      "Spectral": 0.6,
+      "DeepWalk": 0.9,
+      "VGAE-feat": 0.8666666666666667,
+      "VGAE": 1.0,
+      "GraphSAGE": 1.0,
+      "GAT": 1.0
+    },
+    "Spectral": {
+      "DM": 0.06666666666666667,
+      "PCA": 0.13333333333333333,
+      "MDS": 0.0,
+      "GIN": 0.3333333333333333,
+      "Node2Vec": 0.4,
+      "Spectral": 0.5,
+      "DeepWalk": 0.6,
+      "VGAE-feat": 0.6666666666666666,
+      "VGAE": 1.0,
+      "GraphSAGE": 1.0,
+      "GAT": 1.0
+    },
+    "DeepWalk": {
+      "DM": 0.0,
+      "PCA": 0.1,
+      "MDS": 0.06666666666666667,
+      "GIN": 0.1,
+      "Node2Vec": 0.1,
+      "Spectral": 0.4,
+      "DeepWalk": 0.5,
+      "VGAE-feat": 0.7,
+      "VGAE": 1.0,
+      "GraphSAGE": 1.0,
+      "GAT": 1.0
+    },
+    "VGAE-feat": {
+      "DM": 0.0,
+      "PCA": 0.2,
+      "MDS": 0.0,
+      "GIN": 0.13333333333333333,
+      "Node2Vec": 0.13333333333333333,
+      "Spectral": 0.3333333333333333,
+      "DeepWalk": 0.3,
+      "VGAE-feat": 0.5,
+      "VGAE": 1.0,
+      "GraphSAGE": 1.0,
+      "GAT": 1.0
+    },
+    "VGAE": {
+      "DM": 0.0,
+      "PCA": 0.0,
+      "MDS": 0.0,
+      "GIN": 0.0,
+      "Node2Vec": 0.0,
+      "Spectral": 0.0,
+      "DeepWalk": 0.0,
+      "VGAE-feat": 0.0,
+      "VGAE": 0.5,
+      "GraphSAGE": 0.6666666666666666,
+      "GAT": 0.8333333333333334
+    },
+    "GraphSAGE": {
+      "DM": 0.0,
+      "PCA": 0.0,
+      "MDS": 0.0,
+      "GIN": 0.0,
+      "Node2Vec": 0.0,
+      "Spectral": 0.0,
+      "DeepWalk": 0.0,
+      "VGAE-feat": 0.0,
+      "VGAE": 0.3333333333333333,
+      "GraphSAGE": 0.5,
+      "GAT": 0.7333333333333333
+    },
+    "GAT": {
+      "DM": 0.0,
+      "PCA": 0.0,
+      "MDS": 0.0,
+      "GIN": 0.0,
+      "Node2Vec": 0.0,
+      "Spectral": 0.0,
+      "DeepWalk": 0.0,
+      "VGAE-feat": 0.0,
+      "VGAE": 0.16666666666666666,
+      "GraphSAGE": 0.26666666666666666,
+      "GAT": 0.5
+    }
+  },
+  "adjacent_significance": [
+    {
+      "higher": "DM",
+      "lower": "PCA",
+      "p_higher_wins": 0.9,
+      "significant_0.95": false
+    },
+    {
+      "higher": "PCA",
+      "lower": "MDS",
+      "p_higher_wins": 0.6333333333333333,
+      "significant_0.95": false
+    },
+    {
+      "higher": "MDS",
+      "lower": "GIN",
+      "p_higher_wins": 0.8333333333333334,
+      "significant_0.95": false
+    },
+    {
+      "higher": "GIN",
+      "lower": "Node2Vec",
+      "p_higher_wins": 0.5666666666666667,
+      "significant_0.95": false
+    },
+    {
+      "higher": "Node2Vec",
+      "lower": "Spectral",
+      "p_higher_wins": 0.6,
+      "significant_0.95": false
+    },
+    {
+      "higher": "Spectral",
+      "lower": "DeepWalk",
+      "p_higher_wins": 0.6,
+      "significant_0.95": false
+    },
+    {
+      "higher": "DeepWalk",
+      "lower": "VGAE-feat",
+      "p_higher_wins": 0.7,
+      "significant_0.95": false
+    },
+    {
+      "higher": "VGAE-feat",
+      "lower": "VGAE",
+      "p_higher_wins": 1.0,
+      "significant_0.95": true
+    },
+    {
+      "higher": "VGAE",
+      "lower": "GraphSAGE",
+      "p_higher_wins": 0.6666666666666666,
+      "significant_0.95": false
+    },
+    {
+      "higher": "GraphSAGE",
+      "lower": "GAT",
+      "p_higher_wins": 0.7333333333333333,
+      "significant_0.95": false
+    }
+  ]
+}

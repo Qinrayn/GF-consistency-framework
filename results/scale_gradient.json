@@ -1,0 +1,137 @@
+{
+  "scale_sizes": [
+    500,
+    1000,
+    2000,
+    4000
+  ],
+  "methods": [
+    "Spectral",
+    "DeepWalk",
+    "Node2Vec",
+    "PCA"
+  ],
+  "n_annotated": 154,
+  "full_network_size": 5936,
+  "results": {
+    "500": {
+      "Spectral": {
+        "gf_score": 0.0759144747415469,
+        "peak_purity": 0.13687161738009196,
+        "elapsed_s": 31.9
+      },
+      "DeepWalk": {
+        "gf_score": 0.10954126308904502,
+        "peak_purity": 0.19249934042552544,
+        "elapsed_s": 29.7
+      },
+      "Node2Vec": {
+        "gf_score": 0.10591845877926152,
+        "peak_purity": 0.20225412656466865,
+        "elapsed_s": 31.9
+      },
+      "PCA": {
+        "gf_score": 0.16864466559344504,
+        "peak_purity": 0.24102249479384202,
+        "elapsed_s": 18.8
+      }
+    },
+    "1000": {
+      "Spectral": {
+        "gf_score": 0.15980513006718836,
+        "peak_purity": 0.18115133170200645,
+        "elapsed_s": 38.9
+      },
+      "DeepWalk": {
+        "gf_score": 0.14486667545462098,
+        "peak_purity": 0.21028095268683009,
+        "elapsed_s": 34.8
+      },
+      "Node2Vec": {
+        "gf_score": 0.14384798637838395,
+        "peak_purity": 0.19571141476241183,
+        "elapsed_s": 38.5
+      },
+      "PCA": {
+        "gf_score": 0.16123161164006616,
+        "peak_purity": 0.26391234192652635,
+        "elapsed_s": 17.7
+      }
+    },
+    "2000": {
+      "Spectral": {
+        "gf_score": 0.19756545931283584,
+        "peak_purity": 0.21199294532627863,
+        "elapsed_s": 25.8
+      },
+      "DeepWalk": {
+        "gf_score": 0.13901892414296485,
+        "peak_purity": 0.20191164829933006,
+        "elapsed_s": 40.6
+      },
+      "Node2Vec": {
+        "gf_score": 0.15045417160113386,
+        "peak_purity": 0.2220198646468897,
+        "elapsed_s": 47.4
+      },
+      "PCA": {
+        "gf_score": 0.20905264530420126,
+        "peak_purity": 0.27143343353228144,
+        "elapsed_s": 18.6
+      }
+    },
+    "4000": {
+      "Spectral": {
+        "gf_score": 0.19367572940217562,
+        "peak_purity": 0.21527777777777776,
+        "elapsed_s": 61.2
+      },
+      "DeepWalk": {
+        "gf_score": 0.1301651509473166,
+        "peak_purity": 0.2332192582192582,
+        "elapsed_s": 49.2
+      },
+      "Node2Vec": {
+        "gf_score": 0.12671880748094438,
+        "peak_purity": 0.22059117269237338,
+        "elapsed_s": 82.1
+      },
+      "PCA": {
+        "gf_score": 0.26338880197790887,
+        "peak_purity": 0.30638192378523876,
+        "elapsed_s": 25.3
+      }
+    }
+  },
+  "kendalls_w": 0.7,
+  "valid_scales": [
+    500,
+    1000,
+    2000,
+    4000
+  ],
+  "pairwise_correlations": [
+    {
+      "scale_from": 500,
+      "scale_to": 1000,
+      "spearman_rho": 0.39999999999999997,
+      "p_value": 0.6000000000000001
+    },
+    {
+      "scale_from": 1000,
+      "scale_to": 2000,
+      "spearman_rho": 0.7999999999999999,
+      "p_value": 0.2000000000000001
+    },
+    {
+      "scale_from": 2000,
+      "scale_to": 4000,
+      "spearman_rho": 0.7999999999999999,
+      "p_value": 0.2000000000000001
+    }
+  ],
+  "gf_r_interval": [
+    0.05,
+    0.422
+  ]
+}

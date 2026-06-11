@@ -3,7 +3,7 @@
 """
 Master script to run all analyses for the G-F consistency framework.
 
-Version: 1.2.0
+Version: 1.3.0
 
 This script orchestrates the complete analysis pipeline:
 1.  Data preprocessing
@@ -35,20 +35,23 @@ This script orchestrates the complete analysis pipeline:
 27. Metric comparison (G-F Score vs link pred AUC + k-NN F1)
 28. Bootstrap correlations (95% CI for key Spearman correlations)
 29. Semantic purity & similarity analysis (IC-weighted + Resnik + DAG diagnostics)
+30. Cross-species rank consistency (yeast vs human Spearman + Kendall W)
+31. Scale-dependent topology coupling (500-4000 node gradient)
+32. Bootstrap stability analysis (30 resamples, 80% sampling)
 
 Usage:
     python run_all_analysis.py                         # Skip human validation
     python run_all_analysis.py --run-human              # Include human validation
     python run_all_analysis.py --skip-plots             # Skip figure generation
     python run_all_analysis.py --skip-gnn               # Skip GNN embeddings
-    python run_all_analysis.py --skip-extended          # Skip Steps 16-21, 24-29
+    python run_all_analysis.py --skip-extended          # Skip Steps 16-21, 24-32
     python run_all_analysis.py --skip-topological       # Skip Steps 22-23
     python run_all_analysis.py --start-from 3           # Start from step 3
     python run_all_analysis.py --config my_config.yaml  # Custom config file
     gf-consistency --config pipeline_config.yaml        # Via pip entry point
 """
 
-__version__ = "1.2.0"
+__version__ = "1.3.0"
 
 import sys
 import json
@@ -258,6 +261,43 @@ def generate_final_summary(results_dir):
         if "dag_inflation" in data:
             summary["dag_inflation"] = data["dag_inflation"]
 
+    # 12. Cross-species rank consistency (Step 30)
+    cs_file = results_dir / "cross_species_consistency.json"
+    if cs_file.exists():
+        with open(cs_file) as f:
+            data = json.load(f)
+        if "spearman_correlation" in data:
+            summary["cross_species_consistency"] = {
+                "spearman": data["spearman_correlation"],
+                "kendalls_w": data.get("kendalls_w"),
+                "n_shared_methods": data.get("n_shared"),
+            }
+
+    # 13. Scale gradient analysis (Step 31)
+    sg_file = results_dir / "scale_gradient.json"
+    if sg_file.exists():
+        with open(sg_file) as f:
+            data = json.load(f)
+        if "kendalls_w" in data:
+            summary["scale_gradient"] = {
+                "kendalls_w": data["kendalls_w"],
+                "scales": data.get("scale_sizes"),
+                "methods": data.get("methods"),
+            }
+
+    # 14. Bootstrap stability analysis (Step 32)
+    bs_file = results_dir / "bootstrap_stability.json"
+    if bs_file.exists():
+        with open(bs_file) as f:
+            data = json.load(f)
+        if "bootstrap_stats" in data:
+            summary["bootstrap_stability"] = {
+                m: {"ci_95": s["ci_95"], "cv": s["cv"]}
+                for m, s in data["bootstrap_stats"].items()
+            }
+        if "adjacent_significance" in data:
+            summary["bootstrap_adjacent_significance"] = data["adjacent_significance"]
+
     # Save
     output_file = results_dir / "final_results_summary.json"
     with open(output_file, "w") as f:
@@ -277,11 +317,11 @@ def main():
     parser.add_argument("--skip-plots", action="store_true",
                         help="Skip figure generation")
     parser.add_argument("--start-from", type=int, default=None,
-                        help="Start from a specific step (1-29)")
+                        help="Start from a specific step (1-32)")
     parser.add_argument("--skip-gnn", action="store_true",
                         help="Skip GNN embedding computation (Step 15)")
     parser.add_argument("--skip-extended", action="store_true",
-                        help="Skip extended analysis steps (16-21, 24-29)")
+                        help="Skip extended analysis steps (16-21, 24-32)")
     parser.add_argument("--skip-topological", action="store_true",
                         help="Skip topological analysis steps (22-23)")
     parser.add_argument("--seed", type=int, default=None,
@@ -330,7 +370,7 @@ def main():
     if skip_gnn:
         print("  GNN embeddings: SKIPPED")
     if skip_extended:
-        print("  Extended analysis (Steps 16-21, 24-29): SKIPPED")
+        print("  Extended analysis (Steps 16-21, 24-32): SKIPPED")
     if skip_topological:
         print("  Topological analysis (Steps 22-23): SKIPPED")
     print()
@@ -713,6 +753,45 @@ def main():
             import subprocess
             subprocess.run(semantic_cmd, check=True)
         if run_step(run_semantic, "Semantic purity analysis"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 30: Cross-Species Rank Consistency (yeast vs human)
+    if start_from <= 30 and not skip_extended:
+        print_header("Step 30: Cross-Species Rank Consistency")
+        cross_cmd = [sys.executable,
+                     str(Path(__file__).parent / "scripts" / "cross_species_consistency.py")]
+        def run_cross_species():
+            import subprocess
+            subprocess.run(cross_cmd, check=True)
+        if run_step(run_cross_species, "Cross-species consistency"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 31: Scale-Dependent Topology Coupling (500-4000 nodes)
+    if start_from <= 31 and not skip_extended:
+        print_header("Step 31: Scale-Dependent Topology Coupling")
+        scale_cmd = [sys.executable,
+                     str(Path(__file__).parent / "scripts" / "scale_gradient.py")]
+        def run_scale_gradient():
+            import subprocess
+            subprocess.run(scale_cmd, check=True)
+        if run_step(run_scale_gradient, "Scale gradient analysis"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 32: Bootstrap Stability Analysis (50 resamples, 80% sampling)
+    if start_from <= 32 and not skip_extended:
+        print_header("Step 32: Bootstrap Stability Analysis")
+        boot_cmd = [sys.executable,
+                    str(Path(__file__).parent / "scripts" / "bootstrap_stability.py")]
+        def run_bootstrap_stability():
+            import subprocess
+            subprocess.run(boot_cmd, check=True)
+        if run_step(run_bootstrap_stability, "Bootstrap stability"):
             completed += 1
         else:
             failed += 1
