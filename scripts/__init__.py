@@ -33,8 +33,8 @@ go_propagation                Step 19: GO DAG True Path Rule expansion
 biological_interpretation     Step 20: 4-level G-F scale + case study
 benchmark_runtime             Step 21: Pipeline profiling + complexity
 
-Modules (Steps 22-28: topological, pathway, and statistical analyses)
----------------------------------------------------------------------
+Modules (Steps 22-29: topological, pathway, statistical, and semantic analyses)
+--------------------------------------------------------------------------------
 topological_analysis          Step 22: Persistent homology (Betti curves, Ripser)
 topological_stats             Step 23: Topological feature extraction + statistics
 embed_hyperbolic              Step 24: Poincare Ball hyperbolic space embeddings
