@@ -7,25 +7,27 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 21-s
 <details>
 <summary><strong>Key Results at a Glance</strong></summary>
 
-| Method | G-F Score | Link Pred. AUROC | k-NN micro-F1 |
-|--------|:---------:|:-----------------:|:-------------:|
-| **Spectral** | **0.163** | 0.819 ± 0.008 | 0.673 ± 0.060 |
-| DM | 0.155 | 0.738 ± 0.009 | 0.513 ± 0.055 |
-| MDS | 0.152 | 0.804 ± 0.013 | 0.606 ± 0.074 |
-| Node2Vec | 0.151 | 0.525 ± 0.025 | 0.143 ± 0.068 |
-| PCA | 0.138 | — | — |
-| VGAE-feat | 0.124 | — | — |
-| DeepWalk | 0.123 | 0.518 ± 0.024 | 0.186 ± 0.079 |
-| GIN | 0.122 | 0.488 ± 0.024 | 0.203 ± 0.099 |
-| GAT | 0.069 | 0.591 ± 0.021 | 0.159 ± 0.030 |
-| GraphSAGE | 0.069 | 0.642 ± 0.026 | 0.185 ± 0.051 |
-| VGAE | 0.066 | 0.472 ± 0.008 | 0.211 ± 0.076 |
+| Method | G-F Score | Link Pred. AUC | k-NN micro-F1 |
+|--------|:---------:|:--------------:|:-------------:|
+| **Spectral** | **0.163** | 0.885 | 0.672 |
+| DM | 0.155 | 0.726 | 0.513 |
+| MDS | 0.152 | 0.904 | 0.639 |
+| Node2Vec | 0.151 | 0.491 | 0.185 |
+| PCA | 0.138 | 0.678 | 0.521 |
+| VGAE-feat | 0.124 | 0.466 | 0.168 |
+| DeepWalk | 0.123 | 0.489 | 0.193 |
+| GIN | 0.122 | 0.483 | 0.210 |
+| GAT | 0.069 | 0.534 | 0.160 |
+| GraphSAGE | 0.069 | 0.531 | 0.177 |
+| VGAE | 0.066 | 0.491 | 0.227 |
 
 - Leiden baseline purity: **0.180** (same formula as G-F curve: most-common GO term / total GO terms)
 - Leiden baseline ≈ best G-F Score (0.180 vs 0.163), indicating spatial embeddings capture functional structure at a level comparable to graph-based community detection
 - Bonferroni (30 subsets, size 150): **9/30** significant after correction
 - Randomization: original max 0.247 > shuffled 0.230 ± 0.002 (10 permutations, Z = 6.95)
-- Spearman rho (AUROC vs G-F Score): **0.943** (*p* = 0.005)
+- Spearman rho (G-F Score vs Link Pred AUC): **+0.591** (*P* = 0.056, 95% CI [−0.09, 0.88], n = 11)
+- Spearman rho (G-F Score vs k-NN F1): **+0.609** (*P* = 0.047, 95% CI [−0.05, 0.92], n = 11)
+- H1 max persistence vs G-F Score: **ρ = +0.764** (*P* = 0.006, 95% CI [0.27, 0.97])
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)
@@ -152,6 +154,8 @@ Step 23 ─ Topological Statistics ──────── Topo-GF correlations
 Step 24 ─ Hyperbolic Embedding ────────── Poincare Ball (Riemannian SGD)
 Step 25 ─ Pathway Enrichment ──────────── Fisher's exact test on G-F communities
 Step 26 ─ Statistical Summary ─────────── Spearman, Wilcoxon, bootstrap CIs
+Step 27 ─ Metric Comparison ────────────── G-F Score vs link prediction AUC + k-NN F1
+Step 28 ─ Bootstrap Correlations ───────── 95% CI for key Spearman correlations (10k resamples)
          └─ Summary ─────────────────── final_results_summary.json
 ```
 
@@ -159,19 +163,19 @@ Step 26 ─ Statistical Summary ─────────── Spearman, Wilc
 
 ## Embedding Methods
 
-| Method | Input | Strategy | 2D Projection |
-|--------|-------|----------|---------------|
-| Diffusion Map (DM) | 6 centrality features → Markov matrix | Eigendecomposition | Top-2 eigenvectors |
+| Method | Input | Strategy | 2D Output |
+|--------|-------|----------|-----------|
+| Diffusion Map (DM) | 6 centrality features → Markov matrix | Eigendecomposition | 2nd and 3rd eigenvectors |
 | Classical MDS | Shortest-path distances | Double-centering + eigendecomposition | Top-2 eigenvectors |
-| Spectral | Normalized Laplacian | Eigendecomposition | Top-2 eigenvectors |
+| Spectral | Normalized Laplacian | Eigendecomposition | Fiedler vectors (eig 1,2) |
 | DeepWalk | Random walks → co-occurrence | Truncated SVD | Top-2 singular vectors |
 | Node2Vec | Biased random walks → co-occurrence | Truncated SVD | Top-2 singular vectors |
-| VGAE | 2-layer GCN encoder | Variational autoencoder (300 epochs, Adam lr=0.01) | Latent space |
-| VGAE-feat | GCN + 6 centrality features | Variational autoencoder | Latent space |
-| PCA | 6 centrality features | PCA | Top-2 components |
-| GraphSAGE | SAGEConv mean aggregation | 2-layer GNN + BCE reconstruction (300 epochs) | Latent space |
-| GAT | GATConv attention (heads=1) | 2-layer GNN + BCE reconstruction (300 epochs) | Latent space |
-| GIN | GINConv + MLP | 2-layer GNN + BCE reconstruction (300 epochs) | Latent space |
+| VGAE | One-hot identity matrix | 2-layer GCN VAE (hidden=4, 300 epochs, Adam lr=0.01) | Latent mean μ |
+| VGAE-feat | 6 centrality features | 2-layer GCN VAE (hidden=4, 300 epochs) | Latent mean μ |
+| PCA | 6 centrality features | PCA via covariance eigendecomposition | Top-2 components |
+| GraphSAGE | 6 centrality features | 2-layer SAGEConv mean agg (hidden=16, 300 epochs) | Latent space |
+| GAT | 6 centrality features | 2-layer GATConv 1-head (hidden=16, 300 epochs) | Latent space |
+| GIN | 6 centrality features | 2-layer GINConv + MLP (hidden=16, 300 epochs) | Latent space |
 
 All embeddings standardized to **σ = 0.3** before G-F analysis.
 
@@ -212,6 +216,8 @@ GF-consistency-framework/
 │   ├── multispecies_loader.py  # Multi-species dataset loader
 │   ├── temporal_network.py     # Dynamic/temporal PPI framework
 │   ├── pathway_analysis.py     # Pathway enrichment + cancer gene analysis
+│   ├── metric_comparison.py    # G-F Score vs link prediction AUC + k-NN F1 (Step 27)
+│   ├── bootstrap_correlations.py # Bootstrap 95% CI for Spearman correlations (Step 28)
 │   └── utils.py                # Shared utilities
 │
 ├── tests/                      # pytest test suite (51 tests)
@@ -229,10 +235,10 @@ GF-consistency-framework/
 │   └── final_results_summary.json  ← Master summary
 │
 ├── figures/                    # Publication figures (PNG, 300 dpi)
-│   ├── Fig1–7                  # Main numbered figures (incl. Fig6: human validation)
-│   ├── Fig8–14                 # Topological analysis figures (Betti curves, persistence, etc.)
+│   ├── Fig1–14                 # Main figures (G-F curves, topology, human validation)
+│   ├── Fig15                   # Metric comparison scatter (G-F vs link pred vs k-NN)
 │   ├── FigS1–S7                # Supplementary figures
-│   └── comparison_30vs200      # Sampling density check
+│   └── FigS8                   # Sampling density comparison
 │
 ├── human_validation/           # Cross-species (optional, STRING v12.0)
 │
@@ -297,6 +303,8 @@ Beyond the core 21-step pipeline, the framework provides extensible modules for 
 | `topological_stats.py` * | Topological feature extraction and statistical summaries |
 | `robustness_analysis.py` * | Convergence analysis, randomization null test, power curve estimation |
 | `statistical_analysis.py` * | Spearman correlations, Wilcoxon tests, bootstrap CIs, cross-species comparison |
+| `metric_comparison.py` * | G-F Score vs link prediction AUC and k-NN node classification F1 across all 11 methods |
+| `bootstrap_correlations.py` * | Bootstrap 95% CI for key Spearman correlations (10,000 resamples) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
 
@@ -366,9 +374,10 @@ Generated by `scripts/topological_analysis.py` and `scripts/topological_stats.py
 - **GO annotation bias**: G-F Score depends on GO annotation quality and coverage. Well-studied genes have richer annotations, potentially inflating purity for communities dominated by such genes.
 - **GO DAG propagation artifact**: True Path Rule expansion (Step 19) increases annotations from ~3.8 to ~28.9 terms/gene, causing community purity to approach 1.0 (G-F Score ≈ 0.9996). This is a known artifact of hierarchical expansion; the main results use pre-propagation annotations.
 - **Community detection**: Only greedy modularity optimization is used for distance-threshold communities. Alternative algorithms (Leiden, Louvain) may produce different purity profiles.
-- **2D projection**: All embeddings are standardized to σ = 0.3 and projected to 2D before G-F analysis. High-dimensional geometric properties may not be fully captured in 2D.
+- **2D output**: All embeddings directly produce 2-dimensional coordinate spaces (not projected from higher dimensions). While 2D is sufficient for G-F curve analysis, higher-dimensional embeddings may capture additional geometric properties.
 - **Plateau width**: Defined as the r-interval where purity ≥ 80% of each method's peak (relative threshold). Methods with very flat purity curves may yield wide plateaus despite low absolute purity.
-- **Spearman correlation**: rho = 0.943 is based on n = 6 method-level observations (classical methods with both AUROC and G-F Score). Leave-one-out sensitivity analysis is provided in `results/link_prediction.json`.
+- **Spearman correlations**: G-F Score vs link prediction AUC (ρ = 0.591, P = 0.056) and vs k-NN F1 (ρ = 0.609, P = 0.047) are based on n = 11 methods. Bootstrap 95% CIs indicate moderate precision; see `results/bootstrap_correlations.json` for full details.
+- **All embeddings are 2-dimensional**: All 11 methods produce 2D coordinate spaces (standardized to σ = 0.3). Higher-dimensional geometric properties are not captured in this analysis.
 
 ---
 

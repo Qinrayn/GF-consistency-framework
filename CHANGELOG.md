@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- `metric_comparison.py`: G-F Score vs link prediction AUC and k-NN node classification F1 across all 11 embedding methods (Step 27)
+- `bootstrap_correlations.py`: bootstrap 95% CI for key Spearman correlations with 10,000 resamples (Step 28)
+- `metric_comparison.json` and `bootstrap_correlations.json` in results/
+- Figure 15 (`metric_comparison_scatter.png`): three-panel scatter plot comparing G-F Score with traditional metrics
+
+### Changed
+- `Supplementary_Materials.txt`: added correct Table S3 (embedding hyperparameters matching actual code, all 2D output), synced with submission version
+- `requirements.lock.txt`: converted from UTF-16 LE to UTF-8 encoding
+- Renamed `comparison_30vs200_points.png` to `FigS8_sampling_density_comparison.png` for naming consistency
+- `final_results_summary.json`: corrected stale Leiden baseline purity (0.689 → 0.180)
+- Version unified to 1.2.0 across `pyproject.toml`, `scripts/__init__.py`, `run_all_analysis.py`
+- README: updated Key Results table with all 11 methods' link prediction AUC and k-NN F1, updated Spearman correlations to n=11 with bootstrap CIs, corrected Embedding Methods table (all 2D output, accurate hyperparameters), added Steps 27-28 to Pipeline Overview, added new scripts to Project Structure and Extension Modules
+
 ## [1.2.0] — 2026-06-11
 
 ### Fixed
