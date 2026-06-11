@@ -305,6 +305,50 @@ Procedure:
 4. Return curves
 
 
+Algorithm S1b: IC-Weighted and Semantic Purity Variants
+--------------------------------------------------------
+
+To address two known limitations — (i) DAG expansion inflation (True Path
+Rule adds ~5.5x ancestor terms, diluting count-based purity) and (ii) the
+exact-match-only nature of standard purity — we provide two additional
+purity variants as robustness checks.
+
+IC-weighted purity. Each GO term is weighted by its Information Content
+IC(t) = -log( freq(t) / N_genes ), computed from the full yeast genome
+annotation corpus.  The IC-weighted purity of community C is:
+
+    purity_IC(C) = max_t [count(t,C) * IC(t)] / sum_t [count(t,C) * IC(t)]
+
+This down-weights non-specific ancestor terms (low IC) introduced by DAG
+propagation.  Empirically, IC-weighted G-F scores correlate rho = +0.964
+(P < 0.001) with standard scores across 11 methods, confirming rank
+preservation, while the DAG inflation ratio drops from 0.78 to 0.21.
+
+Semantic purity (Resnik MICA).  Pairwise GO term similarity is computed
+via Resnik's Most Informative Common Ancestor (MICA) method using the full
+GO DAG (24,136 BP terms from go.obo release 2026-05-19).  The semantic
+purity of community C is:
+
+    purity_sem(C) = (2 / (n*(n-1))) * sum_{i<j} sim_norm(t_i, t_j)
+
+where sim_norm(t_i, t_j) = IC(MICA(t_i, t_j)) / max_IC is normalised to
+[0, 1].  This captures functional coherence based on GO DAG topology:
+communities with semantically related (but non-identical) terms score high.
+
+Spearman correlations between variants (n = 11 methods, original annotations):
+
+    Standard vs IC-weighted:   rho = +0.964  (P < 0.001)
+    Standard vs semantic:      rho = +0.491  (P = 0.125)
+    IC-weighted vs semantic:   rho = +0.482  (P = 0.133)
+
+The high standard-IC correlation confirms that IC-weighting is a consistent
+enhancement.  The lower standard-semantic correlation indicates that
+semantic purity captures a complementary notion of functional coherence.
+
+Full results: results/semantic_purity_analysis.json
+Figure: Fig16_semantic_purity_comparison.png
+
+
 Supplementary Table S1. G-F curve statistics across 10 random subsets, extended to r = 0.55 (mean +/- SD).
 
 r	DM Purity	MDS Purity	DM Modularity	MDS Modularity
