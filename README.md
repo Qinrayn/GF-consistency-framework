@@ -326,7 +326,7 @@ Beyond the core 32-step pipeline, the framework provides extensible modules for 
 | `semantic_similarity_analysis.py` * | Robustness check: 3-variant G-F score comparison + DAG inflation diagnostics (Fig 16) |
 | `cross_species_consistency.py` * | Cross-species rank concordance: yeast vs human Spearman + Kendall W (Fig 17) |
 | `scale_gradient.py` * | Scale-dependent topology coupling: 500-4000 node gradient analysis (Fig 18) |
-| `bootstrap_stability.py` * | Bootstrap stability: 50-resample 95% CI for G-F Score rankings (Fig 19) |
+| `bootstrap_stability.py` * | Bootstrap stability: 30-resample 95% CI for G-F Score rankings (Fig 19) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
 

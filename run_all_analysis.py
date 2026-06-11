@@ -783,7 +783,7 @@ def main():
         else:
             failed += 1
 
-    # Step 32: Bootstrap Stability Analysis (50 resamples, 80% sampling)
+    # Step 32: Bootstrap Stability Analysis (30 resamples, 80% sampling)
     if start_from <= 32 and not skip_extended:
         print_header("Step 32: Bootstrap Stability Analysis")
         boot_cmd = [sys.executable,
