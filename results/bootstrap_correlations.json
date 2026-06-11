@@ -1,0 +1,98 @@
+{
+  "h1_max_persistence_vs_gf_score": {
+    "description": "H1 Max Persistence vs G-F Score (yeast, n=11 methods)",
+    "methods": [
+      "DM",
+      "MDS",
+      "Spectral",
+      "DeepWalk",
+      "Node2Vec",
+      "VGAE",
+      "PCA",
+      "VGAE-feat",
+      "GraphSAGE",
+      "GAT",
+      "GIN"
+    ],
+    "rho": 0.7636363636363637,
+    "p_value": 0.006233059747904754,
+    "ci_95": [
+      0.2676056338028169,
+      0.9711538461538461
+    ],
+    "n": 11,
+    "n_bootstrap": 10000
+  },
+  "gf_score_vs_link_pred_auc": {
+    "description": "G-F Score vs Link Prediction AUC (n=11 methods)",
+    "methods": [
+      "DM",
+      "MDS",
+      "Spectral",
+      "DeepWalk",
+      "Node2Vec",
+      "VGAE",
+      "VGAE-feat",
+      "GraphSAGE",
+      "GAT",
+      "GIN",
+      "PCA"
+    ],
+    "rho": 0.5909090909090909,
+    "p_value": 0.055575604288774685,
+    "ci_95": [
+      -0.08542713567839195,
+      0.8773584905660375
+    ],
+    "n": 11,
+    "n_bootstrap": 10000
+  },
+  "gf_score_vs_knn_f1": {
+    "description": "G-F Score vs k-NN micro-F1 (n=11 methods)",
+    "methods": [
+      "DM",
+      "MDS",
+      "Spectral",
+      "DeepWalk",
+      "Node2Vec",
+      "VGAE",
+      "VGAE-feat",
+      "GraphSAGE",
+      "GAT",
+      "GIN",
+      "PCA"
+    ],
+    "rho": 0.6090909090909091,
+    "p_value": 0.046695709354098905,
+    "ci_95": [
+      -0.047169811320754707,
+      0.9150943396226414
+    ],
+    "n": 11,
+    "n_bootstrap": 10000
+  },
+  "topo_consistency_vs_gf_score": {
+    "description": "Topological Consistency vs G-F Score (yeast, n=11 methods)",
+    "methods": [
+      "DM",
+      "MDS",
+      "Spectral",
+      "DeepWalk",
+      "Node2Vec",
+      "VGAE",
+      "PCA",
+      "VGAE-feat",
+      "GraphSAGE",
+      "GAT",
+      "GIN"
+    ],
+    "rho": -0.38181818181818183,
+    "p_value": 0.2465595757789701,
+    "ci_95": [
+      -0.8504672897196259,
+      0.32726280510660705
+    ],
+    "n": 11,
+    "n_bootstrap": 10000
+  }
+}

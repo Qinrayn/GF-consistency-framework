@@ -127,7 +127,7 @@
       "effective_threshold": 0.1154
     }
   },
-  "leiden_baseline_purity": 0.6886042692939245,
+  "leiden_baseline_purity": 0.17968645550852239,
   "geometric_margins": {
     "DM": {
       "d_intra": 0.3484364118519035,

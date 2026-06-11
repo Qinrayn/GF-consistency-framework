@@ -373,3 +373,48 @@ r	DM Purity	PCA Purity
 0.469	0.3773	0.3212
 0.484	0.3752	0.3235
 0.500	0.3140	0.3235
+
+
+Supplementary Table S3. Embedding method hyperparameters.
+
+Method	Output Dim	Input Features	Key Parameters
+DM	2	6 centrality features (degree, eigenvector, PageRank, betweenness, closeness, subgraph centrality)	Inner-product similarity, symmetric normalized Laplacian, 2nd and 3rd eigenvectors
+MDS	2	Shortest-path distances (unweighted; disconnected pairs = n)	Classical MDS via double centering + eigendecomposition, top 2 eigenvectors
+Spectral	2	Normalized Laplacian	Fiedler vectors (2nd and 3rd eigenvectors of normalized Laplacian)
+DeepWalk	2	Random walks + SVD	Walk length 20, 10 walks/node, window size 5, SVD on co-occurrence matrix
+Node2Vec	2	Biased random walks + SVD	Walk length 20, 10 walks/node, window size 5, p=0.5, q=2.0 (grid-searched), SVD on co-occurrence matrix
+VGAE	2	One-hot identity matrix (n x n)	2-layer GCN encoder (hidden dim 4), latent dim 2, 300 epochs, lr 0.01, Adam optimizer, BCE + KL loss
+VGAE-feat	2	6 centrality features	Same architecture as VGAE but with 6-dim input features instead of one-hot
+GraphSAGE	2	6 centrality features	2 SAGEConv layers (hidden dim 16), mean aggregation, BatchNorm, 300 epochs, lr 0.01, BCE loss
+GAT	2	6 centrality features	2 GATConv layers (hidden dim 16), 1 attention head, BatchNorm, 300 epochs, lr 0.01, BCE loss
+GIN	2	6 centrality features	2 GINConv layers (hidden dim 16) with 2-layer MLPs per conv, BatchNorm, 300 epochs, lr 0.01, BCE loss
+PCA	2	6 centrality features (same as DM)	Manual PCA via covariance eigendecomposition, top 2 principal components
+
+Note: All embeddings produce 2-dimensional coordinate spaces. Universal post-processing: all embeddings are rescaled to target standard deviation 0.3 via rescale_coordinates(). Random seed = 42.
+
+
+Supplementary Note S1: Persistent Homology Analysis Details
+
+For each embedding method, persistent homology was computed using the Ripser library with Vietoris-Rips complexes up to the maximum pairwise distance in the point set. Persistence diagrams were computed in dimensions H0 (connected components) and H1 (loops).
+
+Topological consistency score definition: Let E = {e_1, e_2, ...} denote the set of all birth and death radii of finite topological features across H0 and H1. Let dp/dr be the gradient of functional purity with respect to distance threshold r, evaluated at the sampled grid points. The topological consistency score is defined as:
+
+    C = (1/|E|) * sum_{e_i in E} |dp/dr|_{r = r_nearest(e_i)}
+
+where r_nearest(e_i) is the nearest sampled r-value to event e_i. This score quantifies the average magnitude of functional purity change at topological transition points (birth/death of connected components and loops).
+
+H1-only consistency score is computed identically but restricted to H1 events only.
+
+Human network topological analysis used 2,000-node subsamples (seed = 42) matched to the G-F Score computation, with r in [0.05, 0.30].
+
+
+Supplementary Figure Legends
+
+Supplementary Figure S1. Network topology radar chart comparing structural properties across embeddings.
+Supplementary Figure S2. Pairwise embedding distance distributions for all 11 methods.
+Supplementary Figure S3. Node2Vec p/q parameter sensitivity heatmap showing G-F Score across parameter grid.
+Supplementary Figure S4. Sample size convergence: G-F Scores stabilize as sampling points increase from 30 to 200.
+Supplementary Figure S5. GO biological process case study showing functional module recovery.
+Supplementary Figure S6. Pipeline runtime breakdown by analysis step.
+Supplementary Figure S7. Time-accuracy tradeoff across sampling densities.
+Supplementary Figure S8. Sampling density comparison between 30-point and 200-point grids (Spearman rho > 0.98).

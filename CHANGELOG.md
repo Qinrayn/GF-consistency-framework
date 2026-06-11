@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] — 2026-06-11
+
 ### Fixed
 - `leiden_baseline.py`: unified purity formula with G-F curve (`most_common / total_GO_terms` instead of `most_common / cluster_size`); baseline purity updated from 0.689 to 0.180
 - `compute_gf.py`: replaced `hash(method)` with `zlib.crc32(method.encode())` for cross-process reproducibility (2 occurrences)

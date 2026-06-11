@@ -3,7 +3,7 @@
 """
 Master script to run all analyses for the G-F consistency framework.
 
-Version: 1.1.1
+Version: 1.2.0
 
 This script orchestrates the complete analysis pipeline:
 1.  Data preprocessing
@@ -45,7 +45,7 @@ Usage:
     gf-consistency --config pipeline_config.yaml        # Via pip entry point
 """
 
-__version__ = "1.1.1"
+__version__ = "1.2.0"
 
 import sys
 import json

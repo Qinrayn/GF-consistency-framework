@@ -49,4 +49,4 @@ robustness_analysis           Extended 30-subset convergence analysis
 visualization_helpers         Okabe-Ito colorblind-safe plotting utilities
 """
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"

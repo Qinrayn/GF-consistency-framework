@@ -1,0 +1,88 @@
+{
+  "description": "Comparison of G-F Score with traditional embedding evaluation metrics",
+  "n_methods": 11,
+  "methods": [
+    "DM",
+    "MDS",
+    "Spectral",
+    "DeepWalk",
+    "Node2Vec",
+    "VGAE",
+    "VGAE-feat",
+    "GraphSAGE",
+    "GAT",
+    "GIN",
+    "PCA"
+  ],
+  "per_method": {
+    "DM": {
+      "link_pred_auc": 0.7263,
+      "knn_micro_f1": 0.5126,
+      "gf_score": 0.1552
+    },
+    "MDS": {
+      "link_pred_auc": 0.9039,
+      "knn_micro_f1": 0.6387,
+      "gf_score": 0.1522
+    },
+    "Spectral": {
+      "link_pred_auc": 0.8849,
+      "knn_micro_f1": 0.6723,
+      "gf_score": 0.1633
+    },
+    "DeepWalk": {
+      "link_pred_auc": 0.4888,
+      "knn_micro_f1": 0.1933,
+      "gf_score": 0.1225
+    },
+    "Node2Vec": {
+      "link_pred_auc": 0.4913,
+      "knn_micro_f1": 0.1849,
+      "gf_score": 0.1512
+    },
+    "VGAE": {
+      "link_pred_auc": 0.4908,
+      "knn_micro_f1": 0.2269,
+      "gf_score": 0.0657
+    },
+    "VGAE-feat": {
+      "link_pred_auc": 0.4664,
+      "knn_micro_f1": 0.1681,
+      "gf_score": 0.1238
+    },
+    "GraphSAGE": {
+      "link_pred_auc": 0.5307,
+      "knn_micro_f1": 0.1765,
+      "gf_score": 0.069
+    },
+    "GAT": {
+      "link_pred_auc": 0.5335,
+      "knn_micro_f1": 0.1597,
+      "gf_score": 0.0694
+    },
+    "GIN": {
+      "link_pred_auc": 0.4827,
+      "knn_micro_f1": 0.2101,
+      "gf_score": 0.1217
+    },
+    "PCA": {
+      "link_pred_auc": 0.6781,
+      "knn_micro_f1": 0.521,
+      "gf_score": 0.1375
+    }
+  },
+  "correlations": {
+    "gf_vs_link_pred_auc": {
+      "spearman_rho": 0.591,
+      "p_value": 0.056
+    },
+    "gf_vs_knn_f1": {
+      "spearman_rho": 0.609,
+      "p_value": 0.047
+    },
+    "link_pred_auc_vs_knn_f1": {
+      "spearman_rho": 0.636,
+      "p_value": 0.035
+    }
+  }
+}
