@@ -388,7 +388,7 @@ def main():
         "n_annotated_genes": len(go_map),
     }
     out_file = results_dir / "multimodal_anchoring.json"
-    with open(str(out_file), "w") as f:
+    with open(str(out_file), "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2)
     print(f"Saved: {out_file}")
 

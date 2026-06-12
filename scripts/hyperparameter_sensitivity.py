@@ -126,13 +126,18 @@ def _compute_gf_custom(coords, nodes, go_map, n_points=100, resolution=1.0):
 
         comm_purities = []
         for comm in communities:
-            labels = [go_map[nodes[i]] for i in comm if i < len(nodes) and nodes[i] in go_map]
-            if not labels:
+            all_terms = []
+            for i in comm:
+                if i < len(nodes) and nodes[i] in go_map:
+                    terms = go_map[nodes[i]]
+                    if isinstance(terms, list):
+                        all_terms.extend(terms)
+                    elif terms:
+                        all_terms.append(terms)
+            if not all_terms:
                 continue
-            # Use first GO term
-            first_labels = [l[0] if isinstance(l, list) else l for l in labels]
-            counts = Counter(first_labels)
-            comm_purities.append(counts.most_common(1)[0][1] / len(first_labels))
+            counts = Counter(all_terms)
+            comm_purities.append(counts.most_common(1)[0][1] / len(all_terms))
 
         if comm_purities:
             purities[ri] = np.mean(comm_purities)
@@ -475,7 +480,7 @@ def main():
         output["experiments"][exp_name] = clean_data
 
     out_file = results_dir / "hyperparameter_sensitivity.json"
-    with open(str(out_file), "w") as f:
+    with open(str(out_file), "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2)
     print(f"Saved: {out_file}")
 

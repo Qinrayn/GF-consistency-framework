@@ -324,22 +324,6 @@ def classify_gf_score(score, thresholds=(0.3, 0.5, 0.7)):
         - ``"description"`` (str): Detailed description of what this level
           means biologically.
         - ``"color"`` (str): Hex colour code for visualisation.
-
-    Examples
-    --------
-    >>> info = classify_gf_score(0.625)
-    >>> info["level"]
-    3
-    >>> info["label"]
-    'Strong alignment'
-
-    >>> info = classify_gf_score(0.248)
-    >>> info["level"]
-    1
-
-    >>> info = classify_gf_score(0.462)
-    >>> info["level"]
-    2
     """
     t1, t2, t3 = thresholds
 

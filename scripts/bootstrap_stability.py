@@ -105,20 +105,20 @@ def compute_gf_curve_louvain(coords, nodes, go_map, r_vals):
                     mod_val = 0.0
             _cache[ne] = (communities, mod_val)
 
-        # Compute purity
+        # Compute purity (standard formula: all GO terms)
         comm_purities = []
         for comm in communities:
-            labels = []
+            all_terms = []
             for idx in comm:
                 node = nodes[idx]
                 if node in go_map:
                     terms = go_map[node]
                     if terms:
-                        labels.append(terms[0])
-            if not labels:
+                        all_terms.extend(terms)
+            if not all_terms:
                 continue
-            counts = Counter(labels)
-            comm_purities.append(counts.most_common(1)[0][1] / len(labels))
+            counts = Counter(all_terms)
+            comm_purities.append(counts.most_common(1)[0][1] / len(all_terms))
 
         if comm_purities:
             purities[orig_idx] = np.mean(comm_purities)
@@ -308,7 +308,7 @@ def main():
     }
 
     output_file = results_dir / "bootstrap_stability.json"
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2)
     print(f"\nSaved: {output_file}")
 

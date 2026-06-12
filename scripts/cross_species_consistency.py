@@ -41,14 +41,14 @@ def load_yeast_scores(results_dir):
     # Classical + PCA/VGAE-feat
     gf_file = results_dir / "gf_scores.json"
     if gf_file.exists():
-        with open(gf_file) as f:
+        with open(gf_file, encoding="utf-8") as f:
             data = json.load(f)
         scores.update(data.get("scores_paper_interval", data.get("scores", {})))
 
     # GNN methods
     gnn_file = results_dir / "gnn_gf_scores.json"
     if gnn_file.exists():
-        with open(gnn_file) as f:
+        with open(gnn_file, encoding="utf-8") as f:
             gnn_data = json.load(f)
         if "gf_scores" in gnn_data:
             scores.update(gnn_data["gf_scores"])
@@ -63,14 +63,14 @@ def load_human_scores(results_dir):
     # Prefer extended (11-method) results
     ext_file = results_dir / "human_gf_scores_extended.json"
     if ext_file.exists():
-        with open(ext_file) as f:
+        with open(ext_file, encoding="utf-8") as f:
             data = json.load(f)
         scores.update(data.get("scores", {}))
         return scores
     # Fallback to original 6-method results
     human_file = results_dir / "human_gf_scores.json"
     if human_file.exists():
-        with open(human_file) as f:
+        with open(human_file, encoding="utf-8") as f:
             data = json.load(f)
         scores.update(data.get("scores", {}))
     return scores
@@ -239,7 +239,7 @@ def main():
     }
 
     output_file = results_dir / "cross_species_consistency.json"
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2)
     print(f"\nSaved: {output_file}")
 

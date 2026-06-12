@@ -24,8 +24,6 @@ Usage::
     python scripts/semantic_similarity_analysis.py
 """
 
-from __future__ import annotations
-
 import sys
 import json
 import time

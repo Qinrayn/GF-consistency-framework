@@ -159,7 +159,7 @@ def main():
 
     # ---- Load GO annotations ----
     data_dir = get_data_dir()
-    with open(data_dir / "gene_go_map.json") as f:
+    with open(data_dir / "gene_go_map.json", encoding="utf-8") as f:
         go_map = json.load(f)
 
     annotated_nodes = sorted(set(go_map.keys()) & set(full_nodes))
@@ -310,7 +310,7 @@ def main():
     }
 
     output_file = results_dir / "scale_gradient.json"
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2)
     print(f"\nSaved: {output_file}")
 

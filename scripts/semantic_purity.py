@@ -34,8 +34,6 @@ computations; gracefully falls back to corpus-only IC if OBO is missing.
 Author: Yuhan Zhang (Qinrayn)
 """
 
-from __future__ import annotations
-
 import sys
 import json
 import math

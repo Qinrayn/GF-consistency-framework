@@ -115,14 +115,21 @@ def compute_gf_curve_fast(coords, node_labels, r_values):
                 communities = [frozenset(c) for c in nx.connected_components(G)]
                 mod_val = 0.0
 
-        # Purity
+        # Purity (standard formula: all GO terms)
         comm_purities = []
         for comm in communities:
-            labels = [node_labels[i] for i in comm if i in node_labels]
-            if not labels:
+            all_terms = []
+            for i in comm:
+                if i in node_labels:
+                    lbl = node_labels[i]
+                    if isinstance(lbl, list):
+                        all_terms.extend(lbl)
+                    else:
+                        all_terms.append(lbl)
+            if not all_terms:
                 continue
-            counts = Counter(labels)
-            comm_purities.append(counts.most_common(1)[0][1] / len(labels))
+            counts = Counter(all_terms)
+            comm_purities.append(counts.most_common(1)[0][1] / len(all_terms))
 
         if comm_purities:
             purities[ri] = np.mean(comm_purities)
@@ -179,9 +186,9 @@ def main():
     node_labels_all = {}
     for node, terms in go_annotations.items():
         if isinstance(terms, list) and len(terms) > 0:
-            node_labels_all[node] = terms[0]
+            node_labels_all[node] = terms  # store all GO terms
         elif isinstance(terms, str):
-            node_labels_all[node] = terms
+            node_labels_all[node] = [terms]  # wrap single term in list
     print(f"  Loaded annotations for {len(node_labels_all)} nodes")
 
     r_values = np.linspace(R_MIN, R_MAX, N_POINTS)

@@ -355,11 +355,7 @@ def _merge_cli_overrides(config: dict) -> dict:
 
 
 def get_config_value(config: dict, dotted_key: str, default: Any = None) -> Any:
-    """Retrieve a config value using dotted notation.
-
-    >>> get_config_value(cfg, "gf_score.n_points")
-    200
-    """
+    """Retrieve a config value using dotted notation."""
     parts = dotted_key.split(".")
     obj = config
     for p in parts:
