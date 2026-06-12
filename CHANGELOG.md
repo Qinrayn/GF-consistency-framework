@@ -35,10 +35,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `pipeline_config.yaml`: updated `start_from` range (1-35) and `skip_extended` scope (Steps 16-21, 24-35)
 
 ### Fixed
+- **v6 audit — Purity formula standardization across all pipeline steps:**
+  - `bootstrap_stability.py`: collect all GO terms per community instead of `terms[0]`; divide by `total_terms` instead of `len(labels)` (P0)
+  - `hyperparameter_sensitivity.py`: same purity formula fix — all GO terms + `most_common / total_terms` (P1)
+  - `human_gf_extended.py` + `human_gf_all.py`: store all GO terms per node (not just `terms[0]`); purity uses `most_common / total_terms` (P1)
+  - `biological_interpretation.py`: `_cluster_quality` purity fix — `dom_count / len(go_terms_all)` instead of `dom_count / len(node_names)` (P0, missed in earlier fix)
+  - `biological_interpretation.py`: `DEFAULT_GF_SCORES` fallback updated to current values
+  - Cross-species consistency improved: ρ = 0.500, W = 0.750 (was ρ = 0.355, W = 0.677 with non-standard purity)
+- **v6 audit — encoding and style cleanup:**
+  - Added `encoding="utf-8"` to all `open()` calls in `cross_species_consistency.py`, `bootstrap_stability.py`, `hyperparameter_sensitivity.py`, `scale_gradient.py`, `multimodal_functional_anchoring.py` (P1)
+  - Removed `from __future__ import annotations` from `semantic_purity.py` and `semantic_similarity_analysis.py` (P2)
+  - Removed `>>>` docstring examples from `biological_interpretation.py` and `config_loader.py` (P2)
+  - `leiden_baseline.py`: docstring expected purity updated from 0.6886 to 0.180
+  - `visualization_helpers.py`: demo convergence data updated to match current bootstrap values; human interval updated to [0.282, 0.297]
 - `run_all_analysis.py`: integrated Steps 27-35; updated `--start-from` range (1-35) and `--skip-extended` scope (Steps 16-21, 24-35)
 - `Supplementary_Materials.txt` Algorithm S1 step 2c: corrected purity formula from `(max GO term count / community size)` to `(max GO term count / total GO terms in community)`
 - `data_preprocessing.py`: corrected filename from `yeast_ppi_5966.edgelist` to `yeast_ppi_5936.edgelist` (docstring + code)
 - README: corrected all step count references to "35-step" to match actual pipeline scope
+- README: updated Human PPI Validation table to 11 methods with standard purity results (Spectral #1: 0.402); cross-species values updated to ρ=0.500, W=0.750; human interval updated to [0.282, 0.297]
 - `scripts/__init__.py`: added Steps 22-35 module sections; version bumped to 1.4.0
 
 ## [1.2.0] — 2026-06-11

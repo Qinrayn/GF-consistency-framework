@@ -30,7 +30,7 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 35-s
 - Spearman rho (standard vs IC-weighted purity): **ρ = +0.964** (*P* < 0.001) — IC-weighting preserves rankings while suppressing DAG inflation
 - Spearman rho (standard vs semantic purity): **ρ = +0.491** (*P* = 0.125) — semantic (Resnik) captures complementary coherence signal
 - H1 max persistence vs G-F Score: **ρ = +0.764** (*P* = 0.006, 95% CI [0.27, 0.97])
-- Cross-species rank consistency (yeast vs human, 6 methods): **ρ = +0.143** (*P* = 0.787), **Kendall W = 0.571** — moderate concordance driven by consistent extremes; random walk methods gain advantage on larger networks
+- Cross-species rank consistency (yeast vs human, 11 methods): **ρ = +0.500** (*P* = 0.117), **Kendall W = 0.750** — strong concordance; Spectral #1 and MDS #2 in both species
 - Scale gradient Kendall W (500-4000 nodes, 4 methods): **W = 0.700** — rank stability across scales; PCA consistently #1 at all scales
 - Unified interval: **[0.05, 0.422]**
 
@@ -361,20 +361,25 @@ G, nodes, go_map = load_species_dataset("fly", data_dir="data/fly")
 
 ## Human PPI Validation
 
-Cross-species validation on STRING v12.0 human interactome (~15,882 nodes after score ≥ 700 filtering; 14,679 in largest CC, 236,712 edges; 14,562 with BP GO annotations). G-F curves computed on 2,000-node subsample using Louvain community detection (100 r-points in [0.05, 0.55]):
+Cross-species validation on STRING v12.0 human interactome (~15,882 nodes after score ≥ 700 filtering; 14,679 in largest CC, 236,712 edges; 14,562 with BP GO annotations). G-F curves computed on 2,000-node subsample using Louvain community detection (200 r-points, standard purity formula):
 
 | Method | G-F Score | Plateau Width W | Peak Purity |
 |--------|:---------:|:---------------:|:-----------:|
-| **Node2Vec** | **0.852** | 0.450 | 0.901 |
-| DeepWalk | 0.840 | 0.450 | 0.884 |
-| Spectral | 0.811 | 0.480 | 0.839 |
-| DM | 0.515 | 0.202 | 0.765 |
-| MDS | 0.415 | 0.202 | 0.683 |
-| VGAE | 0.270 | 0.364 | 0.427 |
+| **Spectral** | **0.402** | 0.480 | 0.478 |
+| MDS | 0.367 | 0.217 | 0.671 |
+| Node2Vec | 0.166 | 0.495 | 0.206 |
+| GraphSAGE | 0.133 | 0.495 | 0.256 |
+| DeepWalk | 0.101 | 0.495 | 0.204 |
+| GIN | 0.089 | 0.379 | 0.184 |
+| VGAE-feat | 0.089 | 0.495 | 0.212 |
+| PCA | 0.086 | 0.495 | 0.264 |
+| DM | 0.060 | 0.495 | 0.165 |
+| VGAE | 0.014 | 0.500 | 0.018 |
+| GAT | 0.011 | 0.500 | 0.011 |
 
-- Human unified interval: **[0.05, 0.297]**
-- Cross-species rank reversal: Node2Vec/DeepWalk rank lowest on yeast but highest on human, demonstrating that G-F scores are **network-specific** rather than universally biased
-- DM drops from 1st (yeast) to 4th (human), confirming the framework discriminates context-dependent embedding quality
+- Human unified interval: **[0.282, 0.297]** (11 methods, standard purity)
+- Spectral ranks #1 in both yeast and human, demonstrating strong cross-species consistency
+- DM drops from 2nd (yeast) to 9th (human), confirming the framework discriminates context-dependent embedding quality
 
 ```bash
 cd human_validation

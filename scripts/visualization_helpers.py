@@ -966,7 +966,7 @@ if __name__ == "__main__":
     fig1 = plot_gf_curves_comparison(
         curves_demo,
         t,
-        fixed_intervals={"yeast": (0.05, 0.422), "human": (0.05, 0.297)},
+        fixed_intervals={"yeast": (0.05, 0.422), "human": (0.282, 0.297)},
         random_baseline={"yeast": 0.12, "human": 0.08},
         save_path=os.path.join(output_dir, "example_gf_curves.png"),
     )
@@ -997,14 +997,14 @@ if __name__ == "__main__":
     conv_df = pd.DataFrame(
         {
             "size": [50, 100, 200, 500, 1000],
-            "mean": [0.50, 0.53, 0.545, 0.549, 0.550],
-            "ci_lower": [0.42, 0.48, 0.52, 0.535, 0.543],
-            "ci_upper": [0.58, 0.58, 0.57, 0.563, 0.557],
+            "mean": [0.12, 0.14, 0.155, 0.158, 0.159],
+            "ci_lower": [0.08, 0.11, 0.135, 0.148, 0.153],
+            "ci_upper": [0.16, 0.17, 0.175, 0.168, 0.165],
         }
     )
     fig3 = plot_convergence_with_ci(
         conv_df,
-        full_set_gf=0.55,
+        full_set_gf=0.16,
         save_path=os.path.join(output_dir, "example_convergence.png"),
     )
     print(f"  Saved to: {os.path.join(output_dir, 'example_convergence.png')}")

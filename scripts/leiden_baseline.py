@@ -2,7 +2,7 @@
 """
 leiden_baseline.py
 Step 4: Leiden community detection on original 153-node PPI network.
-Expected purity ≈ 0.6886
+Expected purity ≈ 0.180
 """
 
 import sys

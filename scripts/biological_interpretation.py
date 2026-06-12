@@ -261,14 +261,14 @@ GF_SCORE_LEVELS = {
 # Default G-F Scores for the yeast 153-node curated dataset.
 # Used as fallback when results/final_results_summary.json is unavailable.
 DEFAULT_GF_SCORES = {
-    "DM": 0.625,
-    "Spectral": 0.588,
-    "PCA": 0.577,
-    "MDS": 0.557,
-    "VGAE-feat": 0.496,
-    "DeepWalk": 0.462,
-    "Node2Vec": 0.415,
-    "VGAE": 0.248,
+    "Spectral": 0.163,
+    "DM": 0.155,
+    "MDS": 0.152,
+    "Node2Vec": 0.151,
+    "PCA": 0.138,
+    "VGAE-feat": 0.124,
+    "DeepWalk": 0.123,
+    "VGAE": 0.066,
 }
 
 # All eight methods evaluated in the yeast experiment.
@@ -416,7 +416,7 @@ def analyze_go_term_clusters(method, nodes, go_map, coords_aligned,
             return 0.0, None, Counter()
         tc = Counter(go_terms_all)
         dom_term, dom_count = tc.most_common(1)[0]
-        return dom_count / len(node_names), dom_term, tc
+        return dom_count / len(go_terms_all), dom_term, tc
 
     def _analyse_communities(communities_int, nodes_local, go_map_local):
         """Analyse a list of integer-index communities, returning details."""
