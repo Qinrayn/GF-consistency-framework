@@ -17,24 +17,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `scale_gradient.py`: scale-dependent topology coupling — subsamples yeast STRING network at 500/1000/2000/4000 nodes and measures G-F Score stability across scales (Step 31)
 - `bootstrap_stability.py`: bootstrap stability analysis — 30 resamples with 80% sampling to compute 95% CI, CV, and pairwise rank stability for all 11 methods (Step 32)
 - `cross_species_consistency.json`, `scale_gradient.json`, `bootstrap_stability.json` and Figs 17-19 in results/ and figures/
-- Steps 27-32 integrated into `run_all_analysis.py` pipeline
-- `generate_final_summary()` now merges metric comparison, bootstrap correlation, semantic purity, cross-species, scale gradient, and bootstrap stability results
+- `human_embed_extended.py`: extended human embeddings — computes PCA, VGAE-feat, GraphSAGE, GAT, GIN on 15,882-node human STRING network using sparse negative-sampling GNN training (Step 33a)
+- `human_gf_extended.py`: G-F analysis for all 11 methods on the human network, producing unified 11-method ranking for cross-species comparison (Step 33b)
+- `multimodal_functional_anchoring.py`: STRING threshold gradient (400-900) + channel-specific network analysis — evaluates G-F Score robustness across evidence modalities (Step 34, Fig 20)
+- `hyperparameter_sensitivity.py`: systematic sensitivity analysis of r-points, Louvain resolution, embedding dimensions, walk length, window size, and Node2Vec (p,q) grid (Step 35, Fig 21)
+- `human_gf_scores_extended.json`, `multimodal_anchoring.json`, `hyperparameter_sensitivity.json` and Figs 20-21 in results/ and figures/
+- Steps 27-35 integrated into `run_all_analysis.py` pipeline
+- `generate_final_summary()` now merges metric comparison, bootstrap correlation, semantic purity, cross-species, scale gradient, bootstrap stability, human extended, multi-modal, and hyperparameter sensitivity results
 
 ### Changed
 - `Supplementary_Materials.txt`: added correct Table S3 (embedding hyperparameters matching actual code, all 2D output), synced with submission version
 - `requirements.lock.txt`: converted from UTF-16 LE to UTF-8 encoding
 - Renamed `comparison_30vs200_points.png` to `FigS8_sampling_density_comparison.png` for naming consistency
 - `final_results_summary.json`: corrected stale Leiden baseline purity (0.689 → 0.180)
-- Version unified to 1.3.0 across `pyproject.toml`, `scripts/__init__.py`, `run_all_analysis.py`
-- README: updated to "32-step" pipeline; added Steps 30-32 to Pipeline Overview, Project Structure, and Extension Modules table; updated `--skip-extended` scope
-- `pipeline_config.yaml`: updated `start_from` range (1-32) and `skip_extended` scope (Steps 16-21, 24-32)
+- Version unified to 1.4.0 across `pyproject.toml`, `scripts/__init__.py`, `run_all_analysis.py`
+- README: updated to "35-step" pipeline; added Steps 33-35 to Pipeline Overview, Project Structure, and Extension Modules table; updated `--skip-extended` scope
+- `pipeline_config.yaml`: updated `start_from` range (1-35) and `skip_extended` scope (Steps 16-21, 24-35)
 
 ### Fixed
-- `run_all_analysis.py`: integrated Steps 27-32; updated `--start-from` range (1-32) and `--skip-extended` scope (Steps 16-21, 24-32)
+- `run_all_analysis.py`: integrated Steps 27-35; updated `--start-from` range (1-35) and `--skip-extended` scope (Steps 16-21, 24-35)
 - `Supplementary_Materials.txt` Algorithm S1 step 2c: corrected purity formula from `(max GO term count / community size)` to `(max GO term count / total GO terms in community)`
 - `data_preprocessing.py`: corrected filename from `yeast_ppi_5966.edgelist` to `yeast_ppi_5936.edgelist` (docstring + code)
-- README: corrected all step count references to "32-step" to match actual pipeline scope
-- `scripts/__init__.py`: added Steps 22-32 module sections; version bumped to 1.3.0
+- README: corrected all step count references to "35-step" to match actual pipeline scope
+- `scripts/__init__.py`: added Steps 22-35 module sections; version bumped to 1.4.0
 
 ## [1.2.0] — 2026-06-11
 

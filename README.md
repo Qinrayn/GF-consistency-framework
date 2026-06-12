@@ -2,7 +2,7 @@
 
 **A Geometric-Functional Consistency Framework for Evaluating Protein Interaction Network Embeddings**
 
-Complete reproduction of the experimental pipeline: 11 embedding methods · 32-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
+Complete reproduction of the experimental pipeline: 11 embedding methods · 35-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
 
 <details>
 <summary><strong>Key Results at a Glance</strong></summary>
@@ -67,7 +67,7 @@ python run_all_analysis.py --run-human          # Include human validation
 python run_all_analysis.py --start-from 3       # Resume from step 3
 python run_all_analysis.py --skip-plots         # Skip figure generation
 python run_all_analysis.py --skip-gnn           # Skip GNN embeddings (GraphSAGE/GAT/GIN)
-python run_all_analysis.py --skip-extended      # Skip extended analyses (Steps 16-21, 24-32)
+python run_all_analysis.py --skip-extended      # Skip extended analyses (Steps 16-21, 24-35)
 python run_all_analysis.py --seed 123           # Override random seed
 python run_all_analysis.py --species human      # Target a different species
 ```
@@ -164,6 +164,9 @@ Step 29 ─ Semantic Purity Analysis ─────── IC-weighted + Resnik 
 Step 30 ─ Cross-Species Consistency ───── Yeast vs human rank concordance (Spearman + Kendall W)
 Step 31 ─ Scale Gradient Analysis ──────── Scale-dependent topology coupling (500-4000 nodes)
 Step 32 ─ Bootstrap Stability ─────────── 30-resample CI for G-F Score rankings (80% sampling)
+Step 33 ─ Human Extended Embeddings ───── 11-method human network embeddings (PCA, VGAE-feat, GNNs)
+Step 34 ─ Multi-Modal Anchoring ───────── STRING threshold gradient + channel-specific GF analysis
+Step 35 ─ Hyperparameter Sensitivity ──── r-points, resolution, dimensions, walk parameters
          └─ Summary ─────────────────── final_results_summary.json
 ```
 
@@ -193,7 +196,7 @@ All embeddings standardized to **σ = 0.3** before G-F analysis.
 
 ```
 GF-consistency-framework/
-├── scripts/                    # 32-step analysis pipeline + extensions
+├── scripts/                    # 35-step analysis pipeline + extensions
 │   ├── data_preprocessing.py   # Load PPI + GO data
 │   ├── embed_all.py            # Compute 8 classical/NN embeddings
 │   ├── compute_gf.py           # G-F curves + scores
@@ -231,6 +234,10 @@ GF-consistency-framework/
 │   ├── cross_species_consistency.py     # Yeast vs human rank concordance analysis (Step 30)
 │   ├── scale_gradient.py               # Scale-dependent topology coupling (Step 31)
 │   ├── bootstrap_stability.py          # Bootstrap CI for G-F Score rankings (Step 32)
+│   ├── human_embed_extended.py         # Extended human embeddings (Step 33a)
+│   ├── human_gf_extended.py            # Human GF analysis all 11 methods (Step 33b)
+│   ├── multimodal_functional_anchoring.py # STRING threshold + channel analysis (Step 34)
+│   ├── hyperparameter_sensitivity.py   # Parameter sensitivity analysis (Step 35)
 │   └── utils.py                # Shared utilities
 │
 ├── tests/                      # pytest test suite (51 tests)
@@ -254,12 +261,14 @@ GF-consistency-framework/
 │   ├── Fig17                   # Cross-species rank consistency (yeast vs human)
 │   ├── Fig18                   # Scale-dependent topology coupling (500-4000 nodes)
 │   ├── Fig19                   # Bootstrap stability of G-F Score rankings
+│   ├── Fig20                   # Multi-modal functional anchoring (threshold + channel)
+│   ├── Fig21                   # Hyperparameter sensitivity analysis
 │   ├── FigS1–S7                # Supplementary figures
 │   └── FigS8                   # Sampling density comparison
 │
 ├── human_validation/           # Cross-species (optional, STRING v12.0)
 │
-├── run_all_analysis.py         # One-command Python pipeline (32 steps)
+├── run_all_analysis.py         # One-command Python pipeline (35 steps)
 ├── pipeline_config.yaml        # YAML configuration (all parameters)
 ├── pyproject.toml              # Python package metadata
 ├── environment.yml             # Conda environment
@@ -308,7 +317,7 @@ Full spec → [`requirements.txt`](requirements.txt) · [`environment.yml`](envi
 
 ## Extension Modules (v1.1+)
 
-Beyond the core 32-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–32).
+Beyond the core 35-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–35).
 
 | Module | Description |
 |--------|-------------|
@@ -327,6 +336,10 @@ Beyond the core 32-step pipeline, the framework provides extensible modules for 
 | `cross_species_consistency.py` * | Cross-species rank concordance: yeast vs human Spearman + Kendall W (Fig 17) |
 | `scale_gradient.py` * | Scale-dependent topology coupling: 500-4000 node gradient analysis (Fig 18) |
 | `bootstrap_stability.py` * | Bootstrap stability: 30-resample 95% CI for G-F Score rankings (Fig 19) |
+| `human_embed_extended.py` * | Extended human embeddings: PCA, VGAE-feat, GraphSAGE, GAT, GIN (Step 33a) |
+| `human_gf_extended.py` * | Human GF analysis for all 11 methods (Step 33b) |
+| `multimodal_functional_anchoring.py` * | STRING threshold gradient + channel-specific GF analysis (Fig 20, Step 34) |
+| `hyperparameter_sensitivity.py` * | r-points, resolution, dimension, walk parameter sensitivity (Fig 21, Step 35) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
 
@@ -422,7 +435,7 @@ ORCID: [0009-0000-2769-467X](https://orcid.org/0009-0000-2769-467X)
 >              Protein Interaction Network Embeddings},
 >   author  = {Zhang, Yuhan},
 >   year    = {2026},
->   note    = {Reproducible pipeline: 11 methods, 32-step validation.},
+>   note    = {Reproducible pipeline: 11 methods, 35-step validation.},
 > }
 > ```
 

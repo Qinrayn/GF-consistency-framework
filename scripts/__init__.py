@@ -1,7 +1,7 @@
 """
 scripts/ — G-F Consistency Framework analysis pipeline.
 
-This package contains the 32-step reproducible analysis pipeline for
+This package contains the 35-step reproducible analysis pipeline for
 evaluating protein interaction network embeddings via geometric-functional
 consistency.
 
@@ -51,6 +51,13 @@ cross_species_consistency     Step 30: Yeast vs human rank concordance (Spearman
 scale_gradient                Step 31: Scale-dependent topology coupling (500-4000 nodes)
 bootstrap_stability           Step 32: Bootstrap CI for G-F Score rankings (30 resamples)
 
+Modules (Steps 33-35: human extension, multi-modal, and sensitivity analyses)
+------------------------------------------------------------------------------
+human_embed_extended          Step 33a: Extended human embeddings (PCA, VGAE-feat, GNNs)
+human_gf_extended             Step 33b: Human GF analysis for all 11 methods
+multimodal_functional_anchoring Step 34: STRING threshold gradient + channel networks
+hyperparameter_sensitivity    Step 35: r-points, resolution, dimensions, walk parameters
+
 Extension modules (v1.1+)
 --------------------------
 config_loader                 YAML configuration loader and validator
@@ -64,4 +71,4 @@ robustness_analysis           Extended 30-subset convergence analysis
 visualization_helpers         Okabe-Ito colorblind-safe plotting utilities
 """
 
-__version__ = "1.3.0"
+__version__ = "1.4.0"

@@ -3,7 +3,7 @@
 """
 Master script to run all analyses for the G-F consistency framework.
 
-Version: 1.3.0
+Version: 1.4.0
 
 This script orchestrates the complete analysis pipeline:
 1.  Data preprocessing
@@ -38,20 +38,23 @@ This script orchestrates the complete analysis pipeline:
 30. Cross-species rank consistency (yeast vs human Spearman + Kendall W)
 31. Scale-dependent topology coupling (500-4000 node gradient)
 32. Bootstrap stability analysis (30 resamples, 80% sampling)
+33. Human extended embeddings (11 methods: PCA, VGAE-feat, GraphSAGE, GAT, GIN)
+34. Multi-modal functional anchoring (STRING threshold gradient + channel networks)
+35. Hyperparameter sensitivity analysis (r-points, resolution, dimensions, walk params)
 
 Usage:
     python run_all_analysis.py                         # Skip human validation
     python run_all_analysis.py --run-human              # Include human validation
     python run_all_analysis.py --skip-plots             # Skip figure generation
     python run_all_analysis.py --skip-gnn               # Skip GNN embeddings
-    python run_all_analysis.py --skip-extended          # Skip Steps 16-21, 24-32
+    python run_all_analysis.py --skip-extended          # Skip Steps 16-21, 24-35
     python run_all_analysis.py --skip-topological       # Skip Steps 22-23
     python run_all_analysis.py --start-from 3           # Start from step 3
     python run_all_analysis.py --config my_config.yaml  # Custom config file
     gf-consistency --config pipeline_config.yaml        # Via pip entry point
 """
 
-__version__ = "1.3.0"
+__version__ = "1.4.0"
 
 import sys
 import json
@@ -298,6 +301,38 @@ def generate_final_summary(results_dir):
         if "adjacent_significance" in data:
             summary["bootstrap_adjacent_significance"] = data["adjacent_significance"]
 
+    # 15. Human extended GF scores (Step 33)
+    hex_file = results_dir / "human_gf_scores_extended.json"
+    if hex_file.exists():
+        with open(hex_file) as f:
+            data = json.load(f)
+        summary["human_gf_scores_extended"] = {
+            "scores": data.get("scores", {}),
+            "ranking": data.get("ranking", []),
+            "n_methods": data.get("n_methods"),
+            "unified_interval": data.get("unified_interval"),
+        }
+
+    # 16. Multi-modal functional anchoring (Step 34)
+    mm_file = results_dir / "multimodal_anchoring.json"
+    if mm_file.exists():
+        with open(mm_file) as f:
+            data = json.load(f)
+        summary["multimodal_anchoring"] = {
+            "kendalls_w_threshold": data.get("kendalls_w_threshold"),
+            "kendalls_w_channel": data.get("kendalls_w_channel"),
+            "thresholds_tested": data.get("thresholds_tested"),
+            "n_valid_thresholds": len(data.get("valid_thresholds", [])),
+        }
+
+    # 17. Hyperparameter sensitivity (Step 35)
+    hp_file = results_dir / "hyperparameter_sensitivity.json"
+    if hp_file.exists():
+        with open(hp_file) as f:
+            data = json.load(f)
+        if "summary" in data:
+            summary["hyperparameter_sensitivity"] = data["summary"]
+
     # Save
     output_file = results_dir / "final_results_summary.json"
     with open(output_file, "w") as f:
@@ -317,11 +352,11 @@ def main():
     parser.add_argument("--skip-plots", action="store_true",
                         help="Skip figure generation")
     parser.add_argument("--start-from", type=int, default=None,
-                        help="Start from a specific step (1-32)")
+                        help="Start from a specific step (1-35)")
     parser.add_argument("--skip-gnn", action="store_true",
                         help="Skip GNN embedding computation (Step 15)")
     parser.add_argument("--skip-extended", action="store_true",
-                        help="Skip extended analysis steps (16-21, 24-32)")
+                        help="Skip extended analysis steps (16-21, 24-35)")
     parser.add_argument("--skip-topological", action="store_true",
                         help="Skip topological analysis steps (22-23)")
     parser.add_argument("--seed", type=int, default=None,
@@ -370,7 +405,7 @@ def main():
     if skip_gnn:
         print("  GNN embeddings: SKIPPED")
     if skip_extended:
-        print("  Extended analysis (Steps 16-21, 24-32): SKIPPED")
+        print("  Extended analysis (Steps 16-21, 24-35): SKIPPED")
     if skip_topological:
         print("  Topological analysis (Steps 22-23): SKIPPED")
     print()
@@ -792,6 +827,48 @@ def main():
             import subprocess
             subprocess.run(boot_cmd, check=True)
         if run_step(run_bootstrap_stability, "Bootstrap stability"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 33: Human Extended Embeddings (11 methods)
+    if start_from <= 33 and not skip_extended:
+        print_header("Step 33: Human Extended Embeddings (11 methods)")
+        he_cmd = [sys.executable,
+                  str(Path(__file__).parent / "scripts" / "human_embed_extended.py")]
+        hgf_cmd = [sys.executable,
+                   str(Path(__file__).parent / "scripts" / "human_gf_extended.py")]
+        def run_human_extended():
+            import subprocess
+            subprocess.run(he_cmd, check=True)
+            subprocess.run(hgf_cmd, check=True)
+        if run_step(run_human_extended, "Human extended embeddings + GF analysis"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 34: Multi-Modal Functional Anchoring
+    if start_from <= 34 and not skip_extended:
+        print_header("Step 34: Multi-Modal Functional Anchoring")
+        mm_cmd = [sys.executable,
+                  str(Path(__file__).parent / "scripts" / "multimodal_functional_anchoring.py")]
+        def run_multimodal():
+            import subprocess
+            subprocess.run(mm_cmd, check=True)
+        if run_step(run_multimodal, "Multi-modal functional anchoring"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 35: Hyperparameter Sensitivity Analysis
+    if start_from <= 35 and not skip_extended:
+        print_header("Step 35: Hyperparameter Sensitivity Analysis")
+        hp_cmd = [sys.executable,
+                  str(Path(__file__).parent / "scripts" / "hyperparameter_sensitivity.py")]
+        def run_hyperparam():
+            import subprocess
+            subprocess.run(hp_cmd, check=True)
+        if run_step(run_hyperparam, "Hyperparameter sensitivity"):
             completed += 1
         else:
             failed += 1

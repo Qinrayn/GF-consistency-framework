@@ -30,7 +30,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from utils import SEED, get_results_dir, get_project_root
 
 # Shared methods between yeast and human analyses
-SHARED_METHODS = ["DM", "MDS", "Spectral", "DeepWalk", "Node2Vec", "VGAE"]
+SHARED_METHODS = ["DM", "MDS", "Spectral", "DeepWalk", "Node2Vec", "VGAE",
+                  "PCA", "VGAE-feat", "GraphSAGE", "GAT", "GIN"]
 
 
 def load_yeast_scores(results_dir):
@@ -56,8 +57,17 @@ def load_yeast_scores(results_dir):
 
 
 def load_human_scores(results_dir):
-    """Load human G-F Scores from human_gf_scores.json."""
+    """Load human G-F Scores from human_gf_scores_extended.json (11 methods)
+    or fall back to human_gf_scores.json (6 methods)."""
     scores = {}
+    # Prefer extended (11-method) results
+    ext_file = results_dir / "human_gf_scores_extended.json"
+    if ext_file.exists():
+        with open(ext_file) as f:
+            data = json.load(f)
+        scores.update(data.get("scores", {}))
+        return scores
+    # Fallback to original 6-method results
     human_file = results_dir / "human_gf_scores.json"
     if human_file.exists():
         with open(human_file) as f:
