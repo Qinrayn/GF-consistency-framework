@@ -275,6 +275,10 @@ GF-consistency-framework/
 │   ├── Fig19                   # Bootstrap stability of G-F Score rankings
 │   ├── Fig20                   # Multi-modal functional anchoring (threshold + channel)
 │   ├── Fig21                   # Hyperparameter sensitivity analysis
+│   ├── Fig22                   # Density-corrected GF analysis (Step 36)
+│   ├── Fig23                   # Human seed stability analysis (Step 37)
+│   ├── Fig24                   # Human IC-weighted GF comparison (Step 38)
+│   ├── Fig25                   # GAT collapse diagnosis (Step 39)
 │   ├── FigS1–S7                # Supplementary figures
 │   └── FigS8                   # Sampling density comparison
 │
