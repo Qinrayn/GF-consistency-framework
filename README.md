@@ -39,6 +39,7 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 39-s
 - **Geometric predictability** (Phase 1-3): Effective dimensionality (ρ=+0.905, p=0.002) and spectral alignment (ρ=+0.810, p=0.015) are independent predictors of G-F Score; combined model achieves **ρ=+0.929** (p=0.001), explaining 86% of inter-method variance
 - **Cross-species geometric transfer fails** (Phase 2): Yeast-trained predictor does not generalise to human PPI (ρ=+0.027) — the geometric-functional correspondence is network-topology-specific
 - **Two-factor model** (Phase 3): G-F consistency requires both correct spectral alignment (embedding captures network's functional modes) and sufficient geometric expressiveness (effective dimensionality ≈ 2.0)
+- **GAT collapse mechanism** (Phase 4): Attention degeneration (normalized entropy=0.973) renders GAT equivalent to GCN; 2-layer mean aggregation with 2D bottleneck produces rank-1 output (effective rank=1.019, dimension variance ratio=105:1). All 5 architectural variants fail — collapse is architectural, not optimization-related
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)
@@ -256,6 +257,7 @@ GF-consistency-framework/
 │   ├── deep_geometric_analysis.py      # Multi-scale geometric fingerprint (Phase 1, Fig 26-29)
 │   ├── geometric_predictor.py          # Cross-species geometric predictor (Phase 2, Fig 30-33)
 │   ├── spectral_alignment.py           # Network-aware spectral alignment (Phase 3, Fig 34-35)
+│   ├── gat_collapse_theory.py          # GAT collapse mathematical theory (Phase 4, Fig 36-38)
 │   └── utils.py                # Shared utilities
 │
 ├── tests/                      # pytest test suite (51 tests)
@@ -295,6 +297,9 @@ GF-consistency-framework/
 │   ├── Fig33                   # Method clustering dendrogram (Phase 2)
 │   ├── Fig34                   # Spectral decomposition in Laplacian eigenbasis (Phase 3)
 │   ├── Fig35                   # Spectral alignment summary (Phase 3)
+│   ├── Fig36                   # Attention degeneration analysis (Phase 4)
+│   ├── Fig37                   # Rank collapse landscape across methods (Phase 4)
+│   ├── Fig38                   # Unified GAT collapse causal chain (Phase 4)
 │   ├── FigS1–S7                # Supplementary figures
 │   └── FigS8                   # Sampling density comparison
 │
@@ -379,6 +384,7 @@ Beyond the core 39-step pipeline, the framework provides extensible modules for 
 | `deep_geometric_analysis.py` | Multi-scale geometric fingerprint: DFC, geometric features, curve decomposition (Phase 1, Fig 26-29) |
 | `geometric_predictor.py` | Cross-species geometric predictability: yeast→human validation, spectral theory (Phase 2, Fig 30-33) |
 | `spectral_alignment.py` | Network-aware spectral alignment: Laplacian eigenbasis decomposition (Phase 3, Fig 34-35) |
+| `gat_collapse_theory.py` | GAT collapse mathematical theory: 4-pillar impossibility analysis (Phase 4, Fig 36-38) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
 

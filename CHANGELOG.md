@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `deep_geometric_analysis.py`: Multi-scale geometric fingerprint decomposition — distance-function correspondence (DFC), geometric feature extraction (6 features), G-F curve shape decomposition across 11 methods (Phase 1, Fig 26-29)
 - `geometric_predictor.py`: Cross-species geometric predictability model — builds yeast-trained geometric predictor and validates on human PPI; includes network Laplacian spectrum analysis, collapse diagnostics, method clustering (Phase 2, Fig 30-33)
 - `spectral_alignment.py`: Network-aware spectral alignment — decomposes embeddings in Laplacian eigenbasis, identifies functional frequency band, computes alignment scores predicting G-F Score (Phase 3, Fig 34-35)
-- `deep_geometric_analysis.json`, `geometric_predictor.json`, `spectral_alignment.json` and Figs 26-35
+- `gat_collapse_theory.py`: Mathematical theory of GAT collapse — 4-pillar analysis: attention degeneration (entropy=0.973), rank collapse (eff_rank=1.019), per-node density-collapse, architectural impossibility across 5 variants (Phase 4, Fig 36-38)
+- `deep_geometric_analysis.json`, `geometric_predictor.json`, `spectral_alignment.json`, `gat_collapse_theory.json` and Figs 26-38
 
 ### Added
 - `density_corrected_gf.py`: Density-corrected G-F Score analysis — computes random baseline via GO-label permutation at each STRING threshold (400-900), normalizes GF scores as (GF_method - GF_random)/(1 - GF_random), and recalculates Kendall's W (Step 36, Fig 22)
@@ -37,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `generate_final_summary()` now merges metric comparison, bootstrap correlation, semantic purity, cross-species, scale gradient, bootstrap stability, human extended, multi-modal, and hyperparameter sensitivity results
 
 ### Changed
-- README: added Phase 1-3 deep analysis modules, Fig 26-35, key geometric findings
+- README: added Phase 1-4 deep analysis modules, Fig 26-38, key geometric and collapse findings
 - `Supplementary_Materials.txt`: added correct Table S3 (embedding hyperparameters matching actual code, all 2D output), synced with submission version
 - `requirements.lock.txt`: converted from UTF-16 LE to UTF-8 encoding
 - Renamed `comparison_30vs200_points.png` to `FigS8_sampling_density_comparison.png` for naming consistency

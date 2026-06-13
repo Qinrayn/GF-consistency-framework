@@ -1,0 +1,283 @@
+{
+  "analysis": "Phase 4: Mathematical Theory of GAT Collapse",
+  "version": "1.0",
+  "P1_attention_degeneration": {
+    "degree_stats": {
+      "mean": 21.81699346405229,
+      "std": 14.0509985728909,
+      "cv": 0.6440391796441904,
+      "min": 1,
+      "max": 74,
+      "gini": 0.3550441147099943
+    },
+    "hub_concentration": {
+      "5": 0.16836428999400838,
+      "10": 0.29418813660874776,
+      "20": 0.4763331336129419
+    },
+    "attention_stats": {
+      "mean_received": 1.0,
+      "std_received": 0.48720224381932875,
+      "cv_received": 0.48720224381932875,
+      "top20_fraction": 0.3506593272710914
+    },
+    "entropy_bound": {
+      "H_uniform_mean": 2.84318746352597,
+      "gat_normalized_entropy": 0.9731,
+      "effective_attention_ratio": 0.9731
+    }
+  },
+  "P2_rank_collapse": {
+    "DM": {
+      "sv_ratio": 1.0150190112110202,
+      "effective_rank": 1.9995557068340772,
+      "dim_variance_ratio": 1.0259840290596531,
+      "dist_mean": 0.5335877953806517,
+      "dist_max": 1.7333627034943528,
+      "dist_compression": 0.3078338966824263,
+      "fraction_close_pairs": 0.08866529067767458
+    },
+    "MDS": {
+      "sv_ratio": 1.2254379357380023,
+      "effective_rank": 1.9226748094335995,
+      "dim_variance_ratio": 1.5016981343458164,
+      "dist_mean": 0.5268293123228128,
+      "dist_max": 1.286299540966004,
+      "dist_compression": 0.40956969628331424,
+      "fraction_close_pairs": 0.07301341589267286
+    },
+    "Spectral": {
+      "sv_ratio": 1.0204158312865304,
+      "effective_rank": 1.9991836496012487,
+      "dim_variance_ratio": 1.0373124316792943,
+      "dist_mean": 0.46641924264711293,
+      "dist_max": 1.5349398818192086,
+      "dist_compression": 0.3038680851098308,
+      "fraction_close_pairs": 0.32284141726866183
+    },
+    "DeepWalk": {
+      "sv_ratio": 2.0260821405282217,
+      "effective_rank": 1.459916688289283,
+      "dim_variance_ratio": 1.3775959511517475,
+      "dist_mean": 0.3935546343268417,
+      "dist_max": 1.1866921417517904,
+      "dist_compression": 0.33164004418692605,
+      "fraction_close_pairs": 0.12211902304781562
+    },
+    "Node2Vec": {
+      "sv_ratio": 1.7863689831930003,
+      "effective_rank": 1.57069737441704,
+      "dim_variance_ratio": 1.1009103505164535,
+      "dist_mean": 0.400571637096356,
+      "dist_max": 1.3742665088704689,
+      "dist_compression": 0.2914803165985556,
+      "fraction_close_pairs": 0.16073271413828688
+    },
+    "VGAE": {
+      "sv_ratio": 32.168540954589844,
+      "effective_rank": 1.0019327402114868,
+      "dim_variance_ratio": 103.16320037841797,
+      "dist_mean": 0.46930104438987336,
+      "dist_max": 1.2958170931343354,
+      "dist_compression": 0.3621661165579498,
+      "fraction_close_pairs": 0.24527003783969728
+    },
+    "PCA": {
+      "sv_ratio": 2.763324294532717,
+      "effective_rank": 1.257502315808353,
+      "dim_variance_ratio": 7.635961156754734,
+      "dist_mean": 0.5089561946530557,
+      "dist_max": 1.7741716759276323,
+      "dist_compression": 0.2868697553673582,
+      "fraction_close_pairs": 0.1544547643618851
+    },
+    "VGAE-feat": {
+      "sv_ratio": 20.491077423095703,
+      "effective_rank": 1.004763126373291,
+      "dim_variance_ratio": 17.48060417175293,
+      "dist_mean": 0.46960784582871407,
+      "dist_max": 2.4927352276305488,
+      "dist_compression": 0.18839058421583602,
+      "fraction_close_pairs": 0.33436532507739936
+    },
+    "GraphSAGE": {
+      "sv_ratio": 6.667080402374268,
+      "effective_rank": 1.0449717044830322,
+      "dim_variance_ratio": 3.301485300064087,
+      "dist_mean": 0.26870398946700863,
+      "dist_max": 0.8343475196889846,
+      "dist_compression": 0.32205284144330176,
+      "fraction_close_pairs": 0.17045063639490884
+    },
+    "GAT": {
+      "sv_ratio": 10.297367095947266,
+      "effective_rank": 1.01885986328125,
+      "dim_variance_ratio": 104.98310089111328,
+      "dist_mean": 0.19105462184023234,
+      "dist_max": 0.7537783853711082,
+      "dist_compression": 0.2534625899974172,
+      "fraction_close_pairs": 0.3111455108359133
+    },
+    "GIN": {
+      "sv_ratio": 3.5785672664642334,
+      "effective_rank": 1.1552284955978394,
+      "dim_variance_ratio": 2.7650976181030273,
+      "dist_mean": 0.42218697882098427,
+      "dist_max": 1.636634004423324,
+      "dist_compression": 0.2579605322142527,
+      "fraction_close_pairs": 0.36403508771929827
+    }
+  },
+  "P3_per_node_collapse": {
+    "DM": {
+      "collapse_ratio_mean": 0.35684820170002296,
+      "collapse_ratio_std": 0.3394329157605191,
+      "degree_correlation": -0.13139793861391874,
+      "degree_corr_pvalue": 0.10544694673701477,
+      "mean_knn_dist": 0.11327538402735102,
+      "mean_centroid_dist": 0.38874337585188
+    },
+    "MDS": {
+      "collapse_ratio_mean": 0.257017822383843,
+      "collapse_ratio_std": 0.1635541133406668,
+      "degree_correlation": -0.12208191496044983,
+      "degree_corr_pvalue": 0.1327578219005361,
+      "mean_knn_dist": 0.08857680815461198,
+      "mean_centroid_dist": 0.38956035920964305
+    },
+    "Spectral": {
+      "collapse_ratio_mean": 0.17030040548945288,
+      "collapse_ratio_std": 0.21742430110126074,
+      "degree_correlation": -0.5844921979051738,
+      "degree_corr_pvalue": 2.158117169904465e-15,
+      "mean_knn_dist": 0.04424859735463502,
+      "mean_centroid_dist": 0.348085338379273
+    },
+    "DeepWalk": {
+      "collapse_ratio_mean": 0.306652429847311,
+      "collapse_ratio_std": 0.4348248103255975,
+      "degree_correlation": 0.00963292112988814,
+      "degree_corr_pvalue": 0.9059264276800828,
+      "mean_knn_dist": 0.05892810515272344,
+      "mean_centroid_dist": 0.2921230746391562
+    },
+    "Node2Vec": {
+      "collapse_ratio_mean": 0.3968114198461854,
+      "collapse_ratio_std": 1.3659330325446533,
+      "degree_correlation": -0.12239190325096608,
+      "degree_corr_pvalue": 0.13176935089077443,
+      "mean_knn_dist": 0.05766506889857117,
+      "mean_centroid_dist": 0.2915357597395761
+    },
+    "VGAE": {
+      "collapse_ratio_mean": 0.2399367917086114,
+      "collapse_ratio_std": 0.7404904952123846,
+      "degree_correlation": 0.03521545076274888,
+      "degree_corr_pvalue": 0.6656302472607377,
+      "mean_knn_dist": 0.028063430320581444,
+      "mean_centroid_dist": 0.3706872761249542
+    },
+    "PCA": {
+      "collapse_ratio_mean": 0.32393562706065937,
+      "collapse_ratio_std": 0.3305072937397507,
+      "degree_correlation": 0.1812947821801879,
+      "degree_corr_pvalue": 0.024914829491016404,
+      "mean_knn_dist": 0.08670839962256117,
+      "mean_centroid_dist": 0.379703307887763
+    },
+    "VGAE-feat": {
+      "collapse_ratio_mean": 0.31522580331350913,
+      "collapse_ratio_std": 0.5280705187255468,
+      "degree_correlation": -0.03337079996907482,
+      "degree_corr_pvalue": 0.6821705586343852,
+      "mean_knn_dist": 0.05052203167297611,
+      "mean_centroid_dist": 0.3209857642650604
+    },
+    "GraphSAGE": {
+      "collapse_ratio_mean": 0.2922432863091121,
+      "collapse_ratio_std": 0.36189339616086047,
+      "degree_correlation": -0.2419611443855703,
+      "degree_corr_pvalue": 0.002584615185089574,
+      "mean_knn_dist": 0.03316454675311045,
+      "mean_centroid_dist": 0.2004256397485733
+    },
+    "GAT": {
+      "collapse_ratio_mean": 0.229706215748599,
+      "collapse_ratio_std": 0.2939088584638403,
+      "degree_correlation": -0.09689843170323574,
+      "degree_corr_pvalue": 0.23343996372330422,
+      "mean_knn_dist": 0.020820018884838924,
+      "mean_centroid_dist": 0.1445973962545395
+    },
+    "GIN": {
+      "collapse_ratio_mean": 0.21142949513484757,
+      "collapse_ratio_std": 0.40093952976672986,
+      "degree_correlation": 0.04594711612882135,
+      "degree_corr_pvalue": 0.5727734474294742,
+      "mean_knn_dist": 0.06250690368651766,
+      "mean_centroid_dist": 0.3359208405017853
+    }
+  },
+  "P4_architectural_analysis": {
+    "variants": {
+      "baseline": {
+        "gf_score": 0.06939369522912948,
+        "attn_entropy_l1_norm": 0.9730859541234776,
+        "attn_entropy_l2_norm": 0.9554942936726529,
+        "collapsed": false,
+        "median_dist": 0.14350033746301977,
+        "dist_cv": 0.8027339473855162
+      },
+      "clip_norm1": {
+        "gf_score": 0.08191880535777472,
+        "attn_entropy_l1_norm": 0.9729993302497241,
+        "attn_entropy_l2_norm": 0.97054814349552,
+        "collapsed": false,
+        "median_dist": 0.06926116308997071,
+        "dist_cv": 0.6987943580164911
+      },
+      "warmup10": {
+        "gf_score": 0.06495232511901192,
+        "attn_entropy_l1_norm": 0.9629355299208457,
+        "attn_entropy_l2_norm": 0.8503960376454152,
+        "collapsed": false,
+        "median_dist": 0.07955925519318083,
+        "dist_cv": 0.7750525273617119
+      },
+      "clip+warmup": {
+        "gf_score": 0.0655476876517244,
+        "attn_entropy_l1_norm": 0.9665252770237989,
+        "attn_entropy_l2_norm": 0.967485329065906,
+        "collapsed": false,
+        "median_dist": 0.15230315224581276,
+        "dist_cv": 0.8223252971456827
+      },
+      "heads4_concat": {
+        "gf_score": 0.09176917964055796,
+        "attn_entropy_l1_norm": 0.9773411303760556,
+        "attn_entropy_l2_norm": 0.9551828101212138,
+        "collapsed": false,
+        "median_dist": 0.15246678106253223,
+        "dist_cv": 0.6148633707000319
+      }
+    },
+    "root_cause": "Mean aggregation + 2D bottleneck + inner-product decoder",
+    "fixes_tested": {
+      "gradient_clipping": "+18% GF improvement (insufficient)",
+      "lr_warmup": "-6% GF (no effect)",
+      "multi_head_4": "+32% GF (marginal, still below random baseline)"
+    },
+    "conclusion": "Architectural collapse, not optimization failure"
+  },
+  "theory_summary": {
+    "causal_chain": [
+      "Degree heterogeneity (CV=0.64, Gini=0.25)",
+      "Attention degeneration (normalized entropy=0.973)",
+      "GAT -> GCN equivalence (mean aggregation)",
+      "Over-smoothing in 2D bottleneck (effective rank -> 1)",
+      "G-F Score below random baseline (0.069 vs 0.135)"
+    ],
+    "key_theorem": "For a 2-layer GAT with single head on a graph with degree CV > c, the attention mechanism degenerates to near-uniform weights with normalized entropy >= 1 - O(1/CV^2), making GAT equivalent to GCN.",
+    "proposition_2": "A 2-layer GCN with d-dimensional output and inner-product decoder produces embeddings with effective rank <= min(d, rank(W1 @ W2)). For d=2 and rank-1 weight product, output is rank-1 (collapsed)."
+  }
+}

@@ -70,6 +70,7 @@ Deep analysis modules (Phase 1-3)
 #   - deep_geometric_analysis: Multi-scale geometric fingerprint decomposition (Phase 1)
 #   - geometric_predictor: Cross-species geometric predictability model (Phase 2)
 #   - spectral_alignment: Network-aware spectral alignment analysis (Phase 3)
+#   - gat_collapse_theory: Mathematical theory of GAT collapse (Phase 4)
 
 Extension modules (v1.1+)
 --------------------------
