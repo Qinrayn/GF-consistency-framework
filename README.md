@@ -2,7 +2,7 @@
 
 **A Geometric-Functional Consistency Framework for Evaluating Protein Interaction Network Embeddings**
 
-Complete reproduction of the experimental pipeline: 11 embedding methods · 35-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
+Complete reproduction of the experimental pipeline: 11 embedding methods · 39-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
 
 <details>
 <summary><strong>Key Results at a Glance</strong></summary>
@@ -32,6 +32,9 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 35-s
 - H1 max persistence vs G-F Score: **ρ = +0.764** (*P* = 0.006, 95% CI [0.27, 0.97])
 - Cross-species rank consistency (yeast vs human, 11 methods): **ρ = +0.500** (*P* = 0.117), **Kendall W = 0.750** — strong concordance; Spectral #1 and MDS #2 in both species
 - Scale gradient Kendall W (500-4000 nodes, 4 methods): **W = 0.700** — rank stability across scales; PCA consistently #1 at all scales
+- Density-corrected GF (STRING threshold gradient, 4 methods): **W<sub>raw</sub> = 0.178 → W<sub>corrected</sub> = 0.70** (ΔW = 0.522) — density correction dramatically improves rank concordance
+- Human seed stability (10 seeds, 11 methods): **Kendall W = 0.675** — strong rank stability; Spectral mean rank 1.1 (std 0.3), consistently #1
+- Human IC-weighted GF (11 methods): **Spearman ρ = +0.991** (*P* < 0.001) — IC-weighting preserves rankings while correcting for DAG inflation
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)
@@ -67,7 +70,7 @@ python run_all_analysis.py --run-human          # Include human validation
 python run_all_analysis.py --start-from 3       # Resume from step 3
 python run_all_analysis.py --skip-plots         # Skip figure generation
 python run_all_analysis.py --skip-gnn           # Skip GNN embeddings (GraphSAGE/GAT/GIN)
-python run_all_analysis.py --skip-extended      # Skip extended analyses (Steps 16-21, 24-35)
+python run_all_analysis.py --skip-extended      # Skip extended analyses (Steps 16-21, 24-39)
 python run_all_analysis.py --seed 123           # Override random seed
 python run_all_analysis.py --species human      # Target a different species
 ```
@@ -167,6 +170,10 @@ Step 32 ─ Bootstrap Stability ─────────── 30-resample CI
 Step 33 ─ Human Extended Embeddings ───── 11-method human network embeddings (PCA, VGAE-feat, GNNs)
 Step 34 ─ Multi-Modal Anchoring ───────── STRING threshold gradient + channel-specific GF analysis
 Step 35 ─ Hyperparameter Sensitivity ──── r-points, resolution, dimensions, walk parameters
+Step 36 ─ Density-Corrected GF ─────────── STRING threshold gradient with random baseline correction (ΔW = 0.522)
+Step 37 ─ GAT Collapse Diagnosis ────────── 5-variant ablation: clip, warmup, multi-head analysis
+Step 38 ─ Human IC-Weighted GF ─────────── IC-weighted purity on human network (ρ = 0.991)
+Step 39 ─ Human Seed Stability ──────────── 10-seed subsampling stability (Kendall W = 0.675)
          └─ Summary ─────────────────── final_results_summary.json
 ```
 
@@ -196,7 +203,7 @@ All embeddings standardized to **σ = 0.3** before G-F analysis.
 
 ```
 GF-consistency-framework/
-├── scripts/                    # 35-step analysis pipeline + extensions
+├── scripts/                    # 39-step analysis pipeline + extensions
 │   ├── data_preprocessing.py   # Load PPI + GO data
 │   ├── embed_all.py            # Compute 8 classical/NN embeddings
 │   ├── compute_gf.py           # G-F curves + scores
@@ -238,6 +245,10 @@ GF-consistency-framework/
 │   ├── human_gf_extended.py            # Human GF analysis all 11 methods (Step 33b)
 │   ├── multimodal_functional_anchoring.py # STRING threshold + channel analysis (Step 34)
 │   ├── hyperparameter_sensitivity.py   # Parameter sensitivity analysis (Step 35)
+│   ├── density_corrected_gf.py         # Density-corrected GF with random baseline (Step 36)
+│   ├── gat_collapse_diagnosis.py       # GAT variant ablation study (Step 37)
+│   ├── human_ic_weighted_gf.py         # Human IC-weighted GF analysis (Step 38)
+│   ├── human_seed_stability.py         # Human 10-seed stability analysis (Step 39)
 │   └── utils.py                # Shared utilities
 │
 ├── tests/                      # pytest test suite (51 tests)
@@ -268,7 +279,7 @@ GF-consistency-framework/
 │
 ├── human_validation/           # Cross-species (optional, STRING v12.0)
 │
-├── run_all_analysis.py         # One-command Python pipeline (35 steps)
+├── run_all_analysis.py         # One-command Python pipeline (39 steps)
 ├── pipeline_config.yaml        # YAML configuration (all parameters)
 ├── pyproject.toml              # Python package metadata
 ├── environment.yml             # Conda environment
@@ -317,7 +328,7 @@ Full spec → [`requirements.txt`](requirements.txt) · [`environment.yml`](envi
 
 ## Extension Modules (v1.1+)
 
-Beyond the core 35-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–35).
+Beyond the core 39-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–39).
 
 | Module | Description |
 |--------|-------------|
@@ -340,6 +351,10 @@ Beyond the core 35-step pipeline, the framework provides extensible modules for 
 | `human_gf_extended.py` * | Human GF analysis for all 11 methods (Step 33b) |
 | `multimodal_functional_anchoring.py` * | STRING threshold gradient + channel-specific GF analysis (Fig 20, Step 34) |
 | `hyperparameter_sensitivity.py` * | r-points, resolution, dimension, walk parameter sensitivity (Fig 21, Step 35) |
+| `density_corrected_gf.py` * | Density-corrected GF with random baseline subtraction (Step 36) |
+| `gat_collapse_diagnosis.py` * | GAT variant ablation: clip, warmup, multi-head analysis (Step 37) |
+| `human_ic_weighted_gf.py` * | Human IC-weighted GF analysis across 11 methods (Step 38) |
+| `human_seed_stability.py` * | Human 10-seed subsampling stability analysis (Step 39) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
 
@@ -418,6 +433,8 @@ Generated by `scripts/topological_analysis.py` and `scripts/topological_stats.py
 - **Plateau width**: Defined as the r-interval where purity ≥ 80% of each method's peak (relative threshold). Methods with very flat purity curves may yield wide plateaus despite low absolute purity.
 - **Spearman correlations**: G-F Score vs link prediction AUC (ρ = 0.591, P = 0.056) and vs k-NN F1 (ρ = 0.609, P = 0.047) are based on n = 11 methods. Bootstrap 95% CIs indicate moderate precision; see `results/bootstrap_correlations.json` for full details.
 - **All embeddings are 2-dimensional**: All 11 methods produce 2D coordinate spaces (standardized to σ = 0.3). Higher-dimensional geometric properties are not captured in this analysis.
+- **GAT embedding collapse**: GAT exhibits persistent embedding collapse on the human network (Step 37), with near-zero coordinate variance. Five variants tested (gradient clipping, warmup, multi-head attention) did not resolve the issue; the collapse appears to be architectural rather than optimization-related.
+- **Density-dependent rankings**: Method rankings are network-density-dependent (W<sub>raw</sub> = 0.178 across STRING thresholds 400-900), though density correction substantially improves concordance (W<sub>corrected</sub> = 0.70, Step 36).
 
 ---
 
@@ -440,7 +457,7 @@ ORCID: [0009-0000-2769-467X](https://orcid.org/0009-0000-2769-467X)
 >              Protein Interaction Network Embeddings},
 >   author  = {Zhang, Yuhan},
 >   year    = {2026},
->   note    = {Reproducible pipeline: 11 methods, 35-step validation.},
+>   note    = {Reproducible pipeline: 11 methods, 39-step validation.},
 > }
 > ```
 
