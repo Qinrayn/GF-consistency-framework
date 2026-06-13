@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `density_corrected_gf.py`: Density-corrected G-F Score analysis — computes random baseline via GO-label permutation at each STRING threshold (400-900), normalizes GF scores as (GF_method - GF_random)/(1 - GF_random), and recalculates Kendall's W (Step 36, Fig 22)
+- `human_seed_stability.py`: Seed stability analysis — 10 random seeds × 2000-node subsamples × 11 methods on human PPI, measuring Kendall's W and per-method CV across seeds (Step 37, Fig 23)
+- `human_ic_weighted_gf.py`: IC-weighted G-F Score on human PPI — computes corpus-based IC for all human GO terms and produces parallel standard vs IC-weighted GF rankings for 11 methods (Step 38, Fig 24)
+- `gat_collapse_diagnosis.py`: GAT embedding collapse root-cause analysis — tests 5 variants (baseline, gradient clipping, LR warmup, combined, multi-head attention) and measures attention entropy, embedding collapse diagnostics, and GF Scores (Step 39, Fig 25)
+- `density_corrected_gf.json`, `human_seed_stability.json`, `human_ic_weighted_gf.json`, `gat_collapse_diagnosis.json` and Figs 22-25
 - `metric_comparison.py`: G-F Score vs link prediction AUC and k-NN node classification F1 across all 11 embedding methods (Step 27)
 - `bootstrap_correlations.py`: bootstrap 95% CI for key Spearman correlations with 10,000 resamples (Step 28)
 - `semantic_purity.py`: IC-weighted purity and Resnik MICA semantic similarity — addresses DAG expansion inflation and provides GO DAG–aware community evaluation (Step 29)
@@ -30,6 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `requirements.lock.txt`: converted from UTF-16 LE to UTF-8 encoding
 - Renamed `comparison_30vs200_points.png` to `FigS8_sampling_density_comparison.png` for naming consistency
 - `final_results_summary.json`: corrected stale Leiden baseline purity (0.689 → 0.180)
+- Version unified to 1.5.0 across `scripts/__init__.py`; added Steps 36-39 documentation
+- `__init__.py`: registered Steps 36-39 modules in package docstring
 - Version unified to 1.4.0 across `pyproject.toml`, `scripts/__init__.py`, `run_all_analysis.py`
 - README: updated to "35-step" pipeline; added Steps 33-35 to Pipeline Overview, Project Structure, and Extension Modules table; updated `--skip-extended` scope
 - `pipeline_config.yaml`: updated `start_from` range (1-35) and `skip_extended` scope (Steps 16-21, 24-35)

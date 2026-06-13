@@ -58,6 +58,13 @@ human_gf_extended             Step 33b: Human GF analysis for all 11 methods
 multimodal_functional_anchoring Step 34: STRING threshold gradient + channel networks
 hyperparameter_sensitivity    Step 35: r-points, resolution, dimensions, walk parameters
 
+Modules (Steps 36-39: density correction, seed stability, IC-weighted, GAT diagnosis)
+--------------------------------------------------------------------------------------
+density_corrected_gf          Step 36: Density-corrected G-F Score (random baseline normalization)
+human_seed_stability          Step 37: 10-seed subsample stability test (human 11 methods)
+human_ic_weighted_gf          Step 38: IC-weighted G-F Score on human PPI (11 methods)
+gat_collapse_diagnosis        Step 39: GAT embedding collapse root-cause analysis
+
 Extension modules (v1.1+)
 --------------------------
 config_loader                 YAML configuration loader and validator
@@ -71,4 +78,4 @@ robustness_analysis           Extended 30-subset convergence analysis
 visualization_helpers         Okabe-Ito colorblind-safe plotting utilities
 """
 
-__version__ = "1.4.0"
+__version__ = "1.5.0"
