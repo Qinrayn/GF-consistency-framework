@@ -65,7 +65,7 @@ human_seed_stability          Step 37: 10-seed subsample stability test (human 1
 human_ic_weighted_gf          Step 38: IC-weighted G-F Score on human PPI (11 methods)
 gat_collapse_diagnosis        Step 39: GAT embedding collapse root-cause analysis
 
-Deep analysis modules (Phase 1-5)
+Deep analysis modules (Phase 1-6)
 -----------------------------------
 #   - deep_geometric_analysis: Multi-scale geometric fingerprint decomposition (Phase 1)
 #   - geometric_predictor: Cross-species geometric predictability model (Phase 2)
@@ -73,6 +73,7 @@ Deep analysis modules (Phase 1-5)
 #   - gat_collapse_theory: Mathematical theory of GAT collapse (Phase 4)
 #   - human_spectral_alignment: Human network spectral alignment / two-factor transfer test (Phase 5A)
 #   - gat_dimension_sweep: GAT latent dimension sweep / causal disentanglement (Phase 5B)
+#   - gat_collapse_formal_proof: Formal proofs of GAT collapse: 3 theorems + corollary (Phase 6)
 
 Extension modules (v1.1+)
 --------------------------
