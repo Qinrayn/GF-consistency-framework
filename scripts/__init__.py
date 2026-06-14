@@ -74,6 +74,7 @@ Deep analysis modules (Phase 1-6)
 #   - human_spectral_alignment: Human network spectral alignment / two-factor transfer test (Phase 5A)
 #   - gat_dimension_sweep: GAT latent dimension sweep / causal disentanglement (Phase 5B)
 #   - gat_collapse_formal_proof: Formal proofs of GAT collapse: 3 theorems + corollary (Phase 6)
+#   - tda_geometry_bridge: TDA-geometry bridge — unified feature matrix, partial correlations, Betti transitions (Phase 7)
 
 Extension modules (v1.1+)
 --------------------------

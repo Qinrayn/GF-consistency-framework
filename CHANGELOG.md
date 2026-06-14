@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (Phase 7: TDA-Geometry Bridge)
+- `tda_geometry_bridge.py`: Bridges topological and geometric analysis streams — assembles unified feature matrix (11 methods × 18 features), computes single-factor Spearman correlations, multi-factor models (2F/3F/weight-optimized), partial correlations controlling for spectral+eff_rank, and Betti curve phase transitions (Phase 7, Fig 44-45)
+- `phase7_tda_bridge_report.md`: Comprehensive bridge report — TDA adds independent signal (partial rho=0.845, p=0.001), revised three-factor framework
+- `tda_geometry_bridge.json` and Figs 44-45
+
 ### Added (Phase 6: Formal Proofs of GAT Collapse)
 - `gat_collapse_formal_proof.py`: Formalises Phase 4 empirical theory into 3 theorems with proofs and numerical verification — T1 (attention degeneration bound), T2 (effective rank bound for mean-aggregation GNN), T3 (G-F Score upper bound for rank-1 embeddings), plus combined corollary validated by Phase 5B dimension sweep (Phase 6, Fig 42-43)
 - `phase6_formal_proof_report.md`: Comprehensive proof report with theorem statements, proof sketches, numerical verification, and practical implications

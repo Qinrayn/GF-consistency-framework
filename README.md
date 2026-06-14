@@ -43,6 +43,7 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 39-s
 - **Two-factor model does not transfer to human** (Phase 5A): Spectral alignment (rho=0.200, p=0.555), effective dimensionality (rho=0.082, p=0.811), and combined model (rho=0.218, p=0.519) all fail on human PPI — the geometric-functional correspondence is network-specific
 - **GAT dimension sweep** (Phase 5B): Increasing latent_dim from 2 to 32 does NOT rescue GAT — G-F Score stays near-random (0.067-0.112), attention entropy stays at ~0.974 across all dimensions. Attention degeneration is dimension-independent, confirming it as the root cause rather than the 2D bottleneck. GraphSAGE at d=32 achieves G-F=0.210 (above random baseline), outperforming GAT
 - **Formal GAT collapse proof** (Phase 6): Three theorems rigorously establish the collapse causal chain — (T1) attention degeneration bound from degree CV, (T2) effective rank bound for mean-aggregation GNN (GNN: 1.045 vs non-GNN: 1.702, rho=0.873), (T3) G-F Score upper bound for rank-1 embeddings (rank-1 methods: GF_2D/GF_1D ratio~1.0; full-rank: up to 1.73). Combined corollary: GAT collapse is architecturally necessary, not an accident of training
+- **TDA-Geometry Bridge** (Phase 7): Topological G-F Score (rho=0.973) is the strongest single predictor; partial correlation analysis shows TDA adds independent signal beyond spectral alignment + effective rank (partial rho=0.845, p=0.001). H1 max persistence provides marginal independent signal (partial rho=0.527, p=0.096). Three-factor model (spectral+eff_rank+topo_gf) achieves rho=0.909, improving over the two-factor model by 12.4%. Betti curve analysis reveals high-G-F methods have richer loop structure (DM: 11 loops) while rank-collapsed methods (VGAE, VGAE-feat) have zero H1 features
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)
@@ -264,6 +265,7 @@ GF-consistency-framework/
 │   ├── human_spectral_alignment.py     # Human network spectral alignment (Phase 5A, Fig 39-40)
 │   ├── gat_dimension_sweep.py          # GAT latent dimension sweep (Phase 5B, Fig 41)
 │   ├── gat_collapse_formal_proof.py    # Formal proofs of GAT collapse (Phase 6, Fig 42-43)
+│   ├── tda_geometry_bridge.py         # TDA-geometry bridge analysis (Phase 7, Fig 44-45)
 │   └── utils.py                # Shared utilities
 │
 ├── tests/                      # pytest test suite (51 tests)
@@ -311,6 +313,8 @@ GF-consistency-framework/
 │   ├── Fig41                   # GAT dimension sweep d=2-32 (Phase 5B)
 │   ├── Fig42                   # Formal proof verification: 3 theorems (Phase 6)
 │   ├── Fig43                   # Proof summary: rank landscape (Phase 6)
+│   ├── Fig44                   # TDA-geometry bridge correlations (Phase 7)
+│   ├── Fig45                   # Three-factor model summary (Phase 7)
 │   ├── FigS1–S7                # Supplementary figures
 │   └── FigS8                   # Sampling density comparison
 │
@@ -399,6 +403,7 @@ Beyond the core 39-step pipeline, the framework provides extensible modules for 
 | `human_spectral_alignment.py` | Human network spectral alignment: cross-network two-factor model transfer test (Phase 5A, Fig 39-40) |
 | `gat_dimension_sweep.py` | GAT latent dimension sweep d={2,4,8,16,32}: causal disentanglement of attention degeneration (Phase 5B, Fig 41) |
 | `gat_collapse_formal_proof.py` | Formal proofs of GAT collapse: 3 theorems with numerical verification — attention degeneration bound, effective rank bound, G-F Score upper bound (Phase 6, Fig 42-43) |
+| `tda_geometry_bridge.py` | TDA-geometry bridge: unified feature matrix (11 methods × 18 features), single/multi-factor models, partial correlations, Betti curve phase transitions — proves TDA adds independent predictive signal (Phase 7, Fig 44-45) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
 

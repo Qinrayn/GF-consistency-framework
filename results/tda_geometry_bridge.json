@@ -1,0 +1,528 @@
+{
+  "analysis": "Phase 7: TDA-Geometry Bridge",
+  "version": "1.0",
+  "methods": [
+    "DM",
+    "DeepWalk",
+    "GAT",
+    "GIN",
+    "GraphSAGE",
+    "MDS",
+    "Node2Vec",
+    "PCA",
+    "Spectral",
+    "VGAE",
+    "VGAE-feat"
+  ],
+  "feature_matrix": {
+    "DM": {
+      "gf_score": 0.15518241816105013,
+      "h1_n_features": 34.0,
+      "h1_max_persistence": 0.07508408278226852,
+      "h1_mean_persistence": 0.018845349769381917,
+      "h1_persistence_entropy": 2.9945655749007893,
+      "h1_topological_complexity": 0.6407418921589851,
+      "h0_n_features": 152.0,
+      "h0_max_persistence": 2.5225851834201194,
+      "h0_persistence_entropy": 4.244050138100909,
+      "topo_gf_score": 0.04942782972544893,
+      "topo_consistency": 0.09435461471096639,
+      "spectral_alignment": 0.8159806125195163,
+      "top3_energy": 0.7337829089506663,
+      "effective_rank": 1.9995557068340772,
+      "effective_dim": 0.0,
+      "sv_ratio": 1.0150190112110202,
+      "dim_variance_ratio": 1.0259840290596531,
+      "dist_compression": 0.3078338966824263
+    },
+    "DeepWalk": {
+      "gf_score": 0.1225356361238432,
+      "h1_n_features": 21.0,
+      "h1_max_persistence": 0.025974035263061523,
+      "h1_mean_persistence": 0.006675800219887779,
+      "h1_persistence_entropy": 2.506358715714563,
+      "h1_topological_complexity": 0.14019180461764336,
+      "h0_n_features": 153.0,
+      "h0_max_persistence": 1.6018545913218545,
+      "h0_persistence_entropy": 4.072501606324411,
+      "topo_gf_score": 0.03880638786442182,
+      "topo_consistency": 0.3305559959605845,
+      "spectral_alignment": 0.5893675849317461,
+      "top3_energy": 0.8128158417849504,
+      "effective_rank": 1.459916688289283,
+      "effective_dim": 0.0,
+      "sv_ratio": 2.0260821405282217,
+      "dim_variance_ratio": 1.3775959511517475,
+      "dist_compression": 0.33164004418692605
+    },
+    "GAT": {
+      "gf_score": 0.0694,
+      "h1_n_features": 17.0,
+      "h1_max_persistence": 0.008064813911914825,
+      "h1_mean_persistence": 0.0029058200991986427,
+      "h1_persistence_entropy": 2.3533435046409967,
+      "h1_topological_complexity": 0.04939894168637693,
+      "h0_n_features": 151.0,
+      "h0_max_persistence": 1.13021981716156,
+      "h0_persistence_entropy": 3.356190344418177,
+      "topo_gf_score": 0.031767109969874835,
+      "topo_consistency": 0.0535123914100297,
+      "spectral_alignment": 0.5909302954800806,
+      "top3_energy": 0.973626666559837,
+      "effective_rank": 1.01885986328125,
+      "effective_dim": 0.0,
+      "sv_ratio": 10.297367095947266,
+      "dim_variance_ratio": 104.98310089111328,
+      "dist_compression": 0.2534625899974172
+    },
+    "GIN": {
+      "gf_score": 0.1217,
+      "h1_n_features": 17.0,
+      "h1_max_persistence": 0.08747728168964386,
+      "h1_mean_persistence": 0.014041047625462799,
+      "h1_persistence_entropy": 1.8013359431050566,
+      "h1_topological_complexity": 0.23869780963286757,
+      "h0_n_features": 151.0,
+      "h0_max_persistence": 2.289090156555176,
+      "h0_persistence_entropy": 3.543259073015588,
+      "topo_gf_score": 0.038642275011274166,
+      "topo_consistency": 0.18385341280283665,
+      "spectral_alignment": 0.5297789064512908,
+      "top3_energy": 0.5062537899984476,
+      "effective_rank": 1.1552284955978394,
+      "effective_dim": 0.0,
+      "sv_ratio": 3.5785672664642334,
+      "dim_variance_ratio": 2.7650976181030273,
+      "dist_compression": 0.2579605322142527
+    },
+    "GraphSAGE": {
+      "gf_score": 0.069,
+      "h1_n_features": 21.0,
+      "h1_max_persistence": 0.023150034248828888,
+      "h1_mean_persistence": 0.004941510923561596,
+      "h1_persistence_entropy": 2.5798068956439097,
+      "h1_topological_complexity": 0.10377172939479351,
+      "h0_n_features": 153.0,
+      "h0_max_persistence": 1.123923420906067,
+      "h0_persistence_entropy": 3.9985997530604838,
+      "topo_gf_score": 0.03374034866137377,
+      "topo_consistency": 0.18507733266304857,
+      "spectral_alignment": 0.600711006734843,
+      "top3_energy": 0.938243815247829,
+      "effective_rank": 1.0449717044830322,
+      "effective_dim": 0.0,
+      "sv_ratio": 6.667080402374268,
+      "dim_variance_ratio": 3.301485300064087,
+      "dist_compression": 0.32205284144330176
+    },
+    "MDS": {
+      "gf_score": 0.152155432912679,
+      "h1_n_features": 23.0,
+      "h1_max_persistence": 0.10416756570339203,
+      "h1_mean_persistence": 0.01801778821517592,
+      "h1_persistence_entropy": 2.2464368272692146,
+      "h1_topological_complexity": 0.41440912894904613,
+      "h0_n_features": 150.0,
+      "h0_max_persistence": 1.8315267284082368,
+      "h0_persistence_entropy": 4.1943054330150975,
+      "topo_gf_score": 0.05547072408626505,
+      "topo_consistency": 0.11556727188336557,
+      "spectral_alignment": 0.877472302521909,
+      "top3_energy": 0.8384970293001054,
+      "effective_rank": 1.9226748094335995,
+      "effective_dim": 0.0,
+      "sv_ratio": 1.2254379357380023,
+      "dim_variance_ratio": 1.5016981343458164,
+      "dist_compression": 0.40956969628331424
+    },
+    "Node2Vec": {
+      "gf_score": 0.1511706117501923,
+      "h1_n_features": 19.0,
+      "h1_max_persistence": 0.04562555253505707,
+      "h1_mean_persistence": 0.00880822392278596,
+      "h1_persistence_entropy": 2.383787620373837,
+      "h1_topological_complexity": 0.16735625453293324,
+      "h0_n_features": 153.0,
+      "h0_max_persistence": 1.8756495486165332,
+      "h0_persistence_entropy": 3.837309679133519,
+      "topo_gf_score": 0.04191837099934345,
+      "topo_consistency": 0.09077208564468275,
+      "spectral_alignment": 0.583081043420042,
+      "top3_energy": 0.7837081079168444,
+      "effective_rank": 1.57069737441704,
+      "effective_dim": 0.0,
+      "sv_ratio": 1.7863689831930003,
+      "dim_variance_ratio": 1.1009103505164535,
+      "dist_compression": 0.2914803165985556
+    },
+    "PCA": {
+      "gf_score": 0.13753060668252517,
+      "h1_n_features": 28.0,
+      "h1_max_persistence": 0.04739276319742203,
+      "h1_mean_persistence": 0.014299585683537381,
+      "h1_persistence_entropy": 2.8669676045562724,
+      "h1_topological_complexity": 0.40038839913904667,
+      "h0_n_features": 150.0,
+      "h0_max_persistence": 2.514007579454222,
+      "h0_persistence_entropy": 4.0741383678453635,
+      "topo_gf_score": 0.04609786649259258,
+      "topo_consistency": 0.1995037026334797,
+      "spectral_alignment": 0.8051278809419656,
+      "top3_energy": 0.7279491580877735,
+      "effective_rank": 1.257502315808353,
+      "effective_dim": 0.0,
+      "sv_ratio": 2.763324294532717,
+      "dim_variance_ratio": 7.635961156754734,
+      "dist_compression": 0.2868697553673582
+    },
+    "Spectral": {
+      "gf_score": 0.16332658400038436,
+      "h1_n_features": 15.0,
+      "h1_max_persistence": 0.09610021114349365,
+      "h1_mean_persistence": 0.0090279725069801,
+      "h1_persistence_entropy": 1.2440583724633074,
+      "h1_topological_complexity": 0.13541958760470152,
+      "h0_n_features": 151.0,
+      "h0_max_persistence": 2.2987626273446886,
+      "h0_persistence_entropy": 3.388281278205312,
+      "topo_gf_score": 0.06322816390896038,
+      "topo_consistency": 0.01882997892183811,
+      "spectral_alignment": 0.908108638788954,
+      "top3_energy": 1.0,
+      "effective_rank": 1.9991836496012487,
+      "effective_dim": 0.0,
+      "sv_ratio": 1.0204158312865304,
+      "dim_variance_ratio": 1.0373124316792943,
+      "dist_compression": 0.3038680851098308
+    },
+    "VGAE": {
+      "gf_score": 0.06567018452344808,
+      "h1_n_features": 7.0,
+      "h1_max_persistence": 0.005350158549845219,
+      "h1_mean_persistence": 0.0029449015855789185,
+      "h1_persistence_entropy": 1.810947284497491,
+      "h1_topological_complexity": 0.02061431109905243,
+      "h0_n_features": 151.0,
+      "h0_max_persistence": 1.9321378469467163,
+      "h0_persistence_entropy": 3.055621036308125,
+      "topo_gf_score": 0.031127381706245447,
+      "topo_consistency": 0.12416795089397452,
+      "spectral_alignment": 0.5800927701426971,
+      "top3_energy": 0.20865071542349223,
+      "effective_rank": 1.0019327402114868,
+      "effective_dim": 0.0,
+      "sv_ratio": 32.168540954589844,
+      "dim_variance_ratio": 103.16320037841797,
+      "dist_compression": 0.3621661165579498
+    },
+    "VGAE-feat": {
+      "gf_score": 0.12384417529354565,
+      "h1_n_features": 15.0,
+      "h1_max_persistence": 0.00837763026356697,
+      "h1_mean_persistence": 0.0023305644591649372,
+      "h1_persistence_entropy": 2.311140046757554,
+      "h1_topological_complexity": 0.03495846688747406,
+      "h0_n_features": 152.0,
+      "h0_max_persistence": 3.6406216621398926,
+      "h0_persistence_entropy": 2.930951185653816,
+      "topo_gf_score": 0.04123519301440666,
+      "topo_consistency": 0.2381376780052467,
+      "spectral_alignment": 0.5213119887151793,
+      "top3_energy": 0.451670174065281,
+      "effective_rank": 1.004763126373291,
+      "effective_dim": 0.0,
+      "sv_ratio": 20.491077423095703,
+      "dim_variance_ratio": 17.48060417175293,
+      "dist_compression": 0.18839058421583602
+    }
+  },
+  "single_factor_correlations": {
+    "spectral_alignment": {
+      "rho": 0.6090909090909091,
+      "p": 0.046695709354098905,
+      "n": 11
+    },
+    "effective_rank": {
+      "rho": 0.8727272727272729,
+      "p": 0.00045461505140964044,
+      "n": 11
+    },
+    "effective_dim": {
+      "rho": 0,
+      "p": 1,
+      "n": 0
+    },
+    "topo_gf_score": {
+      "rho": 0.9727272727272729,
+      "p": 5.142177049049177e-07,
+      "n": 11
+    },
+    "topo_consistency": {
+      "rho": -0.38181818181818183,
+      "p": 0.2465595757789701,
+      "n": 11
+    },
+    "h1_max_persistence": {
+      "rho": 0.7636363636363637,
+      "p": 0.006233059747904754,
+      "n": 11
+    },
+    "h1_mean_persistence": {
+      "rho": 0.6545454545454547,
+      "p": 0.028864598957001903,
+      "n": 11
+    },
+    "h1_topological_complexity": {
+      "rho": 0.6363636363636364,
+      "p": 0.0352869812200623,
+      "n": 11
+    },
+    "h1_n_features": {
+      "rho": 0.37071811786827175,
+      "p": 0.26170556953591967,
+      "n": 11
+    },
+    "h1_persistence_entropy": {
+      "rho": 0.03636363636363637,
+      "p": 0.9154683168905347,
+      "n": 11
+    },
+    "h0_max_persistence": {
+      "rho": 0.4909090909090909,
+      "p": 0.12520440713849548,
+      "n": 11
+    },
+    "h0_persistence_entropy": {
+      "rho": 0.45454545454545453,
+      "p": 0.1601454372552589,
+      "n": 11
+    },
+    "top3_energy": {
+      "rho": 0.28181818181818186,
+      "p": 0.40114489796047825,
+      "n": 11
+    },
+    "sv_ratio": {
+      "rho": -0.8727272727272729,
+      "p": 0.00045461505140964044,
+      "n": 11
+    },
+    "dim_variance_ratio": {
+      "rho": -0.7636363636363637,
+      "p": 0.006233059747904754,
+      "n": 11
+    },
+    "dist_compression": {
+      "rho": 0.018181818181818184,
+      "p": 0.9576852410216187,
+      "n": 11
+    }
+  },
+  "multi_factor_models": {
+    "2F_spectral+effrank": {
+      "predictors": [
+        "spectral_alignment",
+        "effective_rank"
+      ],
+      "rho": 0.8090909090909091,
+      "p": 0.002558580199713917
+    },
+    "3F_spectral+effrank+h1_max_persistence": {
+      "predictors": [
+        "spectral_alignment",
+        "effective_rank",
+        "h1_max_persistence"
+      ],
+      "rho": 0.8272727272727273,
+      "p": 0.0016769738964523804
+    },
+    "3F_spectral+effrank+topo_gf_score": {
+      "predictors": [
+        "spectral_alignment",
+        "effective_rank",
+        "topo_gf_score"
+      ],
+      "rho": 0.9090909090909091,
+      "p": 0.0001055933763036088
+    },
+    "3F_spectral+effrank+h1_topological_complexity": {
+      "predictors": [
+        "spectral_alignment",
+        "effective_rank",
+        "h1_topological_complexity"
+      ],
+      "rho": 0.8181818181818182,
+      "p": 0.0020831448404786926
+    },
+    "3F_optimized": {
+      "predictors": [
+        "spectral_alignment",
+        "effective_rank",
+        "topo_gf_score"
+      ],
+      "weights": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rho": 0.9727272727272729,
+      "p": 5.142177049049177e-07
+    },
+    "1F_spectral_alignment": {
+      "predictors": [
+        "spectral_alignment"
+      ],
+      "rho": 0.6090909090909091,
+      "p": 0.046695709354098905
+    },
+    "1F_effective_rank": {
+      "predictors": [
+        "effective_rank"
+      ],
+      "rho": 0.8727272727272729,
+      "p": 0.00045461505140964044
+    },
+    "1F_h1_max_persistence": {
+      "predictors": [
+        "h1_max_persistence"
+      ],
+      "rho": 0.7636363636363637,
+      "p": 0.006233059747904754
+    },
+    "1F_topo_gf_score": {
+      "predictors": [
+        "topo_gf_score"
+      ],
+      "rho": 0.9727272727272729,
+      "p": 5.142177049049177e-07
+    },
+    "1F_h1_topological_complexity": {
+      "predictors": [
+        "h1_topological_complexity"
+      ],
+      "rho": 0.6363636363636364,
+      "p": 0.0352869812200623
+    }
+  },
+  "partial_correlations": {
+    "h1_max_persistence": {
+      "partial_rho": 0.5272727272727273,
+      "partial_p": 0.09556521835315425,
+      "marginal_rho": 0.7636363636363637,
+      "interpretation": "After controlling for spectral+eff_rank, h1_max_persistence partial rho = 0.527 (p=0.096). Adds independent signal."
+    },
+    "topo_gf_score": {
+      "partial_rho": 0.8454545454545455,
+      "partial_p": 0.001045182145858687,
+      "marginal_rho": 0.9727272727272729,
+      "interpretation": "After controlling for spectral+eff_rank, topo_gf_score partial rho = 0.845 (p=0.001). Adds independent signal."
+    },
+    "h1_topological_complexity": {
+      "partial_rho": 0.33636363636363636,
+      "partial_p": 0.31182431390038634,
+      "marginal_rho": 0.6363636363636364,
+      "interpretation": "After controlling for spectral+eff_rank, h1_topological_complexity partial rho = 0.336 (p=0.312). Redundant."
+    },
+    "topo_consistency": {
+      "partial_rho": 0.3545454545454546,
+      "partial_p": 0.2846927409558867,
+      "marginal_rho": -0.38181818181818183,
+      "interpretation": "After controlling for spectral+eff_rank, topo_consistency partial rho = 0.355 (p=0.285). Redundant."
+    }
+  },
+  "betti_transitions": {
+    "DM": {
+      "r_half_merge": 0.08266331658291458,
+      "r_h1_peak": 0.1278894472361809,
+      "h1_peak_count": 11,
+      "h1_width": 0.04522613065326633,
+      "b0_at_gf_min": 69.0,
+      "b1_at_gf_min": 0.0
+    },
+    "MDS": {
+      "r_half_merge": 0.08015075376884423,
+      "r_h1_peak": 0.08517587939698493,
+      "h1_peak_count": 3,
+      "h1_width": 0.16582914572864324,
+      "b0_at_gf_min": 49.0,
+      "b1_at_gf_min": 1.0
+    },
+    "Spectral": {
+      "r_half_merge": 0.08517587939698493,
+      "r_h1_peak": 0.07010050251256282,
+      "h1_peak_count": 2,
+      "h1_width": 0.0,
+      "b0_at_gf_min": 19.0,
+      "b1_at_gf_min": 0.0
+    },
+    "DeepWalk": {
+      "r_half_merge": 0.06758793969849247,
+      "r_h1_peak": 0.057537688442211056,
+      "h1_peak_count": 5,
+      "h1_width": 0.0050251256281407045,
+      "b0_at_gf_min": 18.0,
+      "b1_at_gf_min": 0.0
+    },
+    "Node2Vec": {
+      "r_half_merge": 0.08517587939698493,
+      "r_h1_peak": 0.05251256281407035,
+      "h1_peak_count": 4,
+      "h1_width": 0.032663316582914576,
+      "b0_at_gf_min": 15.0,
+      "b1_at_gf_min": 3.0
+    },
+    "VGAE": {
+      "r_half_merge": 0.07512562814070352,
+      "r_h1_peak": 0,
+      "h1_peak_count": 0,
+      "h1_width": 0,
+      "b0_at_gf_min": 2.0,
+      "b1_at_gf_min": 0.0
+    },
+    "PCA": {
+      "r_half_merge": 0.07010050251256282,
+      "r_h1_peak": 0.11030150753768844,
+      "h1_peak_count": 8,
+      "h1_width": 0.035175879396984924,
+      "b0_at_gf_min": 55.0,
+      "b1_at_gf_min": 0.0
+    },
+    "VGAE-feat": {
+      "r_half_merge": 0.08517587939698493,
+      "r_h1_peak": 0,
+      "h1_peak_count": 0,
+      "h1_width": 0,
+      "b0_at_gf_min": 10.0,
+      "b1_at_gf_min": 0.0
+    },
+    "GraphSAGE": {
+      "r_half_merge": 0.05502512562814071,
+      "r_h1_peak": 0.05,
+      "h1_peak_count": 2,
+      "h1_width": 0.0050251256281407045,
+      "b0_at_gf_min": 2.0,
+      "b1_at_gf_min": 2.0
+    },
+    "GAT": {
+      "r_half_merge": 0.10025125628140705,
+      "r_h1_peak": 0.05502512562814071,
+      "h1_peak_count": 1,
+      "h1_width": 0.0050251256281407045,
+      "b0_at_gf_min": 3.0,
+      "b1_at_gf_min": 0.0
+    },
+    "GIN": {
+      "r_half_merge": 0.09020100502512562,
+      "r_h1_peak": 0.14798994974874374,
+      "h1_peak_count": 4,
+      "h1_width": 0.0376884422110553,
+      "b0_at_gf_min": 37.0,
+      "b1_at_gf_min": 0.0
+    }
+  },
+  "key_findings": {
+    "strongest_single_predictor": "topo_gf_score",
+    "best_model": "3F_optimized",
+    "tda_adds_independent_signal": true
+  }
+}
