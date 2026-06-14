@@ -75,6 +75,7 @@ Deep analysis modules (Phase 1-6)
 #   - gat_dimension_sweep: GAT latent dimension sweep / causal disentanglement (Phase 5B)
 #   - gat_collapse_formal_proof: Formal proofs of GAT collapse: 3 theorems + corollary (Phase 6)
 #   - tda_geometry_bridge: TDA-geometry bridge — unified feature matrix, partial correlations, Betti transitions (Phase 7)
+#   - human_cross_network_validation: Cross-network validation on human PPI + bootstrap CIs for Phase 7 (Phase 8)
 
 Extension modules (v1.1+)
 --------------------------

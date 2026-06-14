@@ -1,0 +1,240 @@
+{
+  "analysis": "Phase 8: Cross-Network Validation & Bootstrap CIs",
+  "version": "1.0",
+  "human_validation": {
+    "human_11": {
+      "spectral_alignment_rho": 0.2,
+      "effective_rank_rho": 0.418,
+      "effective_dim_rho": 0.082,
+      "two_factor_spec_effrank_rho": 0.543,
+      "two_factor_spec_effdim_rho": 0.146
+    },
+    "human_6": {
+      "spectral_alignment_rho": 0.657,
+      "effective_rank_rho": 0.6,
+      "h1_max_persistence_rho": -0.086,
+      "two_factor_rho": 0.88,
+      "three_factor_rho": 0.6
+    },
+    "yeast_reference": {
+      "spectral_alignment_rho": 0.609,
+      "effective_rank_rho": 0.873,
+      "two_factor_rho": 0.809,
+      "three_factor_with_topo_rho": 0.909
+    }
+  },
+  "human_per_method_11": {
+    "DM": {
+      "gf_score": 0.05982932304070516,
+      "spectral_alignment": 0.594663809546729,
+      "effective_rank": 2.0,
+      "effective_dim": 1.9947745959790466
+    },
+    "MDS": {
+      "gf_score": 0.3665895159604647,
+      "spectral_alignment": 0.6275301760594387,
+      "effective_rank": 1.9645789086505334,
+      "effective_dim": 1.9243570215335937
+    },
+    "Spectral": {
+      "gf_score": 0.401947672531325,
+      "spectral_alignment": 0.6064394387860098,
+      "effective_rank": 2.0000000000000004,
+      "effective_dim": 1.0272021302845582
+    },
+    "DeepWalk": {
+      "gf_score": 0.10057815633051474,
+      "spectral_alignment": 0.6177587154256159,
+      "effective_rank": 1.2419022616962803,
+      "effective_dim": 1.2497477290924142
+    },
+    "Node2Vec": {
+      "gf_score": 0.16620439439191592,
+      "spectral_alignment": 0.6236105131706935,
+      "effective_rank": 1.2029654033264365,
+      "effective_dim": 1.2164395310839071
+    },
+    "VGAE": {
+      "gf_score": 0.013488095495757337,
+      "spectral_alignment": 0.5715341638261886,
+      "effective_rank": 1.0070504494735637,
+      "effective_dim": 1.0002247339760924
+    },
+    "PCA": {
+      "gf_score": 0.08576238310566663,
+      "spectral_alignment": 0.6194894642676616,
+      "effective_rank": 1.50097578390837,
+      "effective_dim": 1.4789152052352548
+    },
+    "VGAE-feat": {
+      "gf_score": 0.08857432406051224,
+      "spectral_alignment": 0.5804024608686936,
+      "effective_rank": 1.4637847928711474,
+      "effective_dim": 1.0370995009518742
+    },
+    "GraphSAGE": {
+      "gf_score": 0.13313221753172583,
+      "spectral_alignment": 0.6275497511512425,
+      "effective_rank": 1.2049204166926601,
+      "effective_dim": 1.766480206225805
+    },
+    "GAT": {
+      "gf_score": 0.010501460262225813,
+      "spectral_alignment": 0.6399897343954037,
+      "effective_rank": 1.0023073258404773,
+      "effective_dim": 1.1747395961784735
+    },
+    "GIN": {
+      "gf_score": 0.08894291070905928,
+      "spectral_alignment": 0.6117593263035911,
+      "effective_rank": 1.9926209805407449,
+      "effective_dim": 1.974047623280245
+    }
+  },
+  "human_per_method_6": {
+    "DM": {
+      "gf_score": 0.05982932304070516,
+      "spectral_alignment": 0.594663809546729,
+      "effective_rank": 2.0,
+      "h1_max_persistence": 0.02137843891978264
+    },
+    "MDS": {
+      "gf_score": 0.3665895159604647,
+      "spectral_alignment": 0.6275301760594387,
+      "effective_rank": 1.9645789086505334,
+      "h1_max_persistence": 0.022343173623085022
+    },
+    "Spectral": {
+      "gf_score": 0.401947672531325,
+      "spectral_alignment": 0.6064394387860098,
+      "effective_rank": 2.0000000000000004,
+      "h1_max_persistence": 0.00019149790750816464
+    },
+    "DeepWalk": {
+      "gf_score": 0.10057815633051474,
+      "spectral_alignment": 0.6177587154256159,
+      "effective_rank": 1.2419022616962803,
+      "h1_max_persistence": 0.03817597031593323
+    },
+    "Node2Vec": {
+      "gf_score": 0.16620439439191592,
+      "spectral_alignment": 0.6236105131706935,
+      "effective_rank": 1.2029654033264365,
+      "h1_max_persistence": 0.029378078877925873
+    },
+    "VGAE": {
+      "gf_score": 0.013488095495757337,
+      "spectral_alignment": 0.5715341638261886,
+      "effective_rank": 1.0070504494735637,
+      "h1_max_persistence": 0.0016576694324612617
+    }
+  },
+  "bootstrap_ci": {
+    "n_methods": 11,
+    "n_bootstrap": 10000,
+    "single_factor_ci": {
+      "topo_gf_score": {
+        "rho": 0.973,
+        "p": 0.0,
+        "boot_median": 0.972,
+        "ci_95": [
+          0.832,
+          1.0
+        ],
+        "significant": true
+      },
+      "effective_rank": {
+        "rho": 0.873,
+        "p": 0.0005,
+        "boot_median": 0.88,
+        "ci_95": [
+          0.484,
+          1.0
+        ],
+        "significant": true
+      },
+      "h1_max_persistence": {
+        "rho": 0.764,
+        "p": 0.0062,
+        "boot_median": 0.766,
+        "ci_95": [
+          0.279,
+          0.972
+        ],
+        "significant": true
+      },
+      "spectral_alignment": {
+        "rho": 0.609,
+        "p": 0.0467,
+        "boot_median": 0.624,
+        "ci_95": [
+          -0.093,
+          0.924
+        ],
+        "significant": false
+      },
+      "h1_topological_complexity": {
+        "rho": 0.636,
+        "p": 0.0353,
+        "boot_median": 0.641,
+        "ci_95": [
+          0.009,
+          0.971
+        ],
+        "significant": true
+      },
+      "topo_consistency": {
+        "rho": -0.382,
+        "p": 0.2466,
+        "boot_median": -0.386,
+        "ci_95": [
+          -0.85,
+          0.333
+        ],
+        "significant": false
+      }
+    },
+    "partial_correlation_ci": {
+      "topo_gf_score": {
+        "partial_rho": 0.809,
+        "partial_p": 0.0026,
+        "boot_median": 0.847,
+        "ci_95": [
+          -0.196,
+          1.0
+        ],
+        "significant": false
+      },
+      "h1_max_persistence": {
+        "partial_rho": 0.318,
+        "partial_p": 0.3403,
+        "boot_median": 0.256,
+        "ci_95": [
+          -0.608,
+          0.935
+        ],
+        "significant": false
+      },
+      "h1_topological_complexity": {
+        "partial_rho": -0.282,
+        "partial_p": 0.4011,
+        "boot_median": -0.189,
+        "ci_95": [
+          -0.907,
+          0.886
+        ],
+        "significant": false
+      },
+      "topo_consistency": {
+        "partial_rho": -0.182,
+        "partial_p": 0.5926,
+        "boot_median": -0.132,
+        "ci_95": [
+          -0.856,
+          0.634
+        ],
+        "significant": false
+      }
+    }
+  }
+}

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (Phase 8: Cross-Network Validation & Bootstrap Confidence Intervals)
+- `human_cross_network_validation.py`: Validates two/three-factor models on human PPI (11 methods: two-factor rho=0.543; 6 methods: rho=0.880, p=0.021); computes bootstrap 95% CIs (10k resamples) for Phase 7 single-factor and partial correlations — confirms 4 single-factor predictors robust, partial correlations not robust at n=11 (Phase 8, Fig 46-47)
+- `phase8_cross_network_validation_report.md`: Comprehensive validation report with revised Phase 7 conclusions
+- `human_cross_network_validation.json` and Figs 46-47
+
 ### Added (Phase 7: TDA-Geometry Bridge)
 - `tda_geometry_bridge.py`: Bridges topological and geometric analysis streams — assembles unified feature matrix (11 methods × 18 features), computes single-factor Spearman correlations, multi-factor models (2F/3F/weight-optimized), partial correlations controlling for spectral+eff_rank, and Betti curve phase transitions (Phase 7, Fig 44-45)
 - `phase7_tda_bridge_report.md`: Comprehensive bridge report — TDA adds independent signal (partial rho=0.845, p=0.001), revised three-factor framework
