@@ -1,0 +1,219 @@
+{
+  "analysis": "Phase 5B: GAT Latent Dimension Sweep",
+  "version": "1.0",
+  "dimensions": [
+    2,
+    4,
+    8,
+    16,
+    32
+  ],
+  "hidden_dim": 16,
+  "epochs": 300,
+  "lr": 0.01,
+  "random_baseline": 0.17015027771004745,
+  "GAT": {
+    "2": {
+      "gf_score": 0.06939369522912948,
+      "effective_dim": 1.0188597440719604,
+      "matrix_rank": 2,
+      "attention_entropy_layer1": {
+        "entropy": 7.938380241394043,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.9730859541234776
+      },
+      "attention_entropy_layer2": {
+        "entropy": 7.794868469238281,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.9554942936726529
+      },
+      "collapse": {
+        "collapsed": false,
+        "method": "GAT_d2",
+        "median_dist": 1.8152271340775679,
+        "mean_dist": 2.4167720163577644,
+        "cv": 0.8027339549223378,
+        "reasons": []
+      },
+      "final_loss": 14572.1142578125,
+      "train_time_s": 13.5
+    },
+    "4": {
+      "gf_score": 0.11165956479011833,
+      "effective_dim": 2.49133038520813,
+      "matrix_rank": 4,
+      "attention_entropy_layer1": {
+        "entropy": 7.948834419250488,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.9743674263287231
+      },
+      "attention_entropy_layer2": {
+        "entropy": 7.925861358642578,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.9715513905731897
+      },
+      "collapse": {
+        "collapsed": false,
+        "method": "GAT_d4",
+        "median_dist": 1.4477764713511894,
+        "mean_dist": 1.8151308992067083,
+        "cv": 0.7408390899333497,
+        "reasons": []
+      },
+      "final_loss": 14713.251953125,
+      "train_time_s": 1.5
+    },
+    "8": {
+      "gf_score": 0.06902161537338643,
+      "effective_dim": 2.004762649536133,
+      "matrix_rank": 8,
+      "attention_entropy_layer1": {
+        "entropy": 7.944273471832275,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.9738083457940044
+      },
+      "attention_entropy_layer2": {
+        "entropy": 7.937647819519043,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.9729961739142432
+      },
+      "collapse": {
+        "collapsed": false,
+        "method": "GAT_d8",
+        "median_dist": 2.7011016044011633,
+        "mean_dist": 2.8365750382927266,
+        "cv": 0.5330321676053019,
+        "reasons": []
+      },
+      "final_loss": 15928.05859375,
+      "train_time_s": 1.6
+    },
+    "16": {
+      "gf_score": 0.06748250377082181,
+      "effective_dim": 1.3554370403289795,
+      "matrix_rank": 16,
+      "attention_entropy_layer1": {
+        "entropy": 7.949098587036133,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.9743998079927308
+      },
+      "attention_entropy_layer2": {
+        "entropy": 7.6669392585754395,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.939812742243686
+      },
+      "collapse": {
+        "collapsed": false,
+        "method": "GAT_d16",
+        "median_dist": 5.770246752951605,
+        "mean_dist": 6.509605177742185,
+        "cv": 0.6468010129384766,
+        "reasons": []
+      },
+      "final_loss": 14223.5458984375,
+      "train_time_s": 1.6
+    },
+    "32": {
+      "gf_score": 0.09025175134360316,
+      "effective_dim": 2.2568891048431396,
+      "matrix_rank": 32,
+      "attention_entropy_layer1": {
+        "entropy": 7.949307918548584,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.9744254678311774
+      },
+      "attention_entropy_layer2": {
+        "entropy": 6.205104827880859,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.7606212058713763
+      },
+      "collapse": {
+        "collapsed": false,
+        "method": "GAT_d32",
+        "median_dist": 11.021110683214918,
+        "mean_dist": 11.142187994586008,
+        "cv": 0.5423415456780166,
+        "reasons": []
+      },
+      "final_loss": 18871.607421875,
+      "train_time_s": 1.6
+    }
+  },
+  "GraphSAGE": {
+    "2": {
+      "gf_score": 0.069026977530774,
+      "effective_dim": 1.0449715852737427,
+      "matrix_rank": 2,
+      "collapse": {
+        "collapsed": false,
+        "method": "SAGE_d2",
+        "median_dist": 4.476139232152762,
+        "mean_dist": 5.2863602194061805,
+        "cv": 0.6794344101705921,
+        "reasons": []
+      },
+      "final_loss": 14341.0693359375,
+      "train_time_s": 0.9
+    },
+    "4": {
+      "gf_score": 0.11406216596266835,
+      "effective_dim": 2.2560760974884033,
+      "matrix_rank": 4,
+      "collapse": {
+        "collapsed": false,
+        "method": "SAGE_d4",
+        "median_dist": 3.5043160735726624,
+        "mean_dist": 3.743897096801193,
+        "cv": 0.47534058973896076,
+        "reasons": []
+      },
+      "final_loss": 13792.76953125,
+      "train_time_s": 0.9
+    },
+    "8": {
+      "gf_score": 0.08099800367117041,
+      "effective_dim": 2.4309518337249756,
+      "matrix_rank": 8,
+      "collapse": {
+        "collapsed": false,
+        "method": "SAGE_d8",
+        "median_dist": 3.6977415962333677,
+        "mean_dist": 3.8915520643813117,
+        "cv": 0.4615296371773066,
+        "reasons": []
+      },
+      "final_loss": 13518.138671875,
+      "train_time_s": 0.8
+    },
+    "16": {
+      "gf_score": 0.07543620170564425,
+      "effective_dim": 2.793595314025879,
+      "matrix_rank": 16,
+      "collapse": {
+        "collapsed": false,
+        "method": "SAGE_d16",
+        "median_dist": 3.044296297423984,
+        "mean_dist": 3.120864050022535,
+        "cv": 0.42801547427198633,
+        "reasons": []
+      },
+      "final_loss": 13498.740234375,
+      "train_time_s": 0.8
+    },
+    "32": {
+      "gf_score": 0.20984032633506314,
+      "effective_dim": 2.363588809967041,
+      "matrix_rank": 32,
+      "collapse": {
+        "collapsed": false,
+        "method": "SAGE_d32",
+        "median_dist": 3.2057836185176862,
+        "mean_dist": 4.1204147197251535,
+        "cv": 0.8218917424722749,
+        "reasons": []
+      },
+      "final_loss": 20268.51953125,
+      "train_time_s": 0.7
+    }
+  }
+}

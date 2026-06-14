@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (Phase 5: Self-Validation and Causal Disentanglement)
+- `human_spectral_alignment.py`: Cross-network two-factor model transfer test — replicates Phase 3 spectral alignment on human STRING v12.0 (1,310-node largest CC), tests whether spectral alignment + effective dimensionality predict human G-F Score (Phase 5A, Fig 39-40)
+- `gat_dimension_sweep.py`: GAT latent dimension sweep d={2,4,8,16,32} with GraphSAGE control — measures G-F Score, attention entropy, effective dimensionality, matrix rank at each dimension; proves attention degeneration is dimension-independent (Phase 5B, Fig 41)
+- `phase5_deep_analysis_report.md`: Comprehensive Phase 5 report with 8 findings, revised GAT causal chain, negative result interpretation
+- `human_spectral_alignment.json`, `gat_dimension_sweep.json` and Figs 39-41
+
 ### Added (Deep Analysis Modules)
 - `deep_geometric_analysis.py`: Multi-scale geometric fingerprint decomposition — distance-function correspondence (DFC), geometric feature extraction (6 features), G-F curve shape decomposition across 11 methods (Phase 1, Fig 26-29)
 - `geometric_predictor.py`: Cross-species geometric predictability model — builds yeast-trained geometric predictor and validates on human PPI; includes network Laplacian spectrum analysis, collapse diagnostics, method clustering (Phase 2, Fig 30-33)
@@ -38,7 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `generate_final_summary()` now merges metric comparison, bootstrap correlation, semantic purity, cross-species, scale gradient, bootstrap stability, human extended, multi-modal, and hyperparameter sensitivity results
 
 ### Changed
-- README: added Phase 1-4 deep analysis modules, Fig 26-38, key geometric and collapse findings
+- README: added Phase 1-5 deep analysis modules, Fig 26-41, key geometric, collapse, and self-validation findings
 - `Supplementary_Materials.txt`: added correct Table S3 (embedding hyperparameters matching actual code, all 2D output), synced with submission version
 - `requirements.lock.txt`: converted from UTF-16 LE to UTF-8 encoding
 - Renamed `comparison_30vs200_points.png` to `FigS8_sampling_density_comparison.png` for naming consistency
