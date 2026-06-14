@@ -37,7 +37,7 @@ import time
 import numpy as np
 import networkx as nx
 from pathlib import Path
-from collections import Counter
+
 import warnings
 warnings.filterwarnings("ignore")
 

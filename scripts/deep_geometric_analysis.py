@@ -26,32 +26,32 @@ import json
 import math
 import numpy as np
 from pathlib import Path
-from collections import Counter, defaultdict
+from collections import Counter
 from scipy.spatial.distance import pdist, squareform
 from scipy.integrate import trapezoid
 from scipy.stats import spearmanr
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
 from matplotlib.gridspec import GridSpec
 
 # ============================================================
-# Project path setup
+# Project path setup (portable via utils helpers)
 # ============================================================
-PROJECT_ROOT = Path(r"C:\Users\云丘\GF-consistency-framework")
-SCRIPTS_DIR = PROJECT_ROOT / "scripts"
-DATA_DIR = PROJECT_ROOT / "data"
-EMBEDDINGS_DIR = PROJECT_ROOT / "embeddings"
-RESULTS_DIR = PROJECT_ROOT / "results"
-FIGURES_DIR = PROJECT_ROOT / "figures"
-
-sys.path.insert(0, str(SCRIPTS_DIR))
+_SCRIPTS_DIR = Path(__file__).resolve().parent
+sys.path.insert(0, str(_SCRIPTS_DIR))
 from utils import (
     SEED, GF_R_MIN, GF_R_MAX, N_POINTS, R_MIN, R_MAX,
     ALL_METHODS, CLASSICAL_METHODS, GNN_METHODS, ALL_CURATED_METHODS,
-    rescale_coordinates, load_curated_network,
+    rescale_coordinates, load_curated_network, load_embedding,
+    get_data_dir, get_embeddings_dir, get_results_dir, get_figures_dir,
 )
+
+# Portable directory aliases (used throughout this script)
+DATA_DIR = get_data_dir()
+EMBEDDINGS_DIR = get_embeddings_dir()
+RESULTS_DIR = get_results_dir()
+FIGURES_DIR = get_figures_dir()
 
 # ============================================================
 # Configuration
@@ -82,22 +82,6 @@ N_DFC_BINS = 30  # number of distance bins for DFC curves
 # ============================================================
 # 1. Data loading
 # ============================================================
-
-def load_embedding(method: str):
-    """Load embedding coordinates and node list for a method."""
-    if method in ALL_CURATED_METHODS:
-        suffix = "153"
-    else:
-        suffix = "153"  # GNN methods also on curated 153
-    npy_path = EMBEDDINGS_DIR / f"{method}_{suffix}.npy"
-    nodes_path = EMBEDDINGS_DIR / f"{method}_{suffix}_nodes.json"
-    if not npy_path.exists():
-        return None, None
-    coords = np.load(npy_path)
-    with open(nodes_path, encoding="utf-8") as f:
-        nodes = json.load(f)
-    return coords, nodes
-
 
 def load_go_map():
     """Load GO annotations and return gene -> [GO terms] dict."""
@@ -724,6 +708,7 @@ def main():
     # -- Load data --
     print("\n[1/6] Loading network, GO annotations, and embeddings...")
     G, nodes, go_map = load_curated_network()
+    node_idx = {nd: i for i, nd in enumerate(nodes)}
     print(f"  Network: {len(nodes)} nodes, {G.number_of_edges()} edges")
     
     n_annotated = sum(1 for nd in nodes if nd in go_map)
@@ -732,11 +717,11 @@ def main():
     # Load all embeddings
     embeddings = {}
     for method in ALL_METHODS:
-        coords, emb_nodes = load_embedding(method)
-        if coords is not None:
+        try:
+            coords, emb_nodes = load_embedding(method)
             embeddings[method] = (coords, emb_nodes)
             print(f"  {method}: {coords.shape[0]} nodes, {coords.shape[1]}D")
-        else:
+        except FileNotFoundError:
             print(f"  {method}: NOT FOUND")
     
     # -- Compute GO co-annotation matrix --
@@ -766,14 +751,15 @@ def main():
         coords_raw, emb_nodes = embeddings[method]
         
         # Align to common nodes
+        emb_node_idx = {n: i for i, n in enumerate(emb_nodes)}
         node_set = set(nodes) & set(emb_nodes) & set(go_map.keys())
         common = sorted(node_set)
         if len(common) < 10:
             print(f"  {method}: too few common nodes ({len(common)}), skipping")
             continue
         
-        emb_idx = [emb_nodes.index(nd) for nd in common]
-        net_idx = [nodes.index(nd) for nd in common]
+        emb_idx = [emb_node_idx[nd] for nd in common]
+        net_idx = [node_idx[nd] for nd in common]
         
         coords = coords_raw[emb_idx]
         coords = rescale_coordinates(coords)
@@ -824,12 +810,13 @@ def main():
         if method not in embeddings:
             continue
         coords_raw, emb_nodes = embeddings[method]
+        emb_node_idx = {n: i for i, n in enumerate(emb_nodes)}
         node_set = set(nodes) & set(emb_nodes) & set(go_map.keys())
         common = sorted(node_set)
         if len(common) < 10:
             continue
         
-        emb_idx = [emb_nodes.index(nd) for nd in common]
+        emb_idx = [emb_node_idx[nd] for nd in common]
         coords = coords_raw[emb_idx]
         coords = rescale_coordinates(coords)
         

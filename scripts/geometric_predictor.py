@@ -24,7 +24,6 @@ Outputs:
 import sys
 import json
 import math
-import pickle
 import numpy as np
 from pathlib import Path
 from collections import Counter
@@ -37,21 +36,22 @@ import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 
 # ============================================================
-# Path setup
+# Path setup (portable via utils helpers)
 # ============================================================
-PROJECT = Path(r"C:\Users\云丘\GF-consistency-framework")
-SCRIPTS = PROJECT / "scripts"
-DATA = PROJECT / "data"
-EMB = PROJECT / "embeddings"
-RES = PROJECT / "results"
-FIG = PROJECT / "figures"
-
-sys.path.insert(0, str(SCRIPTS))
+_SCRIPTS = Path(__file__).resolve().parent
+sys.path.insert(0, str(_SCRIPTS))
 from utils import (
     SEED, GF_R_MIN, GF_R_MAX, ALL_METHODS, CLASSICAL_METHODS,
     GNN_METHODS, ALL_CURATED_METHODS,
-    rescale_coordinates, load_curated_network,
+    rescale_coordinates, load_curated_network, load_embedding,
+    get_data_dir, get_embeddings_dir, get_results_dir, get_figures_dir,
 )
+
+# Portable directory aliases
+DATA = get_data_dir()
+EMB = get_embeddings_dir()
+RES = get_results_dir()
+FIG = get_figures_dir()
 
 METHOD_COLORS = {
     "Spectral": "#E69F00", "DM": "#0072B2", "MDS": "#009E73",
@@ -817,6 +817,7 @@ def main():
         if method not in human_emb:
             continue
         coords, emb_nodes = human_emb[method]
+        emb_node_idx = {n: i for i, n in enumerate(emb_nodes)}
         
         # Filter to nodes with GO annotations
         go_nodes = set(human_scores.keys())  # we just need the node set
@@ -832,7 +833,7 @@ def main():
         else:
             sample_nodes = sorted(np.random.choice(common, HUMAN_SUBSAMPLE, replace=False))
         
-        idx = [emb_nodes.index(n) for n in sample_nodes]
+        idx = [emb_node_idx[n] for n in sample_nodes]
         coords_sub = coords[idx]
         
         features = compute_geometric_features(coords_sub)

@@ -34,20 +34,21 @@ import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 
 # ============================================================
-# Paths
+# Paths (portable via utils helpers)
 # ============================================================
-PROJECT = Path(r"C:\Users\云丘\GF-consistency-framework")
-SCRIPTS = PROJECT / "scripts"
-DATA = PROJECT / "data"
-EMB = PROJECT / "embeddings"
-RES = PROJECT / "results"
-FIG = PROJECT / "figures"
-
-sys.path.insert(0, str(SCRIPTS))
+_SCRIPTS = Path(__file__).resolve().parent
+sys.path.insert(0, str(_SCRIPTS))
 from utils import (
     SEED, ALL_METHODS, ALL_CURATED_METHODS,
-    rescale_coordinates, load_curated_network,
+    rescale_coordinates, load_curated_network, load_embedding,
+    get_data_dir, get_embeddings_dir, get_results_dir, get_figures_dir,
 )
+
+# Portable directory aliases
+DATA = get_data_dir()
+EMB = get_embeddings_dir()
+RES = get_results_dir()
+FIG = get_figures_dir()
 
 METHOD_COLORS = {
     "Spectral": "#E69F00", "DM": "#0072B2", "MDS": "#009E73",
@@ -420,6 +421,7 @@ def main():
     # -- Load data --
     print("\n[1/5] Loading network and GO annotations...")
     G, nodes, go_map = load_curated_network()
+    node_idx = {nd: i for i, nd in enumerate(nodes)}
     n = len(nodes)
     print(f"  Network: {n} nodes, {G.number_of_edges()} edges")
     n_annotated = sum(1 for nd in nodes if nd in go_map)
@@ -467,13 +469,14 @@ def main():
         with open(nodes_f, encoding="utf-8") as f:
             emb_nodes = json.load(f)
         
+        emb_node_idx = {n: i for i, n in enumerate(emb_nodes)}
         # Align
         common = sorted(set(nodes) & set(emb_nodes) & set(go_map.keys()))
         if len(common) < 10:
             continue
         
-        emb_idx = [emb_nodes.index(nd) for nd in common]
-        net_idx = [nodes.index(nd) for nd in common]
+        emb_idx = [emb_node_idx[nd] for nd in common]
+        net_idx = [node_idx[nd] for nd in common]
         
         Y = coords[emb_idx]
         Y = rescale_coordinates(Y.copy())

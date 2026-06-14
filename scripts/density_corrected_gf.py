@@ -35,27 +35,24 @@ Output
 """
 
 import sys
-import os
 import json
 import gzip
 import time
 import numpy as np
 import networkx as nx
 from pathlib import Path
-from collections import Counter
 import warnings
 warnings.filterwarnings("ignore")
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from utils import (
     SEED, get_data_dir, get_results_dir, get_figures_dir,
-    load_curated_network, load_full_STRING_network,
+    load_curated_network,
     spectral_embedding_from_graph, deepwalk_from_graph,
     node2vec_from_graph, rescale_coordinates, compute_gf_curve,
     compute_gf_score, compute_centrality_features,
     GF_R_MIN, GF_R_MAX,
 )
-from sklearn.decomposition import PCA as SkPCA
 
 # ---- Configuration ----
 THRESHOLDS = [400, 500, 600, 700, 800, 900]

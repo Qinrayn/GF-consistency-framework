@@ -286,7 +286,7 @@ def main():
         "methods": list(gf_scores.keys()),
     }
     scores_file = os.path.join(RESULTS_DIR, "human_gf_scores_extended.json")
-    with open(scores_file, "w") as f:
+    with open(scores_file, "w", encoding="utf-8") as f:
         json.dump(scores_data, f, indent=2)
     print(f"  Saved: {scores_file}")
 
