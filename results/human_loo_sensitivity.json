@@ -1,0 +1,303 @@
+{
+  "analysis": "Phase 8C: Leave-One-Out Sensitivity",
+  "species": "human",
+  "n_methods": 11,
+  "full_correlations": {
+    "spectral_alignment": {
+      "rho": 0.2,
+      "p": 0.5554
+    },
+    "effective_rank": {
+      "rho": 0.418,
+      "p": 0.2006
+    },
+    "h1_max_persistence": {
+      "rho": 0.073,
+      "p": 0.8317
+    },
+    "two_factor": {
+      "rho": 0.543,
+      "p": 0.0846
+    },
+    "three_factor": {
+      "rho": 0.282,
+      "p": 0.4
+    }
+  },
+  "loo_results": {
+    "DM": {
+      "spectral_alignment": {
+        "rho": 0.079,
+        "p": 0.8287
+      },
+      "effective_rank": {
+        "rho": 0.564,
+        "p": 0.0897
+      },
+      "h1_max_persistence": {
+        "rho": -0.006,
+        "p": 0.9867
+      },
+      "two_factor": {
+        "rho": 0.489,
+        "p": 0.1512
+      },
+      "three_factor": {
+        "rho": 0.298,
+        "p": 0.4032
+      }
+    },
+    "MDS": {
+      "spectral_alignment": {
+        "rho": 0.152,
+        "p": 0.6761
+      },
+      "effective_rank": {
+        "rho": 0.358,
+        "p": 0.3104
+      },
+      "h1_max_persistence": {
+        "rho": 0.164,
+        "p": 0.6515
+      },
+      "two_factor": {
+        "rho": 0.414,
+        "p": 0.2347
+      },
+      "three_factor": {
+        "rho": 0.334,
+        "p": 0.345
+      }
+    },
+    "Spectral": {
+      "spectral_alignment": {
+        "rho": 0.321,
+        "p": 0.3655
+      },
+      "effective_rank": {
+        "rho": 0.224,
+        "p": 0.5334
+      },
+      "h1_max_persistence": {
+        "rho": 0.43,
+        "p": 0.2145
+      },
+      "two_factor": {
+        "rho": 0.351,
+        "p": 0.3195
+      },
+      "three_factor": {
+        "rho": 0.382,
+        "p": 0.2763
+      }
+    },
+    "DeepWalk": {
+      "spectral_alignment": {
+        "rho": 0.164,
+        "p": 0.6515
+      },
+      "effective_rank": {
+        "rho": 0.503,
+        "p": 0.1383
+      },
+      "h1_max_persistence": {
+        "rho": 0.067,
+        "p": 0.8548
+      },
+      "two_factor": {
+        "rho": 0.652,
+        "p": 0.0409
+      },
+      "three_factor": {
+        "rho": 0.316,
+        "p": 0.3736
+      }
+    },
+    "Node2Vec": {
+      "spectral_alignment": {
+        "rho": 0.152,
+        "p": 0.6761
+      },
+      "effective_rank": {
+        "rho": 0.503,
+        "p": 0.1383
+      },
+      "h1_max_persistence": {
+        "rho": 0.091,
+        "p": 0.8028
+      },
+      "two_factor": {
+        "rho": 0.61,
+        "p": 0.0612
+      },
+      "three_factor": {
+        "rho": 0.334,
+        "p": 0.345
+      }
+    },
+    "VGAE": {
+      "spectral_alignment": {
+        "rho": 0.055,
+        "p": 0.881
+      },
+      "effective_rank": {
+        "rho": 0.224,
+        "p": 0.5334
+      },
+      "h1_max_persistence": {
+        "rho": -0.115,
+        "p": 0.7514
+      },
+      "two_factor": {
+        "rho": 0.432,
+        "p": 0.2123
+      },
+      "three_factor": {
+        "rho": 0.067,
+        "p": 0.8544
+      }
+    },
+    "PCA": {
+      "spectral_alignment": {
+        "rho": 0.224,
+        "p": 0.5334
+      },
+      "effective_rank": {
+        "rho": 0.467,
+        "p": 0.1739
+      },
+      "h1_max_persistence": {
+        "rho": 0.164,
+        "p": 0.6515
+      },
+      "two_factor": {
+        "rho": 0.622,
+        "p": 0.0549
+      },
+      "three_factor": {
+        "rho": 0.455,
+        "p": 0.1869
+      }
+    },
+    "VGAE-feat": {
+      "spectral_alignment": {
+        "rho": 0.127,
+        "p": 0.7261
+      },
+      "effective_rank": {
+        "rho": 0.467,
+        "p": 0.1739
+      },
+      "h1_max_persistence": {
+        "rho": -0.006,
+        "p": 0.9867
+      },
+      "two_factor": {
+        "rho": 0.558,
+        "p": 0.0935
+      },
+      "three_factor": {
+        "rho": 0.299,
+        "p": 0.4017
+      }
+    },
+    "GraphSAGE": {
+      "spectral_alignment": {
+        "rho": 0.164,
+        "p": 0.6515
+      },
+      "effective_rank": {
+        "rho": 0.503,
+        "p": 0.1383
+      },
+      "h1_max_persistence": {
+        "rho": 0.055,
+        "p": 0.881
+      },
+      "two_factor": {
+        "rho": 0.537,
+        "p": 0.1098
+      },
+      "three_factor": {
+        "rho": 0.325,
+        "p": 0.3592
+      }
+    },
+    "GAT": {
+      "spectral_alignment": {
+        "rho": 0.6,
+        "p": 0.0667
+      },
+      "effective_rank": {
+        "rho": 0.224,
+        "p": 0.5334
+      },
+      "h1_max_persistence": {
+        "rho": -0.115,
+        "p": 0.7514
+      },
+      "two_factor": {
+        "rho": 0.622,
+        "p": 0.055
+      },
+      "three_factor": {
+        "rho": 0.103,
+        "p": 0.7763
+      }
+    },
+    "GIN": {
+      "spectral_alignment": {
+        "rho": 0.164,
+        "p": 0.6515
+      },
+      "effective_rank": {
+        "rho": 0.503,
+        "p": 0.1383
+      },
+      "h1_max_persistence": {
+        "rho": 0.067,
+        "p": 0.8548
+      },
+      "two_factor": {
+        "rho": 0.537,
+        "p": 0.1098
+      },
+      "three_factor": {
+        "rho": 0.316,
+        "p": 0.3736
+      }
+    }
+  },
+  "impact_summary": {
+    "spectral_alignment": {
+      "most_influential": "GAT",
+      "delta_rho": 0.4,
+      "loo_rho": 0.6,
+      "full_rho": 0.2
+    },
+    "effective_rank": {
+      "most_influential": "Spectral",
+      "delta_rho": -0.194,
+      "loo_rho": 0.224,
+      "full_rho": 0.418
+    },
+    "h1_max_persistence": {
+      "most_influential": "Spectral",
+      "delta_rho": 0.357,
+      "loo_rho": 0.43,
+      "full_rho": 0.073
+    },
+    "two_factor": {
+      "most_influential": "Spectral",
+      "delta_rho": -0.192,
+      "loo_rho": 0.351,
+      "full_rho": 0.543
+    },
+    "three_factor": {
+      "most_influential": "VGAE",
+      "delta_rho": -0.215,
+      "loo_rho": 0.067,
+      "full_rho": 0.282
+    }
+  }
+}

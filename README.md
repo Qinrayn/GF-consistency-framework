@@ -46,6 +46,7 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 39-s
 - **TDA-Geometry Bridge** (Phase 7): Topological G-F Score (rho=0.973) is the strongest single predictor; partial correlation analysis shows TDA adds independent signal beyond spectral alignment + effective rank (partial rho=0.845, p=0.001). H1 max persistence provides marginal independent signal (partial rho=0.527, p=0.096). Three-factor model (spectral+eff_rank+topo_gf) achieves rho=0.909, improving over the two-factor model by 12.4%. Betti curve analysis reveals high-G-F methods have richer loop structure (DM: 11 loops) while rank-collapsed methods (VGAE, VGAE-feat) have zero H1 features
 - **Cross-network validation & bootstrap CIs** (Phase 8): Two-factor model partially transfers to human PPI (rho=0.543, p=0.085 for 11 methods; rho=0.880, p=0.021 for 6-method subset). SVD-based effective rank outperforms PCA-based effective dimensionality on human (rho=0.418 vs 0.082). Bootstrap analysis (10k resamples) confirms 4 single-factor predictors are robust (topo_gf_score, effective_rank, h1_max_persistence, h1_topological_complexity — all CIs exclude 0), but partial correlations are not robust at n=11
 - **Full human TDA analysis** (Phase 8B): Persistent homology recomputed for all 11 methods on human PPI with identical parameters as yeast — H1 max persistence (rho=0.073) does NOT predict G-F Score on human; three-factor model degrades to rho=0.282 (worse than two-factor rho=0.543). TDA loop signal is yeast-specific, not cross-species transferable
+- **LOO sensitivity** (Phase 8C): Spectral is a catastrophic topological outlier on human (H1 persistence 80x lower than yeast). Excluding Spectral reveals latent H1 signal (rho=+0.430), but two-factor model remains the most LOO-stable cross-species predictor
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)
@@ -270,6 +271,7 @@ GF-consistency-framework/
 │   ├── tda_geometry_bridge.py         # TDA-geometry bridge analysis (Phase 7, Fig 44-45)
 │   ├── human_cross_network_validation.py  # Cross-network validation & bootstrap CIs (Phase 8, Fig 46-47)
 │   ├── human_tda_full.py               # Full human TDA: 11-method persistent homology + three-factor validation (Phase 8B, Fig 48)
+│   ├── human_loo_sensitivity.py        # Leave-one-out sensitivity analysis (Phase 8C, Fig 49)
 │   └── utils.py                # Shared utilities
 │
 ├── tests/                      # pytest test suite (51 tests)
@@ -322,6 +324,7 @@ GF-consistency-framework/
 │   ├── Fig46                   # Human cross-network validation (Phase 8)
 │   ├── Fig47                   # Bootstrap confidence intervals (Phase 8)
 │   ├── Fig48                   # Full human TDA + three-factor validation (Phase 8B)
+│   ├── Fig49                   # Leave-one-out sensitivity analysis (Phase 8C)
 │   ├── FigS1–S7                # Supplementary figures
 │   └── FigS8                   # Sampling density comparison
 │
@@ -413,6 +416,7 @@ Beyond the core 39-step pipeline, the framework provides extensible modules for 
 | `tda_geometry_bridge.py` | TDA-geometry bridge: unified feature matrix (11 methods × 18 features), single/multi-factor models, partial correlations, Betti curve phase transitions — proves TDA adds independent predictive signal (Phase 7, Fig 44-45) |
 | `human_cross_network_validation.py` | Cross-network validation: tests two/three-factor models on human PPI, bootstrap CIs for Phase 7 correlations (10k resamples) — confirms single-factor robustness, identifies partial correlation fragility at n=11 (Phase 8, Fig 46-47) |
 | `human_tda_full.py` | Full human TDA analysis: persistent homology for all 11 methods on human PPI with identical yeast parameters, three-factor validation — H1 persistence does NOT transfer (rho=0.073), three-factor degrades to rho=0.282 (Phase 8B, Fig 48) |
+| `human_loo_sensitivity.py` | Leave-one-out sensitivity: Spectral is a catastrophic topological outlier (H1 80x lower than yeast); excluding Spectral reveals latent H1 signal (rho=+0.430); two-factor model is most LOO-stable (Phase 8C, Fig 49) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
 

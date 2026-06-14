@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (Phase 8C: Leave-One-Out Sensitivity Analysis)
+- `human_loo_sensitivity.py`: LOO analysis for all 11-method human correlations — excluding Spectral reveals latent H1 signal (rho=+0.430 vs full rho=+0.073), Spectral's anomalous topology (H1=0.0012, 80x lower than yeast) drives the null result. Two-factor model is most LOO-stable (Phase 8C, Fig 49)
+- `phase8c_loo_sensitivity_report.md`: Comprehensive sensitivity report with cross-species asymmetry analysis
+- `human_loo_sensitivity.json` and Fig 49
+
 ### Added (Phase 8B: Full Human TDA Analysis)
 - `human_tda_full.py`: Computes persistent homology for all 11 methods on human PPI with identical yeast parameters (r-grid [0.05, 0.55], TARGET_STD=0.3), runs complete three-factor validation — H1 max persistence does NOT predict G-F Score on human (rho=0.073), three-factor model degrades to rho=0.282 (worse than two-factor rho=0.543). TDA loop signal is yeast-specific (Phase 8B, Fig 48)
 - `phase8b_human_tda_full_report.md`: Comprehensive supplement report with species comparison, revised three-factor framework interpretation
