@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (Phase 8B: Full Human TDA Analysis)
+- `human_tda_full.py`: Computes persistent homology for all 11 methods on human PPI with identical yeast parameters (r-grid [0.05, 0.55], TARGET_STD=0.3), runs complete three-factor validation — H1 max persistence does NOT predict G-F Score on human (rho=0.073), three-factor model degrades to rho=0.282 (worse than two-factor rho=0.543). TDA loop signal is yeast-specific (Phase 8B, Fig 48)
+- `phase8b_human_tda_full_report.md`: Comprehensive supplement report with species comparison, revised three-factor framework interpretation
+- `human_tda_full.json` and Fig 48
+
 ### Added (Phase 8: Cross-Network Validation & Bootstrap Confidence Intervals)
 - `human_cross_network_validation.py`: Validates two/three-factor models on human PPI (11 methods: two-factor rho=0.543; 6 methods: rho=0.880, p=0.021); computes bootstrap 95% CIs (10k resamples) for Phase 7 single-factor and partial correlations — confirms 4 single-factor predictors robust, partial correlations not robust at n=11 (Phase 8, Fig 46-47)
 - `phase8_cross_network_validation_report.md`: Comprehensive validation report with revised Phase 7 conclusions

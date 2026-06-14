@@ -76,6 +76,7 @@ Deep analysis modules (Phase 1-6)
 #   - gat_collapse_formal_proof: Formal proofs of GAT collapse: 3 theorems + corollary (Phase 6)
 #   - tda_geometry_bridge: TDA-geometry bridge — unified feature matrix, partial correlations, Betti transitions (Phase 7)
 #   - human_cross_network_validation: Cross-network validation on human PPI + bootstrap CIs for Phase 7 (Phase 8)
+#   - human_tda_full: Full human TDA analysis — 11-method persistent homology + three-factor validation (Phase 8B)
 
 Extension modules (v1.1+)
 --------------------------
