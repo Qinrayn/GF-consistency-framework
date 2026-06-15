@@ -1,0 +1,65 @@
+{
+  "description": "Phase 14b: Fixed Hybrid + Discovery Quality",
+  "method_results": {
+    "DM": {
+      "fallback_mrr": 0.219029,
+      "ppi_mrr": 0.218696,
+      "embedding_mrr": 0.036433,
+      "improvement": 0.000333,
+      "improvement_pct": 0.152099
+    },
+    "MDS": {
+      "fallback_mrr": 0.219198,
+      "ppi_mrr": 0.218696,
+      "embedding_mrr": 0.059992,
+      "improvement": 0.000502,
+      "improvement_pct": 0.229521
+    },
+    "Spectral": {
+      "fallback_mrr": 0.219017,
+      "ppi_mrr": 0.218696,
+      "embedding_mrr": 0.065663,
+      "improvement": 0.000321,
+      "improvement_pct": 0.146868
+    },
+    "Node2Vec": {
+      "fallback_mrr": 0.218936,
+      "ppi_mrr": 0.218696,
+      "embedding_mrr": 0.011148,
+      "improvement": 0.000239,
+      "improvement_pct": 0.109455
+    },
+    "VGAE": {
+      "fallback_mrr": 0.219106,
+      "ppi_mrr": 0.218696,
+      "embedding_mrr": 0.010801,
+      "improvement": 0.00041,
+      "improvement_pct": 0.187587
+    }
+  },
+  "rank_aggregation": {
+    "method": "MDS",
+    "weights": {
+      "0.0": 0.219164,
+      "0.05": 0.219117,
+      "0.1": 0.218564,
+      "0.15": 0.21714,
+      "0.2": 0.215056,
+      "0.25": 0.211946,
+      "0.3": 0.208257,
+      "0.4": 0.194692,
+      "0.5": 0.172523
+    },
+    "best_weight": 0.0,
+    "best_mrr": 0.219164,
+    "ppi_mrr": 0.219164,
+    "gain": 0.0
+  },
+  "trial_categories": {
+    "PPI-only": 5370,
+    "Both": 4483,
+    "Emb-rescue": 258,
+    "Miss": 2579
+  },
+  "total_trials": 12690
+}

@@ -1,0 +1,583 @@
+{
+  "description": "Phase 14: Long-Range Functional Link Discovery",
+  "strata_counts": {
+    "1-3 hops": 154952,
+    "4-6 hops": 21937,
+    "7+ hops": 25,
+    "no_path": 0
+  },
+  "strata_recovery": {
+    "1-3 hops": {
+      "DM": 0.0235,
+      "MDS": 0.026,
+      "Spectral": 0.039,
+      "Node2Vec": 0.005,
+      "VGAE": 0.004,
+      "PPI-Neighbors": 0.2535,
+      "2-Hop Diffusion": 0.628
+    },
+    "4-6 hops": {
+      "DM": 0.006,
+      "MDS": 0.0055,
+      "Spectral": 0.0075,
+      "Node2Vec": 0.0025,
+      "VGAE": 0.0015,
+      "PPI-Neighbors": 0.0,
+      "2-Hop Diffusion": 0.0
+    },
+    "7+ hops": {
+      "PPI-Neighbors": 0.0,
+      "2-Hop Diffusion": 0.0
+    }
+  },
+  "hybrid_sweep": {
+    "0.0": 0.219036,
+    "0.1": 0.076776,
+    "0.2": 0.074619,
+    "0.3": 0.073638,
+    "0.4": 0.073253,
+    "0.5": 0.073043,
+    "0.6": 0.072907,
+    "0.7": 0.072817,
+    "0.8": 0.07267,
+    "0.9": 0.072638,
+    "1.0": 0.065626
+  },
+  "hybrid_detail": {
+    "best_method": "Spectral",
+    "best_weight": 0.0,
+    "best_hybrid_mrr": 0.21903595735647977,
+    "ppi_mrr": 0.21903595735647977,
+    "twohop_mrr": 0.10473017113033489,
+    "n_trials": 12690,
+    "n_proteins": 3133
+  },
+  "longrange_discovery_count": {
+    "DM": 251,
+    "MDS": 145,
+    "Spectral": 256,
+    "Node2Vec": 212,
+    "VGAE": 234
+  },
+  "longrange_examples": {
+    "DM": [
+      {
+        "protein_a": "YAL018C",
+        "protein_b": "YER046W",
+        "embedding_dist": 0.01273648777918856,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0030476"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL018C",
+        "protein_b": "YDL239C",
+        "embedding_dist": 0.018724353741303542,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0030476"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL018C",
+        "protein_b": "YDR402C",
+        "embedding_dist": 0.020096838155713524,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0030476"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL031C",
+        "protein_b": "YDR409W",
+        "embedding_dist": 0.013246568572002074,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0007059"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL051W",
+        "protein_b": "YHR084W",
+        "embedding_dist": 0.008155390474149676,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0045944"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL053W",
+        "protein_b": "YDR046C",
+        "embedding_dist": 0.00670563089188014,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0055085"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL053W",
+        "protein_b": "YCR010C",
+        "embedding_dist": 0.020525326911826666,
+        "network_dist": 5,
+        "shared_terms": [
+          "GO:0055085"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAR018C",
+        "protein_b": "YPL018W",
+        "embedding_dist": 0.005535627057492541,
+        "network_dist": 5,
+        "shared_terms": [
+          "GO:0007059"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBL051C",
+        "protein_b": "YDR499W",
+        "embedding_dist": 0.04444767296103431,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0000077"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBL054W",
+        "protein_b": "YJL103C",
+        "embedding_dist": 0.01924659617564596,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0006357"
+        ],
+        "n_shared": 1
+      }
+    ],
+    "MDS": [
+      {
+        "protein_a": "YAL051W",
+        "protein_b": "YMR280C",
+        "embedding_dist": 0.028349879506491774,
+        "network_dist": 5,
+        "shared_terms": [
+          "GO:0045944"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL053W",
+        "protein_b": "YDR508C",
+        "embedding_dist": 0.03227581878248387,
+        "network_dist": 5,
+        "shared_terms": [
+          "GO:0055085"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL053W",
+        "protein_b": "YPR192W",
+        "embedding_dist": 0.046832647608852515,
+        "network_dist": 5,
+        "shared_terms": [
+          "GO:0055085"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL053W",
+        "protein_b": "YML048W",
+        "embedding_dist": 0.04720197629255773,
+        "network_dist": 5,
+        "shared_terms": [
+          "GO:0006457"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL067C",
+        "protein_b": "YCL069W",
+        "embedding_dist": 0.10254224135837763,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0055085"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBL030C",
+        "protein_b": "YDR205W",
+        "embedding_dist": 0.03646626482035796,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0055085"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBR046C",
+        "protein_b": "YDR368W",
+        "embedding_dist": 0.09050787405050448,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0034599"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBR127C",
+        "protein_b": "YBR180W",
+        "embedding_dist": 0.020798313709799135,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0055085"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBR135W",
+        "protein_b": "YMR182C",
+        "embedding_dist": 0.028865150603006803,
+        "network_dist": 5,
+        "shared_terms": [
+          "GO:0045944"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBR180W",
+        "protein_b": "YBR127C",
+        "embedding_dist": 0.020798313709799135,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0055085"
+        ],
+        "n_shared": 1
+      }
+    ],
+    "Spectral": [
+      {
+        "protein_a": "YAL053W",
+        "protein_b": "YML048W",
+        "embedding_dist": 0.0010910583662186286,
+        "network_dist": 5,
+        "shared_terms": [
+          "GO:0006457"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL053W",
+        "protein_b": "YJL117W",
+        "embedding_dist": 0.0012693028445310108,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0006457"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL053W",
+        "protein_b": "YDR508C",
+        "embedding_dist": 0.0013485598678941006,
+        "network_dist": 5,
+        "shared_terms": [
+          "GO:0055085"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAR018C",
+        "protein_b": "YPL137C",
+        "embedding_dist": 0.0006367502270725135,
+        "network_dist": 5,
+        "shared_terms": [
+          "GO:0007059"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBR006W",
+        "protein_b": "YBR014C",
+        "embedding_dist": 0.0011046221381758104,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0034599"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBR014C",
+        "protein_b": "YBR006W",
+        "embedding_dist": 0.0011046221381758104,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0034599"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBR014C",
+        "protein_b": "YDR346C",
+        "embedding_dist": 0.002014989173504256,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0034599"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBR066C",
+        "protein_b": "YDL214C",
+        "embedding_dist": 0.001108143076123029,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0000122"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBR083W",
+        "protein_b": "YBR240C",
+        "embedding_dist": 0.0014163270892016415,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0045944"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBR105C",
+        "protein_b": "YMR004W",
+        "embedding_dist": 0.0018700643940076113,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0006623"
+        ],
+        "n_shared": 1
+      }
+    ],
+    "Node2Vec": [
+      {
+        "protein_a": "Q0275",
+        "protein_b": "YMR081C",
+        "embedding_dist": 0.0031844937289572123,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0009060"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL019W",
+        "protein_b": "YNL239W",
+        "embedding_dist": 0.0033775876200367577,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0000122"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL067C",
+        "protein_b": "YCL069W",
+        "embedding_dist": 0.01140220355922229,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0055085"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAR042W",
+        "protein_b": "YHR080C",
+        "embedding_dist": 0.00989683437063041,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0015918"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBL005W",
+        "protein_b": "YJL184W",
+        "embedding_dist": 0.0069681429723141555,
+        "network_dist": 5,
+        "shared_terms": [
+          "GO:0045944"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBL031W",
+        "protein_b": "YML064C",
+        "embedding_dist": 0.00544951140173259,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0040001"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBL055C",
+        "protein_b": "YCL035C",
+        "embedding_dist": 0.007546770642057497,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0034599"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBL058W",
+        "protein_b": "YLR341W",
+        "embedding_dist": 0.023286579458411838,
+        "network_dist": 5,
+        "shared_terms": [
+          "GO:0030437"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBL066C",
+        "protein_b": "YDR073W",
+        "embedding_dist": 0.00841474685380101,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0006357"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YBR043C",
+        "protein_b": "YDL128W",
+        "embedding_dist": 0.0542108244129333,
+        "network_dist": 5,
+        "shared_terms": [
+          "GO:0055085"
+        ],
+        "n_shared": 1
+      }
+    ],
+    "VGAE": [
+      {
+        "protein_a": "YAL005C",
+        "protein_b": "YJL146W",
+        "embedding_dist": 0.024729978870218598,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0006457"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL013W",
+        "protein_b": "YPR030W",
+        "embedding_dist": 0.0007162944921488163,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0006357"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL013W",
+        "protein_b": "YNL314W",
+        "embedding_dist": 0.007073625413112031,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0045944"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL019W",
+        "protein_b": "YPL038W",
+        "embedding_dist": 0.0053130135703888205,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0000122"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL040C",
+        "protein_b": "YGL095C",
+        "embedding_dist": 0.02067265025215797,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0007033"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL051W",
+        "protein_b": "YLR071C",
+        "embedding_dist": 0.002694462340762245,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0045944"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL051W",
+        "protein_b": "YKL043W",
+        "embedding_dist": 0.0066153141535261455,
+        "network_dist": 5,
+        "shared_terms": [
+          "GO:0045944"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL051W",
+        "protein_b": "YNR023W",
+        "embedding_dist": 0.008549068357611229,
+        "network_dist": 5,
+        "shared_terms": [
+          "GO:0045944"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL051W",
+        "protein_b": "YPR008W",
+        "embedding_dist": 0.014699311679494124,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0045944"
+        ],
+        "n_shared": 1
+      },
+      {
+        "protein_a": "YAL067C",
+        "protein_b": "YBR293W",
+        "embedding_dist": 0.02505506889795579,
+        "network_dist": 4,
+        "shared_terms": [
+          "GO:0055085"
+        ],
+        "n_shared": 1
+      }
+    ]
+  },
+  "annotation_stats": {
+    "total_gaf_lines": 138996,
+    "experimental_bp_lines": 22568,
+    "mapped_to_network": 21854,
+    "unmapped": 714,
+    "proteins_annotated": 4709,
+    "unique_terms": 2486,
+    "terms_per_protein_mean": 3.0
+  }
+}

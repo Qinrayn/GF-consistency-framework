@@ -85,6 +85,9 @@ Deep analysis modules (Phase 1-6)
 #   - spectral_transferability: Spectral Quality Index (SQI) + SBM validation — explains two-factor model transferability (Phase 11)
 #   - biological_validation: GO BP enrichment + multi-seed panel + mixed-effects model (Phase 12)
 #   - function_prediction: Protein function prediction via LOTO-CV + GF Score correlation (Phase 13)
+#   - dimension_sweep: Spectral embedding dimension sweep d=2..64 (Phase 13b)
+#   - longrange_functional_links: Distance-stratified recovery + long-range discovery (Phase 14)
+#   - longrange_hybrid_fixed: Rank-based fallback hybrid predictor + rescue analysis (Phase 14b)
 
 Extension modules (v1.1+)
 --------------------------
@@ -99,4 +102,4 @@ robustness_analysis           Extended 30-subset convergence analysis
 visualization_helpers         Okabe-Ito colorblind-safe plotting utilities
 """
 
-__version__ = "1.9.0"
+__version__ = "2.0.0"

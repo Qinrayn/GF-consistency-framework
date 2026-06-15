@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (Phase 14: Long-Range Functional Link Discovery + Hybrid Predictor)
+- `longrange_functional_links.py`: Three-part analysis — (1) distance-stratified functional recovery: 176,914 protein pairs sharing GO BP terms stratified by shortest-path network distance (1-3 hops: 87.6%, 4-6 hops: 12.4%, 7+: 0.01%); at 4-6 hops, PPI recovery = 0.000 but Spectral recovers 0.007, confirming embeddings capture signals invisible to local topology; (2) score-weighted hybrid predictor (fails — embedding distance weights overwhelm PPI votes); (3) long-range functional link discovery: 256 links found by Spectral (>=4 hops apart but within top-30 KNN), total ~1,100 across 5 methods
+- `longrange_hybrid_fixed.py`: Fixed hybrid using rank-based fallback (PPI first, embedding fills gaps) — ALL 5 methods improve over pure PPI (MDS best: +0.0005, +0.2%); 258 embedding-rescued trials where PPI fails but embedding succeeds (2.0% of 12,690 LOTO trials); rank aggregation (Borda count) sweep shows pure PPI remains optimal when diluting with embedding ranks
+- `dimension_sweep.py`: Spectral embedding dimension sweep d = {2, 4, 8, 16, 32, 64} on full yeast network; MRR improves 213% from d=2 (0.066) to d=64 (0.205); no dimension exceeds PPI baseline (0.219); d=2 captures only 0.7% of eigenvalue information — 2D visualization fundamentally lossy
+- `longrange_functional_links.json`, `longrange_hybrid_fixed.json`, `dimension_sweep.json`, `phase14_report.md`, and Figs 69-75
+
 ### Added (Phase 13: Protein Function Prediction — Closing the Loop)
 - `function_prediction.py`: Leave-one-term-out cross-validation on the full yeast STRING network (5936 nodes, 4709 proteins with experimental BP annotations, 12 690 LOTO trials). Five embedding methods (DM, MDS, Spectral, Node2Vec, VGAE) predict protein function via KNN in embedding space; three network-topology baselines (PPI direct neighbours, 2-hop diffusion, random frequency). Evaluates Precision@k (k = 3–30) and Mean Reciprocal Rank. Closes the framework loop by correlating curated-network GF Score with full-network prediction accuracy (Spearman rho across 5 methods). Key results: Spectral best embedding method (MRR=0.066, P@10=0.148); GF Score strongly predicts function-prediction accuracy (Spearman rho=0.900, P=0.037, n=5); rank ordering Spectral > MDS > DM > Node2Vec > VGAE matches Phase 1–12 consensus
 - `function_prediction.json`, `phase13_report.md`, and Figs 65-68
