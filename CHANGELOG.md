@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (Phase 11: Spectral Transferability Theory)
+- `spectral_transferability.py`: Derives and validates a closed-form Spectral Quality Index (SQI = λ₂/λ₂_ER × PR × FA_max) that predicts whether the two-factor model transfers to a given PPI network. Part 1 computes Laplacian spectral analysis (eigenvalues, Fiedler participation ratio, functional alignment) for yeast/human/mouse full networks via sparse eigsh. Part 2 verifies the SQI–SA_std monotonic relationship empirically. Part 3 validates on 20 synthetic SBM networks with controlled community structure (n ∈ {500,1000,2000}, k ∈ {5,10,20}) (Phase 11, Fig 55-59). Key results: SQI ordering yeast(10.72) > human(2.02) > mouse(0.54) matches two-factor rho ordering +0.929 > +0.483 > −0.037; mouse Fiedler vector is 6× more localized than yeast (PR=0.0007 vs 0.0044); SBM SA_std correlates +0.647 with log(SQI)
+- `spectral_transferability.json`, `phase11_report.md`, and Figs 55-59
+
 ### Added (Phase 10: Mouse Validation + Persistence Image TDA)
 - `mouse_data_prep.py`: Downloads mouse STRING PPI (taxon 10090, ~81MB), MGI GAF (~13MB), and STRING aliases (~13MB); builds Ensembl_MGI alias map for protein-to-gene-symbol conversion; outputs curated network (~16K nodes, ~233K edges) + GO annotations (17,639 genes) (Phase 10A)
 - `mouse_embeddings_full.py`: Full-network embedding pipeline matching human methodology — computes all 11 methods on the complete ~16K-node mouse STRING network (subsample-after, not subsample-before), with landmark MDS (500 landmarks + Nystrom extension) and sparse VGAE/GNN training for memory efficiency (Phase 10B)

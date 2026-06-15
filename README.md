@@ -49,6 +49,7 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 39-s
 - **LOO sensitivity** (Phase 8C): Spectral is a catastrophic topological outlier on human (H1 persistence 80x lower than yeast). Excluding Spectral reveals latent H1 signal (rho=+0.430), but two-factor model remains the most LOO-stable cross-species predictor
 - **Unified human G-F Scores** (Phase 9): Eliminating community-detection (Louvain→greedy_modularity) and interval ([0.282,0.297]→[0.05,0.422]) confounds yields rho=0.927 rank correlation with original scores. Top-3 (Spectral, MDS, Node2Vec) and bottom-2 (VGAE, GAT) rankings are identical. All predictor correlations preserved in direction (two-factor rho=+0.483 vs old +0.543). LOO pattern confirms Phase 8C (H1→+0.418 excl Spectral)
 - **Three-species mouse validation** (Phase 10): Spectral ranks #1 in all 3 species (yeast, human, mouse). Kendall W=0.739 (11 methods, 3 species). Top-2 (Spectral, MDS) and bottom-2 (VGAE, VGAE-feat) identical in all species. Two-factor geometric model does NOT transfer to mouse (rho=−0.037) — the spectral alignment + effective rank predictors are network-specific, even though method quality is conserved. Spectral is a topological outlier in both human and mouse (H1 persistence 72–161× lower). Persistence images do not improve G-F prediction over scalar H1 features
+- **Spectral Transferability Theory** (Phase 11): Derives closed-form Spectral Quality Index (SQI = λ₂/λ₂_ER × PR × FA_max) predicting when the two-factor model works. SQI ordering: yeast(10.72) > human(2.02) > mouse(0.54) matches two-factor rho: +0.929 > +0.483 > −0.037. Mouse Fiedler vector is 6× more localized (PR=0.0007). Validated on 20 SBM networks (SA_std vs log(SQI) rho=+0.647)
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)
@@ -278,6 +279,7 @@ GF-consistency-framework/
 │   ├── mouse_data_prep.py              # Mouse STRING PPI download + MGI GAF ID mapping (Phase 10A)
 │   ├── mouse_embeddings_full.py        # Full-network mouse embeddings: 11 methods, ~16K nodes (Phase 10B)
 │   ├── persistence_image_analysis.py   # Persistence image TDA + three-species comparison (Phase 10C, Fig 51-54)
+│   ├── spectral_transferability.py     # Spectral Quality Index (SQI) + SBM validation (Phase 11, Fig 55-59)
 │   └── utils.py                # Shared utilities
 │
 ├── tests/                      # pytest test suite (51 tests)
@@ -336,6 +338,11 @@ GF-consistency-framework/
 │   ├── Fig52                   # Persistence images gallery: human vs mouse (Phase 10)
 │   ├── Fig53                   # Three-species G-F Score comparison (Phase 10)
 │   ├── Fig54                   # TDA feature comparison: scalar vs persistence image (Phase 10)
+│   ├── Fig55                   # Laplacian spectrum comparison: 3 species (Phase 11)
+│   ├── Fig56                   # SQI decomposition + two-factor rho (Phase 11)
+│   ├── Fig57                   # SA discriminative power vs SQI (Phase 11)
+│   ├── Fig58                   # SBM synthetic validation (Phase 11)
+│   ├── Fig59                   # Transferability summary + table (Phase 11)
 │   ├── FigS1–S7                # Supplementary figures
 │   └── FigS8                   # Sampling density comparison
 │
@@ -434,6 +441,7 @@ Beyond the core 39-step pipeline, the framework provides extensible modules for 
 | `mouse_data_prep.py` | Mouse STRING PPI + MGI GAF download with Ensembl_MGI alias-based ID mapping: ~16K nodes, ~233K edges, 17,639 annotated genes (Phase 10A) |
 | `mouse_embeddings_full.py` | Full-network mouse embeddings (11 methods, ~16K nodes) with landmark MDS + sparse VGAE/GNN — matches human pipeline methodology (subsample-after, not subsample-before) (Phase 10B) |
 | `persistence_image_analysis.py` | Persistence image TDA via ripser/persim: mouse G-F scores, H1 persistence diagrams + images (energy, density, spread, entropy), three-species Kendall's W concordance (Phase 10C, Fig 51-54) |
+| `spectral_transferability.py` | Spectral Transferability Theory: derives Spectral Quality Index (SQI = λ₂/λ₂_ER × PR × FA_max) predicting two-factor model transferability; Laplacian spectral analysis (3 species), proposition verification, synthetic SBM validation (20 networks) (Phase 11, Fig 55-59) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
 
@@ -522,6 +530,27 @@ Three-species cross-species validation on mouse STRING v11.5 PPI (~16,180 nodes,
 - Persistence images do not improve G-F prediction over scalar H1 features
 
 Report → [`results/phase10_report.md`](results/phase10_report.md) · Figures → [`figures/Fig51-54`](figures/)
+
+---
+
+## Spectral Transferability Theory (Phase 11)
+
+Why does the two-factor model (spectral alignment + effective rank) work on yeast and human but fail on mouse? The answer lies in the **Spectral Quality Index (SQI)**:
+
+$$\text{SQI} = \frac{\lambda_2}{\lambda_2^{\text{ER}}} \times \text{PR}(v_2) \times \text{FA}_{\max}$$
+
+| Species | n | λ₂ | Fiedler PR | SQI | SA_std | 2F rho |
+|---------|-------|--------|-----------|-------|--------|--------|
+| Yeast | 5,936 | 0.0409 | 0.0044 | 10.72 | 0.140 | +0.929 |
+| Human | 15,882 | 0.0046 | 0.0037 | 2.02 | 0.006 | +0.483 |
+| Mouse | 16,180 | 0.0067 | 0.0007 | 0.54 | 0.006 | −0.037 |
+
+- Mouse Fiedler vector is **6× more localized** than yeast (PR=0.0007 vs 0.0044)
+- SQI ordering perfectly predicts two-factor model performance: yeast > human > mouse
+- Validated on 20 synthetic SBM networks: SA_std correlates +0.647 with log(SQI)
+- Practical implication: compute SQI from a PPI network alone to predict a priori whether spectral-based evaluation will work
+
+Report → [`results/phase11_report.md`](results/phase11_report.md) · Figures → [`figures/Fig55-59`](figures/)
 
 ---
 
