@@ -1,0 +1,56 @@
+{
+  "common_methods": [
+    "DM",
+    "DeepWalk",
+    "GAT",
+    "GIN",
+    "GraphSAGE",
+    "MDS",
+    "Node2Vec",
+    "PCA",
+    "Spectral",
+    "VGAE",
+    "VGAE-feat"
+  ],
+  "yeast_ranks": {
+    "DM": 2,
+    "DeepWalk": 7,
+    "GAT": 9,
+    "GIN": 8,
+    "GraphSAGE": 10,
+    "MDS": 3,
+    "Node2Vec": 4,
+    "PCA": 5,
+    "Spectral": 1,
+    "VGAE": 11,
+    "VGAE-feat": 6
+  },
+  "human_ranks": {
+    "DM": 8,
+    "DeepWalk": 4,
+    "GAT": 11,
+    "GIN": 9,
+    "GraphSAGE": 5,
+    "MDS": 2,
+    "Node2Vec": 3,
+    "PCA": 6,
+    "Spectral": 1,
+    "VGAE": 10,
+    "VGAE-feat": 7
+  },
+  "mouse_ranks": {
+    "DM": 5,
+    "DeepWalk": 6,
+    "GAT": 7,
+    "GIN": 9,
+    "GraphSAGE": 4,
+    "MDS": 2,
+    "Node2Vec": 8,
+    "PCA": 3,
+    "Spectral": 1,
+    "VGAE": 10,
+    "VGAE-feat": 11
+  },
+  "kendall_W": 0.739,
+  "analysis": "Phase 10: Three-Species Cross-Species Comparison"
+}

@@ -1,0 +1,114 @@
+{
+  "analysis": "Phase 10: Mouse G-F Analysis",
+  "community_detection": "greedy_modularity_communities",
+  "n_points": 25,
+  "r_range": [
+    0.05,
+    0.55
+  ],
+  "methods": [
+    "DM",
+    "MDS",
+    "Spectral",
+    "DeepWalk",
+    "Node2Vec",
+    "VGAE",
+    "PCA",
+    "VGAE-feat",
+    "GraphSAGE",
+    "GAT",
+    "GIN"
+  ],
+  "gf_scores": {
+    "DM": {
+      "gf_score": 0.047668,
+      "peak_purity": 0.0589
+    },
+    "MDS": {
+      "gf_score": 0.159601,
+      "peak_purity": 0.1796
+    },
+    "Spectral": {
+      "gf_score": 0.308651,
+      "peak_purity": 0.3122
+    },
+    "DeepWalk": {
+      "gf_score": 0.036906,
+      "peak_purity": 0.051
+    },
+    "Node2Vec": {
+      "gf_score": 0.031318,
+      "peak_purity": 0.0428
+    },
+    "VGAE": {
+      "gf_score": 0.015758,
+      "peak_purity": 0.0354
+    },
+    "PCA": {
+      "gf_score": 0.06351,
+      "peak_purity": 0.086
+    },
+    "VGAE-feat": {
+      "gf_score": 0.014894,
+      "peak_purity": 0.0307
+    },
+    "GraphSAGE": {
+      "gf_score": 0.056325,
+      "peak_purity": 0.1192
+    },
+    "GAT": {
+      "gf_score": 0.036101,
+      "peak_purity": 0.0762
+    },
+    "GIN": {
+      "gf_score": 0.021213,
+      "peak_purity": 0.0429
+    }
+  },
+  "features": {
+    "DM": {
+      "spectral_alignment": 0.68427061442229,
+      "effective_rank": 1.999201505710686
+    },
+    "MDS": {
+      "spectral_alignment": 0.647852519800309,
+      "effective_rank": 1.893370468407851
+    },
+    "Spectral": {
+      "spectral_alignment": 0.10094896020071197,
+      "effective_rank": 1.9980034793825778
+    },
+    "DeepWalk": {
+      "spectral_alignment": 0.5398877424791749,
+      "effective_rank": 1.2741208574293021
+    },
+    "Node2Vec": {
+      "spectral_alignment": 0.4464221286470216,
+      "effective_rank": 1.3131972730811479
+    },
+    "VGAE": {
+      "spectral_alignment": 0.6842020369046176,
+      "effective_rank": 1.9884726543191287
+    },
+    "PCA": {
+      "spectral_alignment": 0.6648033657057619,
+      "effective_rank": 1.7172383052924491
+    },
+    "VGAE-feat": {
+      "spectral_alignment": 0.7591799653616038,
+      "effective_rank": 1.0136616102240898
+    },
+    "GraphSAGE": {
+      "spectral_alignment": 0.8816447671968822,
+      "effective_rank": 1.2976614029846714
+    },
+    "GAT": {
+      "spectral_alignment": 0.9509924417123193,
+      "effective_rank": 1.5559362809609691
+    },
+    "GIN": {
+      "spectral_alignment": 0.697064692093619,
+      "effective_rank": 1.9813273541891658
+    }
+  }
+}

@@ -78,6 +78,10 @@ Deep analysis modules (Phase 1-6)
 #   - human_cross_network_validation: Cross-network validation on human PPI + bootstrap CIs for Phase 7 (Phase 8)
 #   - human_tda_full: Full human TDA analysis — 11-method persistent homology + three-factor validation (Phase 8B)
 #   - human_loo_sensitivity: Leave-one-out sensitivity — Spectral outlier reveals latent H1 signal (Phase 8C)
+#   - human_gf_unified: Unified human G-F Scores — eliminates community-detection + interval confounds (Phase 9)
+#   - mouse_data_prep: Mouse STRING PPI download + MGI GAF ID mapping (Phase 10A)
+#   - mouse_embeddings_full: Full-network mouse embeddings (11 methods, ~16K nodes) matching human pipeline (Phase 10B)
+#   - persistence_image_analysis: Persistence image TDA + three-species cross-species comparison (Phase 10C)
 
 Extension modules (v1.1+)
 --------------------------
@@ -92,4 +96,4 @@ robustness_analysis           Extended 30-subset convergence analysis
 visualization_helpers         Okabe-Ito colorblind-safe plotting utilities
 """
 
-__version__ = "1.5.0"
+__version__ = "1.6.0"

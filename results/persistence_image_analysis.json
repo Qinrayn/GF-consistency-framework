@@ -1,0 +1,401 @@
+{
+  "analysis": "Phase 10: Persistence Image TDA Analysis",
+  "species": [
+    "human",
+    "mouse"
+  ],
+  "per_method": {
+    "human": {
+      "DM": {
+        "h1_stats": {
+          "n_features": 459,
+          "max_persistence": 0.0647781491279602,
+          "mean_persistence": 0.007618271244572139,
+          "total_persistence": 3.4967865012586117
+        },
+        "pi_features": {
+          "total_energy": 0.006602811612631196,
+          "max_density": 5.5617091356471175e-05,
+          "spread": 5.289288322835509,
+          "entropy": 4.779120771775718
+        }
+      },
+      "MDS": {
+        "h1_stats": {
+          "n_features": 505,
+          "max_persistence": 0.05382121354341507,
+          "mean_persistence": 0.008214833886168971,
+          "total_persistence": 4.14849111251533
+        },
+        "pi_features": {
+          "total_energy": 0.014413030353028867,
+          "max_density": 6.599481854176408e-05,
+          "spread": 10.788071576282661,
+          "entropy": 5.4025443668217665
+        }
+      },
+      "Spectral": {
+        "h1_stats": {
+          "n_features": 420,
+          "max_persistence": 0.0012362580746412277,
+          "mean_persistence": 5.674867407357115e-05,
+          "total_persistence": 0.023834443110899883
+        },
+        "pi_features": {
+          "total_energy": 3.7933330450211866e-07,
+          "max_density": 3.7933330450211866e-07,
+          "spread": 0.0,
+          "entropy": 0.0
+        }
+      },
+      "DeepWalk": {
+        "h1_stats": {
+          "n_features": 443,
+          "max_persistence": 0.09846633672714233,
+          "mean_persistence": 0.0017353003867547098,
+          "total_persistence": 0.7687380713323364
+        },
+        "pi_features": {
+          "total_energy": 0.008137280869437026,
+          "max_density": 1.1938670131377398e-05,
+          "spread": 20.52256039045187,
+          "entropy": 6.564286798763261
+        }
+      },
+      "Node2Vec": {
+        "h1_stats": {
+          "n_features": 423,
+          "max_persistence": 0.08591881394386292,
+          "mean_persistence": 0.001017599095743569,
+          "total_persistence": 0.43044441749952966
+        },
+        "pi_features": {
+          "total_energy": 0.0018245866329372916,
+          "max_density": 6.79803749538347e-06,
+          "spread": 9.01998878934602,
+          "entropy": 5.598403796030897
+        }
+      },
+      "VGAE": {
+        "h1_stats": {
+          "n_features": 314,
+          "max_persistence": 0.005538474302738905,
+          "mean_persistence": 0.0006513804255519062,
+          "total_persistence": 0.20453345362329856
+        },
+        "pi_features": {
+          "total_energy": 6.510320919571171e-06,
+          "max_density": 3.2551998146331145e-06,
+          "spread": 0.49999999996345806,
+          "entropy": 0.6931471804868614
+        }
+      },
+      "PCA": {
+        "h1_stats": {
+          "n_features": 505,
+          "max_persistence": 0.12058904767036438,
+          "mean_persistence": 0.004030970137538665,
+          "total_persistence": 2.035639919457026
+        },
+        "pi_features": {
+          "total_energy": 0.0226036518795245,
+          "max_density": 3.226527195980999e-05,
+          "spread": 16.503061808496682,
+          "entropy": 6.589607177897941
+        }
+      },
+      "VGAE-feat": {
+        "h1_stats": {
+          "n_features": 455,
+          "max_persistence": 0.05298623442649841,
+          "mean_persistence": 0.0037350296856487517,
+          "total_persistence": 1.699438506970182
+        },
+        "pi_features": {
+          "total_energy": 0.005435796759774096,
+          "max_density": 2.6971320719771456e-05,
+          "spread": 9.939385230191517,
+          "entropy": 5.318042408811895
+        }
+      },
+      "GraphSAGE": {
+        "h1_stats": {
+          "n_features": 519,
+          "max_persistence": 0.10546937584877014,
+          "mean_persistence": 0.004857111089685232,
+          "total_persistence": 2.5208406555466354
+        },
+        "pi_features": {
+          "total_energy": 0.00615752514107236,
+          "max_density": 4.010072900269575e-05,
+          "spread": 5.122076996689201,
+          "entropy": 5.036950079640295
+        }
+      },
+      "GAT": {
+        "h1_stats": {
+          "n_features": 510,
+          "max_persistence": 0.0028063668869435787,
+          "mean_persistence": 0.00019370969966985284,
+          "total_persistence": 0.09879194683162495
+        },
+        "pi_features": {
+          "total_energy": 1.5723022697355546e-06,
+          "max_density": 1.5723022697355546e-06,
+          "spread": 0.0,
+          "entropy": 0.0
+        }
+      },
+      "GIN": {
+        "h1_stats": {
+          "n_features": 504,
+          "max_persistence": 0.10147394239902496,
+          "mean_persistence": 0.007668998808575063,
+          "total_persistence": 3.8651753995218314
+        },
+        "pi_features": {
+          "total_energy": 0.01680201387503682,
+          "max_density": 6.143858399579464e-05,
+          "spread": 7.866897576907974,
+          "entropy": 5.616757026396133
+        }
+      }
+    },
+    "mouse": {
+      "DM": {
+        "h1_stats": {
+          "n_features": 479,
+          "max_persistence": 0.0694074034690857,
+          "mean_persistence": 0.00706767600169697,
+          "total_persistence": 3.3854168048128486
+        },
+        "pi_features": {
+          "total_energy": 0.00788125092822451,
+          "max_density": 5.385601522468765e-05,
+          "spread": 6.3727814304572235,
+          "entropy": 4.990422652702804
+        }
+      },
+      "MDS": {
+        "h1_stats": {
+          "n_features": 522,
+          "max_persistence": 0.04572978615760803,
+          "mean_persistence": 0.007353986599179292,
+          "total_persistence": 3.8387810047715902
+        },
+        "pi_features": {
+          "total_energy": 0.008474154670398942,
+          "max_density": 6.104124730722613e-05,
+          "spread": 8.190120026323278,
+          "entropy": 4.941605254901459
+        }
+      },
+      "Spectral": {
+        "h1_stats": {
+          "n_features": 454,
+          "max_persistence": 0.0011130073107779026,
+          "mean_persistence": 5.719378690035244e-05,
+          "total_persistence": 0.025965979252760008
+        },
+        "pi_features": {
+          "total_energy": 4.132574005580705e-07,
+          "max_density": 4.132574005580705e-07,
+          "spread": 0.0,
+          "entropy": 0.0
+        }
+      },
+      "DeepWalk": {
+        "h1_stats": {
+          "n_features": 418,
+          "max_persistence": 0.12306123971939087,
+          "mean_persistence": 0.002233678104801401,
+          "total_persistence": 0.9336774478069856
+        },
+        "pi_features": {
+          "total_energy": 0.012378078015341628,
+          "max_density": 1.4379940978191243e-05,
+          "spread": 19.839171276962052,
+          "entropy": 6.784046497770708
+        }
+      },
+      "Node2Vec": {
+        "h1_stats": {
+          "n_features": 418,
+          "max_persistence": 0.1770833134651184,
+          "mean_persistence": 0.0015926251428427522,
+          "total_persistence": 0.6657173097082705
+        },
+        "pi_features": {
+          "total_energy": 0.014379699280504825,
+          "max_density": 9.967256580735284e-06,
+          "spread": 24.27092774603792,
+          "entropy": 7.308546793131511
+        }
+      },
+      "VGAE": {
+        "h1_stats": {
+          "n_features": 511,
+          "max_persistence": 0.0811464786529541,
+          "mean_persistence": 0.008904881812741437,
+          "total_persistence": 4.550394606310874
+        },
+        "pi_features": {
+          "total_energy": 0.013622440848753994,
+          "max_density": 7.235967534449398e-05,
+          "spread": 6.578606128443971,
+          "entropy": 5.241739726777993
+        }
+      },
+      "PCA": {
+        "h1_stats": {
+          "n_features": 486,
+          "max_persistence": 0.07943279296159744,
+          "mean_persistence": 0.003951606901344333,
+          "total_persistence": 1.920480954053346
+        },
+        "pi_features": {
+          "total_energy": 0.013347069563231541,
+          "max_density": 3.048559430744218e-05,
+          "spread": 16.516078033731333,
+          "entropy": 6.121696607033876
+        }
+      },
+      "VGAE-feat": {
+        "h1_stats": {
+          "n_features": 417,
+          "max_persistence": 0.030897334218025208,
+          "mean_persistence": 0.0014389218663131234,
+          "total_persistence": 0.6000304182525724
+        },
+        "pi_features": {
+          "total_energy": 0.0006846083619677592,
+          "max_density": 9.543245641424548e-06,
+          "spread": 5.304503803553285,
+          "entropy": 4.276659464148504
+        }
+      },
+      "GraphSAGE": {
+        "h1_stats": {
+          "n_features": 501,
+          "max_persistence": 0.04306179657578468,
+          "mean_persistence": 0.002723737916780892,
+          "total_persistence": 1.364592696307227
+        },
+        "pi_features": {
+          "total_energy": 0.0017317403425461718,
+          "max_density": 2.1707137438008698e-05,
+          "spread": 4.819952934631052,
+          "entropy": 4.382022869391337
+        }
+      },
+      "GAT": {
+        "h1_stats": {
+          "n_features": 480,
+          "max_persistence": 0.022529009729623795,
+          "mean_persistence": 0.002897292559403771,
+          "total_persistence": 1.39070042851381
+        },
+        "pi_features": {
+          "total_energy": 0.0006633297975599196,
+          "max_density": 2.2131401001106624e-05,
+          "spread": 2.9856342968241734,
+          "entropy": 3.4011969152352743
+        }
+      },
+      "GIN": {
+        "h1_stats": {
+          "n_features": 481,
+          "max_persistence": 0.11607199907302856,
+          "mean_persistence": 0.007847175621325943,
+          "total_persistence": 3.774491473857779
+        },
+        "pi_features": {
+          "total_energy": 0.018587968693801984,
+          "max_density": 5.995504013159278e-05,
+          "spread": 8.248316378577988,
+          "entropy": 5.742985905723783
+        }
+      }
+    }
+  },
+  "correlations": {
+    "human": {
+      "spectral_alignment": {
+        "rho": 0.182,
+        "p": 0.5926
+      },
+      "effective_rank": {
+        "rho": 0.4,
+        "p": 0.2229
+      },
+      "h1_max_persistence": {
+        "rho": 0.064,
+        "p": 0.8525
+      },
+      "pi_total_energy": {
+        "rho": 0.036,
+        "p": 0.9155
+      },
+      "pi_max_density": {
+        "rho": 0.027,
+        "p": 0.9366
+      },
+      "pi_spread": {
+        "rho": 0.319,
+        "p": 0.3391
+      },
+      "pi_entropy": {
+        "rho": 0.219,
+        "p": 0.5183
+      },
+      "two_factor": {
+        "rho": 0.483,
+        "p": 0.1325
+      },
+      "three_factor_pi": {
+        "rho": 0.478,
+        "p": 0.1367,
+        "best_pi_feature": "pi_spread"
+      }
+    },
+    "mouse": {
+      "spectral_alignment": {
+        "rho": -0.409,
+        "p": 0.2115
+      },
+      "effective_rank": {
+        "rho": 0.318,
+        "p": 0.3403
+      },
+      "h1_max_persistence": {
+        "rho": -0.345,
+        "p": 0.2981
+      },
+      "pi_total_energy": {
+        "rho": -0.364,
+        "p": 0.2716
+      },
+      "pi_max_density": {
+        "rho": -0.082,
+        "p": 0.811
+      },
+      "pi_spread": {
+        "rho": -0.191,
+        "p": 0.5739
+      },
+      "pi_entropy": {
+        "rho": -0.227,
+        "p": 0.5015
+      },
+      "two_factor": {
+        "rho": -0.037,
+        "p": 0.9145
+      },
+      "three_factor_pi": {
+        "rho": -0.246,
+        "p": 0.4659,
+        "best_pi_feature": "pi_total_energy"
+      }
+    }
+  }
+}

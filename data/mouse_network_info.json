@@ -1,0 +1,14 @@
+{
+  "species": "Mus musculus",
+  "taxon_id": "10090",
+  "string_version": "v11.5",
+  "min_score": 700,
+  "network_nodes": 16180,
+  "network_edges": 233340,
+  "annotated_nodes_in_network": 14569,
+  "go_genes_total": 17639,
+  "gaf_gene_symbols": 27914,
+  "gaf_lines": 707080,
+  "alias_gene_symbols": 21871,
+  "unmapped_symbols": 10255
+}

@@ -26,8 +26,8 @@
 *.tar.gz binary
 # Large data files - use Git LFS if available
 *.edgelist filter=lfs diff=lfs merge=lfs -text
-*.links.v12.0.txt.gz filter=lfs diff=lfs merge=lfs -text
-*.protein.aliases.v12.0.txt.gz filter=lfs diff=lfs merge=lfs -text
+*.links.*.txt.gz filter=lfs diff=lfs merge=lfs -text
+*.protein.aliases.*.txt.gz filter=lfs diff=lfs merge=lfs -text
 *.gaf.gz filter=lfs diff=lfs merge=lfs -text
 *.obo filter=lfs diff=lfs merge=lfs -text
 # Documentation

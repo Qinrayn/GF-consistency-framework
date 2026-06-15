@@ -48,6 +48,7 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 39-s
 - **Full human TDA analysis** (Phase 8B): Persistent homology recomputed for all 11 methods on human PPI with identical parameters as yeast — H1 max persistence (rho=0.073) does NOT predict G-F Score on human; three-factor model degrades to rho=0.282 (worse than two-factor rho=0.543). TDA loop signal is yeast-specific, not cross-species transferable
 - **LOO sensitivity** (Phase 8C): Spectral is a catastrophic topological outlier on human (H1 persistence 80x lower than yeast). Excluding Spectral reveals latent H1 signal (rho=+0.430), but two-factor model remains the most LOO-stable cross-species predictor
 - **Unified human G-F Scores** (Phase 9): Eliminating community-detection (Louvain→greedy_modularity) and interval ([0.282,0.297]→[0.05,0.422]) confounds yields rho=0.927 rank correlation with original scores. Top-3 (Spectral, MDS, Node2Vec) and bottom-2 (VGAE, GAT) rankings are identical. All predictor correlations preserved in direction (two-factor rho=+0.483 vs old +0.543). LOO pattern confirms Phase 8C (H1→+0.418 excl Spectral)
+- **Three-species mouse validation** (Phase 10): Spectral ranks #1 in all 3 species (yeast, human, mouse). Kendall W=0.739 (11 methods, 3 species). Top-2 (Spectral, MDS) and bottom-2 (VGAE, VGAE-feat) identical in all species. Two-factor geometric model does NOT transfer to mouse (rho=−0.037) — the spectral alignment + effective rank predictors are network-specific, even though method quality is conserved. Spectral is a topological outlier in both human and mouse (H1 persistence 72–161× lower). Persistence images do not improve G-F prediction over scalar H1 features
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)
@@ -274,6 +275,9 @@ GF-consistency-framework/
 │   ├── human_tda_full.py               # Full human TDA: 11-method persistent homology + three-factor validation (Phase 8B, Fig 48)
 │   ├── human_loo_sensitivity.py        # Leave-one-out sensitivity analysis (Phase 8C, Fig 49)
 │   ├── human_gf_unified.py             # Unified human G-F Scores: fix confounds 1+2 (Phase 9, Fig 50)
+│   ├── mouse_data_prep.py              # Mouse STRING PPI download + MGI GAF ID mapping (Phase 10A)
+│   ├── mouse_embeddings_full.py        # Full-network mouse embeddings: 11 methods, ~16K nodes (Phase 10B)
+│   ├── persistence_image_analysis.py   # Persistence image TDA + three-species comparison (Phase 10C, Fig 51-54)
 │   └── utils.py                # Shared utilities
 │
 ├── tests/                      # pytest test suite (51 tests)
@@ -328,6 +332,10 @@ GF-consistency-framework/
 │   ├── Fig48                   # Full human TDA + three-factor validation (Phase 8B)
 │   ├── Fig49                   # Leave-one-out sensitivity analysis (Phase 8C)
 │   ├── Fig50                   # Unified human G-F comparison (Phase 9)
+│   ├── Fig51                   # Mouse G-F curves + ranking (Phase 10)
+│   ├── Fig52                   # Persistence images gallery: human vs mouse (Phase 10)
+│   ├── Fig53                   # Three-species G-F Score comparison (Phase 10)
+│   ├── Fig54                   # TDA feature comparison: scalar vs persistence image (Phase 10)
 │   ├── FigS1–S7                # Supplementary figures
 │   └── FigS8                   # Sampling density comparison
 │
@@ -352,6 +360,8 @@ GF-consistency-framework/
 | Yeast GO | SGD GAF | 153 annotated (5,429 after GO DAG propagation) | BP terms, level ≥ 3 |
 | Human PPI | STRING v12.0 | 15,882 (14,679 in largest CC) | Cross-species validation |
 | Human GO | GOA Human GAF | 16,818 annotated | BP terms |
+| Mouse PPI | STRING v11.5 | 16,180 (largest CC) | Score ≥ 700 |
+| Mouse GO | MGI GAF | 17,639 annotated | BP terms, Ensembl_MGI alias mapping |
 
 Large files (`*.txt.gz`, `*.gaf.gz`) tracked via **Git LFS** — run `git lfs install` before cloning.
 
@@ -421,6 +431,9 @@ Beyond the core 39-step pipeline, the framework provides extensible modules for 
 | `human_tda_full.py` | Full human TDA analysis: persistent homology for all 11 methods on human PPI with identical yeast parameters, three-factor validation — H1 persistence does NOT transfer (rho=0.073), three-factor degrades to rho=0.282 (Phase 8B, Fig 48) |
 | `human_loo_sensitivity.py` | Leave-one-out sensitivity: Spectral is a catastrophic topological outlier (H1 80x lower than yeast); excluding Spectral reveals latent H1 signal (rho=+0.430); two-factor model is most LOO-stable (Phase 8C, Fig 49) |
 | `human_gf_unified.py` | Unified human G-F Scores: eliminates community-detection (Louvain→greedy_modularity) and interval confounds; confirms rho=0.927 rank correlation, top-3/bottom-2 identical, all correlations preserved (Phase 9, Fig 50) |
+| `mouse_data_prep.py` | Mouse STRING PPI + MGI GAF download with Ensembl_MGI alias-based ID mapping: ~16K nodes, ~233K edges, 17,639 annotated genes (Phase 10A) |
+| `mouse_embeddings_full.py` | Full-network mouse embeddings (11 methods, ~16K nodes) with landmark MDS + sparse VGAE/GNN — matches human pipeline methodology (subsample-after, not subsample-before) (Phase 10B) |
+| `persistence_image_analysis.py` | Persistence image TDA via ripser/persim: mouse G-F scores, H1 persistence diagrams + images (energy, density, spread, entropy), three-species Kendall's W concordance (Phase 10C, Fig 51-54) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
 
@@ -486,6 +499,29 @@ Persistent homology analysis (Vietoris–Rips complexes via Ripser) generates ad
 | Fig14 | `Fig14_human_topo_scatter.png` | Human PPI topological feature scatter (cross-species validation) |
 
 Generated by `scripts/topological_analysis.py` and `scripts/topological_stats.py`. See `results/topological_analysis.json` for raw numerical data.
+
+---
+
+## Mouse PPI Validation (Phase 10)
+
+Three-species cross-species validation on mouse STRING v11.5 PPI (~16,180 nodes, ~233,340 edges; 17,639 genes with MGI GO annotations via Ensembl_MGI alias mapping). All 11 methods embedded on the full network, G-F curves computed on 2,000-node subsample with unified parameters (greedy_modularity, [0.05, 0.422]):
+
+| Method | Mouse G-F | Yeast Rank | Human Rank | Mouse Rank |
+|--------|:---------:|:----------:|:----------:|:----------:|
+| **Spectral** | **0.309** | 1 | 1 | 1 |
+| MDS | 0.160 | 3 | 2 | 2 |
+| PCA | 0.064 | 5 | 6 | 3 |
+| GraphSAGE | 0.056 | 10 | 5 | 4 |
+| DM | 0.048 | 2 | 8 | 5 |
+| VGAE-feat | 0.015 | 6 | 7 | 11 |
+
+- Three-species Kendall W: **0.739** (11 methods)
+- Pairwise: yeast-human ρ=+0.636, yeast-mouse ρ=+0.555, human-mouse ρ=+0.636
+- Spectral #1 in all three species; MDS consistently top-3
+- Two-factor model does NOT transfer to mouse (rho=−0.037) — geometric predictors are network-specific
+- Persistence images do not improve G-F prediction over scalar H1 features
+
+Report → [`results/phase10_report.md`](results/phase10_report.md) · Figures → [`figures/Fig51-54`](figures/)
 
 ---
 

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (Phase 10: Mouse Validation + Persistence Image TDA)
+- `mouse_data_prep.py`: Downloads mouse STRING PPI (taxon 10090, ~81MB), MGI GAF (~13MB), and STRING aliases (~13MB); builds Ensembl_MGI alias map for protein-to-gene-symbol conversion; outputs curated network (~16K nodes, ~233K edges) + GO annotations (17,639 genes) (Phase 10A)
+- `mouse_embeddings_full.py`: Full-network embedding pipeline matching human methodology — computes all 11 methods on the complete ~16K-node mouse STRING network (subsample-after, not subsample-before), with landmark MDS (500 landmarks + Nystrom extension) and sparse VGAE/GNN training for memory efficiency (Phase 10B)
+- `persistence_image_analysis.py`: Three-part analysis — (1) mouse G-F scores with greedy_modularity + yeast interval [0.05, 0.422], (2) persistence diagrams + images via ripser/persim with extracted features (total_energy, max_density, spread, entropy) as alternative TDA predictors, (3) three-species cross-species comparison with Kendall's W concordance (Phase 10C, Fig 51-54). Key results: Spectral ranks #1 in all 3 species; Kendall W=0.739 (11 methods); two-factor geometric model does NOT transfer to mouse (rho=−0.037 vs human +0.483); Spectral is a topological outlier in both human and mouse (H1 72–161× lower); persistence images do not improve G-F prediction
+- `mouse_gf_analysis.json`, `persistence_image_analysis.json`, `cross_species_three_way.json` and Figs 51-54
+
 ### Added (Phase 9: Unified Human G-F Scores — Fix Confounds 1+2)
 - `human_gf_unified.py`: Recomputes human G-F Scores using greedy_modularity_communities (same as yeast) and yeast integration interval [0.05, 0.422] (same as yeast), eliminating the community-detection algorithm mismatch (Louvain vs greedy_modularity) and GF interval mismatch ([0.282,0.297] vs [0.05,0.422]). Old vs new rank correlation rho=0.927; top-3/bottom-2 rankings identical; all predictor correlations preserved in direction (two-factor rho=+0.483 vs old +0.543). LOO analysis confirms Phase 8C pattern (H1 jumps to +0.418 excl Spectral) (Phase 9, Fig 50)
 - `phase9_unified_report.md`: Comprehensive supplement report with per-method comparison, correlation analysis, LOO sensitivity, and recommended paper language
