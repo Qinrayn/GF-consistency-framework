@@ -1,0 +1,1100 @@
+{
+  "analysis": "Phase 12A: GO BP Pathway Enrichment Validation",
+  "enrichment_radius": 0.2,
+  "n_bp_terms": 24135,
+  "per_species": {
+    "human": {
+      "DM": {
+        "n_communities": 6,
+        "n_significant_05": 5,
+        "frac_significant": 0.833,
+        "median_best_p": 3.7586050142798277e-07,
+        "mean_community_size": 333.3,
+        "top_enriched_terms": [
+          {
+            "community_size": 20,
+            "best_p": 1.8617462033053177e-21,
+            "best_term": "GO:0006412",
+            "term_name": "translation",
+            "odds_ratio": 369.75
+          },
+          {
+            "community_size": 806,
+            "best_p": 3.0321639760930224e-07,
+            "best_term": "GO:0008284",
+            "term_name": "positive regulation of cell population proliferation",
+            "odds_ratio": 3.6155878467635403
+          },
+          {
+            "community_size": 209,
+            "best_p": 3.7586050142798277e-07,
+            "best_term": "GO:0050911",
+            "term_name": "detection of chemical stimulus involved in sensory perception of smell",
+            "odds_ratio": 9.071428571428571
+          },
+          {
+            "community_size": 960,
+            "best_p": 0.00030244401736299236,
+            "best_term": "GO:0006493",
+            "term_name": "protein O-linked glycosylation",
+            "odds_ratio": 1000000.0
+          },
+          {
+            "community_size": 3,
+            "best_p": 0.004495498500000751,
+            "best_term": "GO:0002357",
+            "term_name": "defense response to tumor cell",
+            "odds_ratio": 498.75
+          }
+        ]
+      },
+      "MDS": {
+        "n_communities": 6,
+        "n_significant_05": 5,
+        "frac_significant": 0.833,
+        "median_best_p": 2.296327799192177e-14,
+        "mean_community_size": 333.3,
+        "top_enriched_terms": [
+          {
+            "community_size": 27,
+            "best_p": 3.596798563722601e-43,
+            "best_term": "GO:0050911",
+            "term_name": "detection of chemical stimulus involved in sensory perception of smell",
+            "odds_ratio": 2165.9
+          },
+          {
+            "community_size": 1062,
+            "best_p": 1.9534486539746945e-20,
+            "best_term": "GO:0006357",
+            "term_name": "regulation of transcription by RNA polymerase II",
+            "odds_ratio": 5.925915850562205
+          },
+          {
+            "community_size": 902,
+            "best_p": 2.296327799192177e-14,
+            "best_term": "GO:0007165",
+            "term_name": "signal transduction",
+            "odds_ratio": 3.373263888888889
+          },
+          {
+            "community_size": 3,
+            "best_p": 8.998493240614301e-06,
+            "best_term": "GO:0042633",
+            "term_name": "hair cycle",
+            "odds_ratio": 1995.0
+          },
+          {
+            "community_size": 5,
+            "best_p": 0.004994997498749376,
+            "best_term": "GO:0015828",
+            "term_name": "tyrosine transport",
+            "odds_ratio": 498.5
+          }
+        ]
+      },
+      "Spectral": {
+        "n_communities": 10,
+        "n_significant_05": 0,
+        "frac_significant": 0.0,
+        "median_best_p": 0.35016976763673413,
+        "mean_community_size": 200.0,
+        "top_enriched_terms": [
+          {
+            "community_size": 1988,
+            "best_p": 0.35016976763673413,
+            "best_term": "GO:0006357",
+            "term_name": "regulation of transcription by RNA polymerase II",
+            "odds_ratio": 1000000.0
+          }
+        ]
+      },
+      "DeepWalk": {
+        "n_communities": 13,
+        "n_significant_05": 7,
+        "frac_significant": 0.538,
+        "median_best_p": 1.089121871345732e-06,
+        "mean_community_size": 153.8,
+        "top_enriched_terms": [
+          {
+            "community_size": 26,
+            "best_p": 1.0683727112746672e-34,
+            "best_term": "GO:0050911",
+            "term_name": "detection of chemical stimulus involved in sensory perception of smell",
+            "odds_ratio": 762.7142857142857
+          },
+          {
+            "community_size": 9,
+            "best_p": 1.0978154418172606e-13,
+            "best_term": "GO:0006412",
+            "term_name": "translation",
+            "odds_ratio": 532.5384615384615
+          },
+          {
+            "community_size": 729,
+            "best_p": 6.705801102684975e-09,
+            "best_term": "GO:0008284",
+            "term_name": "positive regulation of cell population proliferation",
+            "odds_ratio": 4.28921568627451
+          },
+          {
+            "community_size": 4,
+            "best_p": 1.089121871345732e-06,
+            "best_term": "GO:0002181",
+            "term_name": "cytoplasmic translation",
+            "odds_ratio": 541.3636363636364
+          },
+          {
+            "community_size": 3,
+            "best_p": 1.952928416160032e-06,
+            "best_term": "GO:0050911",
+            "term_name": "detection of chemical stimulus involved in sensory perception of smell",
+            "odds_ratio": 1000000.0
+          }
+        ]
+      },
+      "Node2Vec": {
+        "n_communities": 11,
+        "n_significant_05": 3,
+        "frac_significant": 0.273,
+        "median_best_p": 1.089121871345732e-06,
+        "mean_community_size": 181.8,
+        "top_enriched_terms": [
+          {
+            "community_size": 647,
+            "best_p": 5.5072669776847485e-12,
+            "best_term": "GO:0045893",
+            "term_name": "positive regulation of DNA-templated transcription",
+            "odds_ratio": 4.1086672879776325
+          },
+          {
+            "community_size": 4,
+            "best_p": 1.089121871345732e-06,
+            "best_term": "GO:0002181",
+            "term_name": "cytoplasmic translation",
+            "odds_ratio": 541.3636363636364
+          },
+          {
+            "community_size": 1340,
+            "best_p": 0.0005833355909073022,
+            "best_term": "GO:0055085",
+            "term_name": "transmembrane transport",
+            "odds_ratio": 2.887763055339049
+          }
+        ]
+      },
+      "VGAE": {
+        "n_communities": 3,
+        "n_significant_05": 3,
+        "frac_significant": 1.0,
+        "median_best_p": 6.786401987457036e-07,
+        "mean_community_size": 666.7,
+        "top_enriched_terms": [
+          {
+            "community_size": 880,
+            "best_p": 1.5257115947546114e-08,
+            "best_term": "GO:0050911",
+            "term_name": "detection of chemical stimulus involved in sensory perception of smell",
+            "odds_ratio": 32.719298245614034
+          },
+          {
+            "community_size": 9,
+            "best_p": 6.786401987457036e-07,
+            "best_term": "GO:0010628",
+            "term_name": "positive regulation of gene expression",
+            "odds_ratio": 58.00595238095238
+          },
+          {
+            "community_size": 1111,
+            "best_p": 0.00025684118095922753,
+            "best_term": "GO:0002181",
+            "term_name": "cytoplasmic translation",
+            "odds_ratio": 1000000.0
+          }
+        ]
+      },
+      "PCA": {
+        "n_communities": 12,
+        "n_significant_05": 6,
+        "frac_significant": 0.5,
+        "median_best_p": 3.891795790899178e-08,
+        "mean_community_size": 166.7,
+        "top_enriched_terms": [
+          {
+            "community_size": 19,
+            "best_p": 1.6300878412324295e-24,
+            "best_term": "GO:0006412",
+            "term_name": "translation",
+            "odds_ratio": 611.0
+          },
+          {
+            "community_size": 15,
+            "best_p": 3.040391075142185e-14,
+            "best_term": "GO:0030490",
+            "term_name": "maturation of SSU-rRNA",
+            "odds_ratio": 578.0833333333334
+          },
+          {
+            "community_size": 19,
+            "best_p": 3.331119805838856e-08,
+            "best_term": "GO:0051123",
+            "term_name": "RNA polymerase II preinitiation complex assembly",
+            "odds_ratio": 100.71428571428571
+          },
+          {
+            "community_size": 1049,
+            "best_p": 4.4524717759595e-08,
+            "best_term": "GO:0050911",
+            "term_name": "detection of chemical stimulus involved in sensory perception of smell",
+            "odds_ratio": 1000000.0
+          },
+          {
+            "community_size": 888,
+            "best_p": 2.110654405865334e-07,
+            "best_term": "GO:0000398",
+            "term_name": "mRNA splicing, via spliceosome",
+            "odds_ratio": 9.351571594877765
+          }
+        ]
+      },
+      "VGAE-feat": {
+        "n_communities": 5,
+        "n_significant_05": 3,
+        "frac_significant": 0.6,
+        "median_best_p": 0.00014068508674090378,
+        "mean_community_size": 400.0,
+        "top_enriched_terms": [
+          {
+            "community_size": 25,
+            "best_p": 8.741068783032471e-07,
+            "best_term": "GO:0010628",
+            "term_name": "positive regulation of gene expression",
+            "odds_ratio": 18.8125
+          },
+          {
+            "community_size": 884,
+            "best_p": 0.00014068508674090378,
+            "best_term": "GO:0050911",
+            "term_name": "detection of chemical stimulus involved in sensory perception of smell",
+            "odds_ratio": 5.406952491309386
+          },
+          {
+            "community_size": 1088,
+            "best_p": 0.00041398029344828557,
+            "best_term": "GO:0006886",
+            "term_name": "intracellular protein transport",
+            "odds_ratio": 3.175451950523311
+          }
+        ]
+      },
+      "GraphSAGE": {
+        "n_communities": 3,
+        "n_significant_05": 3,
+        "frac_significant": 1.0,
+        "median_best_p": 6.87007819067208e-15,
+        "mean_community_size": 666.7,
+        "top_enriched_terms": [
+          {
+            "community_size": 11,
+            "best_p": 1.5479378402841218e-22,
+            "best_term": "GO:0050911",
+            "term_name": "detection of chemical stimulus involved in sensory perception of smell",
+            "odds_ratio": 1000000.0
+          },
+          {
+            "community_size": 977,
+            "best_p": 6.87007819067208e-15,
+            "best_term": "GO:0045893",
+            "term_name": "positive regulation of DNA-templated transcription",
+            "odds_ratio": 6.230033745781777
+          },
+          {
+            "community_size": 1012,
+            "best_p": 1.729529053338024e-06,
+            "best_term": "GO:0030317",
+            "term_name": "flagellated sperm motility",
+            "odds_ratio": 22.953488372093023
+          }
+        ]
+      },
+      "GAT": {
+        "n_communities": 1,
+        "n_significant_05": 0,
+        "frac_significant": 0.0,
+        "median_best_p": 1.0,
+        "mean_community_size": 2000.0,
+        "top_enriched_terms": []
+      },
+      "GIN": {
+        "n_communities": 8,
+        "n_significant_05": 4,
+        "frac_significant": 0.5,
+        "median_best_p": 3.728645468560233e-05,
+        "mean_community_size": 250.0,
+        "top_enriched_terms": [
+          {
+            "community_size": 848,
+            "best_p": 6.1241509512629585e-09,
+            "best_term": "GO:0050911",
+            "term_name": "detection of chemical stimulus involved in sensory perception of smell",
+            "odds_ratio": 34.963547995139734
+          },
+          {
+            "community_size": 1140,
+            "best_p": 2.0672085085187774e-05,
+            "best_term": "GO:0000398",
+            "term_name": "mRNA splicing, via spliceosome",
+            "odds_ratio": 7.7207207207207205
+          },
+          {
+            "community_size": 3,
+            "best_p": 5.3900824286016887e-05,
+            "best_term": "GO:0030216",
+            "term_name": "keratinocyte differentiation",
+            "odds_ratio": 568.5714285714286
+          },
+          {
+            "community_size": 4,
+            "best_p": 0.003996998499249624,
+            "best_term": "GO:0038096",
+            "term_name": "Fc-gamma receptor signaling pathway involved in phagocytosis",
+            "odds_ratio": 665.0
+          }
+        ]
+      }
+    },
+    "mouse": {
+      "DM": {
+        "n_communities": 7,
+        "n_significant_05": 4,
+        "frac_significant": 0.571,
+        "median_best_p": 0.00227106593584612,
+        "mean_community_size": 285.7,
+        "top_enriched_terms": [
+          {
+            "community_size": 3,
+            "best_p": 4.500748872934966e-06,
+            "best_term": "GO:0048009",
+            "term_name": "insulin-like growth factor receptor signaling pathway",
+            "odds_ratio": 3992.0
+          },
+          {
+            "community_size": 832,
+            "best_p": 4.9676659148862105e-06,
+            "best_term": "GO:0010628",
+            "term_name": "positive regulation of gene expression",
+            "odds_ratio": 2.875148576047164
+          },
+          {
+            "community_size": 14,
+            "best_p": 0.004537164205777353,
+            "best_term": "GO:0008286",
+            "term_name": "insulin receptor signaling pathway",
+            "odds_ratio": 25.294871794871796
+          },
+          {
+            "community_size": 1148,
+            "best_p": 0.007666911485169675,
+            "best_term": "GO:0031640",
+            "term_name": "killing of cells of another organism",
+            "odds_ratio": 8.98943661971831
+          }
+        ]
+      },
+      "MDS": {
+        "n_communities": 15,
+        "n_significant_05": 4,
+        "frac_significant": 0.267,
+        "median_best_p": 2.829552467715531e-07,
+        "mean_community_size": 133.3,
+        "top_enriched_terms": [
+          {
+            "community_size": 715,
+            "best_p": 1.0765154118624183e-14,
+            "best_term": "GO:0016567",
+            "term_name": "protein ubiquitination",
+            "odds_ratio": 8.153846153846153
+          },
+          {
+            "community_size": 1250,
+            "best_p": 1.930761713412703e-09,
+            "best_term": "GO:0007165",
+            "term_name": "signal transduction",
+            "odds_ratio": 4.6099281341495875
+          },
+          {
+            "community_size": 18,
+            "best_p": 5.639797318296935e-07,
+            "best_term": "GO:0005977",
+            "term_name": "glycogen metabolic process",
+            "odds_ratio": 112.97142857142858
+          },
+          {
+            "community_size": 4,
+            "best_p": 8.998493240614301e-06,
+            "best_term": "GO:0150077",
+            "term_name": "regulation of neuroinflammatory response",
+            "odds_ratio": 1995.0
+          }
+        ]
+      },
+      "Spectral": {
+        "n_communities": 7,
+        "n_significant_05": 1,
+        "frac_significant": 0.143,
+        "median_best_p": 0.06078120341060889,
+        "mean_community_size": 285.7,
+        "top_enriched_terms": [
+          {
+            "community_size": 16,
+            "best_p": 1.8801231365793927e-07,
+            "best_term": "GO:0045109",
+            "term_name": "intermediate filament organization",
+            "odds_ratio": 165.0
+          },
+          {
+            "community_size": 1979,
+            "best_p": 0.12156221880890412,
+            "best_term": "GO:0045944",
+            "term_name": "positive regulation of transcription by RNA polymerase II",
+            "odds_ratio": 1000000.0
+          }
+        ]
+      },
+      "DeepWalk": {
+        "n_communities": 21,
+        "n_significant_05": 4,
+        "frac_significant": 0.19,
+        "median_best_p": 7.504032819869585e-07,
+        "mean_community_size": 95.2,
+        "top_enriched_terms": [
+          {
+            "community_size": 1255,
+            "best_p": 4.913939063876972e-22,
+            "best_term": "GO:0008150",
+            "term_name": "biological_process",
+            "odds_ratio": 20.857047872340427
+          },
+          {
+            "community_size": 718,
+            "best_p": 5.6188786323366336e-11,
+            "best_term": "GO:0010628",
+            "term_name": "positive regulation of gene expression",
+            "odds_ratio": 4.720318358218773
+          },
+          {
+            "community_size": 3,
+            "best_p": 1.5007503751875936e-06,
+            "best_term": "GO:0006171",
+            "term_name": "cAMP biosynthetic process",
+            "odds_ratio": 1000000.0
+          },
+          {
+            "community_size": 3,
+            "best_p": 5.3900824286016887e-05,
+            "best_term": "GO:0051963",
+            "term_name": "regulation of synapse assembly",
+            "odds_ratio": 568.5714285714286
+          }
+        ]
+      },
+      "Node2Vec": {
+        "n_communities": 22,
+        "n_significant_05": 5,
+        "frac_significant": 0.227,
+        "median_best_p": 2.2481210575257596e-05,
+        "mean_community_size": 90.9,
+        "top_enriched_terms": [
+          {
+            "community_size": 1334,
+            "best_p": 6.186906573308374e-20,
+            "best_term": "GO:0008150",
+            "term_name": "biological_process",
+            "odds_ratio": 23.456053067993366
+          },
+          {
+            "community_size": 638,
+            "best_p": 1.0748190334209544e-12,
+            "best_term": "GO:0010628",
+            "term_name": "positive regulation of gene expression",
+            "odds_ratio": 5.364261168384879
+          },
+          {
+            "community_size": 3,
+            "best_p": 2.2481210575257596e-05,
+            "best_term": "GO:0046686",
+            "term_name": "response to cadmium ion",
+            "odds_ratio": 996.5
+          },
+          {
+            "community_size": 3,
+            "best_p": 5.3900824286016887e-05,
+            "best_term": "GO:0051963",
+            "term_name": "regulation of synapse assembly",
+            "odds_ratio": 568.5714285714286
+          },
+          {
+            "community_size": 3,
+            "best_p": 5.3900824286016887e-05,
+            "best_term": "GO:0043491",
+            "term_name": "phosphatidylinositol 3-kinase/protein kinase B signal transduction",
+            "odds_ratio": 568.5714285714286
+          }
+        ]
+      },
+      "VGAE": {
+        "n_communities": 9,
+        "n_significant_05": 4,
+        "frac_significant": 0.444,
+        "median_best_p": 3.9771788749197914e-08,
+        "mean_community_size": 222.2,
+        "top_enriched_terms": [
+          {
+            "community_size": 912,
+            "best_p": 5.344703339469884e-13,
+            "best_term": "GO:0008150",
+            "term_name": "biological_process",
+            "odds_ratio": 4.018450184501845
+          },
+          {
+            "community_size": 1055,
+            "best_p": 2.4975169488661954e-10,
+            "best_term": "GO:0007165",
+            "term_name": "signal transduction",
+            "odds_ratio": 4.15676652892562
+          },
+          {
+            "community_size": 24,
+            "best_p": 7.929382580350921e-08,
+            "best_term": "GO:0006362",
+            "term_name": "transcription elongation by RNA polymerase I",
+            "odds_ratio": 395.0
+          },
+          {
+            "community_size": 3,
+            "best_p": 8.998493240614301e-06,
+            "best_term": "GO:0042531",
+            "term_name": "positive regulation of tyrosine phosphorylation of STAT protein",
+            "odds_ratio": 1995.0
+          }
+        ]
+      },
+      "PCA": {
+        "n_communities": 13,
+        "n_significant_05": 6,
+        "frac_significant": 0.462,
+        "median_best_p": 6.747033982494101e-09,
+        "mean_community_size": 153.8,
+        "top_enriched_terms": [
+          {
+            "community_size": 13,
+            "best_p": 1.9730263721676404e-27,
+            "best_term": "GO:0002181",
+            "term_name": "cytoplasmic translation",
+            "odds_ratio": 1000000.0
+          },
+          {
+            "community_size": 1088,
+            "best_p": 1.0898852083972055e-15,
+            "best_term": "GO:0008150",
+            "term_name": "biological_process",
+            "odds_ratio": 5.756239316239316
+          },
+          {
+            "community_size": 18,
+            "best_p": 2.3461493496794512e-11,
+            "best_term": "GO:0006364",
+            "term_name": "rRNA processing",
+            "odds_ratio": 125.49090909090908
+          },
+          {
+            "community_size": 858,
+            "best_p": 1.3470606471491408e-08,
+            "best_term": "GO:0006281",
+            "term_name": "DNA repair",
+            "odds_ratio": 18.51985559566787
+          },
+          {
+            "community_size": 8,
+            "best_p": 5.146556068166842e-08,
+            "best_term": "GO:0032543",
+            "term_name": "mitochondrial translation",
+            "odds_ratio": 248.0
+          }
+        ]
+      },
+      "VGAE-feat": {
+        "n_communities": 4,
+        "n_significant_05": 2,
+        "frac_significant": 0.5,
+        "median_best_p": 0.000634059055783278,
+        "mean_community_size": 500.0,
+        "top_enriched_terms": [
+          {
+            "community_size": 1053,
+            "best_p": 1.712004201941875e-06,
+            "best_term": "GO:0008284",
+            "term_name": "positive regulation of cell population proliferation",
+            "odds_ratio": 3.2843434343434343
+          },
+          {
+            "community_size": 944,
+            "best_p": 0.0012664061073646142,
+            "best_term": "GO:0008150",
+            "term_name": "biological_process",
+            "odds_ratio": 1.763361493997332
+          }
+        ]
+      },
+      "GraphSAGE": {
+        "n_communities": 4,
+        "n_significant_05": 3,
+        "frac_significant": 0.75,
+        "median_best_p": 4.226149229368613e-16,
+        "mean_community_size": 500.0,
+        "top_enriched_terms": [
+          {
+            "community_size": 40,
+            "best_p": 6.0524549954775914e-34,
+            "best_term": "GO:0006412",
+            "term_name": "translation",
+            "odds_ratio": 652.3333333333334
+          },
+          {
+            "community_size": 1003,
+            "best_p": 4.226149229368613e-16,
+            "best_term": "GO:0008150",
+            "term_name": "biological_process",
+            "odds_ratio": 5.403447223917023
+          },
+          {
+            "community_size": 956,
+            "best_p": 1.0782804420569094e-08,
+            "best_term": "GO:0006974",
+            "term_name": "DNA damage response",
+            "odds_ratio": 8.83773173391494
+          }
+        ]
+      },
+      "GAT": {
+        "n_communities": 3,
+        "n_significant_05": 3,
+        "frac_significant": 1.0,
+        "median_best_p": 5.802028721088135e-12,
+        "mean_community_size": 666.7,
+        "top_enriched_terms": [
+          {
+            "community_size": 62,
+            "best_p": 1.2116091283263858e-31,
+            "best_term": "GO:0006412",
+            "term_name": "translation",
+            "odds_ratio": 495.8048780487805
+          },
+          {
+            "community_size": 896,
+            "best_p": 5.802028721088135e-12,
+            "best_term": "GO:0045893",
+            "term_name": "positive regulation of DNA-templated transcription",
+            "odds_ratio": 4.180709686258392
+          },
+          {
+            "community_size": 1042,
+            "best_p": 8.303984305177623e-11,
+            "best_term": "GO:0008150",
+            "term_name": "biological_process",
+            "odds_ratio": 3.6433135554541307
+          }
+        ]
+      },
+      "GIN": {
+        "n_communities": 7,
+        "n_significant_05": 3,
+        "frac_significant": 0.429,
+        "median_best_p": 7.447321489921156e-10,
+        "mean_community_size": 285.7,
+        "top_enriched_terms": [
+          {
+            "community_size": 808,
+            "best_p": 4.983812988084399e-21,
+            "best_term": "GO:0008150",
+            "term_name": "biological_process",
+            "odds_ratio": 6.374158249158249
+          },
+          {
+            "community_size": 4,
+            "best_p": 7.447321489921156e-10,
+            "best_term": "GO:0032543",
+            "term_name": "mitochondrial translation",
+            "odds_ratio": 1000000.0
+          },
+          {
+            "community_size": 1183,
+            "best_p": 5.299380834952351e-08,
+            "best_term": "GO:0008284",
+            "term_name": "positive regulation of cell population proliferation",
+            "odds_ratio": 4.608347627215552
+          }
+        ]
+      }
+    },
+    "yeast": {
+      "DM": {
+        "n_communities": 3,
+        "n_significant_05": 3,
+        "frac_significant": 1.0,
+        "median_best_p": 1.3209524794445596e-11,
+        "mean_community_size": 51.0,
+        "top_enriched_terms": [
+          {
+            "community_size": 47,
+            "best_p": 2.980533502388538e-16,
+            "best_term": "GO:0006281",
+            "term_name": "DNA repair",
+            "odds_ratio": 141.75
+          },
+          {
+            "community_size": 71,
+            "best_p": 1.3209524794445596e-11,
+            "best_term": "GO:0051301",
+            "term_name": "cell division",
+            "odds_ratio": 1000000.0
+          },
+          {
+            "community_size": 35,
+            "best_p": 3.781481188411223e-09,
+            "best_term": "GO:0006412",
+            "term_name": "translation",
+            "odds_ratio": 1000000.0
+          }
+        ]
+      },
+      "MDS": {
+        "n_communities": 6,
+        "n_significant_05": 5,
+        "frac_significant": 0.833,
+        "median_best_p": 4.895397643038331e-06,
+        "mean_community_size": 25.5,
+        "top_enriched_terms": [
+          {
+            "community_size": 26,
+            "best_p": 9.689522646763876e-11,
+            "best_term": "GO:0006281",
+            "term_name": "DNA repair",
+            "odds_ratio": 26.325
+          },
+          {
+            "community_size": 56,
+            "best_p": 2.425309114552238e-07,
+            "best_term": "GO:0000086",
+            "term_name": "G2/M transition of mitotic cell cycle",
+            "odds_ratio": 1000000.0
+          },
+          {
+            "community_size": 23,
+            "best_p": 4.895397643038331e-06,
+            "best_term": "GO:0006270",
+            "term_name": "DNA replication initiation",
+            "odds_ratio": 9.679012345679013
+          },
+          {
+            "community_size": 4,
+            "best_p": 2.2553461956410312e-05,
+            "best_term": "GO:0006412",
+            "term_name": "translation",
+            "odds_ratio": 1000000.0
+          },
+          {
+            "community_size": 43,
+            "best_p": 0.004400317236858138,
+            "best_term": "GO:0006412",
+            "term_name": "translation",
+            "odds_ratio": 6.057142857142857
+          }
+        ]
+      },
+      "Spectral": {
+        "n_communities": 5,
+        "n_significant_05": 4,
+        "frac_significant": 0.8,
+        "median_best_p": 4.5808907456448e-10,
+        "mean_community_size": 30.6,
+        "top_enriched_terms": [
+          {
+            "community_size": 13,
+            "best_p": 4.954502325107322e-14,
+            "best_term": "GO:0006412",
+            "term_name": "translation",
+            "odds_ratio": 764.5
+          },
+          {
+            "community_size": 27,
+            "best_p": 8.380675992587363e-13,
+            "best_term": "GO:0007165",
+            "term_name": "signal transduction",
+            "odds_ratio": 1000000.0
+          },
+          {
+            "community_size": 94,
+            "best_p": 9.153400815297012e-10,
+            "best_term": "GO:0000082",
+            "term_name": "G1/S transition of mitotic cell cycle",
+            "odds_ratio": 1000000.0
+          },
+          {
+            "community_size": 18,
+            "best_p": 0.00013942140118508193,
+            "best_term": "GO:0006457",
+            "term_name": "protein folding",
+            "odds_ratio": 1000000.0
+          }
+        ]
+      },
+      "DeepWalk": {
+        "n_communities": 4,
+        "n_significant_05": 1,
+        "frac_significant": 0.25,
+        "median_best_p": 0.06747449066765082,
+        "mean_community_size": 38.2,
+        "top_enriched_terms": [
+          {
+            "community_size": 67,
+            "best_p": 0.0061857604701545344,
+            "best_term": "GO:0031577",
+            "term_name": "spindle checkpoint signaling",
+            "odds_ratio": 1000000.0
+          },
+          {
+            "community_size": 43,
+            "best_p": 0.06747449066765082,
+            "best_term": "GO:0000723",
+            "term_name": "telomere maintenance",
+            "odds_ratio": 8.175
+          },
+          {
+            "community_size": 42,
+            "best_p": 0.07864474979778627,
+            "best_term": "GO:0045944",
+            "term_name": "positive regulation of transcription by RNA polymerase II",
+            "odds_ratio": 2.376470588235294
+          }
+        ]
+      },
+      "Node2Vec": {
+        "n_communities": 3,
+        "n_significant_05": 0,
+        "frac_significant": 0.0,
+        "median_best_p": 0.13831831061017277,
+        "mean_community_size": 51.0,
+        "top_enriched_terms": [
+          {
+            "community_size": 75,
+            "best_p": 0.06868605686337032,
+            "best_term": "GO:0000086",
+            "term_name": "G2/M transition of mitotic cell cycle",
+            "odds_ratio": 2.8461538461538463
+          },
+          {
+            "community_size": 77,
+            "best_p": 0.20795056435697523,
+            "best_term": "GO:0007165",
+            "term_name": "signal transduction",
+            "odds_ratio": 1.8794117647058823
+          }
+        ]
+      },
+      "VGAE": {
+        "n_communities": 2,
+        "n_significant_05": 0,
+        "frac_significant": 0.0,
+        "median_best_p": 0.166904608786687,
+        "mean_community_size": 76.5,
+        "top_enriched_terms": [
+          {
+            "community_size": 73,
+            "best_p": 0.07853115164491534,
+            "best_term": "GO:0006886",
+            "term_name": "intracellular protein transport",
+            "odds_ratio": 3.158974358974359
+          },
+          {
+            "community_size": 80,
+            "best_p": 0.25527806592845864,
+            "best_term": "GO:0007165",
+            "term_name": "signal transduction",
+            "odds_ratio": 1.723943661971831
+          }
+        ]
+      },
+      "PCA": {
+        "n_communities": 3,
+        "n_significant_05": 2,
+        "frac_significant": 0.667,
+        "median_best_p": 0.001069512659981262,
+        "mean_community_size": 51.0,
+        "top_enriched_terms": [
+          {
+            "community_size": 76,
+            "best_p": 4.17205056068354e-09,
+            "best_term": "GO:0006270",
+            "term_name": "DNA replication initiation",
+            "odds_ratio": 24.456521739130434
+          },
+          {
+            "community_size": 76,
+            "best_p": 0.0021390211479119636,
+            "best_term": "GO:0006412",
+            "term_name": "translation",
+            "odds_ratio": 12.861538461538462
+          }
+        ]
+      },
+      "VGAE-feat": {
+        "n_communities": 3,
+        "n_significant_05": 2,
+        "frac_significant": 0.667,
+        "median_best_p": 0.001069512659981262,
+        "mean_community_size": 51.0,
+        "top_enriched_terms": [
+          {
+            "community_size": 76,
+            "best_p": 4.17205056068354e-09,
+            "best_term": "GO:0006270",
+            "term_name": "DNA replication initiation",
+            "odds_ratio": 24.456521739130434
+          },
+          {
+            "community_size": 76,
+            "best_p": 0.0021390211479119636,
+            "best_term": "GO:0006412",
+            "term_name": "translation",
+            "odds_ratio": 12.861538461538462
+          }
+        ]
+      },
+      "GraphSAGE": {
+        "n_communities": 8,
+        "n_significant_05": 1,
+        "frac_significant": 0.125,
+        "median_best_p": 0.09575626047001383,
+        "mean_community_size": 19.1,
+        "top_enriched_terms": [
+          {
+            "community_size": 33,
+            "best_p": 0.031695131869408616,
+            "best_term": "GO:0007186",
+            "term_name": "G protein-coupled receptor signaling pathway",
+            "odds_ratio": 11.9
+          },
+          {
+            "community_size": 8,
+            "best_p": 0.08879084870054331,
+            "best_term": "GO:0000082",
+            "term_name": "G1/S transition of mitotic cell cycle",
+            "odds_ratio": 3.53125
+          },
+          {
+            "community_size": 51,
+            "best_p": 0.09575626047001383,
+            "best_term": "GO:0000132",
+            "term_name": "establishment of mitotic spindle orientation",
+            "odds_ratio": 4.25531914893617
+          },
+          {
+            "community_size": 54,
+            "best_p": 0.12629241588583845,
+            "best_term": "GO:0016192",
+            "term_name": "vesicle-mediated transport",
+            "odds_ratio": 5.764705882352941
+          },
+          {
+            "community_size": 3,
+            "best_p": 0.21864214490257589,
+            "best_term": "GO:0006412",
+            "term_name": "translation",
+            "odds_ratio": 6.318181818181818
+          }
+        ]
+      },
+      "GAT": {
+        "n_communities": 8,
+        "n_significant_05": 1,
+        "frac_significant": 0.125,
+        "median_best_p": 0.08775841770879253,
+        "mean_community_size": 19.1,
+        "top_enriched_terms": [
+          {
+            "community_size": 9,
+            "best_p": 0.039934208479994175,
+            "best_term": "GO:0000278",
+            "term_name": "mitotic cell cycle",
+            "odds_ratio": 4.685714285714286
+          },
+          {
+            "community_size": 5,
+            "best_p": 0.05778708385204691,
+            "best_term": "GO:0006260",
+            "term_name": "DNA replication",
+            "odds_ratio": 8.303030303030303
+          },
+          {
+            "community_size": 68,
+            "best_p": 0.06170557372224816,
+            "best_term": "GO:0031145",
+            "term_name": "anaphase-promoting complex-dependent catabolic process",
+            "odds_ratio": 6.666666666666667
+          },
+          {
+            "community_size": 3,
+            "best_p": 0.11381126169533691,
+            "best_term": "GO:0000132",
+            "term_name": "establishment of mitotic spindle orientation",
+            "odds_ratio": 14.5
+          },
+          {
+            "community_size": 9,
+            "best_p": 0.11455108359133125,
+            "best_term": "GO:0006403",
+            "term_name": "RNA localization",
+            "odds_ratio": 17.875
+          }
+        ]
+      },
+      "GIN": {
+        "n_communities": 6,
+        "n_significant_05": 2,
+        "frac_significant": 0.333,
+        "median_best_p": 0.06491740648856266,
+        "mean_community_size": 25.5,
+        "top_enriched_terms": [
+          {
+            "community_size": 78,
+            "best_p": 0.03261552440419485,
+            "best_term": "GO:0006886",
+            "term_name": "intracellular protein transport",
+            "odds_ratio": 4.760869565217392
+          },
+          {
+            "community_size": 35,
+            "best_p": 0.037574067619379585,
+            "best_term": "GO:0007186",
+            "term_name": "G protein-coupled receptor signaling pathway",
+            "odds_ratio": 10.96875
+          },
+          {
+            "community_size": 29,
+            "best_p": 0.09226074535774574,
+            "best_term": "GO:0006414",
+            "term_name": "translational elongation",
+            "odds_ratio": 9.11111111111111
+          },
+          {
+            "community_size": 9,
+            "best_p": 0.11455108359133125,
+            "best_term": "GO:0006403",
+            "term_name": "RNA localization",
+            "odds_ratio": 17.875
+          }
+        ]
+      }
+    }
+  }
+}

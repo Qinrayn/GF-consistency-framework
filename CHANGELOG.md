@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (Phase 12: Biological Validation & Statistical Power)
+- `biological_validation.py`: Two-part analysis — (A) GO BP hypergeometric enrichment at r=0.2 across 3 species × 11 methods using 24,135 BP terms with sparse matrix set intersection; (B) multi-seed panel (yeast 5 seeds, human 10 seeds, mouse 5 subsamples) with mixed-effects pooled Spearman model. Supports `part_a`/`part_b` CLI modes with checkpoint resume. Fast GF approximation via connected_components + sparse purity for 1000× speedup. Key results: Spectral enrichment 80% (yeast) vs 0% (human) vs 14% (mouse) confirms species-dependent functional coherence; pooled rank consistency |ρ|=0.583 (95% CI [0.470, 0.688], n=220); per-species |ρ|: yeast 0.981, human 0.967, mouse 0.800; Spectral best mean rank (2.9) but highest variance (std 3.5)
+- `biological_enrichment.json`, `multiseed_panel.json`, `phase12_report.md`, and Figs 60-64
+
 ### Added (Phase 11: Spectral Transferability Theory)
 - `spectral_transferability.py`: Derives and validates a closed-form Spectral Quality Index (SQI = λ₂/λ₂_ER × PR × FA_max) that predicts whether the two-factor model transfers to a given PPI network. Part 1 computes Laplacian spectral analysis (eigenvalues, Fiedler participation ratio, functional alignment) for yeast/human/mouse full networks via sparse eigsh. Part 2 verifies the SQI–SA_std monotonic relationship empirically. Part 3 validates on 20 synthetic SBM networks with controlled community structure (n ∈ {500,1000,2000}, k ∈ {5,10,20}) (Phase 11, Fig 55-59). Key results: SQI ordering yeast(10.72) > human(2.02) > mouse(0.54) matches two-factor rho ordering +0.929 > +0.483 > −0.037; mouse Fiedler vector is 6× more localized than yeast (PR=0.0007 vs 0.0044); SBM SA_std correlates +0.647 with log(SQI)
 - `spectral_transferability.json`, `phase11_report.md`, and Figs 55-59

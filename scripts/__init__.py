@@ -83,6 +83,7 @@ Deep analysis modules (Phase 1-6)
 #   - mouse_embeddings_full: Full-network mouse embeddings (11 methods, ~16K nodes) matching human pipeline (Phase 10B)
 #   - persistence_image_analysis: Persistence image TDA + three-species cross-species comparison (Phase 10C)
 #   - spectral_transferability: Spectral Quality Index (SQI) + SBM validation — explains two-factor model transferability (Phase 11)
+#   - biological_validation: GO BP enrichment + multi-seed panel + mixed-effects model (Phase 12)
 
 Extension modules (v1.1+)
 --------------------------
@@ -97,4 +98,4 @@ robustness_analysis           Extended 30-subset convergence analysis
 visualization_helpers         Okabe-Ito colorblind-safe plotting utilities
 """
 
-__version__ = "1.7.0"
+__version__ = "1.8.0"

@@ -50,6 +50,7 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 39-s
 - **Unified human G-F Scores** (Phase 9): Eliminating community-detection (Louvain→greedy_modularity) and interval ([0.282,0.297]→[0.05,0.422]) confounds yields rho=0.927 rank correlation with original scores. Top-3 (Spectral, MDS, Node2Vec) and bottom-2 (VGAE, GAT) rankings are identical. All predictor correlations preserved in direction (two-factor rho=+0.483 vs old +0.543). LOO pattern confirms Phase 8C (H1→+0.418 excl Spectral)
 - **Three-species mouse validation** (Phase 10): Spectral ranks #1 in all 3 species (yeast, human, mouse). Kendall W=0.739 (11 methods, 3 species). Top-2 (Spectral, MDS) and bottom-2 (VGAE, VGAE-feat) identical in all species. Two-factor geometric model does NOT transfer to mouse (rho=−0.037) — the spectral alignment + effective rank predictors are network-specific, even though method quality is conserved. Spectral is a topological outlier in both human and mouse (H1 persistence 72–161× lower). Persistence images do not improve G-F prediction over scalar H1 features
 - **Spectral Transferability Theory** (Phase 11): Derives closed-form Spectral Quality Index (SQI = λ₂/λ₂_ER × PR × FA_max) predicting when the two-factor model works. SQI ordering: yeast(10.72) > human(2.02) > mouse(0.54) matches two-factor rho: +0.929 > +0.483 > −0.037. Mouse Fiedler vector is 6× more localized (PR=0.0007). Validated on 20 SBM networks (SA_std vs log(SQI) rho=+0.647)
+- **Biological Validation & Statistical Power** (Phase 12): GO BP enrichment confirms Spectral's functional coherence on yeast (80% enriched communities, p=4.58e-10) but not human (0%) or mouse (14%), where GraphSAGE/GAT produce more biologically coherent modules. Multi-seed panel (n=220 observations, 20 groups) yields pooled rank consistency |ρ|=0.583 (95% CI [0.470, 0.688]); per-species: yeast 0.981, human 0.967, mouse 0.800
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)
@@ -280,6 +281,7 @@ GF-consistency-framework/
 │   ├── mouse_embeddings_full.py        # Full-network mouse embeddings: 11 methods, ~16K nodes (Phase 10B)
 │   ├── persistence_image_analysis.py   # Persistence image TDA + three-species comparison (Phase 10C, Fig 51-54)
 │   ├── spectral_transferability.py     # Spectral Quality Index (SQI) + SBM validation (Phase 11, Fig 55-59)
+│   ├── biological_validation.py        # GO BP enrichment + multi-seed panel + mixed-effects (Phase 12, Fig 60-64)
 │   └── utils.py                # Shared utilities
 │
 ├── tests/                      # pytest test suite (51 tests)
@@ -343,6 +345,11 @@ GF-consistency-framework/
 │   ├── Fig57                   # SA discriminative power vs SQI (Phase 11)
 │   ├── Fig58                   # SBM synthetic validation (Phase 11)
 │   ├── Fig59                   # Transferability summary + table (Phase 11)
+│   ├── Fig60                   # GO BP enrichment overview: 3 species (Phase 12)
+│   ├── Fig61                   # Enrichment significance distribution (Phase 12)
+│   ├── Fig62                   # Multi-seed method stability (Phase 12)
+│   ├── Fig63                   # Rank consistency |ρ| with CI (Phase 12)
+│   ├── Fig64                   # Phase 12 summary: enrichment + mixed-effects (Phase 12)
 │   ├── FigS1–S7                # Supplementary figures
 │   └── FigS8                   # Sampling density comparison
 │
@@ -442,6 +449,7 @@ Beyond the core 39-step pipeline, the framework provides extensible modules for 
 | `mouse_embeddings_full.py` | Full-network mouse embeddings (11 methods, ~16K nodes) with landmark MDS + sparse VGAE/GNN — matches human pipeline methodology (subsample-after, not subsample-before) (Phase 10B) |
 | `persistence_image_analysis.py` | Persistence image TDA via ripser/persim: mouse G-F scores, H1 persistence diagrams + images (energy, density, spread, entropy), three-species Kendall's W concordance (Phase 10C, Fig 51-54) |
 | `spectral_transferability.py` | Spectral Transferability Theory: derives Spectral Quality Index (SQI = λ₂/λ₂_ER × PR × FA_max) predicting two-factor model transferability; Laplacian spectral analysis (3 species), proposition verification, synthetic SBM validation (20 networks) (Phase 11, Fig 55-59) |
+| `biological_validation.py` | Biological validation + statistical power: (A) GO BP hypergeometric enrichment across 3 species × 11 methods; (B) multi-seed panel (yeast 5 seeds, human 10, mouse 5 subsamples) with mixed-effects pooled Spearman model; `part_a`/`part_b` CLI modes with checkpoint resume (Phase 12, Fig 60-64) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
 
@@ -551,6 +559,29 @@ $$\text{SQI} = \frac{\lambda_2}{\lambda_2^{\text{ER}}} \times \text{PR}(v_2) \ti
 - Practical implication: compute SQI from a PPI network alone to predict a priori whether spectral-based evaluation will work
 
 Report → [`results/phase11_report.md`](results/phase11_report.md) · Figures → [`figures/Fig55-59`](figures/)
+
+## Biological Validation & Statistical Power (Phase 12)
+
+Does the G-F framework detect biologically meaningful structure, and are rankings statistically robust?
+
+**Part A — GO BP Enrichment**: At r=0.2, communities from each embedding method are tested for Gene Ontology biological_process enrichment via hypergeometric test (24,135 BP terms).
+
+| Species | Spectral Enrichment | Best Method | Best Enrichment |
+|---------|:-------------------:|-------------|:---------------:|
+| Yeast | 80% (p=4.58e-10) | DM | 100% (p=1.32e-11) |
+| Human | 0% (p=0.35) | GraphSAGE | 100% (p=6.87e-15) |
+| Mouse | 14% (p=0.06) | GAT | 100% (p=5.80e-12) |
+
+**Part B — Multi-Seed Panel**: 220 observations across 20 groups (species × seed) with pooled Spearman rank consistency.
+
+| Metric | Value |
+|--------|-------|
+| Pooled \|ρ\| | 0.583 (95% CI [0.470, 0.688]) |
+| Yeast \|ρ\| | 0.981 (n=55) |
+| Human \|ρ\| | 0.967 (n=110) |
+| Mouse \|ρ\| | 0.800 (n=55) |
+
+Report → [`results/phase12_report.md`](results/phase12_report.md) · Figures → [`figures/Fig60-64`](figures/)
 
 ---
 
