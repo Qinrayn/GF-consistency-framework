@@ -51,6 +51,7 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 39-s
 - **Three-species mouse validation** (Phase 10): Spectral ranks #1 in all 3 species (yeast, human, mouse). Kendall W=0.739 (11 methods, 3 species). Top-2 (Spectral, MDS) and bottom-2 (VGAE, VGAE-feat) identical in all species. Two-factor geometric model does NOT transfer to mouse (rho=−0.037) — the spectral alignment + effective rank predictors are network-specific, even though method quality is conserved. Spectral is a topological outlier in both human and mouse (H1 persistence 72–161× lower). Persistence images do not improve G-F prediction over scalar H1 features
 - **Spectral Transferability Theory** (Phase 11): Derives closed-form Spectral Quality Index (SQI = λ₂/λ₂_ER × PR × FA_max) predicting when the two-factor model works. SQI ordering: yeast(10.72) > human(2.02) > mouse(0.54) matches two-factor rho: +0.929 > +0.483 > −0.037. Mouse Fiedler vector is 6× more localized (PR=0.0007). Validated on 20 SBM networks (SA_std vs log(SQI) rho=+0.647)
 - **Biological Validation & Statistical Power** (Phase 12): GO BP enrichment confirms Spectral's functional coherence on yeast (80% enriched communities, p=4.58e-10) but not human (0%) or mouse (14%), where GraphSAGE/GAT produce more biologically coherent modules. Multi-seed panel (n=220 observations, 20 groups) yields pooled rank consistency |ρ|=0.583 (95% CI [0.470, 0.688]); per-species: yeast 0.981, human 0.967, mouse 0.800
+- **Protein Function Prediction — Closing the Loop** (Phase 13): Leave-one-term-out CV on full yeast STRING network (5,936 nodes, 12,690 trials) demonstrates that GF-consistent embeddings predict protein function (Spectral P@10=0.148, best among 5 embedding methods). GF Score on curated 153-node network predicts function-prediction MRR on full 5,936-node network (Spearman rho=0.900, P=0.037, n=5 methods)
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)
@@ -282,6 +283,7 @@ GF-consistency-framework/
 │   ├── persistence_image_analysis.py   # Persistence image TDA + three-species comparison (Phase 10C, Fig 51-54)
 │   ├── spectral_transferability.py     # Spectral Quality Index (SQI) + SBM validation (Phase 11, Fig 55-59)
 │   ├── biological_validation.py        # GO BP enrichment + multi-seed panel + mixed-effects (Phase 12, Fig 60-64)
+│   ├── function_prediction.py         # Protein function prediction via LOTO-CV + GF correlation (Phase 13, Fig 65-68)
 │   └── utils.py                # Shared utilities
 │
 ├── tests/                      # pytest test suite (51 tests)
@@ -350,6 +352,10 @@ GF-consistency-framework/
 │   ├── Fig62                   # Multi-seed method stability (Phase 12)
 │   ├── Fig63                   # Rank consistency |ρ| with CI (Phase 12)
 │   ├── Fig64                   # Phase 12 summary: enrichment + mixed-effects (Phase 12)
+│   ├── Fig65                   # Precision@k curves: embedding methods + baselines (Phase 13)
+│   ├── Fig66                   # MRR comparison bar chart coloured by GF Score (Phase 13)
+│   ├── Fig67                   # GF Score vs prediction accuracy scatter (Phase 13)
+│   ├── Fig68                   # Phase 13 summary dashboard (Phase 13)
 │   ├── FigS1–S7                # Supplementary figures
 │   └── FigS8                   # Sampling density comparison
 │
@@ -450,6 +456,7 @@ Beyond the core 39-step pipeline, the framework provides extensible modules for 
 | `persistence_image_analysis.py` | Persistence image TDA via ripser/persim: mouse G-F scores, H1 persistence diagrams + images (energy, density, spread, entropy), three-species Kendall's W concordance (Phase 10C, Fig 51-54) |
 | `spectral_transferability.py` | Spectral Transferability Theory: derives Spectral Quality Index (SQI = λ₂/λ₂_ER × PR × FA_max) predicting two-factor model transferability; Laplacian spectral analysis (3 species), proposition verification, synthetic SBM validation (20 networks) (Phase 11, Fig 55-59) |
 | `biological_validation.py` | Biological validation + statistical power: (A) GO BP hypergeometric enrichment across 3 species × 11 methods; (B) multi-seed panel (yeast 5 seeds, human 10, mouse 5 subsamples) with mixed-effects pooled Spearman model; `part_a`/`part_b` CLI modes with checkpoint resume (Phase 12, Fig 60-64) |
+| `function_prediction.py` | Protein function prediction via leave-one-term-out CV on full yeast STRING network (5,936 nodes, 5 methods, 12,690 trials); KNN in embedding space vs PPI/2-hop/random baselines; Precision@k + MRR evaluation; GF Score ↔ prediction accuracy correlation closes the framework loop (Phase 13, Fig 65-68) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
 
@@ -582,6 +589,27 @@ Does the G-F framework detect biologically meaningful structure, and are ranking
 | Mouse \|ρ\| | 0.800 (n=55) |
 
 Report → [`results/phase12_report.md`](results/phase12_report.md) · Figures → [`figures/Fig60-64`](figures/)
+
+---
+
+## Protein Function Prediction — Closing the Loop (Phase 13)
+
+Can the GF-consistent embedding space predict protein function, and does GF Score predict prediction accuracy?
+
+**Leave-One-Term-Out CV** on the full yeast STRING network (5,936 nodes, 4,709 proteins with experimental BP annotations, 12,690 trials). Five methods with full-network embeddings predict function via KNN; three network-topology baselines for comparison.
+
+| Method | P@5 | P@10 | MRR |
+|--------|:---:|:----:|:---:|
+| PPI-Neighbors (baseline) | 0.331 | 0.442 | 0.219 |
+| 2-Hop Diffusion (baseline) | 0.147 | 0.222 | 0.105 |
+| **Spectral** | **0.097** | **0.148** | **0.066** |
+| MDS | 0.088 | 0.136 | 0.060 |
+| DM | 0.054 | 0.084 | 0.037 |
+| Random (baseline) | 0.049 | 0.073 | 0.041 |
+
+**Closing the loop**: GF Score (curated 153-node network) vs MRR (full 5,936-node network) yields Spearman rho = 0.900 (P = 0.037, n = 5 methods). The framework's structural quality metric predicts function-prediction accuracy across network scales.
+
+Report → [`results/phase13_report.md`](results/phase13_report.md) · Figures → [`figures/Fig65-68`](figures/)
 
 ---
 
