@@ -1,0 +1,250 @@
+{
+  "description": "Phase 16: Metric Comparison & Statistical Rigor",
+  "pairwise_correlations": {
+    "GF Score vs Link Pred AUROC": {
+      "spearman_rho": 0.5909,
+      "spearman_p": 0.055576,
+      "ci_95": [
+        -0.091,
+        0.8768
+      ],
+      "pearson_r": 0.598,
+      "n": 11
+    },
+    "GF Score vs kNN micro-F1": {
+      "spearman_rho": 0.6091,
+      "spearman_p": 0.046696,
+      "ci_95": [
+        -0.0468,
+        0.9147
+      ],
+      "pearson_r": 0.6695,
+      "n": 11
+    },
+    "Link Pred AUROC vs kNN micro-F1": {
+      "spearman_rho": 0.6364,
+      "spearman_p": 0.035287,
+      "ci_95": [
+        -0.0741,
+        0.9193
+      ],
+      "pearson_r": 0.9668,
+      "n": 11
+    }
+  },
+  "rank_discrepancies": {
+    "DM": {
+      "gf_rank": 9,
+      "auc_rank": 8,
+      "f1_rank": 7,
+      "gf_vs_auc_disc": 1,
+      "gf_vs_f1_disc": 2,
+      "max_disc": 2
+    },
+    "MDS": {
+      "gf_rank": 8,
+      "auc_rank": 10,
+      "f1_rank": 9,
+      "gf_vs_auc_disc": 2,
+      "gf_vs_f1_disc": 1,
+      "max_disc": 2
+    },
+    "Spectral": {
+      "gf_rank": 10,
+      "auc_rank": 9,
+      "f1_rank": 10,
+      "gf_vs_auc_disc": 1,
+      "gf_vs_f1_disc": 0,
+      "max_disc": 1
+    },
+    "DeepWalk": {
+      "gf_rank": 4,
+      "auc_rank": 2,
+      "f1_rank": 4,
+      "gf_vs_auc_disc": 2,
+      "gf_vs_f1_disc": 0,
+      "max_disc": 2
+    },
+    "Node2Vec": {
+      "gf_rank": 7,
+      "auc_rank": 4,
+      "f1_rank": 3,
+      "gf_vs_auc_disc": 3,
+      "gf_vs_f1_disc": 4,
+      "max_disc": 4
+    },
+    "VGAE": {
+      "gf_rank": 0,
+      "auc_rank": 3,
+      "f1_rank": 6,
+      "gf_vs_auc_disc": 3,
+      "gf_vs_f1_disc": 6,
+      "max_disc": 6
+    },
+    "VGAE-feat": {
+      "gf_rank": 5,
+      "auc_rank": 0,
+      "f1_rank": 1,
+      "gf_vs_auc_disc": 5,
+      "gf_vs_f1_disc": 4,
+      "max_disc": 5
+    },
+    "GraphSAGE": {
+      "gf_rank": 1,
+      "auc_rank": 5,
+      "f1_rank": 2,
+      "gf_vs_auc_disc": 4,
+      "gf_vs_f1_disc": 1,
+      "max_disc": 4
+    },
+    "GAT": {
+      "gf_rank": 2,
+      "auc_rank": 6,
+      "f1_rank": 0,
+      "gf_vs_auc_disc": 4,
+      "gf_vs_f1_disc": 2,
+      "max_disc": 4
+    },
+    "GIN": {
+      "gf_rank": 3,
+      "auc_rank": 1,
+      "f1_rank": 5,
+      "gf_vs_auc_disc": 2,
+      "gf_vs_f1_disc": 2,
+      "max_disc": 2
+    },
+    "PCA": {
+      "gf_rank": 6,
+      "auc_rank": 7,
+      "f1_rank": 8,
+      "gf_vs_auc_disc": 1,
+      "gf_vs_f1_disc": 2,
+      "max_disc": 2
+    }
+  },
+  "permutation_test": {
+    "n_methods": 5,
+    "methods": [
+      "DM",
+      "MDS",
+      "Spectral",
+      "Node2Vec",
+      "VGAE"
+    ],
+    "observed_rho": 0.9,
+    "parametric_p": 0.037386,
+    "permutation_p": 0.0824,
+    "perm_rho_mean_abs": 0.4209,
+    "perm_rho_max_abs": 1.0,
+    "perm_rhos": [
+      0.7,
+      0.7,
+      -0.3,
+      0.9,
+      0.1,
+      -0.3,
+      -0.1,
+      -0.1,
+      0.0,
+      0.8,
+      -0.7,
+      -0.5,
+      0.7,
+      0.2,
+      -0.4,
+      0.3,
+      0.7,
+      0.1,
+      -0.3,
+      -0.3,
+      -0.2,
+      0.5,
+      0.2,
+      0.7,
+      0.9,
+      0.5,
+      0.3,
+      -0.7,
+      0.6,
+      -0.7,
+      -0.7,
+      0.0,
+      0.3,
+      0.3,
+      -0.7,
+      -0.8,
+      -0.7,
+      -0.1,
+      -0.1,
+      -0.1,
+      0.1,
+      0.7,
+      -0.7,
+      0.2,
+      0.6,
+      -0.3,
+      0.4,
+      0.1,
+      -0.2,
+      0.0,
+      -0.4,
+      -0.2,
+      -0.7,
+      -0.3,
+      0.8,
+      -0.6,
+      -0.2,
+      -0.5,
+      0.6,
+      -0.9,
+      -0.3,
+      -0.4,
+      -0.9,
+      0.7,
+      -0.1,
+      0.2,
+      0.0,
+      -1.0,
+      -0.7,
+      0.5,
+      -0.5,
+      -0.6,
+      -0.6,
+      0.1,
+      0.6,
+      0.0,
+      -0.1,
+      -0.4,
+      0.6,
+      -0.1,
+      -0.5,
+      -0.5,
+      0.4,
+      0.4,
+      -0.3,
+      0.9,
+      -0.1,
+      -0.4,
+      0.4,
+      -0.1,
+      0.3,
+      0.2,
+      -0.7,
+      -0.1,
+      0.3,
+      0.7,
+      0.1,
+      0.0,
+      0.6,
+      1.0
+    ]
+  },
+  "unique_variance": {
+    "rho_gf_auc": 0.5909,
+    "rho_gf_f1": 0.6091,
+    "rho_auc_f1": 0.6364,
+    "unique_variance_gf": 0.629,
+    "unique_variance_auc": 0.595,
+    "n_methods": 11
+  }
+}

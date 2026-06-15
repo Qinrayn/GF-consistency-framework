@@ -88,6 +88,8 @@ Deep analysis modules (Phase 1-6)
 #   - dimension_sweep: Spectral embedding dimension sweep d=2..64 (Phase 13b)
 #   - longrange_functional_links: Distance-stratified recovery + long-range discovery (Phase 14)
 #   - longrange_hybrid_fixed: Rank-based fallback hybrid predictor + rescue analysis (Phase 14b)
+#   - rescue_protein_analysis: Characterisation of embedding-rescued proteins — GO enrichment, network topology (Phase 15)
+#   - metric_comparison_extended: GF Score vs traditional metrics + permutation test + unique variance (Phase 16)
 
 Extension modules (v1.1+)
 --------------------------

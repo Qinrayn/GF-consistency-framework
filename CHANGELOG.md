@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (Phase 16: Metric Comparison & Statistical Rigor)
+- `metric_comparison_extended.py`: Systematic comparison of GF Score against link prediction AUROC and kNN micro-F1 across 11 methods with bootstrap CIs. Key findings: GF Score has 62.9% unique variance not shared with any traditional metric; discordance analysis reveals GF Score uniquely detects geometric collapse (VGAE: GF rank=0 but kNN-F1 rank=6); Spectral most consistent across all metrics (max discrepancy=1). Permutation test for GF Score vs full-network MRR correlation (rho=0.900): parametric p=0.037, permutation p=0.082 (marginal due to n=5)
+- `metric_comparison_extended.json`, and Figs 78-79
+
+### Added (Phase 15: Rescue Protein Characterisation)
+- `rescue_protein_analysis.py`: Identifies and characterises the 235 proteins whose functional associations are ONLY recoverable via embedding KNN (not PPI neighbors). GO enrichment: 3 significant terms (FDR<0.05) including transmembrane transport (13.4x enrichment), sporulation (9.1x), DNA repair (3.3x). Network topology: rescued proteins have significantly lower degree (median 15 vs 26, p<0.0001) and lower clustering coefficient (0.360 vs 0.387, p=0.034) — they reside in network periphery where topology provides insufficient signal. Rescuing embedding neighbors are at median 3 network hops distance. This demonstrates embeddings' unique value for biologically coherent peripheral proteins
+- `rescue_protein_analysis.json`, and Figs 76-77
+
 ### Added (Phase 14: Long-Range Functional Link Discovery + Hybrid Predictor)
 - `longrange_functional_links.py`: Three-part analysis — (1) distance-stratified functional recovery: 176,914 protein pairs sharing GO BP terms stratified by shortest-path network distance (1-3 hops: 87.6%, 4-6 hops: 12.4%, 7+: 0.01%); at 4-6 hops, PPI recovery = 0.000 but Spectral recovers 0.007, confirming embeddings capture signals invisible to local topology; (2) score-weighted hybrid predictor (fails — embedding distance weights overwhelm PPI votes); (3) long-range functional link discovery: 256 links found by Spectral (>=4 hops apart but within top-30 KNN), total ~1,100 across 5 methods
 - `longrange_hybrid_fixed.py`: Fixed hybrid using rank-based fallback (PPI first, embedding fills gaps) — ALL 5 methods improve over pure PPI (MDS best: +0.0005, +0.2%); 258 embedding-rescued trials where PPI fails but embedding succeeds (2.0% of 12,690 LOTO trials); rank aggregation (Borda count) sweep shows pure PPI remains optimal when diluting with embedding ranks
