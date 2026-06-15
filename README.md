@@ -47,6 +47,7 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 39-s
 - **Cross-network validation & bootstrap CIs** (Phase 8): Two-factor model partially transfers to human PPI (rho=0.543, p=0.085 for 11 methods; rho=0.880, p=0.021 for 6-method subset). SVD-based effective rank outperforms PCA-based effective dimensionality on human (rho=0.418 vs 0.082). Bootstrap analysis (10k resamples) confirms 4 single-factor predictors are robust (topo_gf_score, effective_rank, h1_max_persistence, h1_topological_complexity — all CIs exclude 0), but partial correlations are not robust at n=11
 - **Full human TDA analysis** (Phase 8B): Persistent homology recomputed for all 11 methods on human PPI with identical parameters as yeast — H1 max persistence (rho=0.073) does NOT predict G-F Score on human; three-factor model degrades to rho=0.282 (worse than two-factor rho=0.543). TDA loop signal is yeast-specific, not cross-species transferable
 - **LOO sensitivity** (Phase 8C): Spectral is a catastrophic topological outlier on human (H1 persistence 80x lower than yeast). Excluding Spectral reveals latent H1 signal (rho=+0.430), but two-factor model remains the most LOO-stable cross-species predictor
+- **Unified human G-F Scores** (Phase 9): Eliminating community-detection (Louvain→greedy_modularity) and interval ([0.282,0.297]→[0.05,0.422]) confounds yields rho=0.927 rank correlation with original scores. Top-3 (Spectral, MDS, Node2Vec) and bottom-2 (VGAE, GAT) rankings are identical. All predictor correlations preserved in direction (two-factor rho=+0.483 vs old +0.543). LOO pattern confirms Phase 8C (H1→+0.418 excl Spectral)
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)
@@ -272,6 +273,7 @@ GF-consistency-framework/
 │   ├── human_cross_network_validation.py  # Cross-network validation & bootstrap CIs (Phase 8, Fig 46-47)
 │   ├── human_tda_full.py               # Full human TDA: 11-method persistent homology + three-factor validation (Phase 8B, Fig 48)
 │   ├── human_loo_sensitivity.py        # Leave-one-out sensitivity analysis (Phase 8C, Fig 49)
+│   ├── human_gf_unified.py             # Unified human G-F Scores: fix confounds 1+2 (Phase 9, Fig 50)
 │   └── utils.py                # Shared utilities
 │
 ├── tests/                      # pytest test suite (51 tests)
@@ -325,6 +327,7 @@ GF-consistency-framework/
 │   ├── Fig47                   # Bootstrap confidence intervals (Phase 8)
 │   ├── Fig48                   # Full human TDA + three-factor validation (Phase 8B)
 │   ├── Fig49                   # Leave-one-out sensitivity analysis (Phase 8C)
+│   ├── Fig50                   # Unified human G-F comparison (Phase 9)
 │   ├── FigS1–S7                # Supplementary figures
 │   └── FigS8                   # Sampling density comparison
 │
@@ -417,6 +420,7 @@ Beyond the core 39-step pipeline, the framework provides extensible modules for 
 | `human_cross_network_validation.py` | Cross-network validation: tests two/three-factor models on human PPI, bootstrap CIs for Phase 7 correlations (10k resamples) — confirms single-factor robustness, identifies partial correlation fragility at n=11 (Phase 8, Fig 46-47) |
 | `human_tda_full.py` | Full human TDA analysis: persistent homology for all 11 methods on human PPI with identical yeast parameters, three-factor validation — H1 persistence does NOT transfer (rho=0.073), three-factor degrades to rho=0.282 (Phase 8B, Fig 48) |
 | `human_loo_sensitivity.py` | Leave-one-out sensitivity: Spectral is a catastrophic topological outlier (H1 80x lower than yeast); excluding Spectral reveals latent H1 signal (rho=+0.430); two-factor model is most LOO-stable (Phase 8C, Fig 49) |
+| `human_gf_unified.py` | Unified human G-F Scores: eliminates community-detection (Louvain→greedy_modularity) and interval confounds; confirms rho=0.927 rank correlation, top-3/bottom-2 identical, all correlations preserved (Phase 9, Fig 50) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
 

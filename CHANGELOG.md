@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (Phase 9: Unified Human G-F Scores — Fix Confounds 1+2)
+- `human_gf_unified.py`: Recomputes human G-F Scores using greedy_modularity_communities (same as yeast) and yeast integration interval [0.05, 0.422] (same as yeast), eliminating the community-detection algorithm mismatch (Louvain vs greedy_modularity) and GF interval mismatch ([0.282,0.297] vs [0.05,0.422]). Old vs new rank correlation rho=0.927; top-3/bottom-2 rankings identical; all predictor correlations preserved in direction (two-factor rho=+0.483 vs old +0.543). LOO analysis confirms Phase 8C pattern (H1 jumps to +0.418 excl Spectral) (Phase 9, Fig 50)
+- `phase9_unified_report.md`: Comprehensive supplement report with per-method comparison, correlation analysis, LOO sensitivity, and recommended paper language
+- `human_gf_unified.json` and Fig 50
+
 ### Added (Phase 8C: Leave-One-Out Sensitivity Analysis)
 - `human_loo_sensitivity.py`: LOO analysis for all 11-method human correlations — excluding Spectral reveals latent H1 signal (rho=+0.430 vs full rho=+0.073), Spectral's anomalous topology (H1=0.0012, 80x lower than yeast) drives the null result. Two-factor model is most LOO-stable (Phase 8C, Fig 49)
 - `phase8c_loo_sensitivity_report.md`: Comprehensive sensitivity report with cross-species asymmetry analysis

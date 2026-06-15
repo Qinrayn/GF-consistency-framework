@@ -1,0 +1,81 @@
+{
+  "analysis": "Phase 9: Unified Human G-F Scores",
+  "community_detection": "greedy_modularity_communities (same as yeast)",
+  "n_points": 25,
+  "r_range": [
+    0.05,
+    0.55
+  ],
+  "methods": [
+    "DM",
+    "MDS",
+    "Spectral",
+    "DeepWalk",
+    "Node2Vec",
+    "VGAE",
+    "PCA",
+    "VGAE-feat",
+    "GraphSAGE",
+    "GAT",
+    "GIN"
+  ],
+  "n_methods": 11,
+  "gf_scores": {
+    "DM": {
+      "yeast_interval": 0.050987,
+      "human_interval": 0.0,
+      "old_louvain": 0.05982932304070516
+    },
+    "MDS": {
+      "yeast_interval": 0.48341,
+      "human_interval": 0.0,
+      "old_louvain": 0.3665895159604647
+    },
+    "Spectral": {
+      "yeast_interval": 0.496756,
+      "human_interval": 0.0,
+      "old_louvain": 0.401947672531325
+    },
+    "DeepWalk": {
+      "yeast_interval": 0.18574,
+      "human_interval": 0.0,
+      "old_louvain": 0.10057815633051474
+    },
+    "Node2Vec": {
+      "yeast_interval": 0.199333,
+      "human_interval": 0.0,
+      "old_louvain": 0.16620439439191592
+    },
+    "VGAE": {
+      "yeast_interval": 0.022914,
+      "human_interval": 0.0,
+      "old_louvain": 0.013488095495757337
+    },
+    "PCA": {
+      "yeast_interval": 0.138786,
+      "human_interval": 0.0,
+      "old_louvain": 0.08576238310566663
+    },
+    "VGAE-feat": {
+      "yeast_interval": 0.072608,
+      "human_interval": 0.0,
+      "old_louvain": 0.08857432406051224
+    },
+    "GraphSAGE": {
+      "yeast_interval": 0.163952,
+      "human_interval": 0.0,
+      "old_louvain": 0.13313221753172583
+    },
+    "GAT": {
+      "yeast_interval": 0.011227,
+      "human_interval": 0.0,
+      "old_louvain": 0.010501460262225813
+    },
+    "GIN": {
+      "yeast_interval": 0.047439,
+      "human_interval": 0.0,
+      "old_louvain": 0.08894291070905928
+    }
+  },
+  "old_vs_new_rank_correlation": 0.927
+}
