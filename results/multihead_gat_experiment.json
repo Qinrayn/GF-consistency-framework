@@ -1,0 +1,202 @@
+{
+  "experiment": "multihead_gat_fairness",
+  "description": "Systematic sweep of GAT heads x latent dims to test whether multi-head + high-dim GAT can exceed random baseline GF Score.",
+  "random_baseline_gf": 0.135,
+  "gf_interval": [
+    0.05,
+    0.422
+  ],
+  "n_nodes": 153,
+  "n_edges": 1669,
+  "n_annotated": 153,
+  "training": {
+    "epochs": 300,
+    "lr": 0.01,
+    "clip_grad": 1.0,
+    "warmup_epochs": 10,
+    "hidden_dim": 16,
+    "seed": 42
+  },
+  "variants": {
+    "1h_d2": {
+      "n_heads": 1,
+      "latent_dim": 2
+    },
+    "4h_d2": {
+      "n_heads": 4,
+      "latent_dim": 2
+    },
+    "8h_d2": {
+      "n_heads": 8,
+      "latent_dim": 2
+    },
+    "4h_d16": {
+      "n_heads": 4,
+      "latent_dim": 16
+    },
+    "8h_d16": {
+      "n_heads": 8,
+      "latent_dim": 16
+    },
+    "4h_d32": {
+      "n_heads": 4,
+      "latent_dim": 32
+    },
+    "8h_d32": {
+      "n_heads": 8,
+      "latent_dim": 32
+    }
+  },
+  "results": {
+    "1h_d2": {
+      "n_heads": 1,
+      "latent_dim": 2,
+      "gf_score_2d": 0.0655476876517244,
+      "gf_score_raw": null,
+      "collapsed": false,
+      "median_dist": 0.15230315224581276,
+      "dist_cv": 0.8223252971456827,
+      "attention_entropy_layer1": {
+        "entropy": 7.88485860824585,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.9665252770237989
+      },
+      "attention_entropy_layer2": {
+        "entropy": 7.892690658569336,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.967485329065906
+      },
+      "final_loss": 14875.4853515625,
+      "elapsed_s": 52.1
+    },
+    "4h_d2": {
+      "n_heads": 4,
+      "latent_dim": 2,
+      "gf_score_2d": 0.09176917964055796,
+      "gf_score_raw": null,
+      "collapsed": false,
+      "median_dist": 0.15246678106253223,
+      "dist_cv": 0.6148633707000319,
+      "attention_entropy_layer1": {
+        "entropy": 9.32797622680664,
+        "max_entropy": 9.544237868224927,
+        "normalized": 0.9773411303760556
+      },
+      "attention_entropy_layer2": {
+        "entropy": 7.792327404022217,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.9551828101212138
+      },
+      "final_loss": 14572.0654296875,
+      "elapsed_s": 44.9
+    },
+    "8h_d2": {
+      "n_heads": 8,
+      "latent_dim": 2,
+      "gf_score_2d": 0.062462537432685865,
+      "gf_score_raw": null,
+      "collapsed": false,
+      "median_dist": 0.04436648780605962,
+      "dist_cv": 0.701053209414168,
+      "attention_entropy_layer1": {
+        "entropy": 10.011438369750977,
+        "max_entropy": 10.237385048784873,
+        "normalized": 0.9779292584917955
+      },
+      "attention_entropy_layer2": {
+        "entropy": 7.927780628204346,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.971786654467831
+      },
+      "final_loss": 14412.861328125,
+      "elapsed_s": 13.4
+    },
+    "4h_d16": {
+      "n_heads": 4,
+      "latent_dim": 16,
+      "gf_score_2d": 0.12635877346251986,
+      "gf_score_raw": 0.07697105916938664,
+      "collapsed": false,
+      "median_dist": 0.4508944231237406,
+      "dist_cv": 0.6409154108875673,
+      "attention_entropy_layer1": {
+        "entropy": 9.333422660827637,
+        "max_entropy": 9.544237868224927,
+        "normalized": 0.977911781914307
+      },
+      "attention_entropy_layer2": {
+        "entropy": 6.842945098876953,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.838807610377948
+      },
+      "final_loss": 18167.1484375,
+      "elapsed_s": 57.3
+    },
+    "8h_d16": {
+      "n_heads": 8,
+      "latent_dim": 16,
+      "gf_score_2d": 0.10310872778741158,
+      "gf_score_raw": 0.07914953483038126,
+      "collapsed": false,
+      "median_dist": 0.44088568516793786,
+      "dist_cv": 0.6310430565943931,
+      "attention_entropy_layer1": {
+        "entropy": 10.028450965881348,
+        "max_entropy": 10.237385048784873,
+        "normalized": 0.9795910692031377
+      },
+      "attention_entropy_layer2": {
+        "entropy": 6.833561420440674,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.8376573598977882
+      },
+      "final_loss": 16949.65234375,
+      "elapsed_s": 54.4
+    },
+    "4h_d32": {
+      "n_heads": 4,
+      "latent_dim": 32,
+      "gf_score_2d": 0.14912761123041057,
+      "gf_score_raw": 0.13430203264090496,
+      "collapsed": false,
+      "median_dist": 0.4298608940176185,
+      "dist_cv": 0.6785886188240094,
+      "attention_entropy_layer1": {
+        "entropy": 9.334716796875,
+        "max_entropy": 9.544237868224927,
+        "normalized": 0.9780473753545814
+      },
+      "attention_entropy_layer2": {
+        "entropy": 7.739678382873535,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.9487290977239432
+      },
+      "final_loss": 16356.9345703125,
+      "elapsed_s": 54.6
+    },
+    "8h_d32": {
+      "n_heads": 8,
+      "latent_dim": 32,
+      "gf_score_2d": 0.11437489894164694,
+      "gf_score_raw": 0.10326381576200665,
+      "collapsed": false,
+      "median_dist": 0.4523301389338962,
+      "dist_cv": 0.691728564535443,
+      "attention_entropy_layer1": {
+        "entropy": 10.028494834899902,
+        "max_entropy": 10.237385048784873,
+        "normalized": 0.979595354381271
+      },
+      "attention_entropy_layer2": {
+        "entropy": 6.771174430847168,
+        "max_entropy": 8.157943507105037,
+        "normalized": 0.830009968182167
+      },
+      "final_loss": 18167.94140625,
+      "elapsed_s": 54.7
+    }
+  },
+  "best_variant": "4h_d32",
+  "best_gf_score": 0.14912761123041057,
+  "exceeds_random_baseline": true
+}
