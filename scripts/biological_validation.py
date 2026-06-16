@@ -200,6 +200,20 @@ def fast_gf_score_cc(coords, nodes, go_map, n_points=20):
 
     Uses connected_components instead of greedy_modularity_communities
     and sparse matrix purity for ~1000x speedup over the full pipeline.
+
+    WARNING — Metric incompatibility
+    --------------------------------
+    This function computes **pair-sharing purity**: the fraction of node
+    pairs within a community that share *at least one* GO term.  This is
+    fundamentally different from the **standard purity** used by
+    ``compute_gf_curve`` (most_common_count / total_terms, i.e. the
+    fraction of nodes in the majority-label class).
+
+    Consequence: GF scores produced by this function (used for the mouse
+    multi-seed panel) are NOT directly comparable with those produced by
+    the standard pipeline (used for yeast and human).  The pooled
+    mixed-effects model in ``fit_mixed_effects()`` should therefore be
+    interpreted with caution — see the ``exclude_mouse`` flag there.
     """
     from scipy.spatial.distance import pdist, squareform
     from scipy.sparse import csr_matrix
@@ -511,11 +525,22 @@ def multiseed_mouse(n_seeds=5, subsample_size=500):
 # Mixed-Effects Model
 # ============================================================
 
-def fit_mixed_effects(yeast_scores, mouse_scores, human_scores):
+def fit_mixed_effects(yeast_scores, mouse_scores, human_scores,
+                      exclude_mouse=False):
     """
     Pool multi-seed data and compute pooled Spearman correlation.
     Uses a simple approach: concatenate all (species, seed, method, GF_score) tuples,
     rank methods within each (species, seed) group, then compute pooled rank correlation.
+
+    Parameters
+    ----------
+    exclude_mouse : bool
+        If True, exclude mouse observations from the pooled analysis.
+        RECOMMENDED when comparing across species, because mouse GF scores
+        are computed via ``fast_gf_score_cc()`` which uses pair-sharing
+        purity — a different metric from the standard purity used for
+        yeast and human.  Including mouse in the pooled Spearman mixes
+        incompatible metrics and may inflate or deflate the correlation.
     """
     # Collect all observations
     observations = []  # (species, seed, method, gf_score)
@@ -524,9 +549,15 @@ def fit_mixed_effects(yeast_scores, mouse_scores, human_scores):
         for method, gf in method_scores.items():
             observations.append(("yeast", seed, method, gf))
 
-    for seed, method_scores in mouse_scores.items():
-        for method, gf in method_scores.items():
-            observations.append(("mouse", seed, method, gf))
+    if not exclude_mouse:
+        for seed, method_scores in mouse_scores.items():
+            for method, gf in method_scores.items():
+                observations.append(("mouse", seed, method, gf))
+        if mouse_scores:
+            print("  WARNING: mouse multi-seed uses fast_gf_score_cc (pair-sharing "
+                  "purity), which is a different metric from yeast/human standard "
+                  "purity. Pooled Spearman may be affected. Consider re-running with "
+                  "exclude_mouse=True for a metric-consistent analysis.")
 
     for seed, method_scores in human_scores.items():
         for method, gf in method_scores.items():
@@ -605,6 +636,7 @@ def fit_mixed_effects(yeast_scores, mouse_scores, human_scores):
     return {
         "n_total_observations": len(all_ranks),
         "n_groups": len(groups),
+        "mouse_excluded": exclude_mouse,
         "pooled_spearman": {
             "rho": round(float(rho_pooled), 4),
             "p": round(float(p_pooled), 6),

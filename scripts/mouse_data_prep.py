@@ -32,7 +32,9 @@ import networkx as nx
 SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPT_DIR))
 
-DATA_DIR = SCRIPT_DIR.parent / "data"
+from utils import get_data_dir
+
+DATA_DIR = get_data_dir()
 
 STRING_URL = "https://stringdb-static.org/download/protein.links.v11.5/10090.protein.links.v11.5.txt.gz"
 MGI_GAF_URL = "https://current.geneontology.org/annotations/mgi.gaf.gz"

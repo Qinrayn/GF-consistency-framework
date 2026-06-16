@@ -24,8 +24,10 @@ from scipy.stats import spearmanr, rankdata
 SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPT_DIR))
 
-RESULTS = SCRIPT_DIR.parent / "results"
-FIGURES = SCRIPT_DIR.parent / "figures"
+from utils import get_results_dir, get_figures_dir
+
+RESULTS = get_results_dir()
+FIGURES = get_figures_dir()
 BANNER = "=" * 70
 
 

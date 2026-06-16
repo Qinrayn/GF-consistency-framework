@@ -38,15 +38,15 @@ BANNER = "=" * 64
 def load_all_metrics():
     """Load all metrics for all methods from existing result files."""
     # Metric comparison (curated network)
-    with open(RESULTS / "metric_comparison.json") as f:
+    with open(RESULTS / "metric_comparison.json", encoding="utf-8") as f:
         mc = json.load(f)
 
     # Function prediction MRR (full network)
-    with open(RESULTS / "function_prediction.json") as f:
+    with open(RESULTS / "function_prediction.json", encoding="utf-8") as f:
         fp = json.load(f)
 
     # GF scores
-    with open(RESULTS / "gf_scores.json") as f:
+    with open(RESULTS / "gf_scores.json", encoding="utf-8") as f:
         gf = json.load(f)
 
     # Merge into unified table

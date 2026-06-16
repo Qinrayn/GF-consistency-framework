@@ -41,6 +41,10 @@ This script orchestrates the complete analysis pipeline:
 33. Human extended embeddings (11 methods: PCA, VGAE-feat, GraphSAGE, GAT, GIN)
 34. Multi-modal functional anchoring (STRING threshold gradient + channel networks)
 35. Hyperparameter sensitivity analysis (r-points, resolution, dimensions, walk params)
+36. Density-corrected G-F Score (random baseline normalization)
+37. 10-seed subsample stability test (human 11 methods)
+38. IC-weighted G-F Score on human PPI (11 methods)
+39. GAT embedding collapse root-cause analysis
 
 Usage:
     python run_all_analysis.py                         # Skip human validation
@@ -54,7 +58,7 @@ Usage:
     gf-consistency --config pipeline_config.yaml        # Via pip entry point
 """
 
-__version__ = "1.4.0"
+__version__ = "2.1.0"
 
 import sys
 import json
@@ -352,11 +356,11 @@ def main():
     parser.add_argument("--skip-plots", action="store_true",
                         help="Skip figure generation")
     parser.add_argument("--start-from", type=int, default=None,
-                        help="Start from a specific step (1-35)")
+                        help="Start from a specific step (1-39)")
     parser.add_argument("--skip-gnn", action="store_true",
                         help="Skip GNN embedding computation (Step 15)")
     parser.add_argument("--skip-extended", action="store_true",
-                        help="Skip extended analysis steps (16-21, 24-35)")
+                        help="Skip extended analysis steps (16-21, 24-39)")
     parser.add_argument("--skip-topological", action="store_true",
                         help="Skip topological analysis steps (22-23)")
     parser.add_argument("--seed", type=int, default=None,
@@ -405,7 +409,7 @@ def main():
     if skip_gnn:
         print("  GNN embeddings: SKIPPED")
     if skip_extended:
-        print("  Extended analysis (Steps 16-21, 24-35): SKIPPED")
+        print("  Extended analysis (Steps 16-21, 24-39): SKIPPED")
     if skip_topological:
         print("  Topological analysis (Steps 22-23): SKIPPED")
     print()
@@ -869,6 +873,59 @@ def main():
             import subprocess
             subprocess.run(hp_cmd, check=True)
         if run_step(run_hyperparam, "Hyperparameter sensitivity"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 36: Density-Corrected G-F Score
+    if start_from <= 36 and not skip_extended:
+        print_header("Step 36: Density-Corrected G-F Score")
+        from scripts.density_corrected_gf import main as density_corrected_main
+        _saved_argv = sys.argv
+        sys.argv = [sys.argv[0]]
+        try:
+            if run_step(density_corrected_main, "Density-corrected GF"):
+                completed += 1
+            else:
+                failed += 1
+        finally:
+            sys.argv = _saved_argv
+
+    # Step 37: Human Seed Stability (10-seed subsample)
+    if start_from <= 37 and not skip_extended:
+        print_header("Step 37: Human Seed Stability (10-seed)")
+        hs_cmd = [sys.executable,
+                  str(Path(__file__).parent / "scripts" / "human_seed_stability.py")]
+        def run_seed_stability():
+            import subprocess
+            subprocess.run(hs_cmd, check=True)
+        if run_step(run_seed_stability, "Human seed stability"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 38: IC-Weighted G-F Score (Human)
+    if start_from <= 38 and not skip_extended:
+        print_header("Step 38: IC-Weighted G-F Score (Human)")
+        ic_cmd = [sys.executable,
+                  str(Path(__file__).parent / "scripts" / "human_ic_weighted_gf.py")]
+        def run_ic_weighted():
+            import subprocess
+            subprocess.run(ic_cmd, check=True)
+        if run_step(run_ic_weighted, "IC-weighted GF score"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 39: GAT Collapse Diagnosis
+    if start_from <= 39 and not skip_extended:
+        print_header("Step 39: GAT Collapse Diagnosis")
+        gat_cmd = [sys.executable,
+                   str(Path(__file__).parent / "scripts" / "gat_collapse_diagnosis.py")]
+        def run_gat_diagnosis():
+            import subprocess
+            subprocess.run(gat_cmd, check=True)
+        if run_step(run_gat_diagnosis, "GAT collapse diagnosis"):
             completed += 1
         else:
             failed += 1

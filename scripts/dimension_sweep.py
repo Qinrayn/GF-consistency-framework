@@ -14,11 +14,10 @@ Uses the same LOTO-CV framework as Phase 13 (function_prediction.py).
 
 from __future__ import annotations
 
-import gzip
 import json
 import sys
 import time
-from collections import Counter, defaultdict
+from collections import Counter
 from pathlib import Path
 
 import numpy as np
@@ -26,8 +25,6 @@ import networkx as nx
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from scipy import stats
-from scipy.sparse import csgraph
 from scipy.sparse.linalg import eigsh
 from sklearn.neighbors import NearestNeighbors
 
@@ -44,11 +41,9 @@ from function_prediction import (
     parse_gaf_experimental,
     ppi_neighbor_predict,
     twohop_diffusion_predict,
-    build_knn_index,
     knn_predict_fast,
-    evaluate_precision_at_k,
     compute_mean_reciprocal_rank,
-    K_VALUES, K_MAX,
+    K_MAX,
 )
 
 # ============================================================

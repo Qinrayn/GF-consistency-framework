@@ -14,7 +14,7 @@ from __future__ import annotations
 import json
 import sys
 import time
-from collections import Counter, defaultdict
+from collections import Counter
 from pathlib import Path
 
 import numpy as np
@@ -22,7 +22,6 @@ import networkx as nx
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.gridspec import GridSpec
 from sklearn.neighbors import NearestNeighbors
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -33,10 +32,7 @@ from utils import (
 from function_prediction import (
     build_alias_mapping,
     parse_gaf_experimental,
-    build_knn_index,
-    knn_predict_fast,
     ppi_neighbor_predict,
-    twohop_diffusion_predict,
     compute_mean_reciprocal_rank,
     K_MAX,
 )

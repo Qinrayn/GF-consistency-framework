@@ -221,7 +221,8 @@ def compute_spectral_alignment_for_species(G, node_list, eigenvectors, go_map,
         common = [n for n in nodes_ann if n in node_to_idx]
         if len(common) < 100:
             continue
-        emb_idx = [nodes_ann.index(n) for n in common]
+        node_to_emb = {n: i for i, n in enumerate(nodes_ann)}
+        emb_idx = [node_to_emb[n] for n in common if n in node_to_emb]
         eig_idx = [node_to_idx[n] for n in common]
 
         Y = coords[emb_idx]
@@ -358,19 +359,22 @@ def run():
             try:
                 d = json.load(open(RESULTS / "spectral_alignment.json", encoding="utf-8"))
                 two_factor_rho = d.get("predictor_comparison", {}).get("combined", {}).get("rho")
-            except Exception:
+            except Exception as e:
+                print(f"WARNING: Could not load spectral_alignment.json: {e}, using fallback value")
                 two_factor_rho = 0.929  # known from Phase 3
         elif species == "human":
             try:
                 d = json.load(open(RESULTS / "persistence_image_analysis.json", encoding="utf-8"))
                 two_factor_rho = d.get("correlations", {}).get("human", {}).get("two_factor", {}).get("rho")
-            except Exception:
+            except Exception as e:
+                print(f"WARNING: Could not load persistence_image_analysis.json: {e}, using fallback value")
                 two_factor_rho = 0.483
         elif species == "mouse":
             try:
                 d = json.load(open(RESULTS / "persistence_image_analysis.json", encoding="utf-8"))
                 two_factor_rho = d.get("correlations", {}).get("mouse", {}).get("two_factor", {}).get("rho")
-            except Exception:
+            except Exception as e:
+                print(f"WARNING: Could not load persistence_image_analysis.json: {e}, using fallback value")
                 two_factor_rho = -0.037
 
         all_results[species] = {
@@ -493,11 +497,12 @@ def run():
 
         # Synthetic "functional alignment": use ground-truth communities
         communities = {}
+        node_to_idx = {n: i for i, n in enumerate(node_list_sbm)}
         for nd in G_sbm.nodes():
             comm = G_sbm.nodes[nd].get("block", 0)
             if comm not in communities:
                 communities[comm] = []
-            communities[comm].append(node_list_sbm.index(nd))
+            communities[comm].append(node_to_idx[nd])
 
         k_eig = min(30, eig_vecs.shape[1])
         fa_sbm = np.zeros(k_eig)

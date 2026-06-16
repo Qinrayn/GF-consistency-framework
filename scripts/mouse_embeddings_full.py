@@ -35,6 +35,7 @@ sys.path.insert(0, str(SCRIPT_DIR))
 
 from utils import (
     SEED, TARGET_STD,
+    get_data_dir,
     build_similarity_matrix,
     diffusion_map_from_similarity,
     spectral_embedding_from_graph,
@@ -51,7 +52,7 @@ from human_embed_extended import (
     _build_gin_encoder,
 )
 
-DATA_DIR = SCRIPT_DIR.parent / "data"
+DATA_DIR = get_data_dir()
 SCORE_THRESHOLD = 700
 OUTLIER_THRESHOLD = 100
 LANDMARK_COUNT = 500

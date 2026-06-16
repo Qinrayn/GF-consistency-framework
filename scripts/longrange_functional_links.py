@@ -29,14 +29,12 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
-from scipy import stats
 from sklearn.neighbors import NearestNeighbors
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from utils import (
     SEED,
     get_data_dir, get_results_dir, get_figures_dir, get_embeddings_dir,
-    TARGET_STD,
 )
 from function_prediction import (
     build_alias_mapping,
@@ -45,9 +43,8 @@ from function_prediction import (
     knn_predict_fast,
     ppi_neighbor_predict,
     twohop_diffusion_predict,
-    evaluate_precision_at_k,
     compute_mean_reciprocal_rank,
-    K_VALUES, K_MAX,
+    K_MAX,
 )
 
 # ============================================================
