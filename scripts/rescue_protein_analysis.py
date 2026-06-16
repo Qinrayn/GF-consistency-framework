@@ -222,12 +222,10 @@ def network_topology_analysis(rescue_proteins, graph, all_annotations):
     metrics_nr = {"degree": [], "clustering": [], "betweenness": [],
                   "neighbor_mean_degree": []}
 
-    # Compute betweenness for rescue proteins + sample of non-rescue
-    rng = np.random.RandomState(SEED)
-    nr_sample = sorted(rng.choice(list(non_rescue),
-                                  min(500, len(non_rescue)), replace=False))
+    # Use ALL non-rescue proteins (no subsampling)
+    nr_all = sorted(non_rescue)
 
-    # Betweenness centrality (expensive - compute on subgraph)
+    # Betweenness centrality (approximate with k samples)
     print("  Computing betweenness centrality...")
     bc = nx.betweenness_centrality(graph, k=min(200, graph.number_of_nodes()))
 
@@ -246,7 +244,7 @@ def network_topology_analysis(rescue_proteins, graph, all_annotations):
         metrics["betweenness"].append(bet)
         metrics["neighbor_mean_degree"].append(mean_nd)
 
-    for pid in nr_sample:
+    for pid in nr_all:
         if pid not in graph:
             continue
         deg = graph.degree(pid)
@@ -266,7 +264,15 @@ def network_topology_analysis(rescue_proteins, graph, all_annotations):
         r_vals = metrics[key]
         nr_vals = metrics_nr[key]
         if r_vals and nr_vals:
+            n1 = len(r_vals)
+            n2 = len(nr_vals)
+            N = n1 + n2
             u_stat, u_p = stats.mannwhitneyu(r_vals, nr_vals, alternative="two-sided")
+            # Correct effect size: r = Z / sqrt(N)
+            mu_u = n1 * n2 / 2.0
+            sigma_u = np.sqrt(n1 * n2 * (N + 1) / 12.0)
+            z_score = (u_stat - mu_u) / sigma_u
+            effect_r = z_score / np.sqrt(N)
             comparison[key] = {
                 "rescue_median": float(np.median(r_vals)),
                 "nonrescue_median": float(np.median(nr_vals)),
@@ -274,7 +280,9 @@ def network_topology_analysis(rescue_proteins, graph, all_annotations):
                 "nonrescue_mean": float(np.mean(nr_vals)),
                 "mann_whitney_u": float(u_stat),
                 "p_value": float(u_p),
-                "effect_size_r": float(u_stat / (len(r_vals) * len(nr_vals))),
+                "effect_size_r": float(effect_r),
+                "n1": n1,
+                "n2": n2,
             }
 
     print(f"\n  Network topology comparison (rescued vs non-rescued):")

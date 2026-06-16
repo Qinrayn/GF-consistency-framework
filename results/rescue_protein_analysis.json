@@ -667,37 +667,40 @@
       "rescue_median": 15.0,
       "nonrescue_median": 26.0,
       "rescue_mean": 25.591489361702127,
-      "nonrescue_mean": 44.458,
-      "mann_whitney_u": 43451.5,
-      "p_value": 1.1997422923163084e-08,
-      "effect_size_r": 0.3698
+      "nonrescue_mean": 46.52788439828358,
+      "mann_whitney_u": 379026.0,
+      "p_value": 2.072914e-12,
+      "effect_size_r": -0.1029,
+      "n1": 235,
+      "n2": 4429,
+      "note": "Corrected: full non-rescue set, r = Z/sqrt(N)"
     },
     "clustering": {
       "rescue_median": 0.36,
-      "nonrescue_median": 0.38686444850828416,
+      "nonrescue_median": 0.39766081871345027,
       "rescue_mean": 0.3894868749818196,
-      "nonrescue_mean": 0.4169986895118035,
-      "mann_whitney_u": 53042.0,
-      "p_value": 0.033487707671528484,
-      "effect_size_r": 0.45142127659574466
+      "nonrescue_mean": 0.42044519981937234,
+      "mann_whitney_u": 468718.0,
+      "p_value": 1.017766e-02,
+      "effect_size_r": -0.0376,
+      "n1": 235,
+      "n2": 4429,
+      "note": "Corrected: full non-rescue set, r = Z/sqrt(N)"
     },
     "betweenness": {
-      "rescue_median": 8.302498854883565e-05,
-      "nonrescue_median": 0.0001879276222676704,
-      "rescue_mean": 0.000471129731841506,
-      "nonrescue_mean": 0.0004519345879529938,
-      "mann_whitney_u": 45009.0,
-      "p_value": 3.080820686491502e-07,
-      "effect_size_r": 0.38305531914893615
+      "rescue_median": 9.526195329033474e-05,
+      "nonrescue_median": 0.00017302829254414552,
+      "rescue_mean": 0.0004101438172831374,
+      "nonrescue_mean": 0.0004962298490855724,
+      "mann_whitney_u": 415900.0,
+      "p_value": 2.041747e-07,
+      "effect_size_r": -0.0761,
+      "n1": 235,
+      "n2": 4429,
+      "note": "Corrected: full non-rescue set, r = Z/sqrt(N). Betweenness is approximate (k=200)."
     },
     "neighbor_mean_degree": {
-      "rescue_median": 49.05172413793103,
-      "nonrescue_median": 51.04938775510204,
-      "rescue_mean": 51.08209853235592,
-      "nonrescue_mean": 64.88784421653492,
-      "mann_whitney_u": 54056.5,
-      "p_value": 0.08043469865558195,
-      "effect_size_r": 0.46005531914893616
+      "note": "Recompute by re-running rescue_protein_analysis.py with corrected code"
     }
   },
   "rescue_network_dists": {
