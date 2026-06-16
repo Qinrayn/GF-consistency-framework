@@ -45,20 +45,26 @@ This script orchestrates the complete analysis pipeline:
 37. 10-seed subsample stability test (human 11 methods)
 38. IC-weighted G-F Score on human PPI (11 methods)
 39. GAT embedding collapse root-cause analysis
+40. E. coli K-12 cross-species validation (4th species)
+41. Coexpression network G-F analysis (network-type dependence)
+42. Degree-preserving null model (50 randomizations)
+43. GAT collapse theorem verification on full 5936-node network
+44. G-F Score ablation: community detection sensitivity (5 algorithms)
+45. Full 11-method LOTO-CV function prediction
 
 Usage:
     python run_all_analysis.py                         # Skip human validation
     python run_all_analysis.py --run-human              # Include human validation
     python run_all_analysis.py --skip-plots             # Skip figure generation
     python run_all_analysis.py --skip-gnn               # Skip GNN embeddings
-    python run_all_analysis.py --skip-extended          # Skip Steps 16-21, 24-35
+    python run_all_analysis.py --skip-extended          # Skip Steps 16-21, 24-45
     python run_all_analysis.py --skip-topological       # Skip Steps 22-23
     python run_all_analysis.py --start-from 3           # Start from step 3
     python run_all_analysis.py --config my_config.yaml  # Custom config file
     gf-consistency --config pipeline_config.yaml        # Via pip entry point
 """
 
-__version__ = "2.1.0"
+__version__ = "2.2.0"
 
 import sys
 import json
@@ -356,11 +362,11 @@ def main():
     parser.add_argument("--skip-plots", action="store_true",
                         help="Skip figure generation")
     parser.add_argument("--start-from", type=int, default=None,
-                        help="Start from a specific step (1-39)")
+                        help="Start from a specific step (1-45)")
     parser.add_argument("--skip-gnn", action="store_true",
                         help="Skip GNN embedding computation (Step 15)")
     parser.add_argument("--skip-extended", action="store_true",
-                        help="Skip extended analysis steps (16-21, 24-39)")
+                        help="Skip extended analysis steps (16-21, 24-45)")
     parser.add_argument("--skip-topological", action="store_true",
                         help="Skip topological analysis steps (22-23)")
     parser.add_argument("--seed", type=int, default=None,
@@ -409,7 +415,7 @@ def main():
     if skip_gnn:
         print("  GNN embeddings: SKIPPED")
     if skip_extended:
-        print("  Extended analysis (Steps 16-21, 24-39): SKIPPED")
+        print("  Extended analysis (Steps 16-21, 24-45): SKIPPED")
     if skip_topological:
         print("  Topological analysis (Steps 22-23): SKIPPED")
     print()
@@ -926,6 +932,84 @@ def main():
             import subprocess
             subprocess.run(gat_cmd, check=True)
         if run_step(run_gat_diagnosis, "GAT collapse diagnosis"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 40: E. coli K-12 Cross-Species Validation (4th species)
+    if start_from <= 40 and not skip_extended:
+        print_header("Step 40: E. coli K-12 Cross-Species Validation")
+        ecoli_cmd = [sys.executable,
+                     str(Path(__file__).parent / "scripts" / "ecoli_analysis.py")]
+        def run_ecoli():
+            import subprocess
+            subprocess.run(ecoli_cmd, check=True)
+        if run_step(run_ecoli, "E. coli cross-species validation"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 41: Coexpression Network G-F Analysis
+    if start_from <= 41 and not skip_extended:
+        print_header("Step 41: Coexpression Network G-F Analysis")
+        coex_cmd = [sys.executable,
+                    str(Path(__file__).parent / "scripts" / "coexpression_gf.py")]
+        def run_coexpression():
+            import subprocess
+            subprocess.run(coex_cmd, check=True)
+        if run_step(run_coexpression, "Coexpression network analysis"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 42: Degree-Preserving Null Model
+    if start_from <= 42 and not skip_extended:
+        print_header("Step 42: Degree-Preserving Null Model (50 randomizations)")
+        dp_cmd = [sys.executable,
+                  str(Path(__file__).parent / "scripts" / "degree_preserving_null.py")]
+        def run_dp_null():
+            import subprocess
+            subprocess.run(dp_cmd, check=True)
+        if run_step(run_dp_null, "Degree-preserving null model"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 43: GAT Collapse Theorem Verification on Full Network
+    if start_from <= 43 and not skip_extended:
+        print_header("Step 43: GAT Theorem Verification (Full 5936-Node Network)")
+        gat_full_cmd = [sys.executable,
+                        str(Path(__file__).parent / "scripts" / "gat_theorem_large_network.py")]
+        def run_gat_full():
+            import subprocess
+            subprocess.run(gat_full_cmd, check=True)
+        if run_step(run_gat_full, "GAT theorem full-network verification"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 44: G-F Score Ablation — Community Detection Sensitivity
+    if start_from <= 44 and not skip_extended:
+        print_header("Step 44: G-F Score Ablation (Community Detection Sensitivity)")
+        ablation_cmd = [sys.executable,
+                        str(Path(__file__).parent / "scripts" / "gf_ablation_community_detection.py")]
+        def run_ablation():
+            import subprocess
+            subprocess.run(ablation_cmd, check=True)
+        if run_step(run_ablation, "Community detection ablation"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 45: Full 11-Method LOTO-CV Function Prediction
+    if start_from <= 45 and not skip_extended:
+        print_header("Step 45: Full 11-Method LOTO-CV Function Prediction")
+        func_full_cmd = [sys.executable,
+                         str(Path(__file__).parent / "scripts" / "function_prediction_full.py")]
+        def run_func_full():
+            import subprocess
+            subprocess.run(func_full_cmd, check=True)
+        if run_step(run_func_full, "Full 11-method function prediction"):
             completed += 1
         else:
             failed += 1

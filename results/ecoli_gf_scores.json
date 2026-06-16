@@ -1,0 +1,173 @@
+{
+  "analysis": "Cross-Species G-F Score Analysis: E. coli (4th Species)",
+  "species": "Escherichia coli K-12 MG1655 (taxon 511145)",
+  "string_version": "v11.5",
+  "score_threshold": 700,
+  "community_detection": "greedy_modularity_communities",
+  "gf_interval": [
+    0.05,
+    0.422
+  ],
+  "n_points": 25,
+  "r_range": [
+    0.05,
+    0.55
+  ],
+  "subsample_size": 2000,
+  "network_stats": {
+    "n_nodes": 3751,
+    "n_edges": 31762,
+    "n_annotated_with_go": 2000
+  },
+  "gf_scores": {
+    "MDS": {
+      "gf_score": 0.244942,
+      "peak_purity": 0.3642,
+      "n_nodes": 2000
+    },
+    "Spectral": {
+      "gf_score": 0.240203,
+      "peak_purity": 0.2657,
+      "n_nodes": 2000
+    },
+    "VGAE": {
+      "gf_score": 0.194268,
+      "peak_purity": 0.2554,
+      "n_nodes": 2000
+    },
+    "DeepWalk": {
+      "gf_score": 0.090929,
+      "peak_purity": 0.1037,
+      "n_nodes": 2000
+    },
+    "DM": {
+      "gf_score": 0.089305,
+      "peak_purity": 0.1917,
+      "n_nodes": 2000
+    },
+    "Node2Vec": {
+      "gf_score": 0.089139,
+      "peak_purity": 0.098,
+      "n_nodes": 2000
+    },
+    "GIN": {
+      "gf_score": 0.082947,
+      "peak_purity": 0.1084,
+      "n_nodes": 2000
+    },
+    "PCA": {
+      "gf_score": 0.082638,
+      "peak_purity": 0.1596,
+      "n_nodes": 2000
+    },
+    "GraphSAGE": {
+      "gf_score": 0.060531,
+      "peak_purity": 0.2292,
+      "n_nodes": 2000
+    },
+    "VGAE-feat": {
+      "gf_score": 0.047581,
+      "peak_purity": 0.0785,
+      "n_nodes": 2000
+    },
+    "GAT": {
+      "gf_score": 0.04395,
+      "peak_purity": 0.0439,
+      "n_nodes": 2000
+    }
+  },
+  "ranking": {
+    "MDS": 1,
+    "Spectral": 2,
+    "VGAE": 3,
+    "DeepWalk": 4,
+    "DM": 5,
+    "Node2Vec": 6,
+    "GIN": 7,
+    "PCA": 8,
+    "GraphSAGE": 9,
+    "VGAE-feat": 10,
+    "GAT": 11
+  },
+  "cross_species": {
+    "methods": [
+      "DM",
+      "MDS",
+      "Spectral",
+      "DeepWalk",
+      "Node2Vec",
+      "VGAE",
+      "PCA",
+      "VGAE-feat",
+      "GraphSAGE",
+      "GAT",
+      "GIN"
+    ],
+    "yeast_ranks": {
+      "DM": 2,
+      "MDS": 3,
+      "Spectral": 1,
+      "DeepWalk": 7,
+      "Node2Vec": 4,
+      "VGAE": 11,
+      "PCA": 5,
+      "VGAE-feat": 6,
+      "GraphSAGE": 10,
+      "GAT": 9,
+      "GIN": 8
+    },
+    "human_ranks": {
+      "DM": 8,
+      "MDS": 2,
+      "Spectral": 1,
+      "DeepWalk": 4,
+      "Node2Vec": 3,
+      "VGAE": 10,
+      "PCA": 6,
+      "VGAE-feat": 7,
+      "GraphSAGE": 5,
+      "GAT": 11,
+      "GIN": 9
+    },
+    "mouse_ranks": {
+      "DM": 5,
+      "MDS": 2,
+      "Spectral": 1,
+      "DeepWalk": 6,
+      "Node2Vec": 8,
+      "VGAE": 10,
+      "PCA": 3,
+      "VGAE-feat": 11,
+      "GraphSAGE": 4,
+      "GAT": 7,
+      "GIN": 9
+    },
+    "ecoli_ranks": {
+      "DM": 5,
+      "MDS": 1,
+      "Spectral": 2,
+      "DeepWalk": 4,
+      "Node2Vec": 6,
+      "VGAE": 3,
+      "PCA": 8,
+      "VGAE-feat": 10,
+      "GraphSAGE": 9,
+      "GAT": 11,
+      "GIN": 7
+    },
+    "kendall_W_3_species": 0.7394,
+    "kendall_W_4_species": 0.6523,
+    "W_change": -0.0871
+  },
+  "spectral_quality": {
+    "spectral_rank": 2,
+    "gnn_ranks": {
+      "GraphSAGE": 9,
+      "GAT": 11,
+      "GIN": 7
+    },
+    "spectral_beats_all_gnn": true,
+    "sqi": 0.7
+  },
+  "interpretation": "E. coli G-F analysis (3751 nodes, 2000 subsampled). Spectral rank #2 of 11. Kendall's W across 4 species: 0.6523 (decreased from 0.7394 with 3 species). Spectral > GNN pattern HOLDS for E. coli."
+}

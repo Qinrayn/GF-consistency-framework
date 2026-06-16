@@ -1,7 +1,7 @@
 """
 scripts/ — G-F Consistency Framework analysis pipeline.
 
-This package contains the 39-step reproducible analysis pipeline for
+This package contains the 45-step reproducible analysis pipeline for
 evaluating protein interaction network embeddings via geometric-functional
 consistency.
 
@@ -91,6 +91,20 @@ Deep analysis modules (Phase 1-6)
 #   - rescue_protein_analysis: Characterisation of embedding-rescued proteins — GO enrichment, network topology (Phase 15)
 #   - metric_comparison_extended: GF Score vs traditional metrics + permutation test + unique variance (Phase 16)
 
+Modules (Steps 40-45: submission-tier robustness experiments)
+---------------------------------------------------------------
+ecoli_analysis                  Step 40: E. coli K-12 cross-species validation (4th species, SQI=0.7)
+coexpression_gf                 Step 41: Coexpression network G-F analysis (network-type dependence)
+degree_preserving_null          Step 42: Degree-preserving null model (50 double-edge-swap randomizations)
+gat_theorem_large_network       Step 43: GAT collapse theorem verification on full 5936-node network
+gf_ablation_community_detection Step 44: G-F Score ablation — community detection sensitivity (5 algorithms, W=0.797)
+function_prediction_full        Step 45: Full 11-method LOTO-CV function prediction (rho=0.646, p=0.032)
+
+Supplementary experiment modules
+----------------------------------
+multihead_gat_experiment        Multi-head GAT configuration sweep (1/4/8 heads, d=2-32)
+recalculate_rescue_stats        Recalculate rescue protein statistics
+
 Extension modules (v1.1+)
 --------------------------
 config_loader                 YAML configuration loader and validator
@@ -104,4 +118,4 @@ robustness_analysis           Extended 30-subset convergence analysis
 visualization_helpers         Okabe-Ito colorblind-safe plotting utilities
 """
 
-__version__ = "2.1.0"
+__version__ = "2.2.0"

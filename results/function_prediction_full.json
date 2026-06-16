@@ -1,0 +1,154 @@
+{
+  "description": "Full 11-Method LOTO-CV Function Prediction Analysis",
+  "methods_evaluated": [
+    "DM",
+    "DeepWalk",
+    "GAT",
+    "GIN",
+    "GraphSAGE",
+    "MDS",
+    "Node2Vec",
+    "PCA",
+    "Spectral",
+    "VGAE",
+    "VGAE-feat"
+  ],
+  "n_methods": 11,
+  "annotation_stats": {
+    "total_gaf_lines": 138996,
+    "experimental_bp_lines": 22568,
+    "mapped_to_network": 21854,
+    "proteins_annotated": 4709,
+    "unique_terms": 2486,
+    "terms_per_protein_mean": 3.0
+  },
+  "prediction_stats": {
+    "query_proteins": 3133,
+    "total_trials": 12690,
+    "completed": 12690,
+    "elapsed_seconds": 60.3
+  },
+  "mean_reciprocal_rank": {
+    "DM": 0.036707,
+    "MDS": 0.060027,
+    "Spectral": 0.065751,
+    "DeepWalk": 0.010257,
+    "Node2Vec": 0.011191,
+    "VGAE": 0.010657,
+    "PCA": 0.043786,
+    "VGAE-feat": 0.012003,
+    "GIN": 0.010871,
+    "GAT": 0.012379,
+    "GraphSAGE": 0.021024
+  },
+  "gf_scores": {
+    "DM": 0.155182,
+    "MDS": 0.152155,
+    "Spectral": 0.163327,
+    "DeepWalk": 0.122536,
+    "Node2Vec": 0.151171,
+    "VGAE": 0.06567,
+    "PCA": 0.137531,
+    "VGAE-feat": 0.123844,
+    "GIN": 0.1217,
+    "GAT": 0.0694,
+    "GraphSAGE": 0.069
+  },
+  "gf_correlation": {
+    "methods": [
+      "DM",
+      "DeepWalk",
+      "GAT",
+      "GIN",
+      "GraphSAGE",
+      "MDS",
+      "Node2Vec",
+      "PCA",
+      "Spectral",
+      "VGAE",
+      "VGAE-feat"
+    ],
+    "n": 11,
+    "spearman_rho": 0.6455,
+    "spearman_p": 0.031963,
+    "spearman_ci_95": [
+      -0.0141,
+      0.9242
+    ],
+    "pearson_r": 0.6007,
+    "pearson_p": 0.050643,
+    "permutation_p": 0.0405,
+    "permutation_n": 10000,
+    "loo_sensitivity": {
+      "DM": 0.5758,
+      "DeepWalk": 0.697,
+      "GAT": 0.7333,
+      "GIN": 0.6606,
+      "GraphSAGE": 0.7333,
+      "MDS": 0.5515,
+      "Node2Vec": 0.7091,
+      "PCA": 0.6121,
+      "Spectral": 0.5273,
+      "VGAE": 0.5758,
+      "VGAE-feat": 0.6606
+    },
+    "significant_at_005": true,
+    "per_method": [
+      {
+        "method": "DM",
+        "gf_score": 0.1552,
+        "mrr": 0.0367
+      },
+      {
+        "method": "DeepWalk",
+        "gf_score": 0.1225,
+        "mrr": 0.0103
+      },
+      {
+        "method": "GAT",
+        "gf_score": 0.0694,
+        "mrr": 0.0124
+      },
+      {
+        "method": "GIN",
+        "gf_score": 0.1217,
+        "mrr": 0.0109
+      },
+      {
+        "method": "GraphSAGE",
+        "gf_score": 0.069,
+        "mrr": 0.021
+      },
+      {
+        "method": "MDS",
+        "gf_score": 0.1522,
+        "mrr": 0.06
+      },
+      {
+        "method": "Node2Vec",
+        "gf_score": 0.1512,
+        "mrr": 0.0112
+      },
+      {
+        "method": "PCA",
+        "gf_score": 0.1375,
+        "mrr": 0.0438
+      },
+      {
+        "method": "Spectral",
+        "gf_score": 0.1633,
+        "mrr": 0.0658
+      },
+      {
+        "method": "VGAE",
+        "gf_score": 0.0657,
+        "mrr": 0.0107
+      },
+      {
+        "method": "VGAE-feat",
+        "gf_score": 0.1238,
+        "mrr": 0.012
+      }
+    ]
+  }
+}

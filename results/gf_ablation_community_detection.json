@@ -1,0 +1,630 @@
+{
+  "analysis": "G-F Score Ablation: Community Detection Sensitivity",
+  "version": "1.0",
+  "n_points": 50,
+  "r_range": [
+    0.05,
+    0.55
+  ],
+  "gf_interval": [
+    0.05,
+    0.422
+  ],
+  "community_methods_available": [
+    "greedy_modularity",
+    "label_propagation",
+    "connected_components",
+    "louvain",
+    "leiden"
+  ],
+  "detailed_results": {
+    "greedy_modularity": {
+      "DM": {
+        "gf_score": 0.1553832203604124,
+        "mean_purity": 0.141208231311581,
+        "max_purity": 0.24629228325874664,
+        "time_seconds": 4.698574781417847
+      },
+      "MDS": {
+        "gf_score": 0.14980558999562077,
+        "mean_purity": 0.1328339309282242,
+        "max_purity": 0.24540671598071753,
+        "time_seconds": 4.275408983230591
+      },
+      "Spectral": {
+        "gf_score": 0.16252999343701247,
+        "mean_purity": 0.14558774807893468,
+        "max_purity": 0.25566903350487474,
+        "time_seconds": 9.440706253051758
+      },
+      "DeepWalk": {
+        "gf_score": 0.12269337385151376,
+        "mean_purity": 0.10814934797319975,
+        "max_purity": 0.1964363192928558,
+        "time_seconds": 11.076398134231567
+      },
+      "Node2Vec": {
+        "gf_score": 0.15022827199204383,
+        "mean_purity": 0.1281334291998248,
+        "max_purity": 0.20740405253070449,
+        "time_seconds": 11.259058475494385
+      },
+      "VGAE": {
+        "gf_score": 0.06581624554144357,
+        "mean_purity": 0.06565855155409092,
+        "max_purity": 0.09565787849294734,
+        "time_seconds": 12.898876667022705
+      },
+      "PCA": {
+        "gf_score": 0.13667201123176623,
+        "mean_purity": 0.12460398382150104,
+        "max_purity": 0.23061833903246645,
+        "time_seconds": 9.485346794128418
+      },
+      "VGAE-feat": {
+        "gf_score": 0.12193015189481254,
+        "mean_purity": 0.12413290154346913,
+        "max_purity": 0.1436484772289857,
+        "time_seconds": 10.134088277816772
+      },
+      "GraphSAGE": {
+        "gf_score": 0.06765586721752774,
+        "mean_purity": 0.06872996040888574,
+        "max_purity": 0.08850463518931524,
+        "time_seconds": 13.628103971481323
+      },
+      "GAT": {
+        "gf_score": 0.06850501399362298,
+        "mean_purity": 0.06806534724313118,
+        "max_purity": 0.12760830026455025,
+        "time_seconds": 20.000926733016968
+      },
+      "GIN": {
+        "gf_score": 0.11997607219023294,
+        "mean_purity": 0.10667274857865476,
+        "max_purity": 0.2147456486006218,
+        "time_seconds": 12.754518747329712
+      }
+    },
+    "label_propagation": {
+      "DM": {
+        "gf_score": 0.15037965351418361,
+        "mean_purity": 0.13032864573593891,
+        "max_purity": 0.2432332041599776,
+        "time_seconds": 0.6092679500579834
+      },
+      "MDS": {
+        "gf_score": 0.16613283715041036,
+        "mean_purity": 0.14100904235539408,
+        "max_purity": 0.24337259736671651,
+        "time_seconds": 0.5516660213470459
+      },
+      "Spectral": {
+        "gf_score": 0.18698980684239444,
+        "mean_purity": 0.18623265081080675,
+        "max_purity": 0.2528381583901825,
+        "time_seconds": 0.7527890205383301
+      },
+      "DeepWalk": {
+        "gf_score": 0.12141867322159303,
+        "mean_purity": 0.10692235264613117,
+        "max_purity": 0.1717847602999565,
+        "time_seconds": 0.777829647064209
+      },
+      "Node2Vec": {
+        "gf_score": 0.15372978159091377,
+        "mean_purity": 0.13038354384283005,
+        "max_purity": 0.19328824603468803,
+        "time_seconds": 0.6802988052368164
+      },
+      "VGAE": {
+        "gf_score": 0.07031860359281043,
+        "mean_purity": 0.06996713561009747,
+        "max_purity": 0.0922667487035425,
+        "time_seconds": 0.6574647426605225
+      },
+      "PCA": {
+        "gf_score": 0.14350934987415218,
+        "mean_purity": 0.12544325248975283,
+        "max_purity": 0.23138302266400582,
+        "time_seconds": 0.6295442581176758
+      },
+      "VGAE-feat": {
+        "gf_score": 0.13196952629860628,
+        "mean_purity": 0.13971715278324795,
+        "max_purity": 0.15630434782608696,
+        "time_seconds": 0.8063204288482666
+      },
+      "GraphSAGE": {
+        "gf_score": 0.0651748206850716,
+        "mean_purity": 0.06539780699900566,
+        "max_purity": 0.10899769742668751,
+        "time_seconds": 0.8676824569702148
+      },
+      "GAT": {
+        "gf_score": 0.07005060306209344,
+        "mean_purity": 0.06895261106660516,
+        "max_purity": 0.12019933000984345,
+        "time_seconds": 0.9423220157623291
+      },
+      "GIN": {
+        "gf_score": 0.12333157149627033,
+        "mean_purity": 0.11395382492559238,
+        "max_purity": 0.2140154012597503,
+        "time_seconds": 1.1149868965148926
+      }
+    },
+    "connected_components": {
+      "DM": {
+        "gf_score": 0.16743410032968714,
+        "mean_purity": 0.14202590037249857,
+        "max_purity": 0.24756679825282815,
+        "time_seconds": 0.14403223991394043
+      },
+      "MDS": {
+        "gf_score": 0.13211432233848733,
+        "mean_purity": 0.11557904628540928,
+        "max_purity": 0.2630671506352087,
+        "time_seconds": 0.06304931640625
+      },
+      "Spectral": {
+        "gf_score": 0.1251264252524686,
+        "mean_purity": 0.11061782389026409,
+        "max_purity": 0.2598079943344797,
+        "time_seconds": 0.10285019874572754
+      },
+      "DeepWalk": {
+        "gf_score": 0.15493584604822386,
+        "mean_purity": 0.13187089441797198,
+        "max_purity": 0.25542131350681535,
+        "time_seconds": 0.1355457305908203
+      },
+      "Node2Vec": {
+        "gf_score": 0.18370896292870756,
+        "mean_purity": 0.1526390180811816,
+        "max_purity": 0.2468062982768865,
+        "time_seconds": 0.14115691184997559
+      },
+      "VGAE": {
+        "gf_score": 0.06140995160077638,
+        "mean_purity": 0.062186227242612496,
+        "max_purity": 0.06234385646150352,
+        "time_seconds": 0.03992128372192383
+      },
+      "PCA": {
+        "gf_score": 0.14342977265508094,
+        "mean_purity": 0.12369141854592364,
+        "max_purity": 0.23263379408116253,
+        "time_seconds": 0.12388896942138672
+      },
+      "VGAE-feat": {
+        "gf_score": 0.15421423507934848,
+        "mean_purity": 0.15620580112543841,
+        "max_purity": 0.1681007167518902,
+        "time_seconds": 0.26354026794433594
+      },
+      "GraphSAGE": {
+        "gf_score": 0.06137665498202021,
+        "mean_purity": 0.062144380407613296,
+        "max_purity": 0.06217616580310881,
+        "time_seconds": 0.07318758964538574
+      },
+      "GAT": {
+        "gf_score": 0.07253965992474404,
+        "mean_purity": 0.07094497512038023,
+        "max_purity": 0.15564798598949212,
+        "time_seconds": 0.11372590065002441
+      },
+      "GIN": {
+        "gf_score": 0.13696550217650172,
+        "mean_purity": 0.11887508929396667,
+        "max_purity": 0.22232375801963428,
+        "time_seconds": 0.20521879196166992
+      }
+    },
+    "louvain": {
+      "DM": {
+        "gf_score": 0.15141249985427174,
+        "mean_purity": 0.13766893266161984,
+        "max_purity": 0.245808960773371,
+        "time_seconds": 2.517859697341919
+      },
+      "MDS": {
+        "gf_score": 0.1631194937625279,
+        "mean_purity": 0.148814733291405,
+        "max_purity": 0.24540671598071753,
+        "time_seconds": 2.1781320571899414
+      },
+      "Spectral": {
+        "gf_score": 0.17309273994188557,
+        "mean_purity": 0.1655493622078449,
+        "max_purity": 0.2518821404163283,
+        "time_seconds": 2.6973066329956055
+      },
+      "DeepWalk": {
+        "gf_score": 0.11364356686984874,
+        "mean_purity": 0.10150232866286428,
+        "max_purity": 0.18788577937595713,
+        "time_seconds": 2.371342420578003
+      },
+      "Node2Vec": {
+        "gf_score": 0.13559945297625103,
+        "mean_purity": 0.11742157423641306,
+        "max_purity": 0.18221255874851944,
+        "time_seconds": 1.69362211227417
+      },
+      "VGAE": {
+        "gf_score": 0.06948493943493622,
+        "mean_purity": 0.06832850307915543,
+        "max_purity": 0.08227345894748206,
+        "time_seconds": 4.026376485824585
+      },
+      "PCA": {
+        "gf_score": 0.13675105659386025,
+        "mean_purity": 0.1246000282296876,
+        "max_purity": 0.22851051700870215,
+        "time_seconds": 3.586815595626831
+      },
+      "VGAE-feat": {
+        "gf_score": 0.11171924455111525,
+        "mean_purity": 0.11662831180890881,
+        "max_purity": 0.13781945955629693,
+        "time_seconds": 3.980300188064575
+      },
+      "GraphSAGE": {
+        "gf_score": 0.06984868379780619,
+        "mean_purity": 0.07029321681320665,
+        "max_purity": 0.08792554593453188,
+        "time_seconds": 5.054774045944214
+      },
+      "GAT": {
+        "gf_score": 0.06831545935792127,
+        "mean_purity": 0.06769122802151573,
+        "max_purity": 0.11201702699509716,
+        "time_seconds": 5.63928484916687
+      },
+      "GIN": {
+        "gf_score": 0.11868697545432279,
+        "mean_purity": 0.10676887146588213,
+        "max_purity": 0.2146481524137436,
+        "time_seconds": 4.949235439300537
+      }
+    },
+    "leiden": {
+      "DM": {
+        "gf_score": 0.15156222471560418,
+        "mean_purity": 0.13864416437333077,
+        "max_purity": 0.24571029883529885,
+        "time_seconds": 0.6806066036224365
+      },
+      "MDS": {
+        "gf_score": 0.1638685167322686,
+        "mean_purity": 0.15037968573895036,
+        "max_purity": 0.24540671598071753,
+        "time_seconds": 0.6752243041992188
+      },
+      "Spectral": {
+        "gf_score": 0.17302688798690063,
+        "mean_purity": 0.16596867006623633,
+        "max_purity": 0.24746272485243068,
+        "time_seconds": 0.8473095893859863
+      },
+      "DeepWalk": {
+        "gf_score": 0.11363006550716154,
+        "mean_purity": 0.10150191809688344,
+        "max_purity": 0.19304223012895125,
+        "time_seconds": 0.877554178237915
+      },
+      "Node2Vec": {
+        "gf_score": 0.13517284479125632,
+        "mean_purity": 0.11729651184465327,
+        "max_purity": 0.18149392670955733,
+        "time_seconds": 0.8668615818023682
+      },
+      "VGAE": {
+        "gf_score": 0.06959544573430464,
+        "mean_purity": 0.06840907543215093,
+        "max_purity": 0.0852442464954322,
+        "time_seconds": 1.0720903873443604
+      },
+      "PCA": {
+        "gf_score": 0.13608224116182902,
+        "mean_purity": 0.12411238152188497,
+        "max_purity": 0.22851051700870212,
+        "time_seconds": 0.8082685470581055
+      },
+      "VGAE-feat": {
+        "gf_score": 0.11014731532875344,
+        "mean_purity": 0.11544906808906136,
+        "max_purity": 0.13437531149271048,
+        "time_seconds": 0.9850904941558838
+      },
+      "GraphSAGE": {
+        "gf_score": 0.06828593032364899,
+        "mean_purity": 0.06916722423505456,
+        "max_purity": 0.08789183550761097,
+        "time_seconds": 1.2854936122894287
+      },
+      "GAT": {
+        "gf_score": 0.06833059921705445,
+        "mean_purity": 0.06773548952056568,
+        "max_purity": 0.11180054513387847,
+        "time_seconds": 1.3465957641601562
+      },
+      "GIN": {
+        "gf_score": 0.11952049187675236,
+        "mean_purity": 0.1074957910673426,
+        "max_purity": 0.21455481826035183,
+        "time_seconds": 1.0253145694732666
+      }
+    }
+  },
+  "gf_scores_by_community": {
+    "greedy_modularity": {
+      "DM": 0.1553832203604124,
+      "MDS": 0.14980558999562077,
+      "Spectral": 0.16252999343701247,
+      "DeepWalk": 0.12269337385151376,
+      "Node2Vec": 0.15022827199204383,
+      "VGAE": 0.06581624554144357,
+      "PCA": 0.13667201123176623,
+      "VGAE-feat": 0.12193015189481254,
+      "GraphSAGE": 0.06765586721752774,
+      "GAT": 0.06850501399362298,
+      "GIN": 0.11997607219023294
+    },
+    "label_propagation": {
+      "DM": 0.15037965351418361,
+      "MDS": 0.16613283715041036,
+      "Spectral": 0.18698980684239444,
+      "DeepWalk": 0.12141867322159303,
+      "Node2Vec": 0.15372978159091377,
+      "VGAE": 0.07031860359281043,
+      "PCA": 0.14350934987415218,
+      "VGAE-feat": 0.13196952629860628,
+      "GraphSAGE": 0.0651748206850716,
+      "GAT": 0.07005060306209344,
+      "GIN": 0.12333157149627033
+    },
+    "connected_components": {
+      "DM": 0.16743410032968714,
+      "MDS": 0.13211432233848733,
+      "Spectral": 0.1251264252524686,
+      "DeepWalk": 0.15493584604822386,
+      "Node2Vec": 0.18370896292870756,
+      "VGAE": 0.06140995160077638,
+      "PCA": 0.14342977265508094,
+      "VGAE-feat": 0.15421423507934848,
+      "GraphSAGE": 0.06137665498202021,
+      "GAT": 0.07253965992474404,
+      "GIN": 0.13696550217650172
+    },
+    "louvain": {
+      "DM": 0.15141249985427174,
+      "MDS": 0.1631194937625279,
+      "Spectral": 0.17309273994188557,
+      "DeepWalk": 0.11364356686984874,
+      "Node2Vec": 0.13559945297625103,
+      "VGAE": 0.06948493943493622,
+      "PCA": 0.13675105659386025,
+      "VGAE-feat": 0.11171924455111525,
+      "GraphSAGE": 0.06984868379780619,
+      "GAT": 0.06831545935792127,
+      "GIN": 0.11868697545432279
+    },
+    "leiden": {
+      "DM": 0.15156222471560418,
+      "MDS": 0.1638685167322686,
+      "Spectral": 0.17302688798690063,
+      "DeepWalk": 0.11363006550716154,
+      "Node2Vec": 0.13517284479125632,
+      "VGAE": 0.06959544573430464,
+      "PCA": 0.13608224116182902,
+      "VGAE-feat": 0.11014731532875344,
+      "GraphSAGE": 0.06828593032364899,
+      "GAT": 0.06833059921705445,
+      "GIN": 0.11952049187675236
+    }
+  },
+  "rank_consistency": {
+    "rankings": {
+      "greedy_modularity": {
+        "Spectral": 1,
+        "DM": 2,
+        "Node2Vec": 3,
+        "MDS": 4,
+        "PCA": 5,
+        "DeepWalk": 6,
+        "VGAE-feat": 7,
+        "GIN": 8,
+        "GAT": 9,
+        "GraphSAGE": 10,
+        "VGAE": 11
+      },
+      "label_propagation": {
+        "Spectral": 1,
+        "MDS": 2,
+        "Node2Vec": 3,
+        "DM": 4,
+        "PCA": 5,
+        "VGAE-feat": 6,
+        "GIN": 7,
+        "DeepWalk": 8,
+        "VGAE": 9,
+        "GAT": 10,
+        "GraphSAGE": 11
+      },
+      "connected_components": {
+        "Node2Vec": 1,
+        "DM": 2,
+        "DeepWalk": 3,
+        "VGAE-feat": 4,
+        "PCA": 5,
+        "GIN": 6,
+        "MDS": 7,
+        "Spectral": 8,
+        "GAT": 9,
+        "VGAE": 10,
+        "GraphSAGE": 11
+      },
+      "louvain": {
+        "Spectral": 1,
+        "MDS": 2,
+        "DM": 3,
+        "PCA": 4,
+        "Node2Vec": 5,
+        "GIN": 6,
+        "DeepWalk": 7,
+        "VGAE-feat": 8,
+        "GraphSAGE": 9,
+        "VGAE": 10,
+        "GAT": 11
+      },
+      "leiden": {
+        "Spectral": 1,
+        "MDS": 2,
+        "DM": 3,
+        "PCA": 4,
+        "Node2Vec": 5,
+        "GIN": 6,
+        "DeepWalk": 7,
+        "VGAE-feat": 8,
+        "VGAE": 9,
+        "GAT": 10,
+        "GraphSAGE": 11
+      }
+    },
+    "pairwise_correlations": {
+      "connected_components_vs_greedy_modularity": {
+        "spearman_rho": 0.6090909090909091,
+        "spearman_p": 0.046695709354098905,
+        "kendall_tau": 0.45454545454545453,
+        "kendall_p": 0.06017015392015392,
+        "n_methods": 11
+      },
+      "connected_components_vs_label_propagation": {
+        "spearman_rho": 0.48181818181818187,
+        "spearman_p": 0.13343383825682875,
+        "kendall_tau": 0.34545454545454546,
+        "kendall_p": 0.16457331248997917,
+        "n_methods": 11
+      },
+      "connected_components_vs_leiden": {
+        "spearman_rho": 0.4272727272727273,
+        "spearman_p": 0.18994372496542714,
+        "kendall_tau": 0.2727272727272727,
+        "kendall_p": 0.2829668209876543,
+        "n_methods": 11
+      },
+      "connected_components_vs_louvain": {
+        "spearman_rho": 0.4000000000000001,
+        "spearman_p": 0.22286835013352,
+        "kendall_tau": 0.2,
+        "kendall_p": 0.4453821448613115,
+        "n_methods": 11
+      },
+      "greedy_modularity_vs_label_propagation": {
+        "spearman_rho": 0.9090909090909091,
+        "spearman_p": 0.0001055933763036088,
+        "kendall_tau": 0.7454545454545454,
+        "kendall_p": 0.000759529822029822,
+        "n_methods": 11
+      },
+      "greedy_modularity_vs_leiden": {
+        "spearman_rho": 0.9,
+        "spearman_p": 0.00015997142806871355,
+        "kendall_tau": 0.7454545454545454,
+        "kendall_p": 0.000759529822029822,
+        "n_methods": 11
+      },
+      "greedy_modularity_vs_louvain": {
+        "spearman_rho": 0.9,
+        "spearman_p": 0.00015997142806871355,
+        "kendall_tau": 0.7454545454545454,
+        "kendall_p": 0.000759529822029822,
+        "n_methods": 11
+      },
+      "label_propagation_vs_leiden": {
+        "spearman_rho": 0.9454545454545454,
+        "spearman_p": 1.1183037701493196e-05,
+        "kendall_tau": 0.8545454545454545,
+        "kendall_p": 4.624619207952541e-05,
+        "n_methods": 11
+      },
+      "label_propagation_vs_louvain": {
+        "spearman_rho": 0.9181818181818183,
+        "spearman_p": 6.661451941355569e-05,
+        "kendall_tau": 0.7818181818181819,
+        "kendall_p": 0.0003334435626102293,
+        "n_methods": 11
+      },
+      "leiden_vs_louvain": {
+        "spearman_rho": 0.9727272727272729,
+        "spearman_p": 5.142177049049177e-07,
+        "kendall_tau": 0.9272727272727274,
+        "kendall_p": 3.2567740901074234e-06,
+        "n_methods": 11
+      }
+    },
+    "kendall_W": 0.7970909090909091,
+    "spectral_ranks_across_methods": {
+      "connected_components": 8,
+      "greedy_modularity": 1,
+      "label_propagation": 1,
+      "leiden": 1,
+      "louvain": 1
+    },
+    "spectral_always_top3": false,
+    "top_method_per_community": {
+      "connected_components": "Node2Vec",
+      "greedy_modularity": "Spectral",
+      "label_propagation": "Spectral",
+      "leiden": "Spectral",
+      "louvain": "Spectral"
+    },
+    "gnn_ranks_across_methods": {
+      "GAT": [
+        9,
+        9,
+        10,
+        10,
+        11
+      ],
+      "GraphSAGE": [
+        11,
+        10,
+        11,
+        11,
+        9
+      ],
+      "GIN": [
+        6,
+        8,
+        7,
+        6,
+        6
+      ],
+      "VGAE": [
+        10,
+        11,
+        9,
+        9,
+        10
+      ],
+      "VGAE-feat": [
+        4,
+        7,
+        6,
+        8,
+        8
+      ]
+    },
+    "gnn_consistently_low": true
+  },
+  "conclusion": {
+    "kendall_W": 0.7970909090909091,
+    "spectral_robust": false,
+    "gnn_consistently_low": true,
+    "overall": "Kendall's W = 0.797 across 5 community detection methods. Spectral consistently top-3: False. GNN methods consistently low: True. The G-F Score ranking is robust to community detection algorithm choice."
+  }
+}

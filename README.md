@@ -2,7 +2,7 @@
 
 **A Geometric-Functional Consistency Framework for Evaluating Protein Interaction Network Embeddings**
 
-Complete reproduction of the experimental pipeline: 11 embedding methods · 39-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
+Complete reproduction of the experimental pipeline: 11 embedding methods · 45-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
 
 <details>
 <summary><strong>Key Results at a Glance</strong></summary>
@@ -52,6 +52,12 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 39-s
 - **Spectral Transferability Theory** (Phase 11): Derives closed-form Spectral Quality Index (SQI = λ₂/λ₂_ER × PR × FA_max) predicting when the two-factor model works. SQI ordering: yeast(10.72) > human(2.02) > mouse(0.54) matches two-factor rho: +0.929 > +0.483 > −0.037. Mouse Fiedler vector is 6× more localized (PR=0.0007). Validated on 20 SBM networks (SA_std vs log(SQI) rho=+0.647)
 - **Biological Validation & Statistical Power** (Phase 12): GO BP enrichment confirms Spectral's functional coherence on yeast (80% enriched communities, p=4.58e-10) but not human (0%) or mouse (14%), where GraphSAGE/GAT produce more biologically coherent modules. Multi-seed panel (n=220 observations, 20 groups) yields pooled rank consistency |ρ|=0.583 (95% CI [0.470, 0.688]); per-species: yeast 0.981, human 0.967, mouse 0.800
 - **Protein Function Prediction — Closing the Loop** (Phase 13): Leave-one-term-out CV on full yeast STRING network (5,936 nodes, 12,690 trials) demonstrates that GF-consistent embeddings predict protein function (Spectral P@10=0.148, best among 5 embedding methods). GF Score on curated 153-node network predicts function-prediction MRR on full 5,936-node network (Spearman rho=0.900, P=0.037, n=5 methods)
+- **E. coli K-12 4th Species Validation** (Step 40): Spectral ranks #2 (GF=0.240), MDS #1 (GF=0.245) on *E. coli* STRING network. SQI=0.7 (lowest among 4 species). Kendall's W=0.652 including *E. coli* (vs 0.739 for 3 eukaryotic species). Spectral optimality extends to prokaryotes, attenuated by lower network spectral quality
+- **Coexpression Network G-F Analysis** (Step 41): Method optimality is network-type-dependent. DeepWalk #1 (GF=0.877) on coexpression network, Spectral drops to mid-tier. PPI-coexpression rank correlation rho=0.071. Random-walk methods outperform spectral embeddings on coexpression networks — the opposite of PPI
+- **Degree-Preserving Null Model** (Step 42): 50 double-edge-swap randomizations preserving exact degree sequence. Spectral methods fall substantially below DP null (Spectral z=-11.9, MDS z=-18.4); random-walk methods exceed it (DeepWalk z=+2.4, Node2Vec z=+2.7, p<0.01). Reveals fundamental spectral vs random-walk dichotomy
+- **GAT Collapse on Full Network** (Step 43): All three collapse theorems verified on full 5936-node network. T1: H_norm=1.059 (bound satisfied). T2: GNN mean eff_rank=1.228 vs non-GNN=1.816. T3: low-rank methods have GF_2D/GF_1D ratio near 1. Collapse is NOT a small-network artifact
+- **Community Detection Ablation** (Step 44): Kendall's W=0.797 across 5 community detection algorithms (greedy_modularity, label_propagation, connected_components, louvain, leiden). Spectral ranks #1 under 4 of 5 algorithms. G-F Score robustness to community detection methodology confirmed
+- **Full 11-Method Function Prediction** (Step 45): Expanded LOTO-CV from 5 to all 11 methods. Spearman rho=0.646 (p=0.032, permutation p=0.041) between GF Score and MRR. Strengthens GF Score <-> downstream utility correlation with full method coverage
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)
@@ -87,7 +93,7 @@ python run_all_analysis.py --run-human          # Include human validation
 python run_all_analysis.py --start-from 3       # Resume from step 3
 python run_all_analysis.py --skip-plots         # Skip figure generation
 python run_all_analysis.py --skip-gnn           # Skip GNN embeddings (GraphSAGE/GAT/GIN)
-python run_all_analysis.py --skip-extended      # Skip extended analyses (Steps 16-21, 24-39)
+python run_all_analysis.py --skip-extended      # Skip extended analyses (Steps 16-21, 24-45)
 python run_all_analysis.py --seed 123           # Override random seed
 python run_all_analysis.py --species human      # Target a different species
 ```
@@ -191,6 +197,12 @@ Step 36 ─ Density-Corrected GF ─────────── STRING thresh
 Step 37 ─ Human Seed Stability ──────────── 10-seed subsampling stability (Kendall W = 0.675)
 Step 38 ─ Human IC-Weighted GF ─────────── IC-weighted purity on human network (ρ = 0.991)
 Step 39 ─ GAT Collapse Diagnosis ────────── 5-variant ablation: clip, warmup, multi-head analysis
+Step 40 ─ E. coli K-12 Validation ────────── 4th species cross-species validation (SQI=0.7)
+Step 41 ─ Coexpression Network G-F ────────── Network-type dependence (DeepWalk #1)
+Step 42 ─ Degree-Preserving Null Model ────── 50 double-edge-swap randomizations (z-scores)
+Step 43 ─ GAT Theorem Full Network ────────── 5936-node theorem verification (T1-T3)
+Step 44 ─ Community Detection Ablation ────── 5 algorithms, Kendall W=0.797
+Step 45 ─ Full 11-Method LOTO-CV ──────────── Expanded function prediction (rho=0.646)
          └─ Summary ─────────────────── final_results_summary.json
 ```
 
@@ -220,7 +232,7 @@ All embeddings standardized to **σ = 0.3** before G-F analysis.
 
 ```
 GF-consistency-framework/
-├── scripts/                    # 39-step analysis pipeline + extensions
+├── scripts/                    # 45-step analysis pipeline + extensions
 │   ├── data_preprocessing.py   # Load PPI + GO data
 │   ├── embed_all.py            # Compute 8 classical/NN embeddings
 │   ├── compute_gf.py           # G-F curves + scores
@@ -284,6 +296,13 @@ GF-consistency-framework/
 │   ├── spectral_transferability.py     # Spectral Quality Index (SQI) + SBM validation (Phase 11, Fig 55-59)
 │   ├── biological_validation.py        # GO BP enrichment + multi-seed panel + mixed-effects (Phase 12, Fig 60-64)
 │   ├── function_prediction.py         # Protein function prediction via LOTO-CV + GF correlation (Phase 13, Fig 65-68)
+│   ├── ecoli_analysis.py              # E. coli K-12 4th species cross-species validation (Step 40)
+│   ├── coexpression_gf.py             # Coexpression network G-F analysis (Step 41)
+│   ├── degree_preserving_null.py      # Degree-preserving null model (50 randomizations) (Step 42)
+│   ├── gat_theorem_large_network.py   # GAT theorem verification on full network (Step 43)
+│   ├── gf_ablation_community_detection.py # Community detection sensitivity ablation (Step 44)
+│   ├── function_prediction_full.py    # Full 11-method LOTO-CV function prediction (Step 45)
+│   ├── multihead_gat_experiment.py    # Multi-head GAT configuration sweep
 │   └── utils.py                # Shared utilities
 │
 ├── tests/                      # pytest test suite (51 tests)
@@ -361,7 +380,7 @@ GF-consistency-framework/
 │
 ├── human_validation/           # Cross-species (optional, STRING v12.0)
 │
-├── run_all_analysis.py         # One-command Python pipeline (39 steps)
+├── run_all_analysis.py         # One-command Python pipeline (45 steps)
 ├── pipeline_config.yaml        # YAML configuration (all parameters)
 ├── pyproject.toml              # Python package metadata
 ├── environment.yml             # Conda environment
@@ -382,6 +401,9 @@ GF-consistency-framework/
 | Human GO | GOA Human GAF | 16,818 annotated | BP terms |
 | Mouse PPI | STRING v11.5 | 16,180 (largest CC) | Score ≥ 700 |
 | Mouse GO | MGI GAF | 17,639 annotated | BP terms, Ensembl_MGI alias mapping |
+| E. coli PPI | STRING v11.5 | ~4,000 | Score ≥ 700, 4th species validation |
+| E. coli GO | EcoCyc/UniProt | ~3,500 annotated | BP terms |
+| Yeast Coexpression | Transcriptomic | ~5,000 | Network-type dependence analysis |
 
 Large files (`*.txt.gz`, `*.gaf.gz`) tracked via **Git LFS** — run `git lfs install` before cloning.
 
@@ -412,7 +434,7 @@ Full spec → [`requirements.txt`](requirements.txt) · [`environment.yml`](envi
 
 ## Extension Modules (v1.1+)
 
-Beyond the core 39-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–39).
+Beyond the core 45-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–45).
 
 | Module | Description |
 |--------|-------------|
@@ -457,6 +479,13 @@ Beyond the core 39-step pipeline, the framework provides extensible modules for 
 | `spectral_transferability.py` | Spectral Transferability Theory: derives Spectral Quality Index (SQI = λ₂/λ₂_ER × PR × FA_max) predicting two-factor model transferability; Laplacian spectral analysis (3 species), proposition verification, synthetic SBM validation (20 networks) (Phase 11, Fig 55-59) |
 | `biological_validation.py` | Biological validation + statistical power: (A) GO BP hypergeometric enrichment across 3 species × 11 methods; (B) multi-seed panel (yeast 5 seeds, human 10, mouse 5 subsamples) with mixed-effects pooled Spearman model; `part_a`/`part_b` CLI modes with checkpoint resume (Phase 12, Fig 60-64) |
 | `function_prediction.py` | Protein function prediction via leave-one-term-out CV on full yeast STRING network (5,936 nodes, 5 methods, 12,690 trials); KNN in embedding space vs PPI/2-hop/random baselines; Precision@k + MRR evaluation; GF Score ↔ prediction accuracy correlation closes the framework loop (Phase 13, Fig 65-68) |
+| `ecoli_analysis.py` * | E. coli K-12 cross-species validation: 4th species, STRING v11.5, all 11 methods, SQI=0.7 (Step 40) |
+| `coexpression_gf.py` * | Coexpression network G-F analysis: tests network-type dependence, DeepWalk #1 on coexpression (Step 41) |
+| `degree_preserving_null.py` * | Degree-preserving null model: 50 double-edge-swap randomizations, z-score comparison (Step 42) |
+| `gat_theorem_large_network.py` * | GAT collapse theorem verification on full 5936-node network: T1-T3 all hold (Step 43) |
+| `gf_ablation_community_detection.py` * | Community detection sensitivity: 5 algorithms, Kendall W=0.797, Spectral #1 under 4/5 (Step 44) |
+| `function_prediction_full.py` * | Full 11-method LOTO-CV function prediction: rho=0.646, p=0.032, permutation p=0.041 (Step 45) |
+| `multihead_gat_experiment.py` | Multi-head GAT configuration sweep (1/4/8 heads, d=2-32) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
 
@@ -618,7 +647,7 @@ Report → [`results/phase13_report.md`](results/phase13_report.md) · Figures �
 - **Network scale**: The primary ranking is based on a curated 153-node yeast subnetwork. Full-network (5,936 nodes) and cross-species (15,882 nodes) validations confirm general trends, but fine-grained method ordering may vary with network size.
 - **GO annotation bias**: G-F Score depends on GO annotation quality and coverage. Well-studied genes have richer annotations, potentially inflating purity for communities dominated by such genes.
 - **GO DAG propagation artifact**: True Path Rule expansion (Step 19) increases annotations from ~3.8 to ~28.9 terms/gene, causing community purity to approach 1.0 (G-F Score ≈ 0.9996). This is a known artifact of hierarchical expansion; the main results use pre-propagation annotations.
-- **Community detection**: Only greedy modularity optimization is used for distance-threshold communities. Alternative algorithms (Leiden, Louvain) may produce different purity profiles.
+- **Community detection**: Only greedy modularity optimization is used for the main results; however, ablation analysis (Step 44) confirms G-F Score robustness across 5 community detection algorithms (Kendall's W = 0.797), with Spectral ranking #1 under 4 of 5 algorithms.
 - **2D output**: All embeddings directly produce 2-dimensional coordinate spaces (not projected from higher dimensions). While 2D is sufficient for G-F curve analysis, higher-dimensional embeddings may capture additional geometric properties.
 - **Plateau width**: Defined as the r-interval where purity ≥ 80% of each method's peak (relative threshold). Methods with very flat purity curves may yield wide plateaus despite low absolute purity.
 - **Spearman correlations**: G-F Score vs link prediction AUC (ρ = 0.591, P = 0.056) and vs k-NN F1 (ρ = 0.609, P = 0.047) are based on n = 11 methods. Bootstrap 95% CIs indicate moderate precision; see `results/bootstrap_correlations.json` for full details.
@@ -648,7 +677,7 @@ ORCID: [0009-0000-2769-467X](https://orcid.org/0009-0000-2769-467X)
 >              Protein Interaction Network Embeddings},
 >   author  = {Zhang, Yuhan},
 >   year    = {2026},
->   note    = {Reproducible pipeline: 11 methods, 39-step validation.},
+>   note    = {Reproducible pipeline: 11 methods, 45-step validation.},
 > }
 > ```
 

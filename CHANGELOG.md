@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] — 2026-06-16
+
+### Added (Steps 40-45: Submission-Tier Robustness Experiments)
+- `ecoli_analysis.py`: E. coli K-12 cross-species validation as 4th species. STRING v11.5 network, all 11 methods embedded on full network, G-F Scores computed with unified parameters. Key results: MDS #1 (GF=0.245), Spectral #2 (GF=0.240), SQI=0.7. Kendall's W=0.652 including E. coli (vs 0.739 for 3 eukaryotic species). Demonstrates spectral optimality extends to prokaryotes, albeit attenuated by lower SQI
+- `coexpression_gf.py`: Coexpression network G-F analysis testing network-type dependence. Runs the full G-F framework on a yeast coexpression network derived from transcriptomic data. Key result: DeepWalk #1 (GF=0.877), Spectral drops to mid-tier; PPI-coexpression rank correlation rho=0.071. Proves method optimality is network-type-dependent, not universal
+- `degree_preserving_null.py`: Degree-preserving null model with 50 double-edge-swap randomizations preserving the exact degree sequence. Computes G-F Scores on each randomized network and calculates z-scores. Key results: spectral methods (Spectral z=-11.9, MDS z=-18.4) fall substantially below DP null; random-walk methods (DeepWalk z=+2.4, Node2Vec z=+2.7, GIN z=+2.5) exceed it (p<0.01). Reveals a fundamental spectral vs random-walk dichotomy
+- `gat_theorem_large_network.py`: Verifies all three GAT Collapse Theorems on the full 5936-node yeast STRING network (not just the 153-node curated subset). T1: H_norm=1.059, bound satisfied. T2: GNN mean eff_rank=1.228 vs non-GNN=1.816. T3: low-rank methods have GF_2D close to GF_1D. Confirms collapse is NOT an artifact of small network size; larger networks strengthen the attention degeneration bound
+- `gf_ablation_community_detection.py`: G-F Score ablation study testing sensitivity to community detection algorithm choice. Compares greedy_modularity, label_propagation, connected_components, louvain, and leiden across all 11 methods. Kendall's W=0.797 across 5 algorithms. Spectral ranks #1 under 4 of 5 algorithms (top-2 under connected_components). Proves G-F Score robustness to community detection methodology
+- `function_prediction_full.py`: Expands LOTO-CV function prediction from 5 methods to all 11 methods on the full yeast network (12,690 trials). Spearman rho=0.646 (p=0.032) between GF Score and function prediction MRR across all 11 methods. Permutation test p=0.041. Strengthens the GF Score <-> downstream utility correlation with full method coverage
+- `multihead_gat_experiment.py`: Multi-head GAT configuration sweep testing 1/4/8 attention heads at dimensions d=2-32. Confirms that even with generous hyperparameter budgets, attention-based models cannot convincingly exceed the random baseline
+- `recalculate_rescue_stats.py`: Recalculate rescue protein statistics with updated methodology
+- E. coli, coexpression, DP null, full-network theorem, community ablation, and full function prediction results integrated into main manuscript and supplementary materials
+
+### Changed
+- Version bumped to 2.2.0 across `pyproject.toml`, `run_all_analysis.py`, `scripts/__init__.py`
+- Pipeline expanded from 39 steps to 45 steps
+- `pipeline_config.yaml`: updated `start_from` range (1-45) and `skip_extended` scope (Steps 16-21, 24-45)
+- `scripts/__init__.py`: registered Steps 40-45 modules, multihead_gat_experiment, recalculate_rescue_stats; expanded to 45-step pipeline documentation
+- Main manuscript: updated to 4 species (including E. coli), added network-type dependence (coexpression), degree-preserving null model, community detection ablation, full-network theorem verification, expanded LOTO-CV (11 methods)
+- Supplementary materials: added S1.6 (full-network verification), S3.6-S3.8 (ablation, DP null, coexpression), S4.6 (E. coli), Tables S6-S7, Figures S18-S20
+- Cover letter: updated to target Nature Communications, reflecting 4 species and expanded evidence base
+
 ### Added (Phase 16: Metric Comparison & Statistical Rigor)
 - `metric_comparison_extended.py`: Systematic comparison of GF Score against link prediction AUROC and kNN micro-F1 across 11 methods with bootstrap CIs. Key findings: GF Score has 62.9% unique variance not shared with any traditional metric; discordance analysis reveals GF Score uniquely detects geometric collapse (VGAE: GF rank=0 but kNN-F1 rank=6); Spectral most consistent across all metrics (max discrepancy=1). Permutation test for GF Score vs full-network MRR correlation (rho=0.900): parametric p=0.037, permutation p=0.082 (marginal due to n=5)
 - `metric_comparison_extended.json`, and Figs 78-79
