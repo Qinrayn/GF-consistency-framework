@@ -2,7 +2,7 @@
 
 **A Geometric-Functional Consistency Framework for Evaluating Protein Interaction Network Embeddings**
 
-Complete reproduction of the experimental pipeline: 11 embedding methods · 45-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
+Complete reproduction of the experimental pipeline: 11 embedding methods · 48-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
 
 <details>
 <summary><strong>Key Results at a Glance</strong></summary>
@@ -58,6 +58,9 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 45-s
 - **GAT Collapse on Full Network** (Step 43): All three collapse theorems verified on full 5936-node network. T1: H_norm=1.059 (bound satisfied). T2: GNN mean eff_rank=1.228 vs non-GNN=1.816. T3: low-rank methods have GF_2D/GF_1D ratio near 1. Collapse is NOT a small-network artifact
 - **Community Detection Ablation** (Step 44): Kendall's W=0.797 across 5 community detection algorithms (greedy_modularity, label_propagation, connected_components, louvain, leiden). Spectral ranks #1 under 4 of 5 algorithms. G-F Score robustness to community detection methodology confirmed
 - **Full 11-Method Function Prediction** (Step 45): Expanded LOTO-CV from 5 to all 11 methods. Spearman rho=0.646 (p=0.032, permutation p=0.041) between GF Score and MRR. Strengthens GF Score <-> downstream utility correlation with full method coverage
+- **G-F Curve Phase Transition Analysis** (Step 46): Numerical derivatives of 200-point purity curves identify critical radii for all methods. Peak radius mean=0.064 (std=0.031), with Node2Vec as outlier (r=0.145). Sharpness-GF Score correlation rho=+0.405 (n=8). Betti curve percolation radii tested for coincidence with functional transitions. High-GF methods show marginally sharper transitions (Mann-Whitney U=6, p=0.10)
+- **Extended Dimension Sweep** (Step 47): Spectral embeddings extended to d=128 and d=256. Previous d=64 MRR=0.205 vs PPI baseline 0.219. Log-linear fit (MRR ~ log2(d)) tests whether embeddings can surpass PPI topology for function prediction at sufficient dimension
+- **Functional Dark Matter Mining** (Step 48): Identifies protein functional associations invisible to network topology (>= 5 hops apart, not STRING-connected at >= 700). Spectral embedding reveals 74 dark matter pairs among 71 proteins at the extreme network periphery (median degree 4 vs 21, p=2.2e-15). Extraordinary GO enrichment: retrograde transport (1809x), transmembrane transport (960x), ascospore formation (710x), ERAD pathway (521x). These are functional associations that NO network-based method could ever discover
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)
@@ -203,6 +206,9 @@ Step 42 ─ Degree-Preserving Null Model ────── 50 double-edge-swap 
 Step 43 ─ GAT Theorem Full Network ────────── 5936-node theorem verification (T1-T3)
 Step 44 ─ Community Detection Ablation ────── 5 algorithms, Kendall W=0.797
 Step 45 ─ Full 11-Method LOTO-CV ──────────── Expanded function prediction (rho=0.646)
+Step 46 ─ G-F Phase Transition Analysis ───── Critical radii, Betti coincidence, critical exponents
+Step 47 ─ Extended Dimension Sweep ─────────── d=128/256, test PPI baseline crossing
+Step 48 ─ Functional Dark Matter Mining ────── Embedding-only functional associations (74 pairs)
          └─ Summary ─────────────────── final_results_summary.json
 ```
 
@@ -232,7 +238,7 @@ All embeddings standardized to **σ = 0.3** before G-F analysis.
 
 ```
 GF-consistency-framework/
-├── scripts/                    # 45-step analysis pipeline + extensions
+├── scripts/                    # 48-step analysis pipeline + extensions
 │   ├── data_preprocessing.py   # Load PPI + GO data
 │   ├── embed_all.py            # Compute 8 classical/NN embeddings
 │   ├── compute_gf.py           # G-F curves + scores
@@ -302,6 +308,9 @@ GF-consistency-framework/
 │   ├── gat_theorem_large_network.py   # GAT theorem verification on full network (Step 43)
 │   ├── gf_ablation_community_detection.py # Community detection sensitivity ablation (Step 44)
 │   ├── function_prediction_full.py    # Full 11-method LOTO-CV function prediction (Step 45)
+│   ├── gf_phase_transition.py        # G-F curve phase transition analysis (Step 46)
+│   ├── dimension_sweep_extended.py   # Extended dimension sweep d=128/256 (Step 47)
+│   ├── functional_dark_matter.py     # Functional dark matter mining (Step 48)
 │   ├── multihead_gat_experiment.py    # Multi-head GAT configuration sweep
 │   └── utils.py                # Shared utilities
 │
@@ -434,7 +443,7 @@ Full spec → [`requirements.txt`](requirements.txt) · [`environment.yml`](envi
 
 ## Extension Modules (v1.1+)
 
-Beyond the core 45-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–45).
+Beyond the core 48-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–45).
 
 | Module | Description |
 |--------|-------------|
@@ -485,6 +494,9 @@ Beyond the core 45-step pipeline, the framework provides extensible modules for 
 | `gat_theorem_large_network.py` * | GAT collapse theorem verification on full 5936-node network: T1-T3 all hold (Step 43) |
 | `gf_ablation_community_detection.py` * | Community detection sensitivity: 5 algorithms, Kendall W=0.797, Spectral #1 under 4/5 (Step 44) |
 | `function_prediction_full.py` * | Full 11-method LOTO-CV function prediction: rho=0.646, p=0.032, permutation p=0.041 (Step 45) |
+| `gf_phase_transition.py` * | G-F curve phase transition analysis: derivatives, critical radii, Betti coincidence, critical exponents (Step 46) |
+| `dimension_sweep_extended.py` * | Extended dimension sweep d=128/256: tests whether Spectral MRR surpasses PPI-Neighbors baseline (Step 47) |
+| `functional_dark_matter.py` * | Functional dark matter mining: embedding-only functional associations invisible to network topology (Step 48) |
 | `multihead_gat_experiment.py` | Multi-head GAT configuration sweep (1/4/8 heads, d=2-32) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
@@ -677,7 +689,7 @@ ORCID: [0009-0000-2769-467X](https://orcid.org/0009-0000-2769-467X)
 >              Protein Interaction Network Embeddings},
 >   author  = {Zhang, Yuhan},
 >   year    = {2026},
->   note    = {Reproducible pipeline: 11 methods, 45-step validation.},
+>   note    = {Reproducible pipeline: 11 methods, 48-step validation.},
 > }
 > ```
 

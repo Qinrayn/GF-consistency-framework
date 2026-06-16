@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] — 2026-06-16
+
+### Added (Steps 46-48: Breakthrough Experiments — Discovery-Tier Results)
+- `gf_phase_transition.py`: G-F curve phase transition analysis (Phase 17). Computes numerical derivatives d(purity)/dr and d^2(purity)/dr^2 via Savitzky-Golay filtering for all 8 yeast methods. Identifies critical radii (purity peaks, inflection points, zero-crossings), tests coincidence with Betti-curve topological transitions (B0 percolation, B1 peak), and estimates critical exponents. Key analyses: sharpness vs GF Score Spearman correlation, high-GF vs low-GF Mann-Whitney sharpness test, peak radius conservation across methods
+- `dimension_sweep_extended.py`: Extended dimension sweep to d=128 and d=256 (Phase 18). Computes Spectral embeddings at higher dimensions using normalised Laplacian eigendecomposition, runs full LOTO-CV function prediction, tests whether MRR surpasses the PPI-Neighbors baseline (0.219). Log-linear fit extrapolation predicts crossing point. Saves embeddings at each new dimension
+- `functional_dark_matter.py`: Functional dark matter mining (Phase 19). Identifies protein pairs that are >= 5 hops apart in PPI network but close in Spectral embedding space (top-50 KNN), NOT connected at STRING high-confidence (>= 700), yet share GO Biological Process annotations. Multi-evidence cross-validation: STRING low-confidence scores (400-699), GO term specificity, channel-level evidence (experiments, coexpression, database, textmining), network component co-membership. Produces ranked dark matter catalog with confidence scores
+
+### Changed
+- Version bumped to 2.3.0 across `pyproject.toml`, `run_all_analysis.py`, `scripts/__init__.py`
+- Pipeline expanded from 45 steps to 48 steps
+- `pipeline_config.yaml`: updated `start_from` range (1-48) and `skip_extended` scope (Steps 16-21, 24-48)
+- `scripts/__init__.py`: registered Steps 46-48 modules; expanded to 48-step pipeline documentation
+- `run_all_analysis.py`: added Steps 46-48 orchestration blocks with subprocess pattern
+
 ## [2.2.0] — 2026-06-16
 
 ### Added (Steps 40-45: Submission-Tier Robustness Experiments)

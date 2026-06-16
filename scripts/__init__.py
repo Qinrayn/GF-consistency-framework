@@ -1,7 +1,7 @@
 """
 scripts/ — G-F Consistency Framework analysis pipeline.
 
-This package contains the 45-step reproducible analysis pipeline for
+This package contains the 48-step reproducible analysis pipeline for
 evaluating protein interaction network embeddings via geometric-functional
 consistency.
 
@@ -100,6 +100,12 @@ gat_theorem_large_network       Step 43: GAT collapse theorem verification on fu
 gf_ablation_community_detection Step 44: G-F Score ablation — community detection sensitivity (5 algorithms, W=0.797)
 function_prediction_full        Step 45: Full 11-method LOTO-CV function prediction (rho=0.646, p=0.032)
 
+Modules (Steps 46-48: breakthrough experiments — discovery-tier results)
+--------------------------------------------------------------------------
+gf_phase_transition             Step 46: G-F curve phase transition analysis (critical radii, Betti coincidence)
+dimension_sweep_extended        Step 47: Extended dimension sweep d=128/256 (test PPI baseline crossing)
+functional_dark_matter          Step 48: Functional dark matter mining (embedding-only functional associations)
+
 Supplementary experiment modules
 ----------------------------------
 multihead_gat_experiment        Multi-head GAT configuration sweep (1/4/8 heads, d=2-32)
@@ -118,4 +124,4 @@ robustness_analysis           Extended 30-subset convergence analysis
 visualization_helpers         Okabe-Ito colorblind-safe plotting utilities
 """
 
-__version__ = "2.2.0"
+__version__ = "2.3.0"

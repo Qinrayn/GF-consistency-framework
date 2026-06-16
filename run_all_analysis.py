@@ -51,20 +51,23 @@ This script orchestrates the complete analysis pipeline:
 43. GAT collapse theorem verification on full 5936-node network
 44. G-F Score ablation: community detection sensitivity (5 algorithms)
 45. Full 11-method LOTO-CV function prediction
+46. G-F curve phase transition analysis (critical radii, Betti coincidence)
+47. Extended dimension sweep d=128/256 (test PPI baseline crossing)
+48. Functional dark matter mining (embedding-only functional associations)
 
 Usage:
     python run_all_analysis.py                         # Skip human validation
     python run_all_analysis.py --run-human              # Include human validation
     python run_all_analysis.py --skip-plots             # Skip figure generation
     python run_all_analysis.py --skip-gnn               # Skip GNN embeddings
-    python run_all_analysis.py --skip-extended          # Skip Steps 16-21, 24-45
+    python run_all_analysis.py --skip-extended          # Skip Steps 16-21, 24-48
     python run_all_analysis.py --skip-topological       # Skip Steps 22-23
     python run_all_analysis.py --start-from 3           # Start from step 3
     python run_all_analysis.py --config my_config.yaml  # Custom config file
     gf-consistency --config pipeline_config.yaml        # Via pip entry point
 """
 
-__version__ = "2.2.0"
+__version__ = "2.3.0"
 
 import sys
 import json
@@ -362,11 +365,11 @@ def main():
     parser.add_argument("--skip-plots", action="store_true",
                         help="Skip figure generation")
     parser.add_argument("--start-from", type=int, default=None,
-                        help="Start from a specific step (1-45)")
+                        help="Start from a specific step (1-48)")
     parser.add_argument("--skip-gnn", action="store_true",
                         help="Skip GNN embedding computation (Step 15)")
     parser.add_argument("--skip-extended", action="store_true",
-                        help="Skip extended analysis steps (16-21, 24-45)")
+                        help="Skip extended analysis steps (16-21, 24-48)")
     parser.add_argument("--skip-topological", action="store_true",
                         help="Skip topological analysis steps (22-23)")
     parser.add_argument("--seed", type=int, default=None,
@@ -415,7 +418,7 @@ def main():
     if skip_gnn:
         print("  GNN embeddings: SKIPPED")
     if skip_extended:
-        print("  Extended analysis (Steps 16-21, 24-45): SKIPPED")
+        print("  Extended analysis (Steps 16-21, 24-48): SKIPPED")
     if skip_topological:
         print("  Topological analysis (Steps 22-23): SKIPPED")
     print()
@@ -1010,6 +1013,45 @@ def main():
             import subprocess
             subprocess.run(func_full_cmd, check=True)
         if run_step(run_func_full, "Full 11-method function prediction"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 46: G-F Curve Phase Transition Analysis
+    if start_from <= 46 and not skip_extended:
+        print_header("Step 46: G-F Curve Phase Transition Analysis")
+        phase_cmd = [sys.executable,
+                     str(Path(__file__).parent / "scripts" / "gf_phase_transition.py")]
+        def run_phase():
+            import subprocess
+            subprocess.run(phase_cmd, check=True)
+        if run_step(run_phase, "G-F curve phase transition analysis"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 47: Extended Dimension Sweep (d = 128, 256)
+    if start_from <= 47 and not skip_extended:
+        print_header("Step 47: Extended Dimension Sweep (d = 128, 256)")
+        dimsweep_cmd = [sys.executable,
+                        str(Path(__file__).parent / "scripts" / "dimension_sweep_extended.py")]
+        def run_dimsweep():
+            import subprocess
+            subprocess.run(dimsweep_cmd, check=True)
+        if run_step(run_dimsweep, "Extended dimension sweep"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 48: Functional Dark Matter Mining
+    if start_from <= 48 and not skip_extended:
+        print_header("Step 48: Functional Dark Matter Mining")
+        darkmatter_cmd = [sys.executable,
+                          str(Path(__file__).parent / "scripts" / "functional_dark_matter.py")]
+        def run_darkmatter():
+            import subprocess
+            subprocess.run(darkmatter_cmd, check=True)
+        if run_step(run_darkmatter, "Functional dark matter mining"):
             completed += 1
         else:
             failed += 1
