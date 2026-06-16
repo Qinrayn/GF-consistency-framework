@@ -3,7 +3,7 @@
 """
 Master script to run all analyses for the G-F consistency framework.
 
-Version: 1.4.0
+Version: 2.1.0
 
 This script orchestrates the complete analysis pipeline:
 1.  Data preprocessing
@@ -108,7 +108,7 @@ def generate_final_summary(results_dir):
     # 1. G-F Scores
     gf_file = results_dir / "gf_scores.json"
     if gf_file.exists():
-        with open(gf_file) as f:
+        with open(gf_file, encoding="utf-8") as f:
             data = json.load(f)
         summary["gf_scores"] = data.get("scores", data.get("scores_paper_interval", {}))
         summary["unified_interval"] = data.get("unified_interval",
@@ -119,7 +119,7 @@ def generate_final_summary(results_dir):
     # 1b. Merge GNN method results
     gnn_file = results_dir / "gnn_gf_scores.json"
     if gnn_file.exists():
-        with open(gnn_file) as f:
+        with open(gnn_file, encoding="utf-8") as f:
             gnn_data = json.load(f)
         if "gf_scores" in summary and "gf_scores" in gnn_data:
             summary["gf_scores"].update(gnn_data["gf_scores"])
@@ -139,14 +139,14 @@ def generate_final_summary(results_dir):
     # 2. Leiden baseline
     leiden_file = results_dir / "leiden_baseline.json"
     if leiden_file.exists():
-        with open(leiden_file) as f:
+        with open(leiden_file, encoding="utf-8") as f:
             data = json.load(f)
         summary["leiden_baseline_purity"] = data.get("leiden_baseline_purity", None)
 
     # 3. Geometric analysis
     geom_file = results_dir / "geometric_analysis.json"
     if geom_file.exists():
-        with open(geom_file) as f:
+        with open(geom_file, encoding="utf-8") as f:
             data = json.load(f)
         summary["geometric_margins"] = {}
         for method, vals in data.items():
@@ -162,7 +162,7 @@ def generate_final_summary(results_dir):
     if not lp_file.exists():
         lp_file = results_dir / "link_prediction_yeast.json"
     if lp_file.exists():
-        with open(lp_file) as f:
+        with open(lp_file, encoding="utf-8") as f:
             data = json.load(f)
         if isinstance(data, list):
             # Old format: list of method results
@@ -181,7 +181,7 @@ def generate_final_summary(results_dir):
     # 5. Downstream k-NN
     knn_file = results_dir / "downstream_knn.json"
     if knn_file.exists():
-        with open(knn_file) as f:
+        with open(knn_file, encoding="utf-8") as f:
             data = json.load(f)
         summary["downstream_knn"] = data.get("results", {})
         summary["knn_n_nodes"] = data.get("n_nodes")
@@ -192,7 +192,7 @@ def generate_final_summary(results_dir):
     if plateau_file.exists():
         import csv
         summary["plateau_width_200pts"] = {}
-        with open(plateau_file) as f:
+        with open(plateau_file, encoding="utf-8") as f:
             reader = csv.DictReader(f)
             for row in reader:
                 method = row.get("Method", row.get("method", ""))
@@ -207,7 +207,7 @@ def generate_final_summary(results_dir):
     # 7. Bonferroni results (with cross-validation)
     bonf_file = results_dir / "bonferroni_results.json"
     if bonf_file.exists():
-        with open(bonf_file) as f:
+        with open(bonf_file, encoding="utf-8") as f:
             data = json.load(f)
 
         # Cross-validate n_significant_corrected against the boolean array
@@ -235,7 +235,7 @@ def generate_final_summary(results_dir):
     # 8. Randomization control
     rand_file = results_dir / "randomization_control.json"
     if rand_file.exists():
-        with open(rand_file) as f:
+        with open(rand_file, encoding="utf-8") as f:
             data = json.load(f)
         summary["randomization_original_max_purity"] = data.get("original_max_purity")
         summary["randomization_shuffled_max_purity"] = data.get("shuffled_max_purity")
@@ -243,7 +243,7 @@ def generate_final_summary(results_dir):
     # 9. Metric comparison (Step 27)
     mc_file = results_dir / "metric_comparison.json"
     if mc_file.exists():
-        with open(mc_file) as f:
+        with open(mc_file, encoding="utf-8") as f:
             data = json.load(f)
         if "correlations" in data:
             summary["metric_comparison"] = data["correlations"]
@@ -251,7 +251,7 @@ def generate_final_summary(results_dir):
     # 10. Bootstrap correlations (Step 28)
     bc_file = results_dir / "bootstrap_correlations.json"
     if bc_file.exists():
-        with open(bc_file) as f:
+        with open(bc_file, encoding="utf-8") as f:
             data = json.load(f)
         if "bootstrap_correlations" in data:
             summary["bootstrap_correlations"] = data["bootstrap_correlations"]
@@ -259,7 +259,7 @@ def generate_final_summary(results_dir):
     # 11. Semantic purity analysis (Step 29)
     sp_file = results_dir / "semantic_purity_analysis.json"
     if sp_file.exists():
-        with open(sp_file) as f:
+        with open(sp_file, encoding="utf-8") as f:
             data = json.load(f)
         if "gf_scores" in data:
             summary["semantic_purity_scores"] = data["gf_scores"]
@@ -271,7 +271,7 @@ def generate_final_summary(results_dir):
     # 12. Cross-species rank consistency (Step 30)
     cs_file = results_dir / "cross_species_consistency.json"
     if cs_file.exists():
-        with open(cs_file) as f:
+        with open(cs_file, encoding="utf-8") as f:
             data = json.load(f)
         if "spearman_correlation" in data:
             summary["cross_species_consistency"] = {
@@ -283,7 +283,7 @@ def generate_final_summary(results_dir):
     # 13. Scale gradient analysis (Step 31)
     sg_file = results_dir / "scale_gradient.json"
     if sg_file.exists():
-        with open(sg_file) as f:
+        with open(sg_file, encoding="utf-8") as f:
             data = json.load(f)
         if "kendalls_w" in data:
             summary["scale_gradient"] = {
@@ -295,7 +295,7 @@ def generate_final_summary(results_dir):
     # 14. Bootstrap stability analysis (Step 32)
     bs_file = results_dir / "bootstrap_stability.json"
     if bs_file.exists():
-        with open(bs_file) as f:
+        with open(bs_file, encoding="utf-8") as f:
             data = json.load(f)
         if "bootstrap_stats" in data:
             summary["bootstrap_stability"] = {
@@ -308,7 +308,7 @@ def generate_final_summary(results_dir):
     # 15. Human extended GF scores (Step 33)
     hex_file = results_dir / "human_gf_scores_extended.json"
     if hex_file.exists():
-        with open(hex_file) as f:
+        with open(hex_file, encoding="utf-8") as f:
             data = json.load(f)
         summary["human_gf_scores_extended"] = {
             "scores": data.get("scores", {}),
@@ -320,7 +320,7 @@ def generate_final_summary(results_dir):
     # 16. Multi-modal functional anchoring (Step 34)
     mm_file = results_dir / "multimodal_anchoring.json"
     if mm_file.exists():
-        with open(mm_file) as f:
+        with open(mm_file, encoding="utf-8") as f:
             data = json.load(f)
         summary["multimodal_anchoring"] = {
             "kendalls_w_threshold": data.get("kendalls_w_threshold"),
@@ -332,14 +332,14 @@ def generate_final_summary(results_dir):
     # 17. Hyperparameter sensitivity (Step 35)
     hp_file = results_dir / "hyperparameter_sensitivity.json"
     if hp_file.exists():
-        with open(hp_file) as f:
+        with open(hp_file, encoding="utf-8") as f:
             data = json.load(f)
         if "summary" in data:
             summary["hyperparameter_sensitivity"] = data["summary"]
 
     # Save
     output_file = results_dir / "final_results_summary.json"
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2)
     print(f"Saved final results summary to: {output_file}")
     return summary

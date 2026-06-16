@@ -237,19 +237,25 @@ def run():
     # Load old GF scores for comparison
     print(f"\n[3/4] Comparing with old human GF scores (Louvain)...")
     old_path = RESULTS / "human_gf_scores_extended.json"
-    old_data = json.load(open(old_path, encoding="utf-8"))
+    with open(old_path, encoding="utf-8") as f:
+        old_data = json.load(f)
     old_scores = old_data.get("scores", {})
 
     # Build unified feature table for correlation analysis
     print(f"\n[4/4] Running correlation analysis with unified scores...")
 
     # Load Phase 8 features
-    phase8 = json.load(open(RESULTS / "human_cross_network_validation.json", encoding="utf-8"))
+    with open(RESULTS / "human_cross_network_validation.json", encoding="utf-8") as f:
+        phase8 = json.load(f)
     pm11 = phase8.get("human_per_method_11", {})
 
     # Load TDA features
     tda_path = RESULTS / "human_tda_full.json"
-    tda_data = json.load(open(tda_path, encoding="utf-8")) if tda_path.exists() else {}
+    if tda_path.exists():
+        with open(tda_path, encoding="utf-8") as f:
+            tda_data = json.load(f)
+    else:
+        tda_data = {}
     tda_pm = tda_data.get("per_method", {})
 
     methods_available = [m for m in ALL_METHODS
@@ -403,7 +409,8 @@ def generate_figure(methods, all_results, old_scores, gf_new, gf_old):
     # Panel C: Correlation comparison (old vs new GF scores)
     ax = axes[2]
     # Load features for correlation
-    phase8 = json.load(open(RESULTS / "human_cross_network_validation.json", encoding="utf-8"))
+    with open(RESULTS / "human_cross_network_validation.json", encoding="utf-8") as f:
+        phase8 = json.load(f)
     pm11 = phase8.get("human_per_method_11", {})
     sa = np.array([pm11[m]["spectral_alignment"] for m in methods])
     er = np.array([pm11[m]["effective_rank"] for m in methods])

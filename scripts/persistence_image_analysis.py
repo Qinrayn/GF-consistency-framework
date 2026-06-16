@@ -453,11 +453,13 @@ def run():
         print(f"    {m:<12}: SA={sa:.4f}, ER={er:.4f}")
 
     # Load human Phase 8 features for comparison
-    phase8 = json.load(open(RESULTS / "human_cross_network_validation.json", encoding="utf-8"))
+    with open(RESULTS / "human_cross_network_validation.json", encoding="utf-8") as f:
+        phase8 = json.load(f)
     human_pm = phase8.get("human_per_method_11", {})
 
     # Load human GF scores (Phase 9 unified)
-    human_gf_data = json.load(open(RESULTS / "human_gf_unified.json", encoding="utf-8"))
+    with open(RESULTS / "human_gf_unified.json", encoding="utf-8") as f:
+        human_gf_data = json.load(f)
 
     # Build feature tables
     analysis_results = {}
@@ -546,7 +548,8 @@ def run():
     yeast_gf = {}
     yeast_file = RESULTS / "final_results_summary.json"
     if yeast_file.exists():
-        yd = json.load(open(yeast_file, encoding="utf-8"))
+        with open(yeast_file, encoding="utf-8") as f:
+            yd = json.load(f)
         gs = yd.get("gf_scores", {})
         for m in ALL_METHODS:
             if m in gs:

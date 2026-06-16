@@ -333,7 +333,8 @@ def run():
             # Yeast: load Phase 3 pre-computed spectral alignment (curated 153-node)
             # Full-network yeast embeddings don't exist — only curated subset
             try:
-                phase3 = json.load(open(RESULTS / "spectral_alignment.json", encoding="utf-8"))
+                with open(RESULTS / "spectral_alignment.json", encoding="utf-8") as f:
+                    phase3 = json.load(f)
                 sa_scores = {m: v["alignment_score"]
                              for m, v in phase3.get("alignment_results", {}).items()
                              if "alignment_score" in v}
@@ -357,21 +358,24 @@ def run():
         two_factor_rho = None
         if species == "yeast":
             try:
-                d = json.load(open(RESULTS / "spectral_alignment.json", encoding="utf-8"))
+                with open(RESULTS / "spectral_alignment.json", encoding="utf-8") as f:
+                    d = json.load(f)
                 two_factor_rho = d.get("predictor_comparison", {}).get("combined", {}).get("rho")
             except Exception as e:
                 print(f"WARNING: Could not load spectral_alignment.json: {e}, using fallback value")
                 two_factor_rho = 0.929  # known from Phase 3
         elif species == "human":
             try:
-                d = json.load(open(RESULTS / "persistence_image_analysis.json", encoding="utf-8"))
+                with open(RESULTS / "persistence_image_analysis.json", encoding="utf-8") as f:
+                    d = json.load(f)
                 two_factor_rho = d.get("correlations", {}).get("human", {}).get("two_factor", {}).get("rho")
             except Exception as e:
                 print(f"WARNING: Could not load persistence_image_analysis.json: {e}, using fallback value")
                 two_factor_rho = 0.483
         elif species == "mouse":
             try:
-                d = json.load(open(RESULTS / "persistence_image_analysis.json", encoding="utf-8"))
+                with open(RESULTS / "persistence_image_analysis.json", encoding="utf-8") as f:
+                    d = json.load(f)
                 two_factor_rho = d.get("correlations", {}).get("mouse", {}).get("two_factor", {}).get("rho")
             except Exception as e:
                 print(f"WARNING: Could not load persistence_image_analysis.json: {e}, using fallback value")

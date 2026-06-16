@@ -364,7 +364,7 @@ def main():
     
     # Save as JSON
     curves_file = results_dir / "gf_curves_200pts.json"
-    with open(curves_file, "w") as f:
+    with open(curves_file, "w", encoding="utf-8") as f:
         json.dump(curves_data, f, indent=2)
     print(f"\nSaved G-F curves (JSON) to: {curves_file}")
     
@@ -390,13 +390,13 @@ def main():
         scores_data["scores_adaptive"] = gf_scores_adaptive
 
     scores_file = results_dir / "gf_scores.json"
-    with open(scores_file, "w") as f:
+    with open(scores_file, "w", encoding="utf-8") as f:
         json.dump(scores_data, f, indent=2)
     print(f"Saved G-F scores to: {scores_file}")
 
     # Save plateau width CSV (Supplementary Table S2)
     plateau_file = results_dir / "plateau_width_v3_200pts.csv"
-    with open(plateau_file, "w", newline="") as f:
+    with open(plateau_file, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["Method", "W", "r_min", "r_max", "GF_Score",
                           "peak_purity", "effective_threshold"])

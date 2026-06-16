@@ -31,7 +31,7 @@ def main():
     
     # Save full edgelist
     full_edgelist = data_dir / "yeast_ppi_5936.edgelist"
-    with open(full_edgelist, "w") as f:
+    with open(full_edgelist, "w", encoding="utf-8") as f:
         for u, v in G_full.edges():
             f.write(f"{u}\t{v}\n")
     print(f"Saved {full_edgelist.name}: {G_full.number_of_nodes()} nodes, {G_full.number_of_edges()} edges")
@@ -39,17 +39,17 @@ def main():
     # ---- Step 2: Curated 153-node subgraph ----
     print("\nBuilding curated 153-node subgraph...")
     go_map_file = data_dir / "gene_go_map.json"
-    with open(go_map_file) as f:
+    with open(go_map_file, encoding="utf-8") as f:
         go_map = json.load(f)
     
     curated_nodes_file = data_dir / "curated_153_nodes.txt"
     if curated_nodes_file.exists():
-        with open(curated_nodes_file) as f:
+        with open(curated_nodes_file, encoding="utf-8") as f:
             curated_nodes = [line.strip() for line in f if line.strip()]
     else:
         # Intersect GO-annotated nodes with full network
         curated_nodes = sorted(set(go_map.keys()) & set(G_full.nodes()))
-        with open(curated_nodes_file, "w") as f:
+        with open(curated_nodes_file, "w", encoding="utf-8") as f:
             for n in curated_nodes:
                 f.write(n + "\n")
     
@@ -59,14 +59,14 @@ def main():
         G_curated = G_curated.subgraph(comp).copy()
         curated_nodes = sorted(G_curated.nodes())
         # Update node list
-        with open(curated_nodes_file, "w") as f:
+        with open(curated_nodes_file, "w", encoding="utf-8") as f:
             for n in curated_nodes:
                 f.write(n + "\n")
     
     print(f"Curated subgraph: {G_curated.number_of_nodes()} nodes, {G_curated.number_of_edges()} edges")
     
     curated_edgelist = data_dir / "curated_153_ppi.edgelist"
-    with open(curated_edgelist, "w") as f:
+    with open(curated_edgelist, "w", encoding="utf-8") as f:
         for u, v in G_curated.edges():
             f.write(f"{u}\t{v}\n")
     print(f"Saved {curated_edgelist.name}")
@@ -85,7 +85,7 @@ def main():
             G_sub = G_sub.subgraph(comp).copy()
         
         subset_file = data_dir / f"subset_150_{i+1}.edgelist"
-        with open(subset_file, "w") as f:
+        with open(subset_file, "w", encoding="utf-8") as f:
             for u, v in G_sub.edges():
                 f.write(f"{u}\t{v}\n")
         print(f"  Subset {i+1}: {G_sub.number_of_nodes()} nodes, {G_sub.number_of_edges()} edges -> {subset_file.name}")

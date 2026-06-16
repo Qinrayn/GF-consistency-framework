@@ -238,14 +238,17 @@ def run_analysis():
 
     # Load human G-F scores and spectral alignment for validation
     print(f"\n[4/5] Running three-factor validation...")
-    gf_data = json.load(open(RESULTS / "human_gf_scores_extended.json", encoding="utf-8"))
+    with open(RESULTS / "human_gf_scores_extended.json", encoding="utf-8") as f:
+        gf_data = json.load(f)
     gf_scores = gf_data.get("scores", {})
 
-    spec_data = json.load(open(RESULTS / "human_spectral_alignment.json", encoding="utf-8"))
+    with open(RESULTS / "human_spectral_alignment.json", encoding="utf-8") as f:
+        spec_data = json.load(f)
     spec_profiles = spec_data.get("spectral_profiles", {})
 
     # Load effective ranks from Phase 8
-    phase8 = json.load(open(RESULTS / "human_cross_network_validation.json", encoding="utf-8"))
+    with open(RESULTS / "human_cross_network_validation.json", encoding="utf-8") as f:
+        phase8 = json.load(f)
     pm11 = phase8.get("human_per_method_11", {})
 
     methods_available = [m for m in ALL_METHODS

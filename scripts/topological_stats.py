@@ -64,15 +64,18 @@ def load_all_data():
     results_dir = get_results_dir()
 
     # 1. Standard GF scores
-    gf_data = json.load(open(results_dir / 'gf_scores.json'))
+    with open(results_dir / 'gf_scores.json', encoding="utf-8") as f:
+        gf_data = json.load(f)
     gf_scores = dict(gf_data['scores'])
 
     # 2. GNN GF scores
-    gnn_data = json.load(open(results_dir / 'gnn_gf_scores.json'))
+    with open(results_dir / 'gnn_gf_scores.json', encoding="utf-8") as f:
+        gnn_data = json.load(f)
     gf_scores.update(gnn_data['gf_scores'])
 
     # 3. Topological analysis
-    topo_data = json.load(open(results_dir / 'topological_analysis.json'))
+    with open(results_dir / 'topological_analysis.json', encoding="utf-8") as f:
+        topo_data = json.load(f)
 
     return gf_scores, topo_data
 

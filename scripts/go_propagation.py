@@ -840,7 +840,7 @@ def main():
     logger.info("Step 1: Load original data")
     logger.info("=" * 60)
 
-    with open(data_dir / "gene_go_map.json") as fh:
+    with open(data_dir / "gene_go_map.json", encoding="utf-8") as fh:
         original_go_map = json.load(fh)
     original_genes = len(original_go_map)
     original_terms = set()
@@ -857,7 +857,7 @@ def main():
         raise FileNotFoundError(
             f"{curated_nodes_file} not found. Run data_preprocessing.py (Step 1) first."
         )
-    with open(curated_nodes_file) as fh:
+    with open(curated_nodes_file, encoding="utf-8") as fh:
         curated_nodes = [line.strip() for line in fh if line.strip()]
     logger.info("Curated nodes: %d", len(curated_nodes))
 
@@ -1011,7 +1011,7 @@ def main():
     logger.info("=" * 60)
 
     ext_anno_path = results_dir / "extended_go_annotations.json"
-    with open(ext_anno_path, "w") as fh:
+    with open(ext_anno_path, "w", encoding="utf-8") as fh:
         json.dump(extended_go_map, fh, indent=2, sort_keys=True)
     logger.info("Saved: %s", ext_anno_path)
 
@@ -1144,7 +1144,7 @@ def main():
     }
 
     stats_path = results_dir / "go_propagation_stats.json"
-    with open(stats_path, "w") as fh:
+    with open(stats_path, "w", encoding="utf-8") as fh:
         json.dump(stats, fh, indent=2)
     logger.info("Saved: %s", stats_path)
 

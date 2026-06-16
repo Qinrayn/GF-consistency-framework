@@ -35,7 +35,6 @@ import sys
 import json
 import time
 import numpy as np
-import networkx as nx
 from pathlib import Path
 
 import warnings

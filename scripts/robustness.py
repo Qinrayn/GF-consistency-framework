@@ -340,7 +340,7 @@ def main():
 
         # Save per-size raw results
         per_size_file = results_dir / f"robustness_size_{size_label}.json"
-        with open(per_size_file, "w") as f:
+        with open(per_size_file, "w", encoding="utf-8") as f:
             json.dump({
                 "size": size_val,
                 "n_subsets": n_subsets,
@@ -407,17 +407,17 @@ def main():
         legacy_summary[f"std_purity_{suffix}"] = compat_summary[m]["std_purity"]
 
     summary_file = results_dir / "subset_summary.json"
-    with open(summary_file, "w") as f:
+    with open(summary_file, "w", encoding="utf-8") as f:
         json.dump(legacy_summary, f, indent=2)
 
     bonf_file = results_dir / "bonferroni_results.json"
     if bonf_result is not None:
-        with open(bonf_file, "w") as f:
+        with open(bonf_file, "w", encoding="utf-8") as f:
             json.dump(bonf_result, f, indent=2)
 
     # Also save backward-compatible raw subset data
     raw_file = results_dir / "subset_robustness.json"
-    with open(raw_file, "w") as f:
+    with open(raw_file, "w", encoding="utf-8") as f:
         json.dump(all_results.get(compat_label, []), f, indent=2)
 
     # ----------------------------------------------------------------
@@ -443,7 +443,7 @@ def main():
     extended["total_time_seconds"] = round(total_time, 1)
 
     extended_file = results_dir / "robustness_extended.json"
-    with open(extended_file, "w") as f:
+    with open(extended_file, "w", encoding="utf-8") as f:
         json.dump(extended, f, indent=2)
 
     # ----------------------------------------------------------------

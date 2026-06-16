@@ -20,10 +20,10 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RESULTS_DIR = os.path.join(PROJECT_ROOT, "results")
 
 # Load data files
-with open(os.path.join(RESULTS_DIR, "topological_correlation_analysis.json")) as f:
+with open(os.path.join(RESULTS_DIR, "topological_correlation_analysis.json"), encoding="utf-8") as f:
     topo_data = json.load(f)
 
-with open(os.path.join(RESULTS_DIR, "metric_comparison.json")) as f:
+with open(os.path.join(RESULTS_DIR, "metric_comparison.json"), encoding="utf-8") as f:
     metric_data = json.load(f)
 
 # ---------------------------------------------------------------------------
@@ -170,7 +170,7 @@ for key, val in analyses.items():
     output[key] = {k: v for k, v in val.items()}
 
 output_path = os.path.join(RESULTS_DIR, "bootstrap_correlations.json")
-with open(output_path, "w") as f:
+with open(output_path, "w", encoding="utf-8") as f:
     json.dump(output, f, indent=2)
 
 # ---------------------------------------------------------------------------

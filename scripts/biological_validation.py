@@ -28,7 +28,6 @@ import sys
 import time
 import pickle
 import warnings
-import gzip
 from pathlib import Path
 from collections import Counter, defaultdict
 
@@ -36,11 +35,9 @@ import numpy as np
 import networkx as nx
 from scipy.stats import spearmanr, hypergeom
 from scipy.spatial.distance import pdist, squareform
-from scipy.integrate import trapezoid
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.gridspec import GridSpec
 
 warnings.filterwarnings("ignore")
 
@@ -878,7 +875,8 @@ def run():
     print("\n  Fitting mixed-effects model...")
     t6 = time.time()
     mixed_results = fit_mixed_effects(
-        yeast_multiseed, mouse_multiseed, human_multiseed)
+        yeast_multiseed, mouse_multiseed, human_multiseed,
+        exclude_mouse=True)
     print(f"  Mixed-effects: {time.time()-t6:.1f}s")
 
     pooled = mixed_results["pooled_spearman"]
@@ -1442,7 +1440,8 @@ def run_part_b_only():
     # Mixed-effects model
     print("\n  Fitting mixed-effects model...")
     mixed_results = fit_mixed_effects(yeast_multiseed, mouse_multiseed,
-                                       human_multiseed)
+                                       human_multiseed,
+                                       exclude_mouse=True)
     pooled = mixed_results["pooled_spearman"]
     print(f"  Pooled Spearman (n={mixed_results['n_total_observations']}):")
     print(f"    rho = {pooled['rho']:.4f} (p = {pooled['p']:.2e})")
