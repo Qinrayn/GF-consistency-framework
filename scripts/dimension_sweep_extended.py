@@ -122,7 +122,7 @@ def compute_spectral_embedding(graph, dim):
 # ============================================================
 
 def run_loto_for_dimension(coords, nodes, graph, annotations, term_freq, dim,
-                           ppi_mrr_cache=None):
+                           compute_ppi=False):
     """Run LOTO predictions for a single embedding dimension."""
     node_set = set(nodes)
     node_to_idx = {n: i for i, n in enumerate(nodes)}
@@ -162,11 +162,27 @@ def run_loto_for_dimension(coords, nodes, graph, annotations, term_freq, dim,
                 except ValueError:
                     trial_rank[f"Spectral-d{dim}"] = 0
 
-            # PPI baseline (use cached if available)
-            if ppi_mrr_cache is not None and pid in ppi_mrr_cache:
-                trial_rank["PPI-Neighbors"] = ppi_mrr_cache[pid].get("PPI-Neighbors", 0)
-                trial_rank["2-Hop Diffusion"] = ppi_mrr_cache[pid].get("2-Hop Diffusion", 0)
-                trial_rank["Random"] = ppi_mrr_cache[pid].get("Random", 0)
+            # PPI baseline (compute on first dimension only)
+            if compute_ppi:
+                ppi_preds = ppi_neighbor_predict(pid, graph, annotations, hidden_term)
+                ppi_terms_list = [t for t, _ in ppi_preds]
+                try:
+                    trial_rank["PPI-Neighbors"] = ppi_terms_list.index(hidden_term) + 1
+                except ValueError:
+                    trial_rank["PPI-Neighbors"] = 0
+
+                hop_preds = twohop_diffusion_predict(pid, graph, annotations, hidden_term)
+                hop_terms_list = [t for t, _ in hop_preds]
+                try:
+                    trial_rank["2-Hop Diffusion"] = hop_terms_list.index(hidden_term) + 1
+                except ValueError:
+                    trial_rank["2-Hop Diffusion"] = 0
+
+                rand_terms = [t for t, _ in random_ranking]
+                try:
+                    trial_rank["Random"] = rand_terms.index(hidden_term) + 1
+                except ValueError:
+                    trial_rank["Random"] = 0
 
             rank_results.append(trial_rank)
             completed += 1
@@ -186,50 +202,6 @@ def run_loto_for_dimension(coords, nodes, graph, annotations, term_freq, dim,
 
     return mrr
 
-
-def compute_ppi_baseline_ranks(query_proteins, graph, annotations, term_freq):
-    """Pre-compute PPI baseline ranks for all trials (avoids re-computation).
-
-    Returns a dict: {pid: {"PPI-Neighbors": rank, "2-Hop Diffusion": rank, "Random": rank}}
-    """
-    random_ranking = term_freq.most_common()
-    cache = {}
-    completed = 0
-    n_trials = sum(len(terms) for terms in query_proteins.values())
-    t0 = time.time()
-
-    for pid, terms in sorted(query_proteins.items()):
-        pid_cache = {}
-        for hidden_term in sorted(terms):
-            ppi_preds = ppi_neighbor_predict(pid, graph, annotations, hidden_term)
-            ppi_terms = [t for t, _ in ppi_preds]
-            try:
-                pid_cache["PPI-Neighbors"] = ppi_terms.index(hidden_term) + 1
-            except ValueError:
-                pid_cache["PPI-Neighbors"] = 0
-
-            hop_preds = twohop_diffusion_predict(pid, graph, annotations, hidden_term)
-            hop_terms = [t for t, _ in hop_preds]
-            try:
-                pid_cache["2-Hop Diffusion"] = hop_terms.index(hidden_term) + 1
-            except ValueError:
-                pid_cache["2-Hop Diffusion"] = 0
-
-            rand_terms = [t for t, _ in random_ranking]
-            try:
-                pid_cache["Random"] = rand_terms.index(hidden_term) + 1
-            except ValueError:
-                pid_cache["Random"] = 0
-
-        cache[pid] = pid_cache
-        completed += len(terms)
-        if completed % 3000 == 0:
-            elapsed = time.time() - t0
-            rate = completed / elapsed if elapsed > 0 else 0
-            print(f"      PPI baseline: {completed}/{n_trials} "
-                  f"({100*completed/n_trials:.0f}%) -- {rate:.0f} trials/s")
-
-    return cache
 
 
 # ============================================================
@@ -285,36 +257,18 @@ def run():
     print(f"  Proteins: {len(query_proteins)}, Trials: {n_trials}")
     print(f"  Annotation stats: {ann_stats}")
 
-    # ---- Compute PPI baseline (reuse from previous if possible) ----
-    ppi_mrr_val = prev_baselines.get("PPI-Neighbors", 0)
-    twohop_mrr_val = prev_baselines.get("2-Hop Diffusion", 0)
-    random_mrr_val = prev_baselines.get("Random", 0)
-
-    # We need per-trial PPI ranks for the new dimensions
-    # Load from cache file if available
-    ppi_cache_file = RESULTS / "_ppi_baseline_ranks_cache.json"
-    if ppi_cache_file.exists():
-        print(f"  Loading cached PPI baseline ranks ...")
-        with open(ppi_cache_file, encoding="utf-8") as f:
-            ppi_cache = json.load(f)
-        # Convert string keys back
-        ppi_cache = {k: v for k, v in ppi_cache.items()}
-        print(f"  Cached: {len(ppi_cache)} proteins")
-    else:
-        print(f"\n  Computing PPI baseline ranks ({n_trials} trials) ...")
-        ppi_cache = compute_ppi_baseline_ranks(
-            query_proteins, G, annotations, term_freq
-        )
-        # Cache for future runs
-        with open(ppi_cache_file, "w", encoding="utf-8") as f:
-            json.dump(ppi_cache, f)
-        print(f"  Cached PPI baseline ranks to {ppi_cache_file}")
+    # ---- Restore PPI baselines from previous sweep ----
+    ppi_mrr_val = prev_baselines.get("PPI-Neighbors", 0.0)
+    twohop_mrr_val = prev_baselines.get("2-Hop Diffusion", 0.0)
+    random_mrr_val = prev_baselines.get("Random", 0.0)
+    print(f"  PPI baseline MRR: {ppi_mrr_val:.4f}")
 
     # ---- Compute new dimensions ----
     print(f"\n[3/4] Computing Spectral embeddings at d = {NEW_DIMENSIONS} ...")
 
     new_mrr = {}
     new_eigenvalues = {}
+    is_first_dim = True
 
     for dim in NEW_DIMENSIONS:
         print(f"\n  --- Dimension {dim} ---")
@@ -342,12 +296,15 @@ def run():
 
         # Run LOTO
         t_loto = time.time()
-        mrr = run_loto_for_dimension(
+        mrr_dict = run_loto_for_dimension(
             coords, nodes, G, annotations, term_freq, dim,
-            ppi_mrr_cache=ppi_cache,
+            compute_ppi=is_first_dim,
         )
         loto_time = time.time() - t_loto
 
+        # Extract Spectral MRR for this dimension
+        spectral_key = f"Spectral-d{dim}"
+        mrr = float(mrr_dict.get(spectral_key, 0.0))
         new_mrr[dim] = mrr
         new_eigenvalues[dim] = eigenvalues.tolist()
 
@@ -356,6 +313,13 @@ def run():
               f"{'EXCEEDS' if mrr > ppi_mrr_val else 'below'} by "
               f"{abs(mrr - ppi_mrr_val):.6f}")
         print(f"  Time: embedding {emb_time:.1f}s + LOTO {loto_time:.1f}s")
+
+        # Update baselines from fresh computation on first dimension
+        if is_first_dim:
+            ppi_mrr_val = float(mrr_dict.get("PPI-Neighbors", ppi_mrr_val))
+            twohop_mrr_val = float(mrr_dict.get("2-Hop Diffusion", twohop_mrr_val))
+            random_mrr_val = float(mrr_dict.get("Random", random_mrr_val))
+            is_first_dim = False
 
     # ---- Combine results ----
     print(f"\n[4/4] Combining results and generating output ...")
