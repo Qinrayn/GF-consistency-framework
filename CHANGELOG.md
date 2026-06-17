@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.0] — 2026-06-17
+
+### Added (Steps 49-51: Cross-Species Conservation, Missing Figures, Database Re-validation)
+- `cross_species_dark_matter.py`: Cross-species functional conservation of dark matter categories (Step 49). Tests whether GO BP terms enriched in yeast dark matter also show spatial clustering in human/mouse Spectral embeddings. 2/7 categories conserved across species (transmembrane transport, sterol biosynthesis). Fig73 generated.
+- `generate_missing_figures.py`: Generate missing supplementary figures FigS18-S20 (Step 50). FigS18: GAT theorem verification (4-panel), FigS19: community detection ablation heatmap (2-panel), FigS20: coexpression network GF curves (2-panel).
+- `string_v12_revalidation.py`: STRING v12.0 re-validation of all 44 dark matter pairs (Step 51). All pairs remain invisible in v12.0 — dark matter catalog robust to database updates.
+
+### Changed
+- Version bumped to 2.4.0 across `pyproject.toml`, `run_all_analysis.py`, `scripts/__init__.py`
+- Pipeline expanded from 48 steps to 51 steps
+- `pipeline_config.yaml`: updated `start_from` range (1-51) and `skip_extended` scope (Steps 16-21, 24-51)
+- `scripts/__init__.py`: registered Steps 49-51 modules; expanded to 51-step pipeline documentation
+- `run_all_analysis.py`: added Steps 49-51 orchestration blocks with subprocess pattern
+- README: fixed stale step counts (45 -> 51), updated all references
+
 ## [2.3.0] — 2026-06-16
 
 ### Added (Steps 46-48: Breakthrough Experiments — Discovery-Tier Results)

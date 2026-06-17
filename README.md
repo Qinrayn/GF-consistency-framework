@@ -2,7 +2,7 @@
 
 **A Geometric-Functional Consistency Framework for Evaluating Protein Interaction Network Embeddings**
 
-Complete reproduction of the experimental pipeline: 11 embedding methods · 48-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
+Complete reproduction of the experimental pipeline: 11 embedding methods · 51-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
 
 <details>
 <summary><strong>Key Results at a Glance</strong></summary>
@@ -238,7 +238,7 @@ All embeddings standardized to **σ = 0.3** before G-F analysis.
 
 ```
 GF-consistency-framework/
-├── scripts/                    # 48-step analysis pipeline + extensions
+├── scripts/                    # 51-step analysis pipeline + extensions
 │   ├── data_preprocessing.py   # Load PPI + GO data
 │   ├── embed_all.py            # Compute 8 classical/NN embeddings
 │   ├── compute_gf.py           # G-F curves + scores
@@ -389,7 +389,7 @@ GF-consistency-framework/
 │
 ├── human_validation/           # Cross-species (optional, STRING v12.0)
 │
-├── run_all_analysis.py         # One-command Python pipeline (45 steps)
+├── run_all_analysis.py         # One-command Python pipeline (51 steps)
 ├── pipeline_config.yaml        # YAML configuration (all parameters)
 ├── pyproject.toml              # Python package metadata
 ├── environment.yml             # Conda environment
@@ -443,7 +443,7 @@ Full spec → [`requirements.txt`](requirements.txt) · [`environment.yml`](envi
 
 ## Extension Modules (v1.1+)
 
-Beyond the core 48-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–45).
+Beyond the core 51-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–51).
 
 | Module | Description |
 |--------|-------------|
@@ -689,7 +689,7 @@ ORCID: [0009-0000-2769-467X](https://orcid.org/0009-0000-2769-467X)
 >              Protein Interaction Network Embeddings},
 >   author  = {Zhang, Yuhan},
 >   year    = {2026},
->   note    = {Reproducible pipeline: 11 methods, 48-step validation.},
+>   note    = {Reproducible pipeline: 11 methods, 51-step validation.},
 > }
 > ```
 

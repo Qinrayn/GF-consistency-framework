@@ -1,0 +1,727 @@
+{
+  "description": "Cross-Species Functional Conservation of Dark Matter Categories",
+  "version": "1.0.0",
+  "method": "Category-level functional conservation test: for each GO BP term enriched in yeast dark matter, test whether proteins annotated with the same term in human/mouse are spatially clustered in the Spectral embedding. Permutation test (5000 iterations) against random proteins.",
+  "n_dark_matter_pairs": 44,
+  "n_dark_matter_proteins": 71,
+  "n_conserved_categories": 2,
+  "n_total_conserved_terms": 7,
+  "n_yeast_specific_terms": 12,
+  "yeast_clustering": {
+    "GO:0036503": {
+      "name": "ERAD pathway",
+      "n_dm_proteins": 3,
+      "observed_mean_dist": 0.003389,
+      "background_mean_dist": 0.202768,
+      "enrichment_ratio": 59.836,
+      "p_value": 0.001
+    },
+    "GO:0034599": {
+      "name": "cellular response to oxidative stress",
+      "n_dm_proteins": 8,
+      "observed_mean_dist": 0.02877,
+      "background_mean_dist": 0.201752,
+      "enrichment_ratio": 7.013,
+      "p_value": 0.021196
+    },
+    "GO:0006631": {
+      "name": "fatty acid metabolic process",
+      "n_dm_proteins": 2,
+      "observed_mean_dist": 0.003071,
+      "background_mean_dist": 0.220703,
+      "enrichment_ratio": 71.856,
+      "p_value": 0.009198
+    },
+    "GO:0006879": {
+      "name": "intracellular iron ion homeostasis",
+      "n_dm_proteins": 2,
+      "observed_mean_dist": 0.000752,
+      "background_mean_dist": 0.220703,
+      "enrichment_ratio": 293.547,
+      "p_value": 0.0012
+    },
+    "GO:0006457": {
+      "name": "protein folding",
+      "n_dm_proteins": 2,
+      "observed_mean_dist": 0.001091,
+      "background_mean_dist": 0.220703,
+      "enrichment_ratio": 202.284,
+      "p_value": 0.0018
+    },
+    "GO:0016126": {
+      "name": "sterol biosynthetic process",
+      "n_dm_proteins": 2,
+      "observed_mean_dist": 0.000199,
+      "background_mean_dist": 0.220703,
+      "enrichment_ratio": 1106.55,
+      "p_value": 0.0004
+    },
+    "GO:0055085": {
+      "name": "transmembrane transport",
+      "n_dm_proteins": 8,
+      "observed_mean_dist": 0.055384,
+      "background_mean_dist": 0.201752,
+      "enrichment_ratio": 3.643,
+      "p_value": 0.159568
+    }
+  },
+  "human_clustering": {
+    "GO:0036503": {
+      "name": "ERAD pathway",
+      "n_proteins": 89,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.006827,
+      "background_mean_dist": 0.067047,
+      "enrichment_ratio": 9.821,
+      "p_value": 0.140372
+    },
+    "GO:0034599": {
+      "name": "cellular response to oxidative stress",
+      "n_proteins": 100,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.009453,
+      "background_mean_dist": 0.067047,
+      "enrichment_ratio": 7.093,
+      "p_value": 0.606679
+    },
+    "GO:0006631": {
+      "name": "fatty acid metabolic process",
+      "n_proteins": 89,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.006849,
+      "background_mean_dist": 0.067047,
+      "enrichment_ratio": 9.79,
+      "p_value": 0.143971
+    },
+    "GO:0006879": {
+      "name": "intracellular iron ion homeostasis",
+      "n_proteins": 67,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.0078,
+      "background_mean_dist": 0.067047,
+      "enrichment_ratio": 8.596,
+      "p_value": 0.34913
+    },
+    "GO:0006457": {
+      "name": "protein folding",
+      "n_proteins": 184,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.019418,
+      "background_mean_dist": 0.067047,
+      "enrichment_ratio": 3.453,
+      "p_value": 0.716857
+    },
+    "GO:0016126": {
+      "name": "sterol biosynthetic process",
+      "n_proteins": 8,
+      "n_sampled": 8,
+      "observed_mean_dist": 0.004834,
+      "background_mean_dist": 0.054206,
+      "enrichment_ratio": 11.214,
+      "p_value": 0.14917
+    },
+    "GO:0055085": {
+      "name": "transmembrane transport",
+      "n_proteins": 474,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.004776,
+      "background_mean_dist": 0.067047,
+      "enrichment_ratio": 14.039,
+      "p_value": 0.0008
+    }
+  },
+  "mouse_clustering": {
+    "GO:0036503": {
+      "name": "ERAD pathway",
+      "n_proteins": 85,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.003824,
+      "background_mean_dist": 0.045784,
+      "enrichment_ratio": 11.973,
+      "p_value": 0.011798
+    },
+    "GO:0034599": {
+      "name": "cellular response to oxidative stress",
+      "n_proteins": 103,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.006056,
+      "background_mean_dist": 0.045784,
+      "enrichment_ratio": 7.56,
+      "p_value": 0.559888
+    },
+    "GO:0006631": {
+      "name": "fatty acid metabolic process",
+      "n_proteins": 107,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.005019,
+      "background_mean_dist": 0.045784,
+      "enrichment_ratio": 9.123,
+      "p_value": 0.229354
+    },
+    "GO:0006879": {
+      "name": "intracellular iron ion homeostasis",
+      "n_proteins": 61,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.005279,
+      "background_mean_dist": 0.045784,
+      "enrichment_ratio": 8.673,
+      "p_value": 0.317337
+    },
+    "GO:0006457": {
+      "name": "protein folding",
+      "n_proteins": 161,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.005176,
+      "background_mean_dist": 0.045784,
+      "enrichment_ratio": 8.845,
+      "p_value": 0.280544
+    },
+    "GO:0016126": {
+      "name": "sterol biosynthetic process",
+      "n_proteins": 9,
+      "n_sampled": 9,
+      "observed_mean_dist": 0.002582,
+      "background_mean_dist": 0.031636,
+      "enrichment_ratio": 12.251,
+      "p_value": 0.038592
+    },
+    "GO:0055085": {
+      "name": "transmembrane transport",
+      "n_proteins": 475,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.003396,
+      "background_mean_dist": 0.045784,
+      "enrichment_ratio": 13.48,
+      "p_value": 0.0008
+    }
+  },
+  "protein_name_table": [
+    {
+      "orf": "YAL022C",
+      "gene_name": "FUN26",
+      "go_terms": [
+        "GO:0055085"
+      ]
+    },
+    {
+      "orf": "YAL053W",
+      "gene_name": "FLC2",
+      "go_terms": [
+        "GO:0006457",
+        "GO:0055085"
+      ]
+    },
+    {
+      "orf": "YAR018C",
+      "gene_name": "KIN3",
+      "go_terms": [
+        "GO:0007059"
+      ]
+    },
+    {
+      "orf": "YBL066C",
+      "gene_name": "SEF1",
+      "go_terms": [
+        "GO:0006357"
+      ]
+    },
+    {
+      "orf": "YBR069C",
+      "gene_name": "TAT1",
+      "go_terms": [
+        "GO:0055085"
+      ]
+    },
+    {
+      "orf": "YBR293W",
+      "gene_name": "VBA2",
+      "go_terms": [
+        "GO:0055085"
+      ]
+    },
+    {
+      "orf": "YCL026C-A",
+      "gene_name": "FRM2",
+      "go_terms": [
+        "GO:0034599"
+      ]
+    },
+    {
+      "orf": "YCL058W-A",
+      "gene_name": "ADF1",
+      "go_terms": [
+        "GO:0000122"
+      ]
+    },
+    {
+      "orf": "YCR030C",
+      "gene_name": "SYP1",
+      "go_terms": [
+        "GO:0007117"
+      ]
+    },
+    {
+      "orf": "YDL024C",
+      "gene_name": "DIA3",
+      "go_terms": [
+        "GO:0001403",
+        "GO:0007124"
+      ]
+    },
+    {
+      "orf": "YDL056W",
+      "gene_name": "MBP1",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YDL179W",
+      "gene_name": "PCL9",
+      "go_terms": [
+        "GO:0006355"
+      ]
+    },
+    {
+      "orf": "YDL247W",
+      "gene_name": "MPH2",
+      "go_terms": [
+        "GO:0055085"
+      ]
+    },
+    {
+      "orf": "YDR046C",
+      "gene_name": "BAP3",
+      "go_terms": [
+        "GO:0055085"
+      ]
+    },
+    {
+      "orf": "YDR107C",
+      "gene_name": "TMN2",
+      "go_terms": [
+        "GO:0001403",
+        "GO:0007124"
+      ]
+    },
+    {
+      "orf": "YDR173C",
+      "gene_name": "ARG82",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YDR253C",
+      "gene_name": "MET32",
+      "go_terms": [
+        "GO:0000122"
+      ]
+    },
+    {
+      "orf": "YDR259C",
+      "gene_name": "YAP6",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YDR346C",
+      "gene_name": "SVF1",
+      "go_terms": [
+        "GO:0034599"
+      ]
+    },
+    {
+      "orf": "YDR421W",
+      "gene_name": "ARO80",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YDR508C",
+      "gene_name": "GNP1",
+      "go_terms": [
+        "GO:0055085"
+      ]
+    },
+    {
+      "orf": "YDR522C",
+      "gene_name": "SPS2",
+      "go_terms": [
+        "GO:0030476"
+      ]
+    },
+    {
+      "orf": "YDR538W",
+      "gene_name": "PAD1",
+      "go_terms": [
+        "GO:0034599"
+      ]
+    },
+    {
+      "orf": "YEL052W",
+      "gene_name": "AFG1",
+      "go_terms": [
+        "GO:0034599"
+      ]
+    },
+    {
+      "orf": "YER033C",
+      "gene_name": "ZRG8",
+      "go_terms": [
+        "GO:0031505"
+      ]
+    },
+    {
+      "orf": "YER096W",
+      "gene_name": "SHC1",
+      "go_terms": [
+        "GO:0030437"
+      ]
+    },
+    {
+      "orf": "YER180C",
+      "gene_name": "ISC10",
+      "go_terms": [
+        "GO:0030437"
+      ]
+    },
+    {
+      "orf": "YER184C",
+      "gene_name": "YER184C",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YFL025C",
+      "gene_name": "BST1",
+      "go_terms": [
+        "GO:0036503"
+      ]
+    },
+    {
+      "orf": "YFL052W",
+      "gene_name": "YFL052W",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YGR032W",
+      "gene_name": "GSC2",
+      "go_terms": [
+        "GO:0030476"
+      ]
+    },
+    {
+      "orf": "YGR249W",
+      "gene_name": "MGA1",
+      "go_terms": [
+        "GO:0007124"
+      ]
+    },
+    {
+      "orf": "YHR009C",
+      "gene_name": "TDA3",
+      "go_terms": [
+        "GO:0042147"
+      ]
+    },
+    {
+      "orf": "YHR133C",
+      "gene_name": "NSG1",
+      "go_terms": [
+        "GO:0016126"
+      ]
+    },
+    {
+      "orf": "YHR205W",
+      "gene_name": "SCH9",
+      "go_terms": [
+        "GO:0034599"
+      ]
+    },
+    {
+      "orf": "YIL056W",
+      "gene_name": "VHR1",
+      "go_terms": [
+        "GO:0006357",
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YIL085C",
+      "gene_name": "KTR7",
+      "go_terms": [
+        "GO:0031505"
+      ]
+    },
+    {
+      "orf": "YIR013C",
+      "gene_name": "GAT4",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YJL174W",
+      "gene_name": "KRE9",
+      "go_terms": [
+        "GO:0031505"
+      ]
+    },
+    {
+      "orf": "YJL184W",
+      "gene_name": "GON7",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YJL207C",
+      "gene_name": "LAA1",
+      "go_terms": [
+        "GO:0042147"
+      ]
+    },
+    {
+      "orf": "YJR049C",
+      "gene_name": "UTR1",
+      "go_terms": [
+        "GO:0006879"
+      ]
+    },
+    {
+      "orf": "YJR060W",
+      "gene_name": "CBF1",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YJR100C",
+      "gene_name": "AIM25",
+      "go_terms": [
+        "GO:0034599"
+      ]
+    },
+    {
+      "orf": "YJR127C",
+      "gene_name": "RSF2",
+      "go_terms": [
+        "GO:0006355"
+      ]
+    },
+    {
+      "orf": "YJR131W",
+      "gene_name": "MNS1",
+      "go_terms": [
+        "GO:0036503"
+      ]
+    },
+    {
+      "orf": "YKL046C",
+      "gene_name": "DCW1",
+      "go_terms": [
+        "GO:0007117"
+      ]
+    },
+    {
+      "orf": "YLL033W",
+      "gene_name": "IRC19",
+      "go_terms": [
+        "GO:0030437"
+      ]
+    },
+    {
+      "orf": "YLL052C",
+      "gene_name": "AQY2",
+      "go_terms": [
+        "GO:0055085"
+      ]
+    },
+    {
+      "orf": "YLR055C",
+      "gene_name": "SPT8",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YLR341W",
+      "gene_name": "SPO77",
+      "go_terms": [
+        "GO:0030437",
+        "GO:0030476"
+      ]
+    },
+    {
+      "orf": "YML048W",
+      "gene_name": "GSF2",
+      "go_terms": [
+        "GO:0006457"
+      ]
+    },
+    {
+      "orf": "YMR010W",
+      "gene_name": "YMR010W",
+      "go_terms": [
+        "GO:0042147"
+      ]
+    },
+    {
+      "orf": "YMR184W",
+      "gene_name": "ADD37",
+      "go_terms": [
+        "GO:0036503"
+      ]
+    },
+    {
+      "orf": "YNL099C",
+      "gene_name": "OCA1",
+      "go_terms": [
+        "GO:0034599"
+      ]
+    },
+    {
+      "orf": "YNL156C",
+      "gene_name": "NSG2",
+      "go_terms": [
+        "GO:0016126"
+      ]
+    },
+    {
+      "orf": "YNL257C",
+      "gene_name": "SIP3",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YNL309W",
+      "gene_name": "STB1",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YOL047C",
+      "gene_name": "YOL047C",
+      "go_terms": [
+        "GO:0030476"
+      ]
+    },
+    {
+      "orf": "YOL089C",
+      "gene_name": "HAL9",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YOR043W",
+      "gene_name": "WHI2",
+      "go_terms": [
+        "GO:0034599"
+      ]
+    },
+    {
+      "orf": "YOR190W",
+      "gene_name": "SPR1",
+      "go_terms": [
+        "GO:0030437"
+      ]
+    },
+    {
+      "orf": "YOR221C",
+      "gene_name": "MCT1",
+      "go_terms": [
+        "GO:0006631"
+      ]
+    },
+    {
+      "orf": "YOR229W",
+      "gene_name": "WTM2",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YOR247W",
+      "gene_name": "SRL1",
+      "go_terms": [
+        "GO:0031505"
+      ]
+    },
+    {
+      "orf": "YOR363C",
+      "gene_name": "PIP2",
+      "go_terms": [
+        "GO:0006631",
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YOR372C",
+      "gene_name": "NDD1",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YPL021W",
+      "gene_name": "ECM23",
+      "go_terms": [
+        "GO:0007124"
+      ]
+    },
+    {
+      "orf": "YPL026C",
+      "gene_name": "SKS1",
+      "go_terms": [
+        "GO:0045944"
+      ]
+    },
+    {
+      "orf": "YPL137C",
+      "gene_name": "GIP3",
+      "go_terms": [
+        "GO:0007059"
+      ]
+    },
+    {
+      "orf": "YPL224C",
+      "gene_name": "MMT2",
+      "go_terms": [
+        "GO:0006879"
+      ]
+    }
+  ],
+  "conserved_terms": {
+    "GO:0055085": "transmembrane transport",
+    "GO:0036503": "ERAD pathway",
+    "GO:0034599": "cellular response to oxidative stress",
+    "GO:0006457": "protein folding",
+    "GO:0016126": "sterol biosynthetic process",
+    "GO:0006631": "fatty acid metabolic process",
+    "GO:0006879": "intracellular iron ion homeostasis"
+  },
+  "yeast_specific_terms": {
+    "GO:0045944": "positive regulation of transcription by RNA Pol II",
+    "GO:0030437": "ascospore formation",
+    "GO:0007124": "pseudohyphal growth",
+    "GO:0031505": "fungal-type cell wall organization",
+    "GO:0030476": "ascospore wall assembly",
+    "GO:0042147": "retrograde transport, endosome to Golgi",
+    "GO:0001403": "invasive growth in response to glucose limitation",
+    "GO:0007117": "budding cell bud growth",
+    "GO:0006355": "regulation of DNA-templated transcription",
+    "GO:0007059": "chromosome segregation",
+    "GO:0006357": "regulation of transcription by RNA Pol II",
+    "GO:0000122": "negative regulation of transcription by RNA Pol II"
+  },
+  "conclusion": "Of 7 cross-species GO BP categories enriched in dark matter, 2 show significant spatial clustering (p<0.05) in both yeast and at least one mammalian species. This suggests conserved functional-geometric organization across eukaryotes."
+}

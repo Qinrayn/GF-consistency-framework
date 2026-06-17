@@ -67,7 +67,7 @@ Usage:
     gf-consistency --config pipeline_config.yaml        # Via pip entry point
 """
 
-__version__ = "2.3.0"
+__version__ = "2.4.0"
 
 import sys
 import json
@@ -1052,6 +1052,45 @@ def main():
             import subprocess
             subprocess.run(darkmatter_cmd, check=True)
         if run_step(run_darkmatter, "Functional dark matter mining"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 49: Cross-Species Functional Conservation of Dark Matter
+    if start_from <= 49 and not skip_extended:
+        print_header("Step 49: Cross-Species Functional Conservation")
+        cross_cmd = [sys.executable,
+                     str(Path(__file__).parent / "scripts" / "cross_species_dark_matter.py")]
+        def run_cross():
+            import subprocess
+            subprocess.run(cross_cmd, check=True)
+        if run_step(run_cross, "Cross-species dark matter conservation"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 50: Generate Missing Supplementary Figures (FigS18-S20)
+    if start_from <= 50 and not skip_extended:
+        print_header("Step 50: Generate Missing Supplementary Figures")
+        figs_cmd = [sys.executable,
+                    str(Path(__file__).parent / "scripts" / "generate_missing_figures.py")]
+        def run_figs():
+            import subprocess
+            subprocess.run(figs_cmd, check=True)
+        if run_step(run_figs, "Generate missing figures S18-S20"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 51: STRING v12.0 Re-validation of Dark Matter Pairs
+    if start_from <= 51 and not skip_extended:
+        print_header("Step 51: STRING v12.0 Re-validation")
+        reval_cmd = [sys.executable,
+                     str(Path(__file__).parent / "scripts" / "string_v12_revalidation.py")]
+        def run_reval():
+            import subprocess
+            subprocess.run(reval_cmd, check=True)
+        if run_step(run_reval, "STRING v12.0 re-validation"):
             completed += 1
         else:
             failed += 1

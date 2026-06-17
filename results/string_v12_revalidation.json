@@ -1,0 +1,746 @@
+{
+  "description": "STRING v12.0 Re-validation of Dark Matter Pairs",
+  "timestamp": "2026-06-17 08:17:15",
+  "api_base": "https://string-db.org/api/tsv",
+  "taxon": 4932,
+  "n_pairs": 44,
+  "summary": {
+    "no_evidence_v12": 41,
+    "unchanged": 3,
+    "gained_any_evidence": 0,
+    "gained_high_confidence": 0,
+    "errors": 0
+  },
+  "conclusion": "Of 44 dark matter pairs, 41 remain completely invisible in STRING v12.0, 3 have unchanged scores, 0 gained some evidence, and 0 reached high-confidence (>= 700). The dark matter catalog is robust to database updates.",
+  "pairs": [
+    {
+      "protein_a": "YHR133C",
+      "protein_b": "YNL156C",
+      "preferred_a": "NSG1",
+      "preferred_b": "NSG2",
+      "string_id_a": "4932.YHR133C",
+      "string_id_b": "4932.YNL156C",
+      "v11_combined_score": 154,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0016126"
+      ],
+      "confidence_score": 7
+    },
+    {
+      "protein_a": "YDR107C",
+      "protein_b": "YDL024C",
+      "preferred_a": "TMN2",
+      "preferred_b": "DIA3",
+      "string_id_a": "4932.YDR107C",
+      "string_id_b": "4932.YDL024C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0001403",
+        "GO:0007124"
+      ],
+      "confidence_score": 6
+    },
+    {
+      "protein_a": "YCL026C-A",
+      "protein_b": "YDR346C",
+      "preferred_a": "FRM2",
+      "preferred_b": "SVF1",
+      "string_id_a": "4932.YCL026C-A",
+      "string_id_b": "4932.YDR346C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0034599"
+      ],
+      "confidence_score": 5
+    },
+    {
+      "protein_a": "YDL179W",
+      "protein_b": "YJR127C",
+      "preferred_a": "PCL9",
+      "preferred_b": "RSF2",
+      "string_id_a": "4932.YDL179W",
+      "string_id_b": "4932.YJR127C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0006355"
+      ],
+      "confidence_score": 5
+    },
+    {
+      "protein_a": "YJL184W",
+      "protein_b": "YLR055C",
+      "preferred_a": "GON7",
+      "preferred_b": "SPT8",
+      "string_id_a": "4932.YJL184W",
+      "string_id_b": "4932.YLR055C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "confidence_score": 5
+    },
+    {
+      "protein_a": "YJR049C",
+      "protein_b": "YPL224C",
+      "preferred_a": "UTR1",
+      "preferred_b": "MMT2",
+      "string_id_a": "4932.YJR049C",
+      "string_id_b": "4932.YPL224C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0006879"
+      ],
+      "confidence_score": 5
+    },
+    {
+      "protein_a": "YER180C",
+      "protein_b": "YLR341W",
+      "preferred_a": "ISC10",
+      "preferred_b": "SPO77",
+      "string_id_a": "4932.YER180C",
+      "string_id_b": "4932.YLR341W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0030437"
+      ],
+      "confidence_score": 5
+    },
+    {
+      "protein_a": "YJR060W",
+      "protein_b": "YOR363C",
+      "preferred_a": "CBF1",
+      "preferred_b": "PIP2",
+      "string_id_a": "4932.YJR060W",
+      "string_id_b": "4932.YOR363C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "confidence_score": 5
+    },
+    {
+      "protein_a": "YAL022C",
+      "protein_b": "YBR069C",
+      "preferred_a": "FUN26",
+      "preferred_b": "TAT1",
+      "string_id_a": "4932.YAL022C",
+      "string_id_b": "4932.YBR069C",
+      "v11_combined_score": 214,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0055085"
+      ],
+      "confidence_score": 4
+    },
+    {
+      "protein_a": "YAR018C",
+      "protein_b": "YPL137C",
+      "preferred_a": "KIN3",
+      "preferred_b": "GIP3",
+      "string_id_a": "4932.YAR018C",
+      "string_id_b": "4932.YPL137C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0007059"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YER184C",
+      "protein_b": "YFL052W",
+      "preferred_a": "TOG1",
+      "preferred_b": "ZNF1",
+      "string_id_a": "4932.YER184C",
+      "string_id_b": "4932.YFL052W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YIR013C",
+      "protein_b": "YPL026C",
+      "preferred_a": "GAT4",
+      "preferred_b": "SKS1",
+      "string_id_a": "4932.YIR013C",
+      "string_id_b": "4932.YPL026C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YAL053W",
+      "protein_b": "YML048W",
+      "preferred_a": "FLC2",
+      "preferred_b": "GSF2",
+      "string_id_a": "4932.YAL053W",
+      "string_id_b": "4932.YML048W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0006457"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YFL052W",
+      "protein_b": "YOR229W",
+      "preferred_a": "ZNF1",
+      "preferred_b": "WTM2",
+      "string_id_a": "4932.YFL052W",
+      "string_id_b": "4932.YOR229W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YOR043W",
+      "protein_b": "YDR538W",
+      "preferred_a": "WHI2",
+      "preferred_b": "PAD1",
+      "string_id_a": "4932.YOR043W",
+      "string_id_b": "4932.YDR538W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0034599"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YAL022C",
+      "protein_b": "YDR046C",
+      "preferred_a": "FUN26",
+      "preferred_b": "BAP3",
+      "string_id_a": "4932.YAL022C",
+      "string_id_b": "4932.YDR046C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0055085"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YDR421W",
+      "protein_b": "YOR372C",
+      "preferred_a": "ARO80",
+      "preferred_b": "NDD1",
+      "string_id_a": "4932.YDR421W",
+      "string_id_b": "4932.YOR372C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YAL053W",
+      "protein_b": "YDR508C",
+      "preferred_a": "FLC2",
+      "preferred_b": "GNP1",
+      "string_id_a": "4932.YAL053W",
+      "string_id_b": "4932.YDR508C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0055085"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YIR013C",
+      "protein_b": "YNL309W",
+      "preferred_a": "GAT4",
+      "preferred_b": "STB1",
+      "string_id_a": "4932.YIR013C",
+      "string_id_b": "4932.YNL309W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YHR205W",
+      "protein_b": "YNL099C",
+      "preferred_a": "SCH9",
+      "preferred_b": "OCA1",
+      "string_id_a": "4932.YHR205W",
+      "string_id_b": "4932.YNL099C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {
+        "neighborhood": 0,
+        "fusion": 0,
+        "cooccurrence": 0,
+        "coexpression": 0,
+        "experiments": 0,
+        "database": 0,
+        "textmining": 0
+      },
+      "status": "unchanged",
+      "shared_go_terms": [
+        "GO:0034599"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YDR421W",
+      "protein_b": "YIR013C",
+      "preferred_a": "ARO80",
+      "preferred_b": "GAT4",
+      "string_id_a": "4932.YDR421W",
+      "string_id_b": "4932.YIR013C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YIL056W",
+      "protein_b": "YBL066C",
+      "preferred_a": "VHR1",
+      "preferred_b": "SEF1",
+      "string_id_a": "4932.YIL056W",
+      "string_id_b": "4932.YBL066C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0006357"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YIL056W",
+      "protein_b": "YDL056W",
+      "preferred_a": "VHR1",
+      "preferred_b": "MBP1",
+      "string_id_a": "4932.YIL056W",
+      "string_id_b": "4932.YDL056W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YCR030C",
+      "protein_b": "YKL046C",
+      "preferred_a": "SYP1",
+      "preferred_b": "DCW1",
+      "string_id_a": "4932.YCR030C",
+      "string_id_b": "4932.YKL046C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0007117"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YCL058W-A",
+      "protein_b": "YDR253C",
+      "preferred_a": "ADF1",
+      "preferred_b": "MET32",
+      "string_id_a": "4932.YCL058W-A",
+      "string_id_b": "4932.YDR253C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0000122"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YOR247W",
+      "protein_b": "YIL085C",
+      "preferred_a": "SRL1",
+      "preferred_b": "KTR7",
+      "string_id_a": "4932.YOR247W",
+      "string_id_b": "4932.YIL085C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0031505"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YJR131W",
+      "protein_b": "YMR184W",
+      "preferred_a": "MNS1",
+      "preferred_b": "ADD37",
+      "string_id_a": "4932.YJR131W",
+      "string_id_b": "4932.YMR184W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0036503"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YFL025C",
+      "protein_b": "YMR184W",
+      "preferred_a": "BST1",
+      "preferred_b": "ADD37",
+      "string_id_a": "4932.YFL025C",
+      "string_id_b": "4932.YMR184W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0036503"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YEL052W",
+      "protein_b": "YJR100C",
+      "preferred_a": "AFG1",
+      "preferred_b": "AIM25",
+      "string_id_a": "4932.YEL052W",
+      "string_id_b": "4932.YJR100C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0034599"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YOR221C",
+      "protein_b": "YOR363C",
+      "preferred_a": "MCT1",
+      "preferred_b": "PIP2",
+      "string_id_a": "4932.YOR221C",
+      "string_id_b": "4932.YOR363C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0006631"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YER033C",
+      "protein_b": "YJL174W",
+      "preferred_a": "ZRG8",
+      "preferred_b": "KRE9",
+      "string_id_a": "4932.YER033C",
+      "string_id_b": "4932.YJL174W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0031505"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YER096W",
+      "protein_b": "YLR341W",
+      "preferred_a": "SHC1",
+      "preferred_b": "SPO77",
+      "string_id_a": "4932.YER096W",
+      "string_id_b": "4932.YLR341W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0030437"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YDR522C",
+      "protein_b": "YLR341W",
+      "preferred_a": "SPS2",
+      "preferred_b": "SPO77",
+      "string_id_a": "4932.YDR522C",
+      "string_id_b": "4932.YLR341W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {
+        "neighborhood": 0,
+        "fusion": 0,
+        "cooccurrence": 0,
+        "coexpression": 0,
+        "experiments": 0,
+        "database": 0,
+        "textmining": 0
+      },
+      "status": "unchanged",
+      "shared_go_terms": [
+        "GO:0030476"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YBR293W",
+      "protein_b": "YDL247W",
+      "preferred_a": "VBA2",
+      "preferred_b": "MPH2",
+      "string_id_a": "4932.YBR293W",
+      "string_id_b": "4932.YDL247W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0055085"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YDR173C",
+      "protein_b": "YOL089C",
+      "preferred_a": "ARG82",
+      "preferred_b": "HAL9",
+      "string_id_a": "4932.YDR173C",
+      "string_id_b": "4932.YOL089C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YHR009C",
+      "protein_b": "YMR010W",
+      "preferred_a": "TDA3",
+      "preferred_b": "ANY1",
+      "string_id_a": "4932.YHR009C",
+      "string_id_b": "4932.YMR010W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0042147"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YHR009C",
+      "protein_b": "YJL207C",
+      "preferred_a": "TDA3",
+      "preferred_b": "LAA1",
+      "string_id_a": "4932.YHR009C",
+      "string_id_b": "4932.YJL207C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0042147"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YLL033W",
+      "protein_b": "YOR190W",
+      "preferred_a": "IRC19",
+      "preferred_b": "SPR1",
+      "string_id_a": "4932.YLL033W",
+      "string_id_b": "4932.YOR190W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0030437"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YOL047C",
+      "protein_b": "YGR032W",
+      "preferred_a": "LDS2",
+      "preferred_b": "GSC2",
+      "string_id_a": "4932.YOL047C",
+      "string_id_b": "4932.YGR032W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0030476"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YDR259C",
+      "protein_b": "YNL257C",
+      "preferred_a": "YAP6",
+      "preferred_b": "SIP3",
+      "string_id_a": "4932.YDR259C",
+      "string_id_b": "4932.YNL257C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YLL052C",
+      "protein_b": "YBR293W",
+      "preferred_a": "AQY2",
+      "preferred_b": "VBA2",
+      "string_id_a": "4932.YLL052C",
+      "string_id_b": "4932.YBR293W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0055085"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YLL052C",
+      "protein_b": "YDL247W",
+      "preferred_a": "AQY2",
+      "preferred_b": "MPH2",
+      "string_id_a": "4932.YLL052C",
+      "string_id_b": "4932.YDL247W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {
+        "neighborhood": 0,
+        "fusion": 0,
+        "cooccurrence": 0,
+        "coexpression": 0,
+        "experiments": 0,
+        "database": 0,
+        "textmining": 0
+      },
+      "status": "unchanged",
+      "shared_go_terms": [
+        "GO:0055085"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YNL257C",
+      "protein_b": "YOL089C",
+      "preferred_a": "SIP3",
+      "preferred_b": "HAL9",
+      "string_id_a": "4932.YNL257C",
+      "string_id_b": "4932.YOL089C",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "confidence_score": 3
+    },
+    {
+      "protein_a": "YGR249W",
+      "protein_b": "YPL021W",
+      "preferred_a": "MGA1",
+      "preferred_b": "ECM23",
+      "string_id_a": "4932.YGR249W",
+      "string_id_b": "4932.YPL021W",
+      "v11_combined_score": 0,
+      "v12_combined_score": 0,
+      "v12_channels": {},
+      "status": "no_evidence",
+      "shared_go_terms": [
+        "GO:0007124"
+      ],
+      "confidence_score": 3
+    }
+  ]
+}

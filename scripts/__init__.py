@@ -1,7 +1,7 @@
 """
 scripts/ — G-F Consistency Framework analysis pipeline.
 
-This package contains the 48-step reproducible analysis pipeline for
+This package contains the 51-step reproducible analysis pipeline for
 evaluating protein interaction network embeddings via geometric-functional
 consistency.
 
@@ -106,6 +106,12 @@ gf_phase_transition             Step 46: G-F curve phase transition analysis (cr
 dimension_sweep_extended        Step 47: Extended dimension sweep d=128/256 (test PPI baseline crossing)
 functional_dark_matter          Step 48: Functional dark matter mining (embedding-only functional associations)
 
+Modules (Steps 49-51: cross-species conservation, missing figures, database re-validation)
+-------------------------------------------------------------------------------------------
+cross_species_dark_matter       Step 49: Cross-species functional conservation of dark matter categories
+generate_missing_figures        Step 50: Generate missing supplementary figures (FigS18-S20)
+string_v12_revalidation         Step 51: STRING v12.0 re-validation of dark matter pairs
+
 Supplementary experiment modules
 ----------------------------------
 multihead_gat_experiment        Multi-head GAT configuration sweep (1/4/8 heads, d=2-32)
@@ -124,4 +130,4 @@ robustness_analysis           Extended 30-subset convergence analysis
 visualization_helpers         Okabe-Ito colorblind-safe plotting utilities
 """
 
-__version__ = "2.3.0"
+__version__ = "2.4.0"
