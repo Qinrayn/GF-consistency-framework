@@ -1,7 +1,7 @@
 """
 scripts/ — G-F Consistency Framework analysis pipeline.
 
-This package contains the 51-step reproducible analysis pipeline for
+This package contains the 53-step reproducible analysis pipeline for
 evaluating protein interaction network embeddings via geometric-functional
 consistency.
 
@@ -111,6 +111,11 @@ Modules (Steps 49-51: cross-species conservation, missing figures, database re-v
 cross_species_dark_matter       Step 49: Cross-species functional conservation of dark matter categories
 generate_missing_figures        Step 50: Generate missing supplementary figures (FigS18-S20)
 string_v12_revalidation         Step 51: STRING v12.0 re-validation of dark matter pairs
+
+Modules (Steps 52-53: high-dimensional embeddings and cross-species re-analysis)
+----------------------------------------------------------------------------------
+highdim_spectral_embeddings     Step 52: Compute d=64 spectral embeddings for human/mouse PPI networks
+cross_species_highdim           Step 53: Cross-species functional conservation in 64D vs 2D comparison
 
 Supplementary experiment modules
 ----------------------------------

@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.0] — 2026-06-17
+
+### Added (Steps 52-53: High-Dimensional Embeddings and Cross-Species Re-analysis)
+- `highdim_spectral_embeddings.py`: Compute d=64 spectral embeddings for human (15,882 nodes) and mouse (16,180 nodes) PPI networks via sparse eigendecomposition (Step 52). Both species achieve perfect participation ratio (64.00/64), indicating well-distributed spectral geometry across all dimensions.
+- `cross_species_highdim.py`: Cross-species functional conservation analysis comparing 2D vs 64D spectral embeddings (Step 53). With d=64, conserved categories increase from 3/7 (2D) to 4/7 (64D). Different functional categories are detected at each dimension — ERAD, protein folding, and iron homeostasis become significant only in 64D, while large transmembrane transport loses signal due to dimensional dispersion. Fisher pooled test yields 4/7 significant. Fig74 generated.
+
+### Changed
+- Version bumped to 2.5.0 across `pyproject.toml`, `run_all_analysis.py`, `scripts/__init__.py`
+- Pipeline expanded from 51 steps to 53 steps
+- `pipeline_config.yaml`: updated `start_from` range (1-53) and `skip_extended` scope (Steps 16-21, 24-53)
+- `scripts/__init__.py`: registered Steps 52-53 modules; expanded to 53-step pipeline documentation
+- `run_all_analysis.py`: added Steps 52-53 orchestration blocks with subprocess pattern
+
 ## [2.4.0] — 2026-06-17
 
 ### Added (Steps 49-51: Cross-Species Conservation, Missing Figures, Database Re-validation)

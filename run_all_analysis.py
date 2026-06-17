@@ -67,7 +67,7 @@ Usage:
     gf-consistency --config pipeline_config.yaml        # Via pip entry point
 """
 
-__version__ = "2.4.0"
+__version__ = "2.5.0"
 
 import sys
 import json
@@ -1091,6 +1091,32 @@ def main():
             import subprocess
             subprocess.run(reval_cmd, check=True)
         if run_step(run_reval, "STRING v12.0 re-validation"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 52: High-Dimensional Spectral Embeddings (Human/Mouse d=64)
+    if start_from <= 52 and not skip_extended:
+        print_header("Step 52: High-Dimensional Spectral Embeddings")
+        highdim_cmd = [sys.executable,
+                       str(Path(__file__).parent / "scripts" / "highdim_spectral_embeddings.py")]
+        def run_highdim():
+            import subprocess
+            subprocess.run(highdim_cmd, check=True)
+        if run_step(run_highdim, "High-dimensional spectral embeddings"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 53: Cross-Species Conservation in High-Dimensional Space
+    if start_from <= 53 and not skip_extended:
+        print_header("Step 53: Cross-Species High-Dimensional Conservation")
+        xhigh_cmd = [sys.executable,
+                     str(Path(__file__).parent / "scripts" / "cross_species_highdim.py")]
+        def run_xhigh():
+            import subprocess
+            subprocess.run(xhigh_cmd, check=True)
+        if run_step(run_xhigh, "Cross-species high-dim conservation"):
             completed += 1
         else:
             failed += 1

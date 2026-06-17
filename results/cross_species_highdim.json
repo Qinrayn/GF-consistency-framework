@@ -1,0 +1,431 @@
+{
+  "description": "Cross-Species Functional Conservation: 2D vs 64D Comparison",
+  "version": "2.0.0",
+  "method": "Within-category spatial clustering test comparing 2D (Fiedler pair) vs 64D spectral embeddings. Permutation test (5000 iterations) for each species x dimension combination. Fisher's method for cross-species p-value combination.",
+  "embedding_dimensions": {
+    "2D": 2,
+    "64D": 64
+  },
+  "conserved_categories_2d": 3,
+  "conserved_categories_64d": 4,
+  "fisher_pooled_sig_64d": 4,
+  "human_64d_clustering": {
+    "GO:0036503": {
+      "name": "ERAD pathway",
+      "n_proteins": 89,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.018781,
+      "background_mean_dist": 0.047377,
+      "enrichment_ratio": 2.523,
+      "p_value": 0.0004
+    },
+    "GO:0034599": {
+      "name": "cellular response to oxidative stress",
+      "n_proteins": 100,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.042425,
+      "background_mean_dist": 0.047377,
+      "enrichment_ratio": 1.117,
+      "p_value": 0.382923
+    },
+    "GO:0006631": {
+      "name": "fatty acid metabolic process",
+      "n_proteins": 89,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.037392,
+      "background_mean_dist": 0.047377,
+      "enrichment_ratio": 1.267,
+      "p_value": 0.239752
+    },
+    "GO:0006879": {
+      "name": "intracellular iron ion homeostasis",
+      "n_proteins": 67,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.024369,
+      "background_mean_dist": 0.047377,
+      "enrichment_ratio": 1.944,
+      "p_value": 0.011798
+    },
+    "GO:0006457": {
+      "name": "protein folding",
+      "n_proteins": 184,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.025114,
+      "background_mean_dist": 0.047377,
+      "enrichment_ratio": 1.886,
+      "p_value": 0.016397
+    },
+    "GO:0016126": {
+      "name": "sterol biosynthetic process",
+      "n_proteins": 8,
+      "n_sampled": 8,
+      "observed_mean_dist": 0.015298,
+      "background_mean_dist": 0.048845,
+      "enrichment_ratio": 3.193,
+      "p_value": 0.042192
+    },
+    "GO:0055085": {
+      "name": "transmembrane transport",
+      "n_proteins": 474,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.042595,
+      "background_mean_dist": 0.047377,
+      "enrichment_ratio": 1.112,
+      "p_value": 0.387722
+    }
+  },
+  "mouse_64d_clustering": {
+    "GO:0036503": {
+      "name": "ERAD pathway",
+      "n_proteins": 85,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.011314,
+      "background_mean_dist": 0.040276,
+      "enrichment_ratio": 3.56,
+      "p_value": 0.0004
+    },
+    "GO:0034599": {
+      "name": "cellular response to oxidative stress",
+      "n_proteins": 103,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.02063,
+      "background_mean_dist": 0.040276,
+      "enrichment_ratio": 1.952,
+      "p_value": 0.061988
+    },
+    "GO:0006631": {
+      "name": "fatty acid metabolic process",
+      "n_proteins": 107,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.035188,
+      "background_mean_dist": 0.040276,
+      "enrichment_ratio": 1.145,
+      "p_value": 0.418916
+    },
+    "GO:0006879": {
+      "name": "intracellular iron ion homeostasis",
+      "n_proteins": 61,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.019637,
+      "background_mean_dist": 0.040276,
+      "enrichment_ratio": 2.051,
+      "p_value": 0.04819
+    },
+    "GO:0006457": {
+      "name": "protein folding",
+      "n_proteins": 161,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.012571,
+      "background_mean_dist": 0.040276,
+      "enrichment_ratio": 3.204,
+      "p_value": 0.001
+    },
+    "GO:0016126": {
+      "name": "sterol biosynthetic process",
+      "n_proteins": 9,
+      "n_sampled": 9,
+      "observed_mean_dist": 0.014512,
+      "background_mean_dist": 0.039213,
+      "enrichment_ratio": 2.702,
+      "p_value": 0.186963
+    },
+    "GO:0055085": {
+      "name": "transmembrane transport",
+      "n_proteins": 475,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.026734,
+      "background_mean_dist": 0.040276,
+      "enrichment_ratio": 1.507,
+      "p_value": 0.193361
+    }
+  },
+  "human_2d_clustering": {
+    "GO:0036503": {
+      "name": "ERAD pathway",
+      "n_proteins": 89,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.006596,
+      "background_mean_dist": 0.067047,
+      "enrichment_ratio": 10.165,
+      "p_value": 0.09998
+    },
+    "GO:0034599": {
+      "name": "cellular response to oxidative stress",
+      "n_proteins": 100,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.009231,
+      "background_mean_dist": 0.067047,
+      "enrichment_ratio": 7.264,
+      "p_value": 0.587283
+    },
+    "GO:0006631": {
+      "name": "fatty acid metabolic process",
+      "n_proteins": 89,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.006739,
+      "background_mean_dist": 0.067047,
+      "enrichment_ratio": 9.949,
+      "p_value": 0.124775
+    },
+    "GO:0006879": {
+      "name": "intracellular iron ion homeostasis",
+      "n_proteins": 67,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.008826,
+      "background_mean_dist": 0.067047,
+      "enrichment_ratio": 7.597,
+      "p_value": 0.539292
+    },
+    "GO:0006457": {
+      "name": "protein folding",
+      "n_proteins": 184,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.02822,
+      "background_mean_dist": 0.067047,
+      "enrichment_ratio": 2.376,
+      "p_value": 0.723655
+    },
+    "GO:0016126": {
+      "name": "sterol biosynthetic process",
+      "n_proteins": 8,
+      "n_sampled": 8,
+      "observed_mean_dist": 0.004834,
+      "background_mean_dist": 0.054206,
+      "enrichment_ratio": 11.214,
+      "p_value": 0.14917
+    },
+    "GO:0055085": {
+      "name": "transmembrane transport",
+      "n_proteins": 474,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.004884,
+      "background_mean_dist": 0.067047,
+      "enrichment_ratio": 13.728,
+      "p_value": 0.002
+    }
+  },
+  "mouse_2d_clustering": {
+    "GO:0036503": {
+      "name": "ERAD pathway",
+      "n_proteins": 85,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.003622,
+      "background_mean_dist": 0.045784,
+      "enrichment_ratio": 12.641,
+      "p_value": 0.004799
+    },
+    "GO:0034599": {
+      "name": "cellular response to oxidative stress",
+      "n_proteins": 103,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.006069,
+      "background_mean_dist": 0.045784,
+      "enrichment_ratio": 7.544,
+      "p_value": 0.563287
+    },
+    "GO:0006631": {
+      "name": "fatty acid metabolic process",
+      "n_proteins": 107,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.005247,
+      "background_mean_dist": 0.045784,
+      "enrichment_ratio": 8.725,
+      "p_value": 0.307139
+    },
+    "GO:0006879": {
+      "name": "intracellular iron ion homeostasis",
+      "n_proteins": 61,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.005239,
+      "background_mean_dist": 0.045784,
+      "enrichment_ratio": 8.74,
+      "p_value": 0.304739
+    },
+    "GO:0006457": {
+      "name": "protein folding",
+      "n_proteins": 161,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.00483,
+      "background_mean_dist": 0.045784,
+      "enrichment_ratio": 9.478,
+      "p_value": 0.170166
+    },
+    "GO:0016126": {
+      "name": "sterol biosynthetic process",
+      "n_proteins": 9,
+      "n_sampled": 9,
+      "observed_mean_dist": 0.002582,
+      "background_mean_dist": 0.031636,
+      "enrichment_ratio": 12.251,
+      "p_value": 0.038592
+    },
+    "GO:0055085": {
+      "name": "transmembrane transport",
+      "n_proteins": 475,
+      "n_sampled": 50,
+      "observed_mean_dist": 0.0041,
+      "background_mean_dist": 0.045784,
+      "enrichment_ratio": 11.168,
+      "p_value": 0.028194
+    }
+  },
+  "dimension_comparison": {
+    "GO:0036503": {
+      "name": "ERAD pathway",
+      "human_2d_p": 0.09998,
+      "human_2d_enrich": 10.165,
+      "human_64d_p": 0.0004,
+      "human_64d_enrich": 2.523,
+      "mouse_2d_p": 0.004799,
+      "mouse_2d_enrich": 12.641,
+      "mouse_64d_p": 0.0004,
+      "mouse_64d_enrich": 3.56,
+      "n_sig_2d": 1,
+      "n_sig_64d": 2
+    },
+    "GO:0034599": {
+      "name": "cellular response to oxidative stress",
+      "human_2d_p": 0.587283,
+      "human_2d_enrich": 7.264,
+      "human_64d_p": 0.382923,
+      "human_64d_enrich": 1.117,
+      "mouse_2d_p": 0.563287,
+      "mouse_2d_enrich": 7.544,
+      "mouse_64d_p": 0.061988,
+      "mouse_64d_enrich": 1.952,
+      "n_sig_2d": 0,
+      "n_sig_64d": 0
+    },
+    "GO:0006631": {
+      "name": "fatty acid metabolic process",
+      "human_2d_p": 0.124775,
+      "human_2d_enrich": 9.949,
+      "human_64d_p": 0.239752,
+      "human_64d_enrich": 1.267,
+      "mouse_2d_p": 0.307139,
+      "mouse_2d_enrich": 8.725,
+      "mouse_64d_p": 0.418916,
+      "mouse_64d_enrich": 1.145,
+      "n_sig_2d": 0,
+      "n_sig_64d": 0
+    },
+    "GO:0006879": {
+      "name": "intracellular iron ion homeostasis",
+      "human_2d_p": 0.539292,
+      "human_2d_enrich": 7.597,
+      "human_64d_p": 0.011798,
+      "human_64d_enrich": 1.944,
+      "mouse_2d_p": 0.304739,
+      "mouse_2d_enrich": 8.74,
+      "mouse_64d_p": 0.04819,
+      "mouse_64d_enrich": 2.051,
+      "n_sig_2d": 0,
+      "n_sig_64d": 2
+    },
+    "GO:0006457": {
+      "name": "protein folding",
+      "human_2d_p": 0.723655,
+      "human_2d_enrich": 2.376,
+      "human_64d_p": 0.016397,
+      "human_64d_enrich": 1.886,
+      "mouse_2d_p": 0.170166,
+      "mouse_2d_enrich": 9.478,
+      "mouse_64d_p": 0.001,
+      "mouse_64d_enrich": 3.204,
+      "n_sig_2d": 0,
+      "n_sig_64d": 2
+    },
+    "GO:0016126": {
+      "name": "sterol biosynthetic process",
+      "human_2d_p": 0.14917,
+      "human_2d_enrich": 11.214,
+      "human_64d_p": 0.042192,
+      "human_64d_enrich": 3.193,
+      "mouse_2d_p": 0.038592,
+      "mouse_2d_enrich": 12.251,
+      "mouse_64d_p": 0.186963,
+      "mouse_64d_enrich": 2.702,
+      "n_sig_2d": 1,
+      "n_sig_64d": 1
+    },
+    "GO:0055085": {
+      "name": "transmembrane transport",
+      "human_2d_p": 0.002,
+      "human_2d_enrich": 13.728,
+      "human_64d_p": 0.387722,
+      "human_64d_enrich": 1.112,
+      "mouse_2d_p": 0.028194,
+      "mouse_2d_enrich": 11.168,
+      "mouse_64d_p": 0.193361,
+      "mouse_64d_enrich": 1.507,
+      "n_sig_2d": 2,
+      "n_sig_64d": 0
+    }
+  },
+  "fisher_pooled_64d": {
+    "GO:0036503": {
+      "name": "ERAD pathway",
+      "n_species": 2,
+      "fisher_p_64d": 3e-06,
+      "individual_pvals_64d": [
+        0.0004,
+        0.0004
+      ]
+    },
+    "GO:0034599": {
+      "name": "cellular response to oxidative stress",
+      "n_species": 2,
+      "fisher_p_64d": 0.112529,
+      "individual_pvals_64d": [
+        0.382923,
+        0.061988
+      ]
+    },
+    "GO:0006631": {
+      "name": "fatty acid metabolic process",
+      "n_species": 2,
+      "fisher_p_64d": 0.331261,
+      "individual_pvals_64d": [
+        0.239752,
+        0.418916
+      ]
+    },
+    "GO:0006879": {
+      "name": "intracellular iron ion homeostasis",
+      "n_species": 2,
+      "fisher_p_64d": 0.004817,
+      "individual_pvals_64d": [
+        0.011798,
+        0.04819
+      ]
+    },
+    "GO:0006457": {
+      "name": "protein folding",
+      "n_species": 2,
+      "fisher_p_64d": 0.000197,
+      "individual_pvals_64d": [
+        0.016397,
+        0.001
+      ]
+    },
+    "GO:0016126": {
+      "name": "sterol biosynthetic process",
+      "n_species": 2,
+      "fisher_p_64d": 0.046087,
+      "individual_pvals_64d": [
+        0.042192,
+        0.186963
+      ]
+    },
+    "GO:0055085": {
+      "name": "transmembrane transport",
+      "n_species": 2,
+      "fisher_p_64d": 0.269193,
+      "individual_pvals_64d": [
+        0.387722,
+        0.193361
+      ]
+    }
+  },
+  "conclusion_64d": "With d=64 spectral embeddings, 4/7 GO categories show significant spatial clustering (p<0.05) in at least one mammalian species, compared to 3/7 with 2D embeddings. Fisher's combined test yields 4/7 significant categories."
+}
