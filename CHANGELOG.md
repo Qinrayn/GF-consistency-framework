@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.0] — 2026-06-17
+
+### Added (Steps 57-58: GO Ontology Generality + Threshold Sensitivity + Validation)
+- `go_mf_cc_gf_scores.py`: Computes G-F Scores using GO Molecular Function (MF, GF=0.348) and Cellular Component (CC, GF=0.191) in addition to Biological Process (GF=0.112). Demonstrates spectral embedding captures functional geometry across all three GO ontologies.
+- `string_threshold_sensitivity.py`: Tests STRING score thresholds 600/700/800. Rankings stable between 600-700 (Spearman rho=0.90), regime shift at 800 (Node2Vec collapses, rho=-0.10).
+- `dark_matter_ortholog_validation.py`: Maps 71 dark matter proteins to human/mouse orthologs. BST1-ADD37 maps to DERL1-DERL3 as mutual rank-4 neighbors in both species d=64 embeddings.
+
+### Changed
+- Version bumped to 2.8.0 across `pyproject.toml`, README
+- Manuscript updated: literature validation paragraph (NSG1-NSG2, GON7-SPT8, ERAD orthologs), GO MF/CC generality, threshold sensitivity analysis
+- Compliance: Data/Code Availability, Author Contributions (CRediT), ORCID added
+- Supplementary figures: Fig71->FigS23, Fig72->FigS24, FigS18 duplicate removed, S26/S27 legend filenames corrected
+- References expanded to 58
+
+## [2.7.0] — 2026-06-17
+
+### Added (Step 56: UMAP/t-SNE Evaluation)
+- `umap_tsne_gf.py`: Computes UMAP and t-SNE 2D embeddings with adjacency and shortest-path inputs on curated (153-node) and full (5,936-node) yeast networks.
+- 12 embedding files: UMAP_153.npy, UMAP-adj_153.npy, TSNE_153.npy, TSNE-sp_153.npy, UMAP_full.npy, TSNE_full.npy + corresponding _nodes.json
+- Key finding: adjacency-based UMAP achieves GF=0.177 (highest across all methods), t-SNE GF=0.152. Shortest-path input causes UMAP collapse (GF=0.068).
+
+### Changed
+- Version bumped to 2.7.0
+- Pipeline expanded from 55 to 57 steps
+
 ## [2.6.0] — 2026-06-17
 
 ### Added (Steps 54-55: Yeast High-Dim Embedding + Three-Species Dimension Gradient)

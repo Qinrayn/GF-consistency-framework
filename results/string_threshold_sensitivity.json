@@ -1,0 +1,98 @@
+{
+  "description": "STRING threshold sensitivity analysis: G-F Scores, method rankings, and dark matter counts at thresholds 600, 700, 800.",
+  "thresholds": [
+    600,
+    700,
+    800
+  ],
+  "reference_threshold": 700,
+  "integration_interval": [
+    0.05,
+    0.422
+  ],
+  "n_points": 25,
+  "methods": [
+    "Spectral",
+    "MDS",
+    "DM",
+    "PCA",
+    "Node2Vec"
+  ],
+  "dark_matter_params": {
+    "min_bfs_hops": 5,
+    "max_emb_rank": 50
+  },
+  "results": {
+    "600": {
+      "string_nodes": 6044,
+      "string_edges": 160816,
+      "curated_present": 153,
+      "curated_isolated": 0,
+      "subgraph_edges": 2009,
+      "gf_scores": {
+        "Spectral": 0.0862,
+        "MDS": 0.1418,
+        "DM": 0.1134,
+        "PCA": 0.0772,
+        "Node2Vec": 0.139
+      },
+      "dark_matter_count": 0,
+      "spearman_vs_700": 0.9,
+      "spearman_pvalue": 0.0374,
+      "method_ranking": [
+        "MDS",
+        "Node2Vec",
+        "DM",
+        "Spectral",
+        "PCA"
+      ]
+    },
+    "700": {
+      "string_nodes": 5936,
+      "string_edges": 120357,
+      "curated_present": 153,
+      "curated_isolated": 0,
+      "subgraph_edges": 1669,
+      "gf_scores": {
+        "Spectral": 0.0779,
+        "MDS": 0.0951,
+        "DM": 0.09,
+        "PCA": 0.0593,
+        "Node2Vec": 0.1936
+      },
+      "dark_matter_count": 0,
+      "spearman_vs_700": 1.0,
+      "method_ranking": [
+        "Node2Vec",
+        "MDS",
+        "DM",
+        "Spectral",
+        "PCA"
+      ]
+    },
+    "800": {
+      "string_nodes": 5414,
+      "string_edges": 90655,
+      "curated_present": 153,
+      "curated_isolated": 0,
+      "subgraph_edges": 1296,
+      "gf_scores": {
+        "Spectral": 0.1855,
+        "MDS": 0.2562,
+        "DM": 0.0689,
+        "PCA": 0.0562,
+        "Node2Vec": 0.0478
+      },
+      "dark_matter_count": 0,
+      "spearman_vs_700": -0.1,
+      "spearman_pvalue": 0.8729,
+      "method_ranking": [
+        "MDS",
+        "Spectral",
+        "DM",
+        "PCA",
+        "Node2Vec"
+      ]
+    }
+  }
+}

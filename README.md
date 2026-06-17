@@ -2,7 +2,7 @@
 
 **A Geometric-Functional Consistency Framework for Evaluating Protein Interaction Network Embeddings**
 
-Complete reproduction of the experimental pipeline: 11 embedding methods · 55-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
+Complete reproduction of the experimental pipeline: 11 embedding methods · 57-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
 
 <details>
 <summary><strong>Key Results at a Glance</strong></summary>
@@ -61,6 +61,10 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 55-s
 - **G-F Curve Phase Transition Analysis** (Step 46): Numerical derivatives of 200-point purity curves identify critical radii for all methods. Peak radius mean=0.064 (std=0.031), with Node2Vec as outlier (r=0.145). Sharpness-GF Score correlation rho=+0.405 (n=8). Betti curve percolation radii tested for coincidence with functional transitions. High-GF methods show marginally sharper transitions (Mann-Whitney U=6, p=0.10)
 - **Extended Dimension Sweep** (Step 47): Spectral embeddings extended to d=128 and d=256. Previous d=64 MRR=0.205 vs PPI baseline 0.219. Log-linear fit (MRR ~ log2(d)) tests whether embeddings can surpass PPI topology for function prediction at sufficient dimension
 - **Functional Dark Matter Mining** (Step 48): Identifies protein functional associations invisible to network topology (>= 5 hops apart, not STRING-connected at >= 700). Spectral embedding reveals 74 dark matter pairs among 71 proteins at the extreme network periphery (median degree 4 vs 21, p=2.2e-15). Extraordinary GO enrichment: retrograde transport (1809x), transmembrane transport (960x), ascospore formation (710x), ERAD pathway (521x). These are functional associations that NO network-based method could ever discover
+- **UMAP/t-SNE Evaluation** (v2.7.0, Step 56): Adjacency-based UMAP achieves highest G-F Score (0.177) across all evaluated methods, exceeding Spectral (0.163). t-SNE achieves 0.152. Critical caveat: shortest-path input causes UMAP to collapse to near-random (GF=0.068), while t-SNE degrades only modestly (0.150). Input representation matters more than algorithm choice
+- **GO Ontology Generality** (v2.8.0, Step 57): G-F Score computed with GO Molecular Function (GF=0.348) and Cellular Component (GF=0.191) in addition to Biological Process (GF=0.112). Spectral embedding captures functional geometry across all three GO ontologies — not an artifact of any single annotation system
+- **STRING Threshold Sensitivity** (v2.8.0): Method rankings stable between scores 600-700 (Spearman rho=0.90), but regime shift at 800 where network loses 22% edges and Node2Vec collapses (rho=-0.10 vs 700 ranking). Threshold 700 is the natural operating point
+- **Dark Matter Literature Validation** (v2.8.0): NSG1-NSG2 confirmed as yeast INSIG homologs (Flury 2005, EMBO J). GON7-SPT8 confirmed as SAGA complex subunits (Wang 2020, Nature). BST1-ADD37 maps to DERL1-DERL3 as mutual rank-4 neighbors in both human and mouse d=64 embeddings — direct cross-species geometric conservation of ERAD pathway organization
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)

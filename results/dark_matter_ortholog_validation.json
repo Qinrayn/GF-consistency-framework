@@ -1,0 +1,3610 @@
+{
+  "description": "Phase 20: Dark Matter Ortholog Validation",
+  "method": "For each of 71 yeast dark matter proteins, orthologs in human and mouse were identified using a curated ortholog table validated via the STRING resolve API. For DM pairs where both proteins have orthologs found in the target species' spectral d=64 embedding, we check if those orthologs are within each other's top-100 nearest neighbours (KNN) in embedding space.",
+  "parameters": {
+    "knn_k": 100,
+    "embedding_method": "Spectral",
+    "embedding_dim": 64
+  },
+  "summary": {
+    "n_dm_pairs": 44,
+    "n_dm_proteins": 71,
+    "n_proteins_with_human_orthologs": 47,
+    "n_proteins_with_mouse_orthologs": 47,
+    "n_proteins_human_in_embedding": 47,
+    "n_proteins_mouse_in_embedding": 44,
+    "n_pairs_both_human_orthologs": 20,
+    "n_pairs_both_mouse_orthologs": 20,
+    "n_human_knn100_hits": 3,
+    "n_mouse_knn100_hits": 2,
+    "human_knn_hit_rate": 0.15,
+    "mouse_knn_hit_rate": 0.1
+  },
+  "human_knn_pairs": [
+    {
+      "yeast_pair": [
+        "YAR018C",
+        "YPL137C"
+      ],
+      "human_genes": [
+        "PLK1",
+        "NUF2"
+      ],
+      "rank_a_to_b": 12,
+      "rank_b_to_a": null,
+      "distance": 0.019982457122580573,
+      "yeast_emb_rank": 22
+    },
+    {
+      "yeast_pair": [
+        "YFL025C",
+        "YMR184W"
+      ],
+      "human_genes": [
+        "DERL3",
+        "DERL1"
+      ],
+      "rank_a_to_b": 4,
+      "rank_b_to_a": 4,
+      "distance": 0.0027480360051450885,
+      "yeast_emb_rank": 34
+    },
+    {
+      "yeast_pair": [
+        "YER033C",
+        "YJL174W"
+      ],
+      "human_genes": [
+        "SLC39A4",
+        "B4GALT7"
+      ],
+      "rank_a_to_b": 38,
+      "rank_b_to_a": null,
+      "distance": 0.1633502391219308,
+      "yeast_emb_rank": 41
+    }
+  ],
+  "mouse_knn_pairs": [
+    {
+      "yeast_pair": [
+        "YAR018C",
+        "YPL137C"
+      ],
+      "mouse_genes": [
+        "Plk1",
+        "Ndc80"
+      ],
+      "rank_a_to_b": 6,
+      "rank_b_to_a": 24,
+      "distance": 0.0035774676097639823,
+      "yeast_emb_rank": 22
+    },
+    {
+      "yeast_pair": [
+        "YFL025C",
+        "YMR184W"
+      ],
+      "mouse_genes": [
+        "Derl3",
+        "Derl1"
+      ],
+      "rank_a_to_b": 4,
+      "rank_b_to_a": 4,
+      "distance": 0.0028467872061588633,
+      "yeast_emb_rank": 34
+    }
+  ],
+  "pair_results": [
+    {
+      "yeast_pair": [
+        "YHR133C",
+        "YNL156C"
+      ],
+      "yeast_gene_a": "NSG1",
+      "yeast_gene_b": "NSG2",
+      "emb_dist_yeast": 0.00019945170533273169,
+      "emb_rank_yeast": 2,
+      "shared_go_terms": [
+        "GO:0016126"
+      ],
+      "go_term_names": [
+        "sterol biosynthetic process"
+      ],
+      "confidence_score": 7,
+      "human_analysis": {
+        "gene_a": "INSIG1",
+        "gene_b": "INSIG1",
+        "stringId_a": "9606.ENSP00000344741",
+        "stringId_b": "9606.ENSP00000344741",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.0
+      },
+      "mouse_analysis": {
+        "gene_a": "Insig1",
+        "gene_b": "Insig1",
+        "stringId_a": "10090.ENSMUSP00000061877",
+        "stringId_b": "10090.ENSMUSP00000061877",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.0
+      }
+    },
+    {
+      "yeast_pair": [
+        "YDR107C",
+        "YDL024C"
+      ],
+      "yeast_gene_a": "TMN2",
+      "yeast_gene_b": "DIA3",
+      "emb_dist_yeast": 0.0015863743642801063,
+      "emb_rank_yeast": 38,
+      "shared_go_terms": [
+        "GO:0001403",
+        "GO:0007124"
+      ],
+      "go_term_names": [
+        "invasive growth in response to glucose limitation",
+        "pseudohyphal growth"
+      ],
+      "confidence_score": 6,
+      "human_analysis": null,
+      "mouse_analysis": null
+    },
+    {
+      "yeast_pair": [
+        "YCL026C-A",
+        "YDR346C"
+      ],
+      "yeast_gene_a": "FRM2",
+      "yeast_gene_b": "SVF1",
+      "emb_dist_yeast": 0.000297563634671745,
+      "emb_rank_yeast": 1,
+      "shared_go_terms": [
+        "GO:0034599"
+      ],
+      "go_term_names": [
+        "cellular response to oxidative stress"
+      ],
+      "confidence_score": 5,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [
+          {
+            "gene": "FADS1",
+            "stringId": "9606.ENSP00000322229"
+          },
+          {
+            "gene": "ACOX1",
+            "stringId": "9606.ENSP00000293217"
+          }
+        ],
+        "orthologs_b": []
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [
+          {
+            "gene": "Fads1",
+            "stringId": "10090.ENSMUSP00000010807"
+          },
+          {
+            "gene": "Acox1",
+            "stringId": "10090.ENSMUSP00000063325"
+          }
+        ],
+        "orthologs_b": []
+      }
+    },
+    {
+      "yeast_pair": [
+        "YDL179W",
+        "YJR127C"
+      ],
+      "yeast_gene_a": "PCL9",
+      "yeast_gene_b": "RSF2",
+      "emb_dist_yeast": 0.0005194889315894325,
+      "emb_rank_yeast": 8,
+      "shared_go_terms": [
+        "GO:0006355"
+      ],
+      "go_term_names": [
+        "regulation of DNA-templated transcription"
+      ],
+      "confidence_score": 5,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [
+          {
+            "gene": "CCNI",
+            "stringId": "9606.ENSP00000237654"
+          },
+          {
+            "gene": "CCNH",
+            "stringId": "9606.ENSP00000498750"
+          }
+        ],
+        "orthologs_b": []
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [
+          {
+            "gene": "Ccni",
+            "stringId": "10090.ENSMUSP00000050189"
+          },
+          {
+            "gene": "Ccnh",
+            "stringId": "10090.ENSMUSP00000022030"
+          }
+        ],
+        "orthologs_b": []
+      }
+    },
+    {
+      "yeast_pair": [
+        "YJL184W",
+        "YLR055C"
+      ],
+      "yeast_gene_a": "GON7",
+      "yeast_gene_b": "SPT8",
+      "emb_dist_yeast": 0.000718965400090119,
+      "emb_rank_yeast": 4,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ],
+      "confidence_score": 5,
+      "human_analysis": {
+        "gene_a": "GON7",
+        "gene_b": "TAF1",
+        "stringId_a": "9606.ENSP00000306320",
+        "stringId_b": "9606.ENSP00000406549",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.045246479962106595
+      },
+      "mouse_analysis": {
+        "gene_a": "Gon7",
+        "gene_b": "Taf5",
+        "stringId_a": "10090.ENSMUSP00000136425",
+        "stringId_b": "10090.ENSMUSP00000026027",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.01518407102038345
+      }
+    },
+    {
+      "yeast_pair": [
+        "YJR049C",
+        "YPL224C"
+      ],
+      "yeast_gene_a": "UTR1",
+      "yeast_gene_b": "MMT2",
+      "emb_dist_yeast": 0.000751851243624385,
+      "emb_rank_yeast": 6,
+      "shared_go_terms": [
+        "GO:0006879"
+      ],
+      "go_term_names": [
+        "intracellular iron ion homeostasis"
+      ],
+      "confidence_score": 5,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [],
+        "orthologs_b": [
+          {
+            "gene": "SLC25A37",
+            "stringId": "9606.ENSP00000429200"
+          },
+          {
+            "gene": "SLC25A28",
+            "stringId": "9606.ENSP00000359526"
+          }
+        ]
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [],
+        "orthologs_b": [
+          {
+            "gene": "Slc25a37",
+            "stringId": "10090.ENSMUSP00000039990"
+          },
+          {
+            "gene": "Slc25a28",
+            "stringId": "10090.ENSMUSP00000036913"
+          }
+        ]
+      }
+    },
+    {
+      "yeast_pair": [
+        "YER180C",
+        "YLR341W"
+      ],
+      "yeast_gene_a": "ISC10",
+      "yeast_gene_b": "SPO77",
+      "emb_dist_yeast": 0.0009815790187512822,
+      "emb_rank_yeast": 8,
+      "shared_go_terms": [
+        "GO:0030437"
+      ],
+      "go_term_names": [
+        "ascospore formation"
+      ],
+      "confidence_score": 5,
+      "human_analysis": null,
+      "mouse_analysis": null
+    },
+    {
+      "yeast_pair": [
+        "YJR060W",
+        "YOR363C"
+      ],
+      "yeast_gene_a": "CBF1",
+      "yeast_gene_b": "PIP2",
+      "emb_dist_yeast": 0.0026001353140547114,
+      "emb_rank_yeast": 8,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ],
+      "confidence_score": 5,
+      "human_analysis": {
+        "gene_a": "USF1",
+        "gene_b": "PPARG",
+        "stringId_a": "9606.ENSP00000357000",
+        "stringId_b": "9606.ENSP00000287820",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.011854185867987511
+      },
+      "mouse_analysis": {
+        "gene_a": "Usf1",
+        "gene_b": "Pparg",
+        "stringId_a": "10090.ENSMUSP00000125729",
+        "stringId_b": "10090.ENSMUSP00000000450",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.008487269134468496
+      }
+    },
+    {
+      "yeast_pair": [
+        "YAL022C",
+        "YBR069C"
+      ],
+      "yeast_gene_a": "FUN26",
+      "yeast_gene_b": "TAT1",
+      "emb_dist_yeast": 0.0012214069075125369,
+      "emb_rank_yeast": 37,
+      "shared_go_terms": [
+        "GO:0055085"
+      ],
+      "go_term_names": [
+        "transmembrane transport"
+      ],
+      "confidence_score": 4,
+      "human_analysis": {
+        "gene_a": "SLC29A1",
+        "gene_b": "SLC7A8",
+        "stringId_a": "9606.ENSP00000498610",
+        "stringId_b": "9606.ENSP00000320378",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.013640738155240532
+      },
+      "mouse_analysis": {
+        "gene_a": "Slc29a1",
+        "gene_b": "Slc7a8",
+        "stringId_a": "10090.ENSMUSP00000131976",
+        "stringId_b": "10090.ENSMUSP00000022787",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.027113564173519983
+      }
+    },
+    {
+      "yeast_pair": [
+        "YAR018C",
+        "YPL137C"
+      ],
+      "yeast_gene_a": "KIN3",
+      "yeast_gene_b": "GIP3",
+      "emb_dist_yeast": 0.0006367502270725135,
+      "emb_rank_yeast": 22,
+      "shared_go_terms": [
+        "GO:0007059"
+      ],
+      "go_term_names": [
+        "chromosome segregation"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "PLK1",
+        "gene_b": "NUF2",
+        "stringId_a": "9606.ENSP00000300093",
+        "stringId_b": "9606.ENSP00000271452",
+        "both_in_embedding": true,
+        "a_in_b_knn100": true,
+        "b_in_a_knn100": false,
+        "any_direction_knn": true,
+        "rank_a_to_b": 12,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.019982457122580573
+      },
+      "mouse_analysis": {
+        "gene_a": "Plk1",
+        "gene_b": "Ndc80",
+        "stringId_a": "10090.ENSMUSP00000033154",
+        "stringId_b": "10090.ENSMUSP00000024851",
+        "both_in_embedding": true,
+        "a_in_b_knn100": true,
+        "b_in_a_knn100": true,
+        "any_direction_knn": true,
+        "rank_a_to_b": 6,
+        "rank_b_to_a": 24,
+        "euclidean_distance": 0.0035774676097639823
+      }
+    },
+    {
+      "yeast_pair": [
+        "YER184C",
+        "YFL052W"
+      ],
+      "yeast_gene_a": "YER184C",
+      "yeast_gene_b": "YFL052W",
+      "emb_dist_yeast": 0.0008400060018694762,
+      "emb_rank_yeast": 16,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ],
+      "confidence_score": 3,
+      "human_analysis": null,
+      "mouse_analysis": null
+    },
+    {
+      "yeast_pair": [
+        "YIR013C",
+        "YPL026C"
+      ],
+      "yeast_gene_a": "GAT4",
+      "yeast_gene_b": "SKS1",
+      "emb_dist_yeast": 0.000949329768584467,
+      "emb_rank_yeast": 22,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [
+          {
+            "gene": "ZNF143",
+            "stringId": "9606.ENSP00000379847"
+          },
+          {
+            "gene": "ZNF263",
+            "stringId": "9606.ENSP00000219069"
+          }
+        ],
+        "orthologs_b": []
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [
+          {
+            "gene": "Znf143",
+            "stringId": "10090.ENSMUSP00000147673"
+          }
+        ],
+        "orthologs_b": []
+      }
+    },
+    {
+      "yeast_pair": [
+        "YAL053W",
+        "YML048W"
+      ],
+      "yeast_gene_a": "FLC2",
+      "yeast_gene_b": "GSF2",
+      "emb_dist_yeast": 0.0010910583662186286,
+      "emb_rank_yeast": 14,
+      "shared_go_terms": [
+        "GO:0006457"
+      ],
+      "go_term_names": [
+        "protein folding"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [
+          {
+            "gene": "SLC35B1",
+            "stringId": "9606.ENSP00000497423"
+          },
+          {
+            "gene": "SLC35B2",
+            "stringId": "9606.ENSP00000377401"
+          }
+        ],
+        "orthologs_b": []
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [
+          {
+            "gene": "Slc35b1",
+            "stringId": "10090.ENSMUSP00000021243"
+          },
+          {
+            "gene": "Slc35b2",
+            "stringId": "10090.ENSMUSP00000037834"
+          }
+        ],
+        "orthologs_b": []
+      }
+    },
+    {
+      "yeast_pair": [
+        "YFL052W",
+        "YOR229W"
+      ],
+      "yeast_gene_a": "YFL052W",
+      "yeast_gene_b": "WTM2",
+      "emb_dist_yeast": 0.001202637827390611,
+      "emb_rank_yeast": 39,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ],
+      "confidence_score": 3,
+      "human_analysis": null,
+      "mouse_analysis": null
+    },
+    {
+      "yeast_pair": [
+        "YOR043W",
+        "YDR538W"
+      ],
+      "yeast_gene_a": "WHI2",
+      "yeast_gene_b": "PAD1",
+      "emb_dist_yeast": 0.0012563180910715294,
+      "emb_rank_yeast": 41,
+      "shared_go_terms": [
+        "GO:0034599"
+      ],
+      "go_term_names": [
+        "cellular response to oxidative stress"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "KCTD6",
+        "gene_b": "PADI2",
+        "stringId_a": "9606.ENSP00000347188",
+        "stringId_b": "9606.ENSP00000364635",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.005125693303772373
+      },
+      "mouse_analysis": {
+        "gene_a": "Kctd6",
+        "gene_b": "Padi4",
+        "stringId_a": "10090.ENSMUSP00000129059",
+        "stringId_b": "10090.ENSMUSP00000026381",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.0023261205226430045
+      }
+    },
+    {
+      "yeast_pair": [
+        "YAL022C",
+        "YDR046C"
+      ],
+      "yeast_gene_a": "FUN26",
+      "yeast_gene_b": "BAP3",
+      "emb_dist_yeast": 0.0013012364595316552,
+      "emb_rank_yeast": 44,
+      "shared_go_terms": [
+        "GO:0055085"
+      ],
+      "go_term_names": [
+        "transmembrane transport"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "SLC29A1",
+        "gene_b": "BCAP31",
+        "stringId_a": "9606.ENSP00000498610",
+        "stringId_b": "9606.ENSP00000392330",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.018285318630593746
+      },
+      "mouse_analysis": {
+        "gene_a": "Slc29a1",
+        "gene_b": "Bcap31",
+        "stringId_a": "10090.ENSMUSP00000131976",
+        "stringId_b": "10090.ENSMUSP00000002091",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.02890850613338881
+      }
+    },
+    {
+      "yeast_pair": [
+        "YDR421W",
+        "YOR372C"
+      ],
+      "yeast_gene_a": "ARO80",
+      "yeast_gene_b": "NDD1",
+      "emb_dist_yeast": 0.0013029484540794398,
+      "emb_rank_yeast": 27,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [],
+        "orthologs_b": [
+          {
+            "gene": "FOXM1",
+            "stringId": "9606.ENSP00000342307"
+          }
+        ]
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [],
+        "orthologs_b": [
+          {
+            "gene": "Foxm1",
+            "stringId": "10090.ENSMUSP00000073041"
+          }
+        ]
+      }
+    },
+    {
+      "yeast_pair": [
+        "YAL053W",
+        "YDR508C"
+      ],
+      "yeast_gene_a": "FLC2",
+      "yeast_gene_b": "GNP1",
+      "emb_dist_yeast": 0.0013485598678941006,
+      "emb_rank_yeast": 29,
+      "shared_go_terms": [
+        "GO:0055085"
+      ],
+      "go_term_names": [
+        "transmembrane transport"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "SLC35B1",
+        "gene_b": "SLC38A2",
+        "stringId_a": "9606.ENSP00000497423",
+        "stringId_b": "9606.ENSP00000256689",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.031765064117523764
+      },
+      "mouse_analysis": {
+        "gene_a": "Slc35b1",
+        "gene_b": "Slc38a2",
+        "stringId_a": "10090.ENSMUSP00000021243",
+        "stringId_b": "10090.ENSMUSP00000023099",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.013490238432164958
+      }
+    },
+    {
+      "yeast_pair": [
+        "YIR013C",
+        "YNL309W"
+      ],
+      "yeast_gene_a": "GAT4",
+      "yeast_gene_b": "STB1",
+      "emb_dist_yeast": 0.0014086865573581491,
+      "emb_rank_yeast": 40,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [
+          {
+            "gene": "ZNF143",
+            "stringId": "9606.ENSP00000379847"
+          },
+          {
+            "gene": "ZNF263",
+            "stringId": "9606.ENSP00000219069"
+          }
+        ],
+        "orthologs_b": []
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [
+          {
+            "gene": "Znf143",
+            "stringId": "10090.ENSMUSP00000147673"
+          }
+        ],
+        "orthologs_b": []
+      }
+    },
+    {
+      "yeast_pair": [
+        "YHR205W",
+        "YNL099C"
+      ],
+      "yeast_gene_a": "SCH9",
+      "yeast_gene_b": "OCA1",
+      "emb_dist_yeast": 0.0015227955939171413,
+      "emb_rank_yeast": 42,
+      "shared_go_terms": [
+        "GO:0034599"
+      ],
+      "go_term_names": [
+        "cellular response to oxidative stress"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "SGK1",
+        "gene_b": "PPM1A",
+        "stringId_a": "9606.ENSP00000356832",
+        "stringId_b": "9606.ENSP00000327255",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.005671068186036435
+      },
+      "mouse_analysis": {
+        "gene_a": "Sgk1",
+        "gene_b": "Ppm1a",
+        "stringId_a": "10090.ENSMUSP00000114074",
+        "stringId_b": "10090.ENSMUSP00000021514",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.003765285451149608
+      }
+    },
+    {
+      "yeast_pair": [
+        "YDR421W",
+        "YIR013C"
+      ],
+      "yeast_gene_a": "ARO80",
+      "yeast_gene_b": "GAT4",
+      "emb_dist_yeast": 0.001703449212255077,
+      "emb_rank_yeast": 49,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [],
+        "orthologs_b": [
+          {
+            "gene": "ZNF143",
+            "stringId": "9606.ENSP00000379847"
+          },
+          {
+            "gene": "ZNF263",
+            "stringId": "9606.ENSP00000219069"
+          }
+        ]
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [],
+        "orthologs_b": [
+          {
+            "gene": "Znf143",
+            "stringId": "10090.ENSMUSP00000147673"
+          }
+        ]
+      }
+    },
+    {
+      "yeast_pair": [
+        "YIL056W",
+        "YBL066C"
+      ],
+      "yeast_gene_a": "VHR1",
+      "yeast_gene_b": "SEF1",
+      "emb_dist_yeast": 0.0019044010645553387,
+      "emb_rank_yeast": 46,
+      "shared_go_terms": [
+        "GO:0006357"
+      ],
+      "go_term_names": [
+        "regulation of transcription by RNA polymerase II"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [
+          {
+            "gene": "DUSP3",
+            "stringId": "9606.ENSP00000226004"
+          },
+          {
+            "gene": "DUSP4",
+            "stringId": "9606.ENSP00000240100"
+          }
+        ],
+        "orthologs_b": []
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [
+          {
+            "gene": "Dusp3",
+            "stringId": "10090.ENSMUSP00000102790"
+          },
+          {
+            "gene": "Dusp4",
+            "stringId": "10090.ENSMUSP00000033930"
+          }
+        ],
+        "orthologs_b": []
+      }
+    },
+    {
+      "yeast_pair": [
+        "YIL056W",
+        "YDL056W"
+      ],
+      "yeast_gene_a": "VHR1",
+      "yeast_gene_b": "MBP1",
+      "emb_dist_yeast": 0.0019906326349702695,
+      "emb_rank_yeast": 48,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "DUSP4",
+        "gene_b": "E2F3",
+        "stringId_a": "9606.ENSP00000240100",
+        "stringId_b": "9606.ENSP00000262904",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.012646682658181625
+      },
+      "mouse_analysis": {
+        "gene_a": "Dusp4",
+        "gene_b": "E2f3",
+        "stringId_a": "10090.ENSMUSP00000033930",
+        "stringId_b": "10090.ENSMUSP00000100012",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.014454041349519135
+      }
+    },
+    {
+      "yeast_pair": [
+        "YCR030C",
+        "YKL046C"
+      ],
+      "yeast_gene_a": "SYP1",
+      "yeast_gene_b": "DCW1",
+      "emb_dist_yeast": 0.0020636494529305016,
+      "emb_rank_yeast": 33,
+      "shared_go_terms": [
+        "GO:0007117"
+      ],
+      "go_term_names": [
+        "budding cell bud growth"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [
+          {
+            "gene": "FCHO1",
+            "stringId": "9606.ENSP00000473001"
+          },
+          {
+            "gene": "FCHO2",
+            "stringId": "9606.ENSP00000393776"
+          }
+        ],
+        "orthologs_b": []
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [
+          {
+            "gene": "Fcho1",
+            "stringId": "10090.ENSMUSP00000091151"
+          },
+          {
+            "gene": "Fcho2",
+            "stringId": "10090.ENSMUSP00000042959"
+          }
+        ],
+        "orthologs_b": []
+      }
+    },
+    {
+      "yeast_pair": [
+        "YCL058W-A",
+        "YDR253C"
+      ],
+      "yeast_gene_a": "ADF1",
+      "yeast_gene_b": "MET32",
+      "emb_dist_yeast": 0.002388034049854154,
+      "emb_rank_yeast": 26,
+      "shared_go_terms": [
+        "GO:0000122"
+      ],
+      "go_term_names": [
+        "negative regulation of transcription by RNA polymerase II"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [],
+        "orthologs_b": [
+          {
+            "gene": "MLX",
+            "stringId": "9606.ENSP00000246912"
+          },
+          {
+            "gene": "MLXIPL",
+            "stringId": "9606.ENSP00000320886"
+          }
+        ]
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [],
+        "orthologs_b": [
+          {
+            "gene": "Mlx",
+            "stringId": "10090.ENSMUSP00000017945"
+          },
+          {
+            "gene": "Mlxipl",
+            "stringId": "10090.ENSMUSP00000005507"
+          }
+        ]
+      }
+    },
+    {
+      "yeast_pair": [
+        "YOR247W",
+        "YIL085C"
+      ],
+      "yeast_gene_a": "SRL1",
+      "yeast_gene_b": "KTR7",
+      "emb_dist_yeast": 0.002475523314816404,
+      "emb_rank_yeast": 42,
+      "shared_go_terms": [
+        "GO:0031505"
+      ],
+      "go_term_names": [
+        "fungal-type cell wall organization"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "SAR1A",
+        "gene_b": "B4GALT4",
+        "stringId_a": "9606.ENSP00000362339",
+        "stringId_b": "9606.ENSP00000420161",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.1728393473895357
+      },
+      "mouse_analysis": {
+        "gene_a": "Sar1a",
+        "gene_b": "B4galt4",
+        "stringId_a": "10090.ENSMUSP00000020285",
+        "stringId_b": "10090.ENSMUSP00000023482",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.08272946562900609
+      }
+    },
+    {
+      "yeast_pair": [
+        "YJR131W",
+        "YMR184W"
+      ],
+      "yeast_gene_a": "MNS1",
+      "yeast_gene_b": "ADD37",
+      "emb_dist_yeast": 0.0025361676603000787,
+      "emb_rank_yeast": 41,
+      "shared_go_terms": [
+        "GO:0036503"
+      ],
+      "go_term_names": [
+        "ERAD pathway"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "MAN1B1",
+        "gene_b": "DERL1",
+        "stringId_a": "9606.ENSP00000360645",
+        "stringId_b": "9606.ENSP00000259512",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.04707069768837328
+      },
+      "mouse_analysis": {
+        "gene_a": "Man1b1",
+        "gene_b": "Derl1",
+        "stringId_a": "10090.ENSMUSP00000036996",
+        "stringId_b": "10090.ENSMUSP00000022993",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.023424121293360557
+      }
+    },
+    {
+      "yeast_pair": [
+        "YFL025C",
+        "YMR184W"
+      ],
+      "yeast_gene_a": "BST1",
+      "yeast_gene_b": "ADD37",
+      "emb_dist_yeast": 0.0026088709039278858,
+      "emb_rank_yeast": 34,
+      "shared_go_terms": [
+        "GO:0036503"
+      ],
+      "go_term_names": [
+        "ERAD pathway"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "DERL3",
+        "gene_b": "DERL1",
+        "stringId_a": "9606.ENSP00000384744",
+        "stringId_b": "9606.ENSP00000259512",
+        "both_in_embedding": true,
+        "a_in_b_knn100": true,
+        "b_in_a_knn100": true,
+        "any_direction_knn": true,
+        "rank_a_to_b": 4,
+        "rank_b_to_a": 4,
+        "euclidean_distance": 0.0027480360051450885
+      },
+      "mouse_analysis": {
+        "gene_a": "Derl3",
+        "gene_b": "Derl1",
+        "stringId_a": "10090.ENSMUSP00000009236",
+        "stringId_b": "10090.ENSMUSP00000022993",
+        "both_in_embedding": true,
+        "a_in_b_knn100": true,
+        "b_in_a_knn100": true,
+        "any_direction_knn": true,
+        "rank_a_to_b": 4,
+        "rank_b_to_a": 4,
+        "euclidean_distance": 0.0028467872061588633
+      }
+    },
+    {
+      "yeast_pair": [
+        "YEL052W",
+        "YJR100C"
+      ],
+      "yeast_gene_a": "AFG1",
+      "yeast_gene_b": "AIM25",
+      "emb_dist_yeast": 0.0028950187016375585,
+      "emb_rank_yeast": 45,
+      "shared_go_terms": [
+        "GO:0034599"
+      ],
+      "go_term_names": [
+        "cellular response to oxidative stress"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [
+          {
+            "gene": "AFG3L2",
+            "stringId": "9606.ENSP00000269143"
+          },
+          {
+            "gene": "SPG7",
+            "stringId": "9606.ENSP00000495795"
+          }
+        ],
+        "orthologs_b": []
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [
+          {
+            "gene": "Afg3l2",
+            "stringId": "10090.ENSMUSP00000025408"
+          },
+          {
+            "gene": "Spg7",
+            "stringId": "10090.ENSMUSP00000119552"
+          }
+        ],
+        "orthologs_b": []
+      }
+    },
+    {
+      "yeast_pair": [
+        "YOR221C",
+        "YOR363C"
+      ],
+      "yeast_gene_a": "MCT1",
+      "yeast_gene_b": "PIP2",
+      "emb_dist_yeast": 0.0030714634950737983,
+      "emb_rank_yeast": 31,
+      "shared_go_terms": [
+        "GO:0006631"
+      ],
+      "go_term_names": [
+        "fatty acid metabolic process"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "ACAT1",
+        "gene_b": "PPARA",
+        "stringId_a": "9606.ENSP00000265838",
+        "stringId_b": "9606.ENSP00000385523",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.019210007436848354
+      },
+      "mouse_analysis": {
+        "gene_a": "Acat1",
+        "gene_b": "Ppara",
+        "stringId_a": "10090.ENSMUSP00000034547",
+        "stringId_b": "10090.ENSMUSP00000105049",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.01986738412747442
+      }
+    },
+    {
+      "yeast_pair": [
+        "YER033C",
+        "YJL174W"
+      ],
+      "yeast_gene_a": "ZRG8",
+      "yeast_gene_b": "KRE9",
+      "emb_dist_yeast": 0.003279040449345214,
+      "emb_rank_yeast": 41,
+      "shared_go_terms": [
+        "GO:0031505"
+      ],
+      "go_term_names": [
+        "fungal-type cell wall organization"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "SLC39A4",
+        "gene_b": "B4GALT7",
+        "stringId_a": "9606.ENSP00000301305",
+        "stringId_b": "9606.ENSP00000029410",
+        "both_in_embedding": true,
+        "a_in_b_knn100": true,
+        "b_in_a_knn100": false,
+        "any_direction_knn": true,
+        "rank_a_to_b": 38,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.1633502391219308
+      },
+      "mouse_analysis": {
+        "gene_a": "Slc39a14",
+        "gene_b": "B4galt7",
+        "stringId_a": "10090.ENSMUSP00000066108",
+        "stringId_b": "10090.ENSMUSP00000068532",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.18014745950900857
+      }
+    },
+    {
+      "yeast_pair": [
+        "YER096W",
+        "YLR341W"
+      ],
+      "yeast_gene_a": "SHC1",
+      "yeast_gene_b": "SPO77",
+      "emb_dist_yeast": 0.0034587911926020026,
+      "emb_rank_yeast": 27,
+      "shared_go_terms": [
+        "GO:0030437"
+      ],
+      "go_term_names": [
+        "ascospore formation"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [
+          {
+            "gene": "SHC1",
+            "stringId": "9606.ENSP00000401303"
+          },
+          {
+            "gene": "SHC2",
+            "stringId": "9606.ENSP00000264554"
+          }
+        ],
+        "orthologs_b": []
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [
+          {
+            "gene": "Shc1",
+            "stringId": "10090.ENSMUSP00000091940"
+          },
+          {
+            "gene": "Shc2",
+            "stringId": "10090.ENSMUSP00000020564"
+          }
+        ],
+        "orthologs_b": []
+      }
+    },
+    {
+      "yeast_pair": [
+        "YDR522C",
+        "YLR341W"
+      ],
+      "yeast_gene_a": "SPS2",
+      "yeast_gene_b": "SPO77",
+      "emb_dist_yeast": 0.0035446793825215286,
+      "emb_rank_yeast": 20,
+      "shared_go_terms": [
+        "GO:0030476"
+      ],
+      "go_term_names": [
+        "ascospore wall assembly"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [
+          {
+            "gene": "SRD5A1",
+            "stringId": "9606.ENSP00000274192"
+          },
+          {
+            "gene": "SRD5A2",
+            "stringId": "9606.ENSP00000477587"
+          }
+        ],
+        "orthologs_b": []
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [
+          {
+            "gene": "Srd5a1",
+            "stringId": "10090.ENSMUSP00000089097"
+          },
+          {
+            "gene": "Srd5a2",
+            "stringId": "10090.ENSMUSP00000048862"
+          }
+        ],
+        "orthologs_b": []
+      }
+    },
+    {
+      "yeast_pair": [
+        "YBR293W",
+        "YDL247W"
+      ],
+      "yeast_gene_a": "VBA2",
+      "yeast_gene_b": "MPH2",
+      "emb_dist_yeast": 0.005627660176901711,
+      "emb_rank_yeast": 41,
+      "shared_go_terms": [
+        "GO:0055085"
+      ],
+      "go_term_names": [
+        "transmembrane transport"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [
+          {
+            "gene": "SLC25A4",
+            "stringId": "9606.ENSP00000281456"
+          },
+          {
+            "gene": "SLC25A5",
+            "stringId": "9606.ENSP00000360671"
+          }
+        ],
+        "orthologs_b": []
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [
+          {
+            "gene": "Slc25a4",
+            "stringId": "10090.ENSMUSP00000034049"
+          },
+          {
+            "gene": "Slc25a5",
+            "stringId": "10090.ENSMUSP00000016463"
+          }
+        ],
+        "orthologs_b": []
+      }
+    },
+    {
+      "yeast_pair": [
+        "YDR173C",
+        "YOL089C"
+      ],
+      "yeast_gene_a": "ARG82",
+      "yeast_gene_b": "HAL9",
+      "emb_dist_yeast": 0.0060421240221032865,
+      "emb_rank_yeast": 13,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "IPMK",
+        "gene_b": "HAL",
+        "stringId_a": "9606.ENSP00000363046",
+        "stringId_b": "9606.ENSP00000261208",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.019359343472890072
+      },
+      "mouse_analysis": {
+        "gene_a": "Ipmk",
+        "gene_b": "Hal",
+        "stringId_a": "10090.ENSMUSP00000112568",
+        "stringId_b": "10090.ENSMUSP00000123336",
+        "both_in_embedding": false,
+        "a_in_embedding": false,
+        "b_in_embedding": true
+      }
+    },
+    {
+      "yeast_pair": [
+        "YHR009C",
+        "YMR010W"
+      ],
+      "yeast_gene_a": "TDA3",
+      "yeast_gene_b": "YMR010W",
+      "emb_dist_yeast": 0.008782139167885112,
+      "emb_rank_yeast": 24,
+      "shared_go_terms": [
+        "GO:0042147"
+      ],
+      "go_term_names": [
+        "retrograde transport, endosome to Golgi"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [
+          {
+            "gene": "NEK6",
+            "stringId": "9606.ENSP00000362702"
+          },
+          {
+            "gene": "NEK9",
+            "stringId": "9606.ENSP00000238616"
+          }
+        ],
+        "orthologs_b": []
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [
+          {
+            "gene": "Nek6",
+            "stringId": "10090.ENSMUSP00000049723"
+          },
+          {
+            "gene": "Nek9",
+            "stringId": "10090.ENSMUSP00000049056"
+          }
+        ],
+        "orthologs_b": []
+      }
+    },
+    {
+      "yeast_pair": [
+        "YHR009C",
+        "YJL207C"
+      ],
+      "yeast_gene_a": "TDA3",
+      "yeast_gene_b": "LAA1",
+      "emb_dist_yeast": 0.00940037193469781,
+      "emb_rank_yeast": 25,
+      "shared_go_terms": [
+        "GO:0042147"
+      ],
+      "go_term_names": [
+        "retrograde transport, endosome to Golgi"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "NEK6",
+        "gene_b": "ANKRD27",
+        "stringId_a": "9606.ENSP00000362702",
+        "stringId_b": "9606.ENSP00000304292",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.02148482694844264
+      },
+      "mouse_analysis": {
+        "gene_a": "Nek6",
+        "gene_b": "Ankrd27",
+        "stringId_a": "10090.ENSMUSP00000049723",
+        "stringId_b": "10090.ENSMUSP00000041751",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.009595762212784088
+      }
+    },
+    {
+      "yeast_pair": [
+        "YLL033W",
+        "YOR190W"
+      ],
+      "yeast_gene_a": "IRC19",
+      "yeast_gene_b": "SPR1",
+      "emb_dist_yeast": 0.009709854692960975,
+      "emb_rank_yeast": 23,
+      "shared_go_terms": [
+        "GO:0030437"
+      ],
+      "go_term_names": [
+        "ascospore formation"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [],
+        "orthologs_b": [
+          {
+            "gene": "SPRR1A",
+            "stringId": "9606.ENSP00000357751"
+          },
+          {
+            "gene": "SPRR2A",
+            "stringId": "9606.ENSP00000376423"
+          }
+        ]
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [],
+        "orthologs_b": [
+          {
+            "gene": "Sprr1a",
+            "stringId": "10090.ENSMUSP00000053751"
+          },
+          {
+            "gene": "Sprr2a",
+            "stringId": "10090.ENSMUSP00000083330"
+          }
+        ]
+      }
+    },
+    {
+      "yeast_pair": [
+        "YOL047C",
+        "YGR032W"
+      ],
+      "yeast_gene_a": "YOL047C",
+      "yeast_gene_b": "GSC2",
+      "emb_dist_yeast": 0.009724763507758919,
+      "emb_rank_yeast": 42,
+      "shared_go_terms": [
+        "GO:0030476"
+      ],
+      "go_term_names": [
+        "ascospore wall assembly"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [],
+        "orthologs_b": [
+          {
+            "gene": "GCS1",
+            "stringId": "9606.ENSP00000410992"
+          },
+          {
+            "gene": "GCLC",
+            "stringId": "9606.ENSP00000497574"
+          }
+        ]
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [],
+        "orthologs_b": [
+          {
+            "gene": "Gcs1",
+            "stringId": "10090.ENSMUSP00000032114"
+          },
+          {
+            "gene": "Gclc",
+            "stringId": "10090.ENSMUSP00000034905"
+          }
+        ]
+      }
+    },
+    {
+      "yeast_pair": [
+        "YDR259C",
+        "YNL257C"
+      ],
+      "yeast_gene_a": "YAP6",
+      "yeast_gene_b": "SIP3",
+      "emb_dist_yeast": 0.01172672003449784,
+      "emb_rank_yeast": 19,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "FOS",
+        "gene_b": "SIK1",
+        "stringId_a": "9606.ENSP00000306245",
+        "stringId_b": "9606.ENSP00000270162",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.014744759492652021
+      },
+      "mouse_analysis": {
+        "gene_a": "Fos",
+        "gene_b": "Sik1",
+        "stringId_a": "10090.ENSMUSP00000021674",
+        "stringId_b": "10090.ENSMUSP00000024839",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.01076797365590806
+      }
+    },
+    {
+      "yeast_pair": [
+        "YLL052C",
+        "YBR293W"
+      ],
+      "yeast_gene_a": "AQY2",
+      "yeast_gene_b": "VBA2",
+      "emb_dist_yeast": 0.01192874704840568,
+      "emb_rank_yeast": 35,
+      "shared_go_terms": [
+        "GO:0055085"
+      ],
+      "go_term_names": [
+        "transmembrane transport"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "AQP1",
+        "gene_b": "SLC25A5",
+        "stringId_a": "9606.ENSP00000311165",
+        "stringId_b": "9606.ENSP00000360671",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.01302642323316873
+      },
+      "mouse_analysis": {
+        "gene_a": "Aqp1",
+        "gene_b": "Slc25a5",
+        "stringId_a": "10090.ENSMUSP00000004774",
+        "stringId_b": "10090.ENSMUSP00000016463",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.025544193253628028
+      }
+    },
+    {
+      "yeast_pair": [
+        "YLL052C",
+        "YDL247W"
+      ],
+      "yeast_gene_a": "AQY2",
+      "yeast_gene_b": "MPH2",
+      "emb_dist_yeast": 0.012369239881539526,
+      "emb_rank_yeast": 40,
+      "shared_go_terms": [
+        "GO:0055085"
+      ],
+      "go_term_names": [
+        "transmembrane transport"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "note": "Only one side has human orthologs",
+        "orthologs_a": [
+          {
+            "gene": "AQP1",
+            "stringId": "9606.ENSP00000311165"
+          }
+        ],
+        "orthologs_b": []
+      },
+      "mouse_analysis": {
+        "note": "Only one side has mouse orthologs",
+        "orthologs_a": [
+          {
+            "gene": "Aqp1",
+            "stringId": "10090.ENSMUSP00000004774"
+          },
+          {
+            "gene": "Aqp4",
+            "stringId": "10090.ENSMUSP00000078088"
+          }
+        ],
+        "orthologs_b": []
+      }
+    },
+    {
+      "yeast_pair": [
+        "YNL257C",
+        "YOL089C"
+      ],
+      "yeast_gene_a": "SIP3",
+      "yeast_gene_b": "HAL9",
+      "emb_dist_yeast": 0.022475917333771762,
+      "emb_rank_yeast": 49,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ],
+      "confidence_score": 3,
+      "human_analysis": {
+        "gene_a": "SIK2",
+        "gene_b": "HAL",
+        "stringId_a": "9606.ENSP00000305976",
+        "stringId_b": "9606.ENSP00000261208",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.01294448277716828
+      },
+      "mouse_analysis": {
+        "gene_a": "Sik2",
+        "gene_b": "Hal",
+        "stringId_a": "10090.ENSMUSP00000038761",
+        "stringId_b": "10090.ENSMUSP00000123336",
+        "both_in_embedding": true,
+        "a_in_b_knn100": false,
+        "b_in_a_knn100": false,
+        "any_direction_knn": false,
+        "rank_a_to_b": null,
+        "rank_b_to_a": null,
+        "euclidean_distance": 0.010671908900873446
+      }
+    },
+    {
+      "yeast_pair": [
+        "YGR249W",
+        "YPL021W"
+      ],
+      "yeast_gene_a": "MGA1",
+      "yeast_gene_b": "ECM23",
+      "emb_dist_yeast": 0.030085772976552613,
+      "emb_rank_yeast": 32,
+      "shared_go_terms": [
+        "GO:0007124"
+      ],
+      "go_term_names": [
+        "pseudohyphal growth"
+      ],
+      "confidence_score": 3,
+      "human_analysis": null,
+      "mouse_analysis": null
+    }
+  ],
+  "protein_ortholog_map": {
+    "YAL022C": {
+      "orf": "YAL022C",
+      "gene_name": "FUN26",
+      "go_terms": [
+        "GO:0055085"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "SLC29A1",
+          "stringId": "9606.ENSP00000498610",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "SLC29A2",
+          "stringId": "9606.ENSP00000440329",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Slc29a1",
+          "stringId": "10090.ENSMUSP00000131976",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Slc29a2",
+          "stringId": "10090.ENSMUSP00000157780",
+          "in_mouse_embedding": false
+        }
+      ]
+    },
+    "YAL053W": {
+      "orf": "YAL053W",
+      "gene_name": "FLC2",
+      "go_terms": [
+        "GO:0006457",
+        "GO:0055085"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "SLC35B1",
+          "stringId": "9606.ENSP00000497423",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "SLC35B2",
+          "stringId": "9606.ENSP00000377401",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Slc35b1",
+          "stringId": "10090.ENSMUSP00000021243",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Slc35b2",
+          "stringId": "10090.ENSMUSP00000037834",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YAR018C": {
+      "orf": "YAR018C",
+      "gene_name": "KIN3",
+      "go_terms": [
+        "GO:0007059"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "NEK1",
+          "stringId": "9606.ENSP00000424757",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "PLK1",
+          "stringId": "9606.ENSP00000300093",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Nek1",
+          "stringId": "10090.ENSMUSP00000147809",
+          "in_mouse_embedding": false
+        },
+        {
+          "gene": "Plk1",
+          "stringId": "10090.ENSMUSP00000033154",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YBL066C": {
+      "orf": "YBL066C",
+      "gene_name": "SEF1",
+      "go_terms": [
+        "GO:0006357"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YBR069C": {
+      "orf": "YBR069C",
+      "gene_name": "TAT1",
+      "go_terms": [
+        "GO:0055085"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "SLC7A5",
+          "stringId": "9606.ENSP00000261622",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "SLC7A8",
+          "stringId": "9606.ENSP00000320378",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Slc7a5",
+          "stringId": "10090.ENSMUSP00000041557",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Slc7a8",
+          "stringId": "10090.ENSMUSP00000022787",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YBR293W": {
+      "orf": "YBR293W",
+      "gene_name": "VBA2",
+      "go_terms": [
+        "GO:0055085"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "SLC25A4",
+          "stringId": "9606.ENSP00000281456",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "SLC25A5",
+          "stringId": "9606.ENSP00000360671",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Slc25a4",
+          "stringId": "10090.ENSMUSP00000034049",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Slc25a5",
+          "stringId": "10090.ENSMUSP00000016463",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YCL026C-A": {
+      "orf": "YCL026C-A",
+      "gene_name": "FRM2",
+      "go_terms": [
+        "GO:0034599"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "FADS1",
+          "stringId": "9606.ENSP00000322229",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "ACOX1",
+          "stringId": "9606.ENSP00000293217",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Fads1",
+          "stringId": "10090.ENSMUSP00000010807",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Acox1",
+          "stringId": "10090.ENSMUSP00000063325",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YCL058W-A": {
+      "orf": "YCL058W-A",
+      "gene_name": "ADF1",
+      "go_terms": [
+        "GO:0000122"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YCR030C": {
+      "orf": "YCR030C",
+      "gene_name": "SYP1",
+      "go_terms": [
+        "GO:0007117"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "FCHO1",
+          "stringId": "9606.ENSP00000473001",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "FCHO2",
+          "stringId": "9606.ENSP00000393776",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Fcho1",
+          "stringId": "10090.ENSMUSP00000091151",
+          "in_mouse_embedding": false
+        },
+        {
+          "gene": "Fcho2",
+          "stringId": "10090.ENSMUSP00000042959",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YDL024C": {
+      "orf": "YDL024C",
+      "gene_name": "DIA3",
+      "go_terms": [
+        "GO:0001403",
+        "GO:0007124"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YDL056W": {
+      "orf": "YDL056W",
+      "gene_name": "MBP1",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "E2F1",
+          "stringId": "9606.ENSP00000345571",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "E2F3",
+          "stringId": "9606.ENSP00000262904",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "E2f1",
+          "stringId": "10090.ENSMUSP00000099434",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "E2f3",
+          "stringId": "10090.ENSMUSP00000100012",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YDL179W": {
+      "orf": "YDL179W",
+      "gene_name": "PCL9",
+      "go_terms": [
+        "GO:0006355"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "CCNI",
+          "stringId": "9606.ENSP00000237654",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "CCNH",
+          "stringId": "9606.ENSP00000498750",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Ccni",
+          "stringId": "10090.ENSMUSP00000050189",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Ccnh",
+          "stringId": "10090.ENSMUSP00000022030",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YDL247W": {
+      "orf": "YDL247W",
+      "gene_name": "MPH2",
+      "go_terms": [
+        "GO:0055085"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YDR046C": {
+      "orf": "YDR046C",
+      "gene_name": "BAP3",
+      "go_terms": [
+        "GO:0055085"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "BCAP31",
+          "stringId": "9606.ENSP00000392330",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "BCAP29",
+          "stringId": "9606.ENSP00000368414",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Bcap31",
+          "stringId": "10090.ENSMUSP00000002091",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Bcap29",
+          "stringId": "10090.ENSMUSP00000137260",
+          "in_mouse_embedding": false
+        }
+      ]
+    },
+    "YDR107C": {
+      "orf": "YDR107C",
+      "gene_name": "TMN2",
+      "go_terms": [
+        "GO:0001403",
+        "GO:0007124"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YDR173C": {
+      "orf": "YDR173C",
+      "gene_name": "ARG82",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "IPMK",
+          "stringId": "9606.ENSP00000363046",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Ipmk",
+          "stringId": "10090.ENSMUSP00000112568",
+          "in_mouse_embedding": false
+        }
+      ]
+    },
+    "YDR253C": {
+      "orf": "YDR253C",
+      "gene_name": "MET32",
+      "go_terms": [
+        "GO:0000122"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "MLX",
+          "stringId": "9606.ENSP00000246912",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "MLXIPL",
+          "stringId": "9606.ENSP00000320886",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Mlx",
+          "stringId": "10090.ENSMUSP00000017945",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Mlxipl",
+          "stringId": "10090.ENSMUSP00000005507",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YDR259C": {
+      "orf": "YDR259C",
+      "gene_name": "YAP6",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "FOS",
+          "stringId": "9606.ENSP00000306245",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "JUN",
+          "stringId": "9606.ENSP00000360266",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Fos",
+          "stringId": "10090.ENSMUSP00000021674",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Jun",
+          "stringId": "10090.ENSMUSP00000102711",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YDR346C": {
+      "orf": "YDR346C",
+      "gene_name": "SVF1",
+      "go_terms": [
+        "GO:0034599"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YDR421W": {
+      "orf": "YDR421W",
+      "gene_name": "ARO80",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YDR508C": {
+      "orf": "YDR508C",
+      "gene_name": "GNP1",
+      "go_terms": [
+        "GO:0055085"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "SLC38A1",
+          "stringId": "9606.ENSP00000449756",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "SLC38A2",
+          "stringId": "9606.ENSP00000256689",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Slc38a1",
+          "stringId": "10090.ENSMUSP00000085799",
+          "in_mouse_embedding": false
+        },
+        {
+          "gene": "Slc38a2",
+          "stringId": "10090.ENSMUSP00000023099",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YDR522C": {
+      "orf": "YDR522C",
+      "gene_name": "SPS2",
+      "go_terms": [
+        "GO:0030476"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "SRD5A1",
+          "stringId": "9606.ENSP00000274192",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "SRD5A2",
+          "stringId": "9606.ENSP00000477587",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Srd5a1",
+          "stringId": "10090.ENSMUSP00000089097",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Srd5a2",
+          "stringId": "10090.ENSMUSP00000048862",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YDR538W": {
+      "orf": "YDR538W",
+      "gene_name": "PAD1",
+      "go_terms": [
+        "GO:0034599"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "PADI1",
+          "stringId": "9606.ENSP00000364620",
+          "in_human_embedding": false
+        },
+        {
+          "gene": "PADI2",
+          "stringId": "9606.ENSP00000364635",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "PADI4",
+          "stringId": "9606.ENSP00000364597",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Padi2",
+          "stringId": "10090.ENSMUSP00000030765",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Padi4",
+          "stringId": "10090.ENSMUSP00000026381",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YEL052W": {
+      "orf": "YEL052W",
+      "gene_name": "AFG1",
+      "go_terms": [
+        "GO:0034599"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "AFG3L2",
+          "stringId": "9606.ENSP00000269143",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "SPG7",
+          "stringId": "9606.ENSP00000495795",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Afg3l2",
+          "stringId": "10090.ENSMUSP00000025408",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Spg7",
+          "stringId": "10090.ENSMUSP00000119552",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YER033C": {
+      "orf": "YER033C",
+      "gene_name": "ZRG8",
+      "go_terms": [
+        "GO:0031505"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "SLC39A4",
+          "stringId": "9606.ENSP00000301305",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "SLC39A14",
+          "stringId": "9606.ENSP00000370635",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Slc39a4",
+          "stringId": "10090.ENSMUSP00000155442",
+          "in_mouse_embedding": false
+        },
+        {
+          "gene": "Slc39a14",
+          "stringId": "10090.ENSMUSP00000066108",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YER096W": {
+      "orf": "YER096W",
+      "gene_name": "SHC1",
+      "go_terms": [
+        "GO:0030437"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "SHC1",
+          "stringId": "9606.ENSP00000401303",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "SHC2",
+          "stringId": "9606.ENSP00000264554",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Shc1",
+          "stringId": "10090.ENSMUSP00000091940",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Shc2",
+          "stringId": "10090.ENSMUSP00000020564",
+          "in_mouse_embedding": false
+        }
+      ]
+    },
+    "YER180C": {
+      "orf": "YER180C",
+      "gene_name": "ISC10",
+      "go_terms": [
+        "GO:0030437"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YER184C": {
+      "orf": "YER184C",
+      "gene_name": "YER184C",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YFL025C": {
+      "orf": "YFL025C",
+      "gene_name": "BST1",
+      "go_terms": [
+        "GO:0036503"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "DERL1",
+          "stringId": "9606.ENSP00000259512",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "DERL2",
+          "stringId": "9606.ENSP00000158771",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "DERL3",
+          "stringId": "9606.ENSP00000384744",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Derl1",
+          "stringId": "10090.ENSMUSP00000022993",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Derl2",
+          "stringId": "10090.ENSMUSP00000117052",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Derl3",
+          "stringId": "10090.ENSMUSP00000009236",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YFL052W": {
+      "orf": "YFL052W",
+      "gene_name": "YFL052W",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YGR032W": {
+      "orf": "YGR032W",
+      "gene_name": "GSC2",
+      "go_terms": [
+        "GO:0030476"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "GCS1",
+          "stringId": "9606.ENSP00000410992",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "GCLC",
+          "stringId": "9606.ENSP00000497574",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Gcs1",
+          "stringId": "10090.ENSMUSP00000032114",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Gclc",
+          "stringId": "10090.ENSMUSP00000034905",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YGR249W": {
+      "orf": "YGR249W",
+      "gene_name": "MGA1",
+      "go_terms": [
+        "GO:0007124"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YHR009C": {
+      "orf": "YHR009C",
+      "gene_name": "TDA3",
+      "go_terms": [
+        "GO:0042147"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "NEK6",
+          "stringId": "9606.ENSP00000362702",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "NEK9",
+          "stringId": "9606.ENSP00000238616",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Nek6",
+          "stringId": "10090.ENSMUSP00000049723",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Nek9",
+          "stringId": "10090.ENSMUSP00000049056",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YHR133C": {
+      "orf": "YHR133C",
+      "gene_name": "NSG1",
+      "go_terms": [
+        "GO:0016126"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "INSIG1",
+          "stringId": "9606.ENSP00000344741",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "INSIG2",
+          "stringId": "9606.ENSP00000245787",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Insig1",
+          "stringId": "10090.ENSMUSP00000061877",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Insig2",
+          "stringId": "10090.ENSMUSP00000003818",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YHR205W": {
+      "orf": "YHR205W",
+      "gene_name": "SCH9",
+      "go_terms": [
+        "GO:0034599"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "AKT1",
+          "stringId": "9606.ENSP00000451828",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "AKT2",
+          "stringId": "9606.ENSP00000375892",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "SGK1",
+          "stringId": "9606.ENSP00000356832",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Akt1",
+          "stringId": "10090.ENSMUSP00000001780",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Akt2",
+          "stringId": "10090.ENSMUSP00000103981",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Sgk1",
+          "stringId": "10090.ENSMUSP00000114074",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YIL056W": {
+      "orf": "YIL056W",
+      "gene_name": "VHR1",
+      "go_terms": [
+        "GO:0006357",
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "DUSP3",
+          "stringId": "9606.ENSP00000226004",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "DUSP4",
+          "stringId": "9606.ENSP00000240100",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Dusp3",
+          "stringId": "10090.ENSMUSP00000102790",
+          "in_mouse_embedding": false
+        },
+        {
+          "gene": "Dusp4",
+          "stringId": "10090.ENSMUSP00000033930",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YIL085C": {
+      "orf": "YIL085C",
+      "gene_name": "KTR7",
+      "go_terms": [
+        "GO:0031505"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "B4GALT1",
+          "stringId": "9606.ENSP00000369055",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "B4GALT4",
+          "stringId": "9606.ENSP00000420161",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "B4galt1",
+          "stringId": "10090.ENSMUSP00000030121",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "B4galt4",
+          "stringId": "10090.ENSMUSP00000023482",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YIR013C": {
+      "orf": "YIR013C",
+      "gene_name": "GAT4",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "ZNF143",
+          "stringId": "9606.ENSP00000379847",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "ZNF263",
+          "stringId": "9606.ENSP00000219069",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Znf143",
+          "stringId": "10090.ENSMUSP00000147673",
+          "in_mouse_embedding": false
+        }
+      ]
+    },
+    "YJL174W": {
+      "orf": "YJL174W",
+      "gene_name": "KRE9",
+      "go_terms": [
+        "GO:0031505"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "B4GALT1",
+          "stringId": "9606.ENSP00000369055",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "B4GALT7",
+          "stringId": "9606.ENSP00000029410",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "B4galt1",
+          "stringId": "10090.ENSMUSP00000030121",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "B4galt7",
+          "stringId": "10090.ENSMUSP00000068532",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YJL184W": {
+      "orf": "YJL184W",
+      "gene_name": "GON7",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "GON7",
+          "stringId": "9606.ENSP00000306320",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Gon7",
+          "stringId": "10090.ENSMUSP00000136425",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YJL207C": {
+      "orf": "YJL207C",
+      "gene_name": "LAA1",
+      "go_terms": [
+        "GO:0042147"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "ANKRD27",
+          "stringId": "9606.ENSP00000304292",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "VPS51",
+          "stringId": "9606.ENSP00000279281",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Ankrd27",
+          "stringId": "10090.ENSMUSP00000041751",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Vps51",
+          "stringId": "10090.ENSMUSP00000025711",
+          "in_mouse_embedding": false
+        }
+      ]
+    },
+    "YJR049C": {
+      "orf": "YJR049C",
+      "gene_name": "UTR1",
+      "go_terms": [
+        "GO:0006879"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YJR060W": {
+      "orf": "YJR060W",
+      "gene_name": "CBF1",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "USF1",
+          "stringId": "9606.ENSP00000357000",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "USF2",
+          "stringId": "9606.ENSP00000222305",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "MAX",
+          "stringId": "9606.ENSP00000351490",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Usf1",
+          "stringId": "10090.ENSMUSP00000125729",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Usf2",
+          "stringId": "10090.ENSMUSP00000132256",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Max",
+          "stringId": "10090.ENSMUSP00000106025",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YJR100C": {
+      "orf": "YJR100C",
+      "gene_name": "AIM25",
+      "go_terms": [
+        "GO:0034599"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YJR127C": {
+      "orf": "YJR127C",
+      "gene_name": "RSF2",
+      "go_terms": [
+        "GO:0006355"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YJR131W": {
+      "orf": "YJR131W",
+      "gene_name": "MNS1",
+      "go_terms": [
+        "GO:0036503"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "MAN1B1",
+          "stringId": "9606.ENSP00000360645",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "MAN2A1",
+          "stringId": "9606.ENSP00000261483",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Man1b1",
+          "stringId": "10090.ENSMUSP00000036996",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Man2a1",
+          "stringId": "10090.ENSMUSP00000083928",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YKL046C": {
+      "orf": "YKL046C",
+      "gene_name": "DCW1",
+      "go_terms": [
+        "GO:0007117"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YLL033W": {
+      "orf": "YLL033W",
+      "gene_name": "IRC19",
+      "go_terms": [
+        "GO:0030437"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YLL052C": {
+      "orf": "YLL052C",
+      "gene_name": "AQY2",
+      "go_terms": [
+        "GO:0055085"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "AQP1",
+          "stringId": "9606.ENSP00000311165",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Aqp1",
+          "stringId": "10090.ENSMUSP00000004774",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Aqp4",
+          "stringId": "10090.ENSMUSP00000078088",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YLR055C": {
+      "orf": "YLR055C",
+      "gene_name": "SPT8",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "TAF1",
+          "stringId": "9606.ENSP00000406549",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "TAF5",
+          "stringId": "9606.ENSP00000358854",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Taf1",
+          "stringId": "10090.ENSMUSP00000114765",
+          "in_mouse_embedding": false
+        },
+        {
+          "gene": "Taf5",
+          "stringId": "10090.ENSMUSP00000026027",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YLR341W": {
+      "orf": "YLR341W",
+      "gene_name": "SPO77",
+      "go_terms": [
+        "GO:0030437",
+        "GO:0030476"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YML048W": {
+      "orf": "YML048W",
+      "gene_name": "GSF2",
+      "go_terms": [
+        "GO:0006457"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YMR010W": {
+      "orf": "YMR010W",
+      "gene_name": "YMR010W",
+      "go_terms": [
+        "GO:0042147"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YMR184W": {
+      "orf": "YMR184W",
+      "gene_name": "ADD37",
+      "go_terms": [
+        "GO:0036503"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "DERL1",
+          "stringId": "9606.ENSP00000259512",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Derl1",
+          "stringId": "10090.ENSMUSP00000022993",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YNL099C": {
+      "orf": "YNL099C",
+      "gene_name": "OCA1",
+      "go_terms": [
+        "GO:0034599"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "PPM1A",
+          "stringId": "9606.ENSP00000327255",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "PPM1B",
+          "stringId": "9606.ENSP00000282412",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Ppm1a",
+          "stringId": "10090.ENSMUSP00000021514",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Ppm1b",
+          "stringId": "10090.ENSMUSP00000079107",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YNL156C": {
+      "orf": "YNL156C",
+      "gene_name": "NSG2",
+      "go_terms": [
+        "GO:0016126"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "INSIG1",
+          "stringId": "9606.ENSP00000344741",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "INSIG2",
+          "stringId": "9606.ENSP00000245787",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Insig1",
+          "stringId": "10090.ENSMUSP00000061877",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Insig2",
+          "stringId": "10090.ENSMUSP00000003818",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YNL257C": {
+      "orf": "YNL257C",
+      "gene_name": "SIP3",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "SIK1",
+          "stringId": "9606.ENSP00000270162",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "SIK2",
+          "stringId": "9606.ENSP00000305976",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Sik1",
+          "stringId": "10090.ENSMUSP00000024839",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Sik2",
+          "stringId": "10090.ENSMUSP00000038761",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YNL309W": {
+      "orf": "YNL309W",
+      "gene_name": "STB1",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YOL047C": {
+      "orf": "YOL047C",
+      "gene_name": "YOL047C",
+      "go_terms": [
+        "GO:0030476"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YOL089C": {
+      "orf": "YOL089C",
+      "gene_name": "HAL9",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "HAL",
+          "stringId": "9606.ENSP00000261208",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Hal",
+          "stringId": "10090.ENSMUSP00000123336",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YOR043W": {
+      "orf": "YOR043W",
+      "gene_name": "WHI2",
+      "go_terms": [
+        "GO:0034599"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "KCTD6",
+          "stringId": "9606.ENSP00000347188",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "KCTD11",
+          "stringId": "9606.ENSP00000495203",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Kctd6",
+          "stringId": "10090.ENSMUSP00000129059",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Kctd11",
+          "stringId": "10090.ENSMUSP00000159163",
+          "in_mouse_embedding": false
+        }
+      ]
+    },
+    "YOR190W": {
+      "orf": "YOR190W",
+      "gene_name": "SPR1",
+      "go_terms": [
+        "GO:0030437"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "SPRR1A",
+          "stringId": "9606.ENSP00000357751",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "SPRR2A",
+          "stringId": "9606.ENSP00000376423",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Sprr1a",
+          "stringId": "10090.ENSMUSP00000053751",
+          "in_mouse_embedding": false
+        },
+        {
+          "gene": "Sprr2a",
+          "stringId": "10090.ENSMUSP00000083330",
+          "in_mouse_embedding": false
+        }
+      ]
+    },
+    "YOR221C": {
+      "orf": "YOR221C",
+      "gene_name": "MCT1",
+      "go_terms": [
+        "GO:0006631"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "ACAT1",
+          "stringId": "9606.ENSP00000265838",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "ACAT2",
+          "stringId": "9606.ENSP00000356015",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Acat1",
+          "stringId": "10090.ENSMUSP00000034547",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Acat2",
+          "stringId": "10090.ENSMUSP00000007005",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YOR229W": {
+      "orf": "YOR229W",
+      "gene_name": "WTM2",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YOR247W": {
+      "orf": "YOR247W",
+      "gene_name": "SRL1",
+      "go_terms": [
+        "GO:0031505"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "SAR1A",
+          "stringId": "9606.ENSP00000362339",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "SAR1B",
+          "stringId": "9606.ENSP00000385432",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Sar1a",
+          "stringId": "10090.ENSMUSP00000020285",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Sar1b",
+          "stringId": "10090.ENSMUSP00000020653",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YOR363C": {
+      "orf": "YOR363C",
+      "gene_name": "PIP2",
+      "go_terms": [
+        "GO:0006631",
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "PPARA",
+          "stringId": "9606.ENSP00000385523",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "PPARG",
+          "stringId": "9606.ENSP00000287820",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Ppara",
+          "stringId": "10090.ENSMUSP00000105049",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Pparg",
+          "stringId": "10090.ENSMUSP00000000450",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YOR372C": {
+      "orf": "YOR372C",
+      "gene_name": "NDD1",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "FOXM1",
+          "stringId": "9606.ENSP00000342307",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Foxm1",
+          "stringId": "10090.ENSMUSP00000073041",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YPL021W": {
+      "orf": "YPL021W",
+      "gene_name": "ECM23",
+      "go_terms": [
+        "GO:0007124"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YPL026C": {
+      "orf": "YPL026C",
+      "gene_name": "SKS1",
+      "go_terms": [
+        "GO:0045944"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [],
+      "mouse_orthologs_resolved": []
+    },
+    "YPL137C": {
+      "orf": "YPL137C",
+      "gene_name": "GIP3",
+      "go_terms": [
+        "GO:0007059"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "NDC80",
+          "stringId": "9606.ENSP00000261597",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "NUF2",
+          "stringId": "9606.ENSP00000271452",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Ndc80",
+          "stringId": "10090.ENSMUSP00000024851",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Nuf2",
+          "stringId": "10090.ENSMUSP00000106999",
+          "in_mouse_embedding": true
+        }
+      ]
+    },
+    "YPL224C": {
+      "orf": "YPL224C",
+      "gene_name": "MMT2",
+      "go_terms": [
+        "GO:0006879"
+      ],
+      "in_yeast_embedding": true,
+      "human_orthologs_resolved": [
+        {
+          "gene": "SLC25A37",
+          "stringId": "9606.ENSP00000429200",
+          "in_human_embedding": true
+        },
+        {
+          "gene": "SLC25A28",
+          "stringId": "9606.ENSP00000359526",
+          "in_human_embedding": true
+        }
+      ],
+      "mouse_orthologs_resolved": [
+        {
+          "gene": "Slc25a37",
+          "stringId": "10090.ENSMUSP00000039990",
+          "in_mouse_embedding": true
+        },
+        {
+          "gene": "Slc25a28",
+          "stringId": "10090.ENSMUSP00000036913",
+          "in_mouse_embedding": true
+        }
+      ]
+    }
+  }
+}

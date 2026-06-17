@@ -1,0 +1,40 @@
+{
+  "description": "G-F Scores computed with Spectral embedding on the curated 153-node yeast PPI subnetwork, using each GO ontology aspect (BP, MF, CC) independently.",
+  "integration_interval": [
+    0.05,
+    0.422
+  ],
+  "n_points": 25,
+  "embedding": "Spectral (2-D, normalised Laplacian)",
+  "network": "curated_153_ppi",
+  "annotation_stats": {
+    "BP": {
+      "annotation_lines": 1393,
+      "proteins_annotated": 153,
+      "unique_terms": 387
+    },
+    "MF": {
+      "annotation_lines": 2075,
+      "proteins_annotated": 153,
+      "unique_terms": 153
+    },
+    "CC": {
+      "annotation_lines": 965,
+      "proteins_annotated": 151,
+      "unique_terms": 129
+    },
+    "total_gaf_lines": 138996,
+    "total_experimental_lines": 77586
+  },
+  "gf_scores": {
+    "BP": {
+      "Spectral": 0.112
+    },
+    "MF": {
+      "Spectral": 0.3475
+    },
+    "CC": {
+      "Spectral": 0.191
+    }
+  }
+}

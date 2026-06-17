@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "G-F Consistency Framework: Embedding Geometry Reveals Functional Dark Matter in Protein Interaction Networks"
+authors:
+  - family-names: Zhang
+    given-names: Yuhan
+    orcid: "https://orcid.org/0009-0000-2769-467X"
+    affiliation: "Guangling College, Yangzhou University, Yangzhou, Jiangsu, China"
+    corresponding: true
+    email: "qinray@hotmail.com"
+repository-code: "https://github.com/Qinrayn/GF-consistency-framework"
+url: "https://github.com/Qinrayn/GF-consistency-framework"
+version: "2.8.0"
+date-released: "2026-06-17"
+license: MIT
+keywords:
+  - bioinformatics
+  - protein-protein-interaction
+  - network-embedding
+  - gene-ontology
+  - graph-neural-networks
+  - spectral-embedding
+  - functional-dark-matter
+programming-languages:
+  - Python
+identifiers:
+  - description: "GitHub repository"
+    type: url
+    value: "https://github.com/Qinrayn/GF-consistency-framework"
