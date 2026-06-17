@@ -11,9 +11,9 @@
 pipeline:
   seed: 42
   species: yeast                # yeast | human (human requires extra data)
-  start_from: 1                 # first step to execute (1-53)
+  start_from: 1                 # first step to execute (1-55)
   skip_gnn: false
-  skip_extended: false          # skip Steps 16-21, 24-53
+  skip_extended: false          # skip Steps 16-21, 24-55
   skip_plots: false
   run_human: false              # enable cross-species human validation
 

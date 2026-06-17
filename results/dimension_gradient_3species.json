@@ -1,0 +1,1168 @@
+{
+  "description": "Three-Species Dimension Gradient: Critical Dimensions",
+  "version": "1.0.0",
+  "method": "Within-category spatial clustering test at d = [2, 8, 16, 32, 64] for yeast, human, mouse. Nested spectral embeddings (first d columns of d=64 eigenvectors). Permutation test (3000 iterations). Critical dimension = lowest d where p < 0.05.",
+  "dimensions": [
+    2,
+    8,
+    16,
+    32,
+    64
+  ],
+  "n_permutations": 3000,
+  "results_by_dimension": {
+    "2": {
+      "yeast": {
+        "GO:0036503": {
+          "observed_mean_dist": 0.000146,
+          "background_mean_dist": 0.008963,
+          "enrichment_ratio": 61.553,
+          "p_value": 0.000666,
+          "name": "ERAD pathway",
+          "n_proteins": 3,
+          "n_sampled": 3
+        },
+        "GO:0034599": {
+          "observed_mean_dist": 0.001236,
+          "background_mean_dist": 0.009383,
+          "enrichment_ratio": 7.59,
+          "p_value": 0.020327,
+          "name": "oxidative stress response",
+          "n_proteins": 8,
+          "n_sampled": 8
+        },
+        "GO:0055085": {
+          "observed_mean_dist": 0.00238,
+          "background_mean_dist": 0.009383,
+          "enrichment_ratio": 3.943,
+          "p_value": 0.154615,
+          "name": "transmembrane transport",
+          "n_proteins": 8,
+          "n_sampled": 8
+        }
+      },
+      "human": {
+        "GO:0036503": {
+          "observed_mean_dist": 0.000174,
+          "background_mean_dist": 0.001742,
+          "enrichment_ratio": 9.985,
+          "p_value": 0.099967,
+          "name": "ERAD pathway",
+          "n_proteins": 89,
+          "n_sampled": 50
+        },
+        "GO:0006631": {
+          "observed_mean_dist": 0.000178,
+          "background_mean_dist": 0.001742,
+          "enrichment_ratio": 9.773,
+          "p_value": 0.122293,
+          "name": "fatty acid metabolism",
+          "n_proteins": 89,
+          "n_sampled": 50
+        },
+        "GO:0006879": {
+          "observed_mean_dist": 0.000233,
+          "background_mean_dist": 0.001742,
+          "enrichment_ratio": 7.463,
+          "p_value": 0.536821,
+          "name": "iron ion homeostasis",
+          "n_proteins": 67,
+          "n_sampled": 50
+        },
+        "GO:0034599": {
+          "observed_mean_dist": 0.000244,
+          "background_mean_dist": 0.001742,
+          "enrichment_ratio": 7.135,
+          "p_value": 0.589137,
+          "name": "oxidative stress response",
+          "n_proteins": 100,
+          "n_sampled": 50
+        },
+        "GO:0006457": {
+          "observed_mean_dist": 0.000746,
+          "background_mean_dist": 0.001742,
+          "enrichment_ratio": 2.334,
+          "p_value": 0.71876,
+          "name": "protein folding",
+          "n_proteins": 184,
+          "n_sampled": 50
+        },
+        "GO:0016126": {
+          "observed_mean_dist": 0.000128,
+          "background_mean_dist": 0.00193,
+          "enrichment_ratio": 15.1,
+          "p_value": 0.155615,
+          "name": "sterol biosynthesis",
+          "n_proteins": 8,
+          "n_sampled": 8
+        },
+        "GO:0055085": {
+          "observed_mean_dist": 0.000129,
+          "background_mean_dist": 0.001742,
+          "enrichment_ratio": 13.485,
+          "p_value": 0.001,
+          "name": "transmembrane transport",
+          "n_proteins": 474,
+          "n_sampled": 50
+        }
+      },
+      "mouse": {
+        "GO:0036503": {
+          "observed_mean_dist": 9.2e-05,
+          "background_mean_dist": 0.001297,
+          "enrichment_ratio": 14.101,
+          "p_value": 0.004998,
+          "name": "ERAD pathway",
+          "n_proteins": 85,
+          "n_sampled": 50
+        },
+        "GO:0006631": {
+          "observed_mean_dist": 0.000132,
+          "background_mean_dist": 0.001297,
+          "enrichment_ratio": 9.833,
+          "p_value": 0.307564,
+          "name": "fatty acid metabolism",
+          "n_proteins": 107,
+          "n_sampled": 50
+        },
+        "GO:0006879": {
+          "observed_mean_dist": 0.000131,
+          "background_mean_dist": 0.001297,
+          "enrichment_ratio": 9.869,
+          "p_value": 0.306898,
+          "name": "iron ion homeostasis",
+          "n_proteins": 61,
+          "n_sampled": 50
+        },
+        "GO:0034599": {
+          "observed_mean_dist": 0.000154,
+          "background_mean_dist": 0.001297,
+          "enrichment_ratio": 8.427,
+          "p_value": 0.580473,
+          "name": "oxidative stress response",
+          "n_proteins": 103,
+          "n_sampled": 50
+        },
+        "GO:0006457": {
+          "observed_mean_dist": 0.000122,
+          "background_mean_dist": 0.001297,
+          "enrichment_ratio": 10.635,
+          "p_value": 0.173609,
+          "name": "protein folding",
+          "n_proteins": 161,
+          "n_sampled": 50
+        },
+        "GO:0016126": {
+          "observed_mean_dist": 6.5e-05,
+          "background_mean_dist": 0.001789,
+          "enrichment_ratio": 27.579,
+          "p_value": 0.035322,
+          "name": "sterol biosynthesis",
+          "n_proteins": 9,
+          "n_sampled": 9
+        },
+        "GO:0055085": {
+          "observed_mean_dist": 0.000102,
+          "background_mean_dist": 0.001297,
+          "enrichment_ratio": 12.676,
+          "p_value": 0.029657,
+          "name": "transmembrane transport",
+          "n_proteins": 475,
+          "n_sampled": 50
+        }
+      }
+    },
+    "8": {
+      "yeast": {
+        "GO:0036503": {
+          "observed_mean_dist": 0.013051,
+          "background_mean_dist": 0.030833,
+          "enrichment_ratio": 2.363,
+          "p_value": 0.201933,
+          "name": "ERAD pathway",
+          "n_proteins": 3,
+          "n_sampled": 3
+        },
+        "GO:0034599": {
+          "observed_mean_dist": 0.008915,
+          "background_mean_dist": 0.030178,
+          "enrichment_ratio": 3.385,
+          "p_value": 0.003999,
+          "name": "oxidative stress response",
+          "n_proteins": 8,
+          "n_sampled": 8
+        },
+        "GO:0055085": {
+          "observed_mean_dist": 0.006787,
+          "background_mean_dist": 0.030178,
+          "enrichment_ratio": 4.447,
+          "p_value": 0.000333,
+          "name": "transmembrane transport",
+          "n_proteins": 8,
+          "n_sampled": 8
+        }
+      },
+      "human": {
+        "GO:0036503": {
+          "observed_mean_dist": 0.000259,
+          "background_mean_dist": 0.004193,
+          "enrichment_ratio": 16.164,
+          "p_value": 0.02066,
+          "name": "ERAD pathway",
+          "n_proteins": 89,
+          "n_sampled": 50
+        },
+        "GO:0006631": {
+          "observed_mean_dist": 0.000283,
+          "background_mean_dist": 0.004193,
+          "enrichment_ratio": 14.832,
+          "p_value": 0.044652,
+          "name": "fatty acid metabolism",
+          "n_proteins": 89,
+          "n_sampled": 50
+        },
+        "GO:0006879": {
+          "observed_mean_dist": 0.000399,
+          "background_mean_dist": 0.004193,
+          "enrichment_ratio": 10.501,
+          "p_value": 0.353549,
+          "name": "iron ion homeostasis",
+          "n_proteins": 67,
+          "n_sampled": 50
+        },
+        "GO:0034599": {
+          "observed_mean_dist": 0.000393,
+          "background_mean_dist": 0.004193,
+          "enrichment_ratio": 10.667,
+          "p_value": 0.341553,
+          "name": "oxidative stress response",
+          "n_proteins": 100,
+          "n_sampled": 50
+        },
+        "GO:0006457": {
+          "observed_mean_dist": 0.000877,
+          "background_mean_dist": 0.004193,
+          "enrichment_ratio": 4.781,
+          "p_value": 0.606465,
+          "name": "protein folding",
+          "n_proteins": 184,
+          "n_sampled": 50
+        },
+        "GO:0016126": {
+          "observed_mean_dist": 0.000169,
+          "background_mean_dist": 0.004249,
+          "enrichment_ratio": 25.199,
+          "p_value": 0.051649,
+          "name": "sterol biosynthesis",
+          "n_proteins": 8,
+          "n_sampled": 8
+        },
+        "GO:0055085": {
+          "observed_mean_dist": 0.000267,
+          "background_mean_dist": 0.004193,
+          "enrichment_ratio": 15.696,
+          "p_value": 0.025991,
+          "name": "transmembrane transport",
+          "n_proteins": 474,
+          "n_sampled": 50
+        }
+      },
+      "mouse": {
+        "GO:0036503": {
+          "observed_mean_dist": 0.00016,
+          "background_mean_dist": 0.004057,
+          "enrichment_ratio": 25.365,
+          "p_value": 0.010663,
+          "name": "ERAD pathway",
+          "n_proteins": 85,
+          "n_sampled": 50
+        },
+        "GO:0006631": {
+          "observed_mean_dist": 0.000184,
+          "background_mean_dist": 0.004057,
+          "enrichment_ratio": 22.082,
+          "p_value": 0.045651,
+          "name": "fatty acid metabolism",
+          "n_proteins": 107,
+          "n_sampled": 50
+        },
+        "GO:0006879": {
+          "observed_mean_dist": 0.000179,
+          "background_mean_dist": 0.004057,
+          "enrichment_ratio": 22.623,
+          "p_value": 0.037321,
+          "name": "iron ion homeostasis",
+          "n_proteins": 61,
+          "n_sampled": 50
+        },
+        "GO:0034599": {
+          "observed_mean_dist": 0.000222,
+          "background_mean_dist": 0.004057,
+          "enrichment_ratio": 18.252,
+          "p_value": 0.17061,
+          "name": "oxidative stress response",
+          "n_proteins": 103,
+          "n_sampled": 50
+        },
+        "GO:0006457": {
+          "observed_mean_dist": 0.000194,
+          "background_mean_dist": 0.004057,
+          "enrichment_ratio": 20.934,
+          "p_value": 0.068977,
+          "name": "protein folding",
+          "n_proteins": 161,
+          "n_sampled": 50
+        },
+        "GO:0016126": {
+          "observed_mean_dist": 0.000106,
+          "background_mean_dist": 0.004879,
+          "enrichment_ratio": 45.818,
+          "p_value": 0.034322,
+          "name": "sterol biosynthesis",
+          "n_proteins": 9,
+          "n_sampled": 9
+        },
+        "GO:0055085": {
+          "observed_mean_dist": 0.000168,
+          "background_mean_dist": 0.004057,
+          "enrichment_ratio": 24.165,
+          "p_value": 0.021326,
+          "name": "transmembrane transport",
+          "n_proteins": 475,
+          "n_sampled": 50
+        }
+      }
+    },
+    "16": {
+      "yeast": {
+        "GO:0036503": {
+          "observed_mean_dist": 0.050557,
+          "background_mean_dist": 0.04642,
+          "enrichment_ratio": 0.918,
+          "p_value": 0.750083,
+          "name": "ERAD pathway",
+          "n_proteins": 3,
+          "n_sampled": 3
+        },
+        "GO:0034599": {
+          "observed_mean_dist": 0.01173,
+          "background_mean_dist": 0.046451,
+          "enrichment_ratio": 3.96,
+          "p_value": 0.000333,
+          "name": "oxidative stress response",
+          "n_proteins": 8,
+          "n_sampled": 8
+        },
+        "GO:0055085": {
+          "observed_mean_dist": 0.01284,
+          "background_mean_dist": 0.046451,
+          "enrichment_ratio": 3.618,
+          "p_value": 0.000333,
+          "name": "transmembrane transport",
+          "n_proteins": 8,
+          "n_sampled": 8
+        }
+      },
+      "human": {
+        "GO:0036503": {
+          "observed_mean_dist": 0.003858,
+          "background_mean_dist": 0.013466,
+          "enrichment_ratio": 3.491,
+          "p_value": 0.003332,
+          "name": "ERAD pathway",
+          "n_proteins": 89,
+          "n_sampled": 50
+        },
+        "GO:0006631": {
+          "observed_mean_dist": 0.00527,
+          "background_mean_dist": 0.013466,
+          "enrichment_ratio": 2.555,
+          "p_value": 0.058647,
+          "name": "fatty acid metabolism",
+          "n_proteins": 89,
+          "n_sampled": 50
+        },
+        "GO:0006879": {
+          "observed_mean_dist": 0.004148,
+          "background_mean_dist": 0.013466,
+          "enrichment_ratio": 3.246,
+          "p_value": 0.006664,
+          "name": "iron ion homeostasis",
+          "n_proteins": 67,
+          "n_sampled": 50
+        },
+        "GO:0034599": {
+          "observed_mean_dist": 0.006819,
+          "background_mean_dist": 0.013466,
+          "enrichment_ratio": 1.975,
+          "p_value": 0.18927,
+          "name": "oxidative stress response",
+          "n_proteins": 100,
+          "n_sampled": 50
+        },
+        "GO:0006457": {
+          "observed_mean_dist": 0.006329,
+          "background_mean_dist": 0.013466,
+          "enrichment_ratio": 2.128,
+          "p_value": 0.140953,
+          "name": "protein folding",
+          "n_proteins": 184,
+          "n_sampled": 50
+        },
+        "GO:0016126": {
+          "observed_mean_dist": 0.002149,
+          "background_mean_dist": 0.01329,
+          "enrichment_ratio": 6.185,
+          "p_value": 0.021659,
+          "name": "sterol biosynthesis",
+          "n_proteins": 8,
+          "n_sampled": 8
+        },
+        "GO:0055085": {
+          "observed_mean_dist": 0.003882,
+          "background_mean_dist": 0.013466,
+          "enrichment_ratio": 3.469,
+          "p_value": 0.003332,
+          "name": "transmembrane transport",
+          "n_proteins": 474,
+          "n_sampled": 50
+        }
+      },
+      "mouse": {
+        "GO:0036503": {
+          "observed_mean_dist": 0.001211,
+          "background_mean_dist": 0.013742,
+          "enrichment_ratio": 11.351,
+          "p_value": 0.000333,
+          "name": "ERAD pathway",
+          "n_proteins": 85,
+          "n_sampled": 50
+        },
+        "GO:0006631": {
+          "observed_mean_dist": 0.005052,
+          "background_mean_dist": 0.013742,
+          "enrichment_ratio": 2.72,
+          "p_value": 0.080973,
+          "name": "fatty acid metabolism",
+          "n_proteins": 107,
+          "n_sampled": 50
+        },
+        "GO:0006879": {
+          "observed_mean_dist": 0.003657,
+          "background_mean_dist": 0.013742,
+          "enrichment_ratio": 3.757,
+          "p_value": 0.014662,
+          "name": "iron ion homeostasis",
+          "n_proteins": 61,
+          "n_sampled": 50
+        },
+        "GO:0034599": {
+          "observed_mean_dist": 0.006452,
+          "background_mean_dist": 0.013742,
+          "enrichment_ratio": 2.13,
+          "p_value": 0.208264,
+          "name": "oxidative stress response",
+          "n_proteins": 103,
+          "n_sampled": 50
+        },
+        "GO:0006457": {
+          "observed_mean_dist": 0.004218,
+          "background_mean_dist": 0.013742,
+          "enrichment_ratio": 3.258,
+          "p_value": 0.032989,
+          "name": "protein folding",
+          "n_proteins": 161,
+          "n_sampled": 50
+        },
+        "GO:0016126": {
+          "observed_mean_dist": 0.002586,
+          "background_mean_dist": 0.015507,
+          "enrichment_ratio": 5.996,
+          "p_value": 0.074642,
+          "name": "sterol biosynthesis",
+          "n_proteins": 9,
+          "n_sampled": 9
+        },
+        "GO:0055085": {
+          "observed_mean_dist": 0.003275,
+          "background_mean_dist": 0.013742,
+          "enrichment_ratio": 4.196,
+          "p_value": 0.004665,
+          "name": "transmembrane transport",
+          "n_proteins": 475,
+          "n_sampled": 50
+        }
+      }
+    },
+    "32": {
+      "yeast": {
+        "GO:0036503": {
+          "observed_mean_dist": 0.069111,
+          "background_mean_dist": 0.076128,
+          "enrichment_ratio": 1.102,
+          "p_value": 0.588137,
+          "name": "ERAD pathway",
+          "n_proteins": 3,
+          "n_sampled": 3
+        },
+        "GO:0034599": {
+          "observed_mean_dist": 0.037886,
+          "background_mean_dist": 0.075006,
+          "enrichment_ratio": 1.98,
+          "p_value": 0.031656,
+          "name": "oxidative stress response",
+          "n_proteins": 8,
+          "n_sampled": 8
+        },
+        "GO:0055085": {
+          "observed_mean_dist": 0.062398,
+          "background_mean_dist": 0.075006,
+          "enrichment_ratio": 1.202,
+          "p_value": 0.406531,
+          "name": "transmembrane transport",
+          "n_proteins": 8,
+          "n_sampled": 8
+        }
+      },
+      "human": {
+        "GO:0036503": {
+          "observed_mean_dist": 0.009267,
+          "background_mean_dist": 0.030802,
+          "enrichment_ratio": 3.324,
+          "p_value": 0.000333,
+          "name": "ERAD pathway",
+          "n_proteins": 89,
+          "n_sampled": 50
+        },
+        "GO:0006631": {
+          "observed_mean_dist": 0.018908,
+          "background_mean_dist": 0.030802,
+          "enrichment_ratio": 1.629,
+          "p_value": 0.08897,
+          "name": "fatty acid metabolism",
+          "n_proteins": 89,
+          "n_sampled": 50
+        },
+        "GO:0006879": {
+          "observed_mean_dist": 0.01816,
+          "background_mean_dist": 0.030802,
+          "enrichment_ratio": 1.696,
+          "p_value": 0.067311,
+          "name": "iron ion homeostasis",
+          "n_proteins": 67,
+          "n_sampled": 50
+        },
+        "GO:0034599": {
+          "observed_mean_dist": 0.029359,
+          "background_mean_dist": 0.030802,
+          "enrichment_ratio": 1.049,
+          "p_value": 0.509164,
+          "name": "oxidative stress response",
+          "n_proteins": 100,
+          "n_sampled": 50
+        },
+        "GO:0006457": {
+          "observed_mean_dist": 0.02145,
+          "background_mean_dist": 0.030802,
+          "enrichment_ratio": 1.436,
+          "p_value": 0.183605,
+          "name": "protein folding",
+          "n_proteins": 184,
+          "n_sampled": 50
+        },
+        "GO:0016126": {
+          "observed_mean_dist": 0.009585,
+          "background_mean_dist": 0.030422,
+          "enrichment_ratio": 3.174,
+          "p_value": 0.055648,
+          "name": "sterol biosynthesis",
+          "n_proteins": 8,
+          "n_sampled": 8
+        },
+        "GO:0055085": {
+          "observed_mean_dist": 0.013763,
+          "background_mean_dist": 0.030802,
+          "enrichment_ratio": 2.238,
+          "p_value": 0.002333,
+          "name": "transmembrane transport",
+          "n_proteins": 474,
+          "n_sampled": 50
+        }
+      },
+      "mouse": {
+        "GO:0036503": {
+          "observed_mean_dist": 0.00335,
+          "background_mean_dist": 0.024809,
+          "enrichment_ratio": 7.406,
+          "p_value": 0.000333,
+          "name": "ERAD pathway",
+          "n_proteins": 85,
+          "n_sampled": 50
+        },
+        "GO:0006631": {
+          "observed_mean_dist": 0.020727,
+          "background_mean_dist": 0.024809,
+          "enrichment_ratio": 1.197,
+          "p_value": 0.463179,
+          "name": "fatty acid metabolism",
+          "n_proteins": 107,
+          "n_sampled": 50
+        },
+        "GO:0006879": {
+          "observed_mean_dist": 0.014334,
+          "background_mean_dist": 0.024809,
+          "enrichment_ratio": 1.731,
+          "p_value": 0.222926,
+          "name": "iron ion homeostasis",
+          "n_proteins": 61,
+          "n_sampled": 50
+        },
+        "GO:0034599": {
+          "observed_mean_dist": 0.01378,
+          "background_mean_dist": 0.024809,
+          "enrichment_ratio": 1.8,
+          "p_value": 0.19027,
+          "name": "oxidative stress response",
+          "n_proteins": 103,
+          "n_sampled": 50
+        },
+        "GO:0006457": {
+          "observed_mean_dist": 0.007394,
+          "background_mean_dist": 0.024809,
+          "enrichment_ratio": 3.355,
+          "p_value": 0.004332,
+          "name": "protein folding",
+          "n_proteins": 161,
+          "n_sampled": 50
+        },
+        "GO:0016126": {
+          "observed_mean_dist": 0.010309,
+          "background_mean_dist": 0.025724,
+          "enrichment_ratio": 2.495,
+          "p_value": 0.35888,
+          "name": "sterol biosynthesis",
+          "n_proteins": 9,
+          "n_sampled": 9
+        },
+        "GO:0055085": {
+          "observed_mean_dist": 0.022746,
+          "background_mean_dist": 0.024809,
+          "enrichment_ratio": 1.091,
+          "p_value": 0.540153,
+          "name": "transmembrane transport",
+          "n_proteins": 475,
+          "n_sampled": 50
+        }
+      }
+    },
+    "64": {
+      "yeast": {
+        "GO:0036503": {
+          "observed_mean_dist": 0.095628,
+          "background_mean_dist": 0.115603,
+          "enrichment_ratio": 1.209,
+          "p_value": 0.495501,
+          "name": "ERAD pathway",
+          "n_proteins": 3,
+          "n_sampled": 3
+        },
+        "GO:0034599": {
+          "observed_mean_dist": 0.059719,
+          "background_mean_dist": 0.11291,
+          "enrichment_ratio": 1.891,
+          "p_value": 0.040986,
+          "name": "oxidative stress response",
+          "n_proteins": 8,
+          "n_sampled": 8
+        },
+        "GO:0055085": {
+          "observed_mean_dist": 0.092359,
+          "background_mean_dist": 0.11291,
+          "enrichment_ratio": 1.223,
+          "p_value": 0.357214,
+          "name": "transmembrane transport",
+          "n_proteins": 8,
+          "n_sampled": 8
+        }
+      },
+      "human": {
+        "GO:0036503": {
+          "observed_mean_dist": 0.018781,
+          "background_mean_dist": 0.047957,
+          "enrichment_ratio": 2.554,
+          "p_value": 0.000333,
+          "name": "ERAD pathway",
+          "n_proteins": 89,
+          "n_sampled": 50
+        },
+        "GO:0006631": {
+          "observed_mean_dist": 0.037392,
+          "background_mean_dist": 0.047957,
+          "enrichment_ratio": 1.283,
+          "p_value": 0.230923,
+          "name": "fatty acid metabolism",
+          "n_proteins": 89,
+          "n_sampled": 50
+        },
+        "GO:0006879": {
+          "observed_mean_dist": 0.024369,
+          "background_mean_dist": 0.047957,
+          "enrichment_ratio": 1.968,
+          "p_value": 0.012996,
+          "name": "iron ion homeostasis",
+          "n_proteins": 67,
+          "n_sampled": 50
+        },
+        "GO:0034599": {
+          "observed_mean_dist": 0.042425,
+          "background_mean_dist": 0.047957,
+          "enrichment_ratio": 1.13,
+          "p_value": 0.378207,
+          "name": "oxidative stress response",
+          "n_proteins": 100,
+          "n_sampled": 50
+        },
+        "GO:0006457": {
+          "observed_mean_dist": 0.025114,
+          "background_mean_dist": 0.047957,
+          "enrichment_ratio": 1.91,
+          "p_value": 0.017994,
+          "name": "protein folding",
+          "n_proteins": 184,
+          "n_sampled": 50
+        },
+        "GO:0016126": {
+          "observed_mean_dist": 0.015298,
+          "background_mean_dist": 0.048914,
+          "enrichment_ratio": 3.197,
+          "p_value": 0.044985,
+          "name": "sterol biosynthesis",
+          "n_proteins": 8,
+          "n_sampled": 8
+        },
+        "GO:0055085": {
+          "observed_mean_dist": 0.042595,
+          "background_mean_dist": 0.047957,
+          "enrichment_ratio": 1.126,
+          "p_value": 0.384538,
+          "name": "transmembrane transport",
+          "n_proteins": 474,
+          "n_sampled": 50
+        }
+      },
+      "mouse": {
+        "GO:0036503": {
+          "observed_mean_dist": 0.011314,
+          "background_mean_dist": 0.042036,
+          "enrichment_ratio": 3.715,
+          "p_value": 0.000666,
+          "name": "ERAD pathway",
+          "n_proteins": 85,
+          "n_sampled": 50
+        },
+        "GO:0006631": {
+          "observed_mean_dist": 0.035188,
+          "background_mean_dist": 0.042036,
+          "enrichment_ratio": 1.195,
+          "p_value": 0.420526,
+          "name": "fatty acid metabolism",
+          "n_proteins": 107,
+          "n_sampled": 50
+        },
+        "GO:0006879": {
+          "observed_mean_dist": 0.019637,
+          "background_mean_dist": 0.042036,
+          "enrichment_ratio": 2.141,
+          "p_value": 0.052982,
+          "name": "iron ion homeostasis",
+          "n_proteins": 61,
+          "n_sampled": 50
+        },
+        "GO:0034599": {
+          "observed_mean_dist": 0.02063,
+          "background_mean_dist": 0.042036,
+          "enrichment_ratio": 2.038,
+          "p_value": 0.065645,
+          "name": "oxidative stress response",
+          "n_proteins": 103,
+          "n_sampled": 50
+        },
+        "GO:0006457": {
+          "observed_mean_dist": 0.012571,
+          "background_mean_dist": 0.042036,
+          "enrichment_ratio": 3.344,
+          "p_value": 0.001333,
+          "name": "protein folding",
+          "n_proteins": 161,
+          "n_sampled": 50
+        },
+        "GO:0016126": {
+          "observed_mean_dist": 0.014512,
+          "background_mean_dist": 0.041739,
+          "enrichment_ratio": 2.876,
+          "p_value": 0.19127,
+          "name": "sterol biosynthesis",
+          "n_proteins": 9,
+          "n_sampled": 9
+        },
+        "GO:0055085": {
+          "observed_mean_dist": 0.026734,
+          "background_mean_dist": 0.042036,
+          "enrichment_ratio": 1.572,
+          "p_value": 0.197601,
+          "name": "transmembrane transport",
+          "n_proteins": 475,
+          "n_sampled": 50
+        }
+      }
+    }
+  },
+  "critical_dimensions": {
+    "GO:0036503": {
+      "name": "ERAD pathway",
+      "yeast": {
+        "critical_dim": 2,
+        "p_values": [
+          0.000666,
+          0.201933,
+          0.750083,
+          0.588137,
+          0.495501
+        ],
+        "becomes_significant": true
+      },
+      "human": {
+        "critical_dim": 8,
+        "p_values": [
+          0.099967,
+          0.02066,
+          0.003332,
+          0.000333,
+          0.000333
+        ],
+        "becomes_significant": true
+      },
+      "mouse": {
+        "critical_dim": 2,
+        "p_values": [
+          0.004998,
+          0.010663,
+          0.000333,
+          0.000333,
+          0.000666
+        ],
+        "becomes_significant": true
+      }
+    },
+    "GO:0006631": {
+      "name": "fatty acid metabolism",
+      "yeast": {
+        "critical_dim": null,
+        "p_values": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "becomes_significant": false
+      },
+      "human": {
+        "critical_dim": 8,
+        "p_values": [
+          0.122293,
+          0.044652,
+          0.058647,
+          0.08897,
+          0.230923
+        ],
+        "becomes_significant": true
+      },
+      "mouse": {
+        "critical_dim": 8,
+        "p_values": [
+          0.307564,
+          0.045651,
+          0.080973,
+          0.463179,
+          0.420526
+        ],
+        "becomes_significant": true
+      }
+    },
+    "GO:0006879": {
+      "name": "iron ion homeostasis",
+      "yeast": {
+        "critical_dim": null,
+        "p_values": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "becomes_significant": false
+      },
+      "human": {
+        "critical_dim": 16,
+        "p_values": [
+          0.536821,
+          0.353549,
+          0.006664,
+          0.067311,
+          0.012996
+        ],
+        "becomes_significant": true
+      },
+      "mouse": {
+        "critical_dim": 8,
+        "p_values": [
+          0.306898,
+          0.037321,
+          0.014662,
+          0.222926,
+          0.052982
+        ],
+        "becomes_significant": true
+      }
+    },
+    "GO:0034599": {
+      "name": "oxidative stress response",
+      "yeast": {
+        "critical_dim": 2,
+        "p_values": [
+          0.020327,
+          0.003999,
+          0.000333,
+          0.031656,
+          0.040986
+        ],
+        "becomes_significant": true
+      },
+      "human": {
+        "critical_dim": null,
+        "p_values": [
+          0.589137,
+          0.341553,
+          0.18927,
+          0.509164,
+          0.378207
+        ],
+        "becomes_significant": false
+      },
+      "mouse": {
+        "critical_dim": null,
+        "p_values": [
+          0.580473,
+          0.17061,
+          0.208264,
+          0.19027,
+          0.065645
+        ],
+        "becomes_significant": false
+      }
+    },
+    "GO:0006457": {
+      "name": "protein folding",
+      "yeast": {
+        "critical_dim": null,
+        "p_values": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "becomes_significant": false
+      },
+      "human": {
+        "critical_dim": 64,
+        "p_values": [
+          0.71876,
+          0.606465,
+          0.140953,
+          0.183605,
+          0.017994
+        ],
+        "becomes_significant": true
+      },
+      "mouse": {
+        "critical_dim": 16,
+        "p_values": [
+          0.173609,
+          0.068977,
+          0.032989,
+          0.004332,
+          0.001333
+        ],
+        "becomes_significant": true
+      }
+    },
+    "GO:0016126": {
+      "name": "sterol biosynthesis",
+      "yeast": {
+        "critical_dim": null,
+        "p_values": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "becomes_significant": false
+      },
+      "human": {
+        "critical_dim": 16,
+        "p_values": [
+          0.155615,
+          0.051649,
+          0.021659,
+          0.055648,
+          0.044985
+        ],
+        "becomes_significant": true
+      },
+      "mouse": {
+        "critical_dim": 2,
+        "p_values": [
+          0.035322,
+          0.034322,
+          0.074642,
+          0.35888,
+          0.19127
+        ],
+        "becomes_significant": true
+      }
+    },
+    "GO:0055085": {
+      "name": "transmembrane transport",
+      "yeast": {
+        "critical_dim": 8,
+        "p_values": [
+          0.154615,
+          0.000333,
+          0.000333,
+          0.406531,
+          0.357214
+        ],
+        "becomes_significant": true
+      },
+      "human": {
+        "critical_dim": 2,
+        "p_values": [
+          0.001,
+          0.025991,
+          0.003332,
+          0.002333,
+          0.384538
+        ],
+        "becomes_significant": true
+      },
+      "mouse": {
+        "critical_dim": 2,
+        "p_values": [
+          0.029657,
+          0.021326,
+          0.004665,
+          0.540153,
+          0.197601
+        ],
+        "becomes_significant": true
+      }
+    }
+  },
+  "yeast_eigenvalues": [
+    0.04085413872168852,
+    0.046580738425610925,
+    0.06274001246713298,
+    0.07862943823951636,
+    0.09456000262757489,
+    0.09526268885624806,
+    0.0969406799054999,
+    0.10840666310463896,
+    0.11386070101040431,
+    0.11581188249630626,
+    0.13074712901247312,
+    0.13157665124484827,
+    0.13403771378339066,
+    0.14043601100991904,
+    0.14297633803328363,
+    0.1482232910062869,
+    0.14947445819567137,
+    0.15858237088428584,
+    0.16399386126356397,
+    0.1645289214241955,
+    0.16842372120600613,
+    0.17222969101702795,
+    0.17402820014425782,
+    0.17514533765725657,
+    0.1783514943833982,
+    0.1809535348419576,
+    0.18371491918528482,
+    0.18535046671505098,
+    0.18816788125144396,
+    0.1895567327280031,
+    0.19429207452422406,
+    0.19775534473296127,
+    0.19874081250754236,
+    0.19966327690827476,
+    0.2025646793142253,
+    0.2046090514485443,
+    0.205872641198537,
+    0.20890304890319986,
+    0.21106595656625596,
+    0.2156667464389199,
+    0.2171155576137339,
+    0.2177505064001083,
+    0.22056822792727765,
+    0.221499418058646,
+    0.2224486675969878,
+    0.22417323309571224,
+    0.22506939067746642,
+    0.22681200104513946,
+    0.22839934021838787,
+    0.22922954632428938,
+    0.23025030719877249,
+    0.23260672926293047,
+    0.23432820973462215,
+    0.23593065520919648,
+    0.2407629121197694,
+    0.24196070864977073,
+    0.24206291245431238,
+    0.24312536485371383,
+    0.2445021681661283,
+    0.24622684594399885,
+    0.2471952829042882,
+    0.24866322847694036,
+    0.24949975530345064,
+    0.25001836698997687
+  ],
+  "yeast_participation_ratio": 63.99448433495642,
+  "summary": {
+    "2": {
+      "yeast": 2,
+      "human": 1,
+      "mouse": 3
+    },
+    "8": {
+      "yeast": 2,
+      "human": 3,
+      "mouse": 5
+    },
+    "16": {
+      "yeast": 2,
+      "human": 4,
+      "mouse": 4
+    },
+    "32": {
+      "yeast": 1,
+      "human": 2,
+      "mouse": 2
+    },
+    "64": {
+      "yeast": 1,
+      "human": 4,
+      "mouse": 2
+    }
+  }
+}

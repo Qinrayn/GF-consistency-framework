@@ -67,7 +67,7 @@ Usage:
     gf-consistency --config pipeline_config.yaml        # Via pip entry point
 """
 
-__version__ = "2.5.0"
+__version__ = "2.6.0"
 
 import sys
 import json
@@ -1117,6 +1117,22 @@ def main():
             import subprocess
             subprocess.run(xhigh_cmd, check=True)
         if run_step(run_xhigh, "Cross-species high-dim conservation"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 54: Yeast High-Dimensional Spectral Embedding (d=64)
+    # (Computed as part of Step 55, no separate step needed)
+
+    # Step 55: Three-Species Dimension Gradient (d=2,8,16,32,64)
+    if start_from <= 55 and not skip_extended:
+        print_header("Step 55: Three-Species Dimension Gradient")
+        gradient_cmd = [sys.executable,
+                        str(Path(__file__).parent / "scripts" / "dimension_gradient_3species.py")]
+        def run_gradient():
+            import subprocess
+            subprocess.run(gradient_cmd, check=True)
+        if run_step(run_gradient, "Three-species dimension gradient"):
             completed += 1
         else:
             failed += 1

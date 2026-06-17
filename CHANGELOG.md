@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.6.0] — 2026-06-17
+
+### Added (Steps 54-55: Yeast High-Dim Embedding + Three-Species Dimension Gradient)
+- `dimension_gradient_3species.py`: Combined Steps 54+55. Computes yeast d=64 spectral embedding (5,936 nodes, PR=63.99/64) and runs systematic dimension gradient at d=2,8,16,32,64 across all three species. Identifies critical dimensions for each GO category: ERAD d=2 (yeast/mouse) to d=8 (human); transmembrane d=2 (human/mouse); protein folding d=16 (mouse) to d=64 (human). Mouse peaks at d=8 (5/7 sig), human bimodal at d=16 and d=64 (4/7 each). Fig75 generated.
+
+### Changed
+- Version bumped to 2.6.0 across `pyproject.toml`, `run_all_analysis.py`, `scripts/__init__.py`
+- Pipeline expanded from 53 steps to 55 steps
+- `pipeline_config.yaml`: updated `start_from` range (1-55) and `skip_extended` scope (Steps 16-21, 24-55)
+- `scripts/__init__.py`: registered Steps 54-55 module; expanded to 55-step pipeline documentation
+- `run_all_analysis.py`: added Steps 54-55 orchestration blocks with subprocess pattern
+
 ## [2.5.0] — 2026-06-17
 
 ### Added (Steps 52-53: High-Dimensional Embeddings and Cross-Species Re-analysis)

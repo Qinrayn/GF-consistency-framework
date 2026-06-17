@@ -1,7 +1,7 @@
 """
 scripts/ — G-F Consistency Framework analysis pipeline.
 
-This package contains the 53-step reproducible analysis pipeline for
+This package contains the 55-step reproducible analysis pipeline for
 evaluating protein interaction network embeddings via geometric-functional
 consistency.
 
@@ -116,6 +116,10 @@ Modules (Steps 52-53: high-dimensional embeddings and cross-species re-analysis)
 ----------------------------------------------------------------------------------
 highdim_spectral_embeddings     Step 52: Compute d=64 spectral embeddings for human/mouse PPI networks
 cross_species_highdim           Step 53: Cross-species functional conservation in 64D vs 2D comparison
+
+Modules (Steps 54-55: yeast high-dim embedding and three-species dimension gradient)
+--------------------------------------------------------------------------------------
+dimension_gradient_3species     Step 54+55: Yeast d=64 embedding + three-species dimension gradient (d=2,8,16,32,64)
 
 Supplementary experiment modules
 ----------------------------------
