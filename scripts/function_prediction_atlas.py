@@ -3,7 +3,7 @@
 Function Prediction Atlas: Multi-Ontology, Multi-Dimension (Step 67 / Phase 20)
 ================================================================================
 
-Scale up function prediction from BP-only at d=2 to a comprehensive atlas:
+Scale up function prediction from BP-only at d=2 to a multi-ontology atlas:
   - 3 GO ontologies: BP (P), MF (F), CC (C)
   - Multiple dimensions: d = 2, 64, 256
   - 11 embedding methods at d=2

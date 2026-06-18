@@ -202,38 +202,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added (Phase 9: Unified Human G-F Scores — Fix Confounds 1+2)
 - `human_gf_unified.py`: Recomputes human G-F Scores using greedy_modularity_communities (same as yeast) and yeast integration interval [0.05, 0.422] (same as yeast), eliminating the community-detection algorithm mismatch (Louvain vs greedy_modularity) and GF interval mismatch ([0.282,0.297] vs [0.05,0.422]). Old vs new rank correlation rho=0.927; top-3/bottom-2 rankings identical; all predictor correlations preserved in direction (two-factor rho=+0.483 vs old +0.543). LOO analysis confirms Phase 8C pattern (H1 jumps to +0.418 excl Spectral) (Phase 9, Fig 50)
-- `phase9_unified_report.md`: Comprehensive supplement report with per-method comparison, correlation analysis, LOO sensitivity, and recommended paper language
+- `phase9_unified_report.md`: Phase 9 supplement report with per-method comparison, correlation analysis, LOO sensitivity, and recommended paper language
 - `human_gf_unified.json` and Fig 50
 
 ### Added (Phase 8C: Leave-One-Out Sensitivity Analysis)
 - `human_loo_sensitivity.py`: LOO analysis for all 11-method human correlations — excluding Spectral reveals latent H1 signal (rho=+0.430 vs full rho=+0.073), Spectral's anomalous topology (H1=0.0012, 80x lower than yeast) drives the null result. Two-factor model is most LOO-stable (Phase 8C, Fig 49)
-- `phase8c_loo_sensitivity_report.md`: Comprehensive sensitivity report with cross-species asymmetry analysis
+- `phase8c_loo_sensitivity_report.md`: Phase 8C sensitivity report with cross-species asymmetry analysis
 - `human_loo_sensitivity.json` and Fig 49
 
 ### Added (Phase 8B: Full Human TDA Analysis)
 - `human_tda_full.py`: Computes persistent homology for all 11 methods on human PPI with identical yeast parameters (r-grid [0.05, 0.55], TARGET_STD=0.3), runs complete three-factor validation — H1 max persistence does NOT predict G-F Score on human (rho=0.073), three-factor model degrades to rho=0.282 (worse than two-factor rho=0.543). TDA loop signal is yeast-specific (Phase 8B, Fig 48)
-- `phase8b_human_tda_full_report.md`: Comprehensive supplement report with species comparison, revised three-factor framework interpretation
+- `phase8b_human_tda_full_report.md`: Phase 8B supplement report with species comparison, revised three-factor framework interpretation
 - `human_tda_full.json` and Fig 48
 
 ### Added (Phase 8: Cross-Network Validation & Bootstrap Confidence Intervals)
 - `human_cross_network_validation.py`: Validates two/three-factor models on human PPI (11 methods: two-factor rho=0.543; 6 methods: rho=0.880, p=0.021); computes bootstrap 95% CIs (10k resamples) for Phase 7 single-factor and partial correlations — confirms 4 single-factor predictors robust, partial correlations not robust at n=11 (Phase 8, Fig 46-47)
-- `phase8_cross_network_validation_report.md`: Comprehensive validation report with revised Phase 7 conclusions
+- `phase8_cross_network_validation_report.md`: Phase 8 cross-network validation report with revised Phase 7 conclusions
 - `human_cross_network_validation.json` and Figs 46-47
 
 ### Added (Phase 7: TDA-Geometry Bridge)
 - `tda_geometry_bridge.py`: Bridges topological and geometric analysis streams — assembles unified feature matrix (11 methods × 18 features), computes single-factor Spearman correlations, multi-factor models (2F/3F/weight-optimized), partial correlations controlling for spectral+eff_rank, and Betti curve phase transitions (Phase 7, Fig 44-45)
-- `phase7_tda_bridge_report.md`: Comprehensive bridge report — TDA adds independent signal (partial rho=0.845, p=0.001), revised three-factor framework
+- `phase7_tda_bridge_report.md`: Phase 7 TDA bridge report — TDA adds independent signal (partial rho=0.845, p=0.001), revised three-factor framework
 - `tda_geometry_bridge.json` and Figs 44-45
 
 ### Added (Phase 6: Formal Proofs of GAT Collapse)
 - `gat_collapse_formal_proof.py`: Formalises Phase 4 empirical theory into 3 theorems with proofs and numerical verification — T1 (attention degeneration bound), T2 (effective rank bound for mean-aggregation GNN), T3 (G-F Score upper bound for rank-1 embeddings), plus combined corollary validated by Phase 5B dimension sweep (Phase 6, Fig 42-43)
-- `phase6_formal_proof_report.md`: Comprehensive proof report with theorem statements, proof sketches, numerical verification, and practical implications
+- `phase6_formal_proof_report.md`: Phase 6 formal proof report with theorem statements, proof sketches, numerical verification, and practical implications
 - `gat_collapse_formal_proof.json` and Figs 42-43
 
 ### Added (Phase 5: Self-Validation and Causal Disentanglement)
 - `human_spectral_alignment.py`: Cross-network two-factor model transfer test — replicates Phase 3 spectral alignment on human STRING v12.0 (1,310-node largest CC), tests whether spectral alignment + effective dimensionality predict human G-F Score (Phase 5A, Fig 39-40)
 - `gat_dimension_sweep.py`: GAT latent dimension sweep d={2,4,8,16,32} with GraphSAGE control — measures G-F Score, attention entropy, effective dimensionality, matrix rank at each dimension; proves attention degeneration is dimension-independent (Phase 5B, Fig 41)
-- `phase5_deep_analysis_report.md`: Comprehensive Phase 5 report with 8 findings, revised GAT causal chain, negative result interpretation
+- `phase5_deep_analysis_report.md`: Phase 5 deep analysis report with 8 findings, revised GAT causal chain, negative result interpretation
 - `human_spectral_alignment.json`, `gat_dimension_sweep.json` and Figs 39-41
 
 ### Added (Deep Analysis Modules)

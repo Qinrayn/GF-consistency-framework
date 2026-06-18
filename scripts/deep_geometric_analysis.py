@@ -962,7 +962,7 @@ def main():
     if shape_features:
         peak_locations = [sf["peak_r"] for sf in shape_features.values()]
         print(f"\nPeak location range: [{min(peak_locations):.3f}, {max(peak_locations):.3f}]")
-        print("  → Methods diverge most at this scale range")
+        print("  -> Methods diverge most at this scale range")
     
     print("\n" + "=" * 70)
     print("Phase 1 complete. Results ready for interpretation.")

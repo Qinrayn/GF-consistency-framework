@@ -295,7 +295,7 @@ def main():
 
     elapsed = time.time() - t0
     logger.info("Semantic similarity analysis complete (%.1fs)", elapsed)
-    print(f"\nStep 30 complete: {len(common_methods)} methods × 3 purity variants")
+    print(f"\nStep 30 complete: {len(common_methods)} methods x 3 purity variants")
     print(f"  Spearman(standard, IC-weighted): {correlations.get('standard_vs_ic_weighted', {}).get('spearman_rho', 'N/A')}")
     print(f"  Spearman(standard, semantic):    {correlations.get('standard_vs_semantic', {}).get('spearman_rho', 'N/A')}")
     print(f"  DAG inflation ratio (std):       {inflation['inflation_ratio_std']}")

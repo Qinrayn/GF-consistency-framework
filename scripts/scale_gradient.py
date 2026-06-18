@@ -290,7 +290,7 @@ def main():
                 "spearman_rho": float(rho),
                 "p_value": float(p),
             })
-            print(f"  {s1} → {s2}: ρ = {rho:.4f} (P = {p:.4f})")
+            print(f"  {s1} -> {s2}: rho = {rho:.4f} (P = {p:.4f})")
 
     # ---- Save results ----
     output = {

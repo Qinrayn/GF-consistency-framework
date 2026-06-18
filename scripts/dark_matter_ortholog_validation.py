@@ -27,9 +27,6 @@ from collections import defaultdict
 
 # ── Paths ──────────────────────────────────────────────────────────────────
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# Allow override if run from outside project root
-if not os.path.isdir(os.path.join(BASE, "results")):
-    BASE = r"C:\Users\云丘\GF-consistency-framework"
 
 RESULTS_DIR = os.path.join(BASE, "results")
 EMBED_DIR = os.path.join(BASE, "embeddings")

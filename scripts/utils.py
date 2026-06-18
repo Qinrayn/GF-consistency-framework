@@ -31,6 +31,25 @@ from networkx.algorithms.community import greedy_modularity_communities, modular
 
 SEED: int = 42
 
+
+def set_seed(new_seed: int) -> None:
+    """Update the global SEED and re-seed all RNGs.
+
+    Call this once at the start of a pipeline run so that every
+    downstream function that reads ``SEED`` (or uses ``np.random`` /
+    ``random``) honours the user-requested seed.
+    """
+    global SEED
+    SEED = new_seed
+    random.seed(new_seed)
+    np.random.seed(new_seed)
+    try:
+        import torch
+        torch.manual_seed(new_seed)
+    except ImportError:
+        pass
+
+
 # Integration interval for G-F Score (paper default)
 GF_R_MIN: float = 0.05
 GF_R_MAX: float = 0.422
@@ -579,8 +598,10 @@ def spectral_embedding_from_graph(G: nx.Graph,
 
 def deepwalk_from_graph(G: nx.Graph, walk_length: int = 20,
                         walks_per_node: int = 10, window_size: int = 5,
-                        dimensions: int = 2, seed: int = SEED) -> np.ndarray:
+                        dimensions: int = 2, seed: Optional[int] = None) -> np.ndarray:
     """DeepWalk embedding via uniform random walks + SVD."""
+    if seed is None:
+        seed = SEED
     random.seed(seed)
     np.random.seed(seed)
 
@@ -646,8 +667,10 @@ def deepwalk_from_graph(G: nx.Graph, walk_length: int = 20,
 def node2vec_from_graph(G: nx.Graph, walk_length: int = 20,
                         walks_per_node: int = 10, window_size: int = 5,
                         dimensions: int = 2, p: float = 0.5, q: float = 2.0,
-                        seed: int = SEED) -> np.ndarray:
+                        seed: Optional[int] = None) -> np.ndarray:
     """Node2Vec embedding via biased random walks + SVD."""
+    if seed is None:
+        seed = SEED
     random.seed(seed)
     np.random.seed(seed)
 
@@ -730,7 +753,7 @@ def node2vec_from_graph(G: nx.Graph, walk_length: int = 20,
 def vgae_from_graph(G: nx.Graph, hidden_dim: int = 4, latent_dim: int = 2,
                     epochs: int = 300, lr: float = 0.01,
                     features: Optional[np.ndarray] = None,
-                    seed: int = SEED) -> np.ndarray:
+                    seed: Optional[int] = None) -> np.ndarray:
     """VGAE embedding (2-D latent) with 2-layer GCN encoder."""
     import torch
     import torch.nn as nn
@@ -738,6 +761,8 @@ def vgae_from_graph(G: nx.Graph, hidden_dim: int = 4, latent_dim: int = 2,
     from torch_geometric.nn import GCNConv
     from torch_geometric.utils import from_networkx
 
+    if seed is None:
+        seed = SEED
     torch.manual_seed(seed)
     np.random.seed(seed)
 

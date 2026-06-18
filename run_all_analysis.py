@@ -426,6 +426,8 @@ def main():
     skip_topological = args.skip_topological or pipeline_cfg.get("skip_topological", False)
     start_from = args.start_from if args.start_from is not None else pipeline_cfg.get("start_from", 1)
     seed = args.seed if args.seed is not None else pipeline_cfg.get("seed", 42)
+    from scripts.utils import set_seed
+    set_seed(seed)
     species = args.species or pipeline_cfg.get("species", "yeast")
 
     pipeline_start = time.time()

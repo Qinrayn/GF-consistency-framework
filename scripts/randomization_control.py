@@ -70,7 +70,7 @@ def main():
     # Compare
     orig_max_pur = max(orig_purities)
     print(f"\nOriginal DM max purity: {orig_max_pur:.4f}")
-    print(f"Shuffled max purity (mean ± std): {mean_shuf_max:.4f} ± {std_shuf_max:.4f}")
+    print(f"Shuffled max purity (mean +/- std): {mean_shuf_max:.4f} +/- {std_shuf_max:.4f}")
     print(f"Drop: {orig_max_pur - mean_shuf_max:.4f} ({(orig_max_pur - mean_shuf_max) / orig_max_pur * 100:.1f}%)")
     
     # Statistical test: is original significantly above shuffled?

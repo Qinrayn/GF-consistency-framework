@@ -181,8 +181,8 @@ def main():
         yeast_ranks, human_ranks, n_perm=10000, rng=rng
     )
 
-    print(f"\nCross-species Spearman ρ = {rho:.4f} (P = {p_spearman:.4f})")
-    print(f"Permutation test: ρ = {rho_obs:.4f} (P_perm = {p_perm:.4f})")
+    print(f"\nCross-species Spearman rho = {rho:.4f} (P = {p_spearman:.4f})")
+    print(f"Permutation test: rho = {rho_obs:.4f} (P_perm = {p_perm:.4f})")
 
     # ---- Kendall's W ----
     W = kendalls_w([yeast_ranks, human_ranks])
@@ -199,8 +199,8 @@ def main():
             "yeast_score": float(yeast_vals[i]),
             "human_score": float(human_vals[i]),
         }
-        direction = "↑" if shift < 0 else ("↓" if shift > 0 else "→")
-        print(f"  {m:12s}  yeast#{yeast_ranks[i]} → human#{human_ranks[i]}  "
+        direction = "^" if shift < 0 else ("v" if shift > 0 else "->")
+        print(f"  {m:12s}  yeast#{yeast_ranks[i]} -> human#{human_ranks[i]}  "
               f"({direction}{abs(shift)})")
 
     # ---- Normalised score comparison ----

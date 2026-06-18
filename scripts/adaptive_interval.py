@@ -576,7 +576,7 @@ def main() -> None:
         if transparency["genuine_methods"]:
             print(f"    Genuine methods : {transparency['genuine_methods']}")
         if fb_ratio > 0.5:
-            print("  WARNING: majority of methods used fallback — "
+            print("  WARNING: majority of methods used fallback -- "
                   "consensus interval is unreliable!")
         print("=" * 60)
 

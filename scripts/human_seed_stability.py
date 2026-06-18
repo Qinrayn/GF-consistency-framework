@@ -319,8 +319,8 @@ def main():
 
     # ---- Multi-seed analysis ----
     print(f"\n{'=' * 60}")
-    print(f"Seed Stability Analysis: {N_SEEDS} seeds × "
-          f"{SUBSAMPLE_SIZE} nodes × {len(available_methods)} methods")
+    print(f"Seed Stability Analysis: {N_SEEDS} seeds x "
+          f"{SUBSAMPLE_SIZE} nodes x {len(available_methods)} methods")
     print(f"{'=' * 60}")
 
     seed_results = []
@@ -405,8 +405,8 @@ def main():
                 "best_rank": int(np.min(ranks)),
                 "worst_rank": int(np.max(ranks)),
             }
-            print(f"  {method:12s}  GF={mean_val:.4f}±{std_val:.4f}  "
-                  f"CV={cv:.3f}  rank={np.mean(ranks):.1f}±{np.std(ranks):.1f}  "
+            print(f"  {method:12s}  GF={mean_val:.4f}+/-{std_val:.4f}  "
+                  f"CV={cv:.3f}  rank={np.mean(ranks):.1f}+/-{np.std(ranks):.1f}  "
                   f"[{int(np.min(ranks))}-{int(np.max(ranks))}]")
 
     # ---- Save results ----

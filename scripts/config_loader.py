@@ -115,7 +115,7 @@ _VALIDATION_RULES: dict[str, list[tuple[str, type, Optional[Any], Optional[Any]]
     "pipeline": [
         ("seed", int, 0, None),
         ("species", str, None, None),
-        ("start_from", int, 1, 21),
+        ("start_from", int, 1, 72),
     ],
     "gf_score": [
         ("r_min", float, 0.0, 1.0),

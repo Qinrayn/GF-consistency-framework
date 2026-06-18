@@ -880,7 +880,7 @@ def main():
     print(f"  Collapsed ({len(collapse['collapsed'])}): {collapse['collapsed']}")
     for group, stats in collapse["group_statistics"].items():
         if "gf_score" in stats:
-            print(f"    {group:12s}: mean G-F = {stats['gf_score']['mean']:.3f} ± {stats['gf_score']['std']:.3f}")
+            print(f"    {group:12s}: mean G-F = {stats['gf_score']['mean']:.3f} +/- {stats['gf_score']['std']:.3f}")
     
     # -- Method clustering --
     print("\n[7/7] Method clustering...")

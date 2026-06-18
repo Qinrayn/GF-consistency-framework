@@ -25,8 +25,9 @@ OI_COLORS = [
 ]
 
 # ── Load data ──────────────────────────────────────────────────────────────
-RESULTS_DIR = r'C:\Users\云丘\GF-consistency-framework\results'
-FIGURES_DIR = r'C:\Users\云丘\GF-consistency-framework\figures'
+_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS_DIR = os.path.join(_PROJECT_ROOT, 'results')
+FIGURES_DIR = os.path.join(_PROJECT_ROOT, 'figures')
 os.makedirs(FIGURES_DIR, exist_ok=True)
 
 data_path = os.path.join(RESULTS_DIR, 'coexpression_gf.json')

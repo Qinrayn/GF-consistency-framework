@@ -19,7 +19,7 @@ from scipy import stats
 from sklearn.neighbors import NearestNeighbors
 
 # Set up paths
-PROJECT = Path(r"C:\Users\云丘\GF-consistency-framework")
+PROJECT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT / "scripts"))
 
 from utils import SEED, load_embedding

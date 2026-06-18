@@ -272,7 +272,7 @@ def unique_variance_analysis(data, methods):
 
 def plot_fig78_metric_comparison(data, methods, correlations, discrepancies,
                                  unique_var):
-    """Fig78: Comprehensive metric comparison dashboard."""
+    """Fig78: Metric comparison dashboard (GF Score vs AUROC vs kNN-F1)."""
     fig = plt.figure(figsize=(18, 14))
     gs = GridSpec(2, 2, figure=fig, hspace=0.4, wspace=0.35)
 

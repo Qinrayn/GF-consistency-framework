@@ -85,7 +85,7 @@ OKABE_ITO = [
 # ---------------------------------------------------------------------------
 # GO term name dictionary
 # ---------------------------------------------------------------------------
-# Comprehensive mapping of GO term IDs found in the yeast curated 153-node
+# Full mapping of GO term IDs found in the yeast curated 153-node
 # dataset (gene_go_map.json) to their standard human-readable names.
 # Covers biological process, molecular function, and cellular component
 # ontology terms relevant to Saccharomyces cerevisiae.
