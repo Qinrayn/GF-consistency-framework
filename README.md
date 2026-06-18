@@ -90,6 +90,9 @@ conda activate gf-consistency
 # Or install as a package
 pip install .
 
+# Exact reproduction (pinned 88 dependencies)
+pip install -r requirements.lock.txt
+
 # 2. Pull large data files (tracked via Git LFS)
 git lfs pull
 
@@ -434,6 +437,7 @@ GF-consistency-framework/
 ├── pyproject.toml              # Python package metadata
 ├── environment.yml             # Conda environment
 ├── requirements.txt            # pip dependencies
+├── requirements.lock.txt       # Pinned lock file (88 packages, exact reproduction)
 ├── Supplementary_Materials.pdf # Mathematical proofs (Propositions 1-2, Theorems 1-4)
 └── LICENSE                     # MIT License
 ```
