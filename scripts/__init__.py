@@ -1,7 +1,7 @@
 """
 scripts/ — G-F Consistency Framework analysis pipeline.
 
-This package contains the 55-step reproducible analysis pipeline for
+This package contains the 62-step reproducible analysis pipeline for
 evaluating protein interaction network embeddings via geometric-functional
 consistency.
 
@@ -121,6 +121,19 @@ Modules (Steps 54-55: yeast high-dim embedding and three-species dimension gradi
 --------------------------------------------------------------------------------------
 dimension_gradient_3species     Step 54+55: Yeast d=64 embedding + three-species dimension gradient (d=2,8,16,32,64)
 
+Modules (Steps 56-59: UMAP/t-SNE, GO ontology generality, threshold sensitivity, GATv2)
+------------------------------------------------------------------------------------------
+umap_tsne_gf                    Step 56: UMAP/t-SNE G-F evaluation (adjacency vs shortest-path input)
+go_mf_cc_gf_scores              Step 57: GO Molecular Function + Cellular Component G-F Scores
+string_threshold_sensitivity    Step 58: STRING threshold gradient 600-800 (regime shift at 800)
+gatv2_experiment                Step 59: GATv2 vs GAT collapse comparison (Brody et al., ICLR 2022)
+
+Modules (Steps 60-62: robustness baselines and 5th species validation)
+------------------------------------------------------------------------
+prone_harp_gf                   Step 60: ProNE + HARP embedding G-F Scores (spectral-propagation and hierarchical coarsening baselines)
+function_prediction_cosine      Step 61: Cosine similarity voting baseline for function prediction
+fly_analysis                    Step 62: Drosophila melanogaster 5th species cross-species validation (6,909 nodes)
+
 Supplementary experiment modules
 ----------------------------------
 multihead_gat_experiment        Multi-head GAT configuration sweep (1/4/8 heads, d=2-32)
@@ -139,4 +152,4 @@ robustness_analysis           Extended 30-subset convergence analysis
 visualization_helpers         Okabe-Ito colorblind-safe plotting utilities
 """
 
-__version__ = "2.4.0"
+__version__ = "2.9.0"

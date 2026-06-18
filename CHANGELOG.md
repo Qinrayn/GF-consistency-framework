@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.9.0] — 2026-06-17
+
+### Added (Steps 60-62: 5th Species + ProNE/HARP + Cosine Baseline)
+- `fly_analysis.py`: Drosophila melanogaster as 5th species (6,909 nodes, 89,685 edges, STRING v11.5). 11 methods, Spectral ranks #1 (GF=0.619, highest across all 5 species). Kendall's W=0.752 (4 eukaryotes, HIGHER than 3-species W=0.739). GNN collapse confirmed. SQI=0.73.
+- `prone_harp_gf.py`: ProNE (Zhang 2019, spectral propagation + Chebyshev + info enhancement) and HARP (Chen 2018, hierarchical coarsening) on curated 153-node + full 5936-node. Both below Spectral on curated (ProNE 0.087, HARP 0.114 vs Spectral 0.163, random 0.135). Confirms Spectral superiority is not method-selection bias.
+- `function_prediction_cosine.py`: Cosine similarity voting baseline (top-100, positive similarity weighting) vs Euclidean KNN (k=10). Cosine improves MRR for all 5 methods (Spectral +21%, MDS +38%). GF-MRR correlation strengthens to rho=0.90 (p=0.037).
+- `gatv2_experiment.py`: (from v2.8.1) GATv2 dynamic attention reduces entropy (0.903 vs 0.927) but GF stays near-random (0.157 vs 0.154). Collapse from adjacency-reconstruction objective.
+
+### Changed
+- Version bumped to 2.9.0 across `pyproject.toml`, `scripts/__init__.py`
+- Pipeline expanded from 59 steps to 62 steps
+- `pipeline_config.yaml`: `start_from` range updated (1-62)
+- Manuscript: 5 species, Kendall's W=0.752, ProNE/HARP robustness check, cosine baseline, refs [60-61]
+- Cover letter: 5 species, v2.9.0, 100 scripts, 62 steps
+- Abstract: 149/150 words, Body: ~6413 words, 61 references
+
+## [2.8.1] — 2026-06-17
+
+### Added (GATv2 vs GAT Collapse Comparison)
+- `gatv2_experiment.py`: GATv2 (Brody et al., 2022) vs GAT collapse comparison on curated 153-node yeast PPI. Dynamic attention reduces mean attention entropy from 0.927 to 0.903 but does not rescue GF Score (max 0.157 vs GAT 0.154, both below Spectral 0.163). Collapse originates from adjacency-reconstruction objective.
+
 ## [2.8.0] — 2026-06-17
 
 ### Added (Steps 57-58: GO Ontology Generality + Threshold Sensitivity + Validation)

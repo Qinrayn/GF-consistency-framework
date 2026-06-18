@@ -1,0 +1,41 @@
+ACADEMIC USE NOTICE
+===================
+
+Copyright (c) 2026 Zhang, Yuhan
+Department of Chemical Engineering and Pharmacy, Guangling College, Yangzhou University
+
+This software and its associated data, results, and documentation (collectively,
+"the Work") accompany a manuscript currently under peer review. The Work is
+distributed under the MIT License (see LICENSE) subject to the following
+additional terms:
+
+1. CITATION REQUIREMENT
+   Any academic publication that uses, adapts, or builds upon this Work must
+   cite the accompanying paper:
+
+     Zhang, Y. "Embedding Geometry Reveals Functional Dark Matter in Protein
+     Interaction Networks." (2026). Submitted to Nature Communications.
+
+2. NO COMPETING PRE-PUBLICATION USE
+   This Work must not be used to produce a competing or derivative publication
+   before the original manuscript has completed its publication process. If the
+   manuscript is rejected or withdrawn, this restriction is lifted 12 months
+   after this repository's initial public release.
+
+3. DERIVATIVE WORKS
+   Modified versions must clearly state they are modified and must not be
+   presented as the original. Forks or derivative repositories used in academic
+   work must retain this notice.
+
+4. RESULTS INTEGRITY
+   Numerical results, figures, and rankings produced by this pipeline must not
+   be reused in other publications without explicit written permission from the
+   corresponding author (qinray@hotmail.com), except for reproducing or
+   verifying the results described in the accompanying paper.
+
+Violation of these terms constitutes an academic ethics concern. The author
+reserves the right to raise such concerns with relevant journal editors and
+institutional research integrity offices.
+
+These terms are in addition to, and do not replace, the MIT License under which
+this Work is distributed.

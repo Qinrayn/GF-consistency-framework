@@ -1,0 +1,188 @@
+{
+  "analysis": "Cross-Species G-F Score Analysis: Drosophila melanogaster (5th Species)",
+  "species": "Drosophila melanogaster (taxon 7227)",
+  "string_version": "v11.5",
+  "score_threshold": 700,
+  "community_detection": "connected_components",
+  "gf_interval": [
+    0.05,
+    0.422
+  ],
+  "n_points": 25,
+  "r_range": [
+    0.05,
+    0.55
+  ],
+  "subsample_size": 2000,
+  "network_stats": {
+    "n_nodes": 6909,
+    "n_edges": 89685,
+    "n_annotated_with_go": 2000
+  },
+  "gf_scores": {
+    "Spectral": {
+      "gf_score": 0.619226,
+      "peak_purity": 0.6651,
+      "n_nodes": 2000
+    },
+    "MDS": {
+      "gf_score": 0.414695,
+      "peak_purity": 0.5498,
+      "n_nodes": 2000
+    },
+    "Node2Vec": {
+      "gf_score": 0.362879,
+      "peak_purity": 0.4676,
+      "n_nodes": 2000
+    },
+    "DeepWalk": {
+      "gf_score": 0.256866,
+      "peak_purity": 0.4208,
+      "n_nodes": 2000
+    },
+    "PCA": {
+      "gf_score": 0.248944,
+      "peak_purity": 0.4183,
+      "n_nodes": 2000
+    },
+    "GIN": {
+      "gf_score": 0.153848,
+      "peak_purity": 0.2194,
+      "n_nodes": 2000
+    },
+    "DM": {
+      "gf_score": 0.098147,
+      "peak_purity": 0.2584,
+      "n_nodes": 2000
+    },
+    "GraphSAGE": {
+      "gf_score": 0.092655,
+      "peak_purity": 0.1332,
+      "n_nodes": 2000
+    },
+    "VGAE": {
+      "gf_score": 0.049501,
+      "peak_purity": 0.2008,
+      "n_nodes": 2000
+    },
+    "VGAE-feat": {
+      "gf_score": 0.034305,
+      "peak_purity": 0.1847,
+      "n_nodes": 2000
+    },
+    "GAT": {
+      "gf_score": 0.023505,
+      "peak_purity": 0.2582,
+      "n_nodes": 2000
+    }
+  },
+  "ranking": {
+    "Spectral": 1,
+    "MDS": 2,
+    "Node2Vec": 3,
+    "DeepWalk": 4,
+    "PCA": 5,
+    "GIN": 6,
+    "DM": 7,
+    "GraphSAGE": 8,
+    "VGAE": 9,
+    "VGAE-feat": 10,
+    "GAT": 11
+  },
+  "cross_species": {
+    "methods": [
+      "DM",
+      "MDS",
+      "Spectral",
+      "DeepWalk",
+      "Node2Vec",
+      "VGAE",
+      "PCA",
+      "VGAE-feat",
+      "GraphSAGE",
+      "GAT",
+      "GIN"
+    ],
+    "yeast_ranks": {
+      "DM": 2,
+      "MDS": 3,
+      "Spectral": 1,
+      "DeepWalk": 7,
+      "Node2Vec": 4,
+      "VGAE": 11,
+      "PCA": 5,
+      "VGAE-feat": 6,
+      "GraphSAGE": 10,
+      "GAT": 9,
+      "GIN": 8
+    },
+    "human_ranks": {
+      "DM": 8,
+      "MDS": 2,
+      "Spectral": 1,
+      "DeepWalk": 4,
+      "Node2Vec": 3,
+      "VGAE": 10,
+      "PCA": 6,
+      "VGAE-feat": 7,
+      "GraphSAGE": 5,
+      "GAT": 11,
+      "GIN": 9
+    },
+    "mouse_ranks": {
+      "DM": 5,
+      "MDS": 2,
+      "Spectral": 1,
+      "DeepWalk": 6,
+      "Node2Vec": 8,
+      "VGAE": 10,
+      "PCA": 3,
+      "VGAE-feat": 11,
+      "GraphSAGE": 4,
+      "GAT": 7,
+      "GIN": 9
+    },
+    "ecoli_ranks": {
+      "DM": 5,
+      "MDS": 1,
+      "Spectral": 2,
+      "DeepWalk": 4,
+      "Node2Vec": 6,
+      "VGAE": 3,
+      "PCA": 8,
+      "VGAE-feat": 10,
+      "GraphSAGE": 9,
+      "GAT": 11,
+      "GIN": 7
+    },
+    "fly_ranks": {
+      "DM": 7,
+      "MDS": 2,
+      "Spectral": 1,
+      "DeepWalk": 4,
+      "Node2Vec": 3,
+      "VGAE": 9,
+      "PCA": 5,
+      "VGAE-feat": 10,
+      "GraphSAGE": 8,
+      "GAT": 11,
+      "GIN": 6
+    },
+    "kendall_W_3_species": 0.7394,
+    "kendall_W_4_species_no_ecoli": 0.7523,
+    "kendall_W_4_species_with_ecoli": 0.6523,
+    "kendall_W_5_species": 0.6902,
+    "W_change_4sp_to_5sp": 0.0379
+  },
+  "spectral_quality": {
+    "spectral_rank": 1,
+    "gnn_ranks": {
+      "GraphSAGE": 8,
+      "GAT": 11,
+      "GIN": 6
+    },
+    "spectral_beats_all_gnn": true,
+    "sqi": 0.7333
+  },
+  "interpretation": "Drosophila G-F analysis (6909 nodes, 2000 subsampled). Spectral rank #1 of 11. Kendall's W across 5 species: 0.6902. Spectral > GNN pattern HOLDS for Drosophila."
+}

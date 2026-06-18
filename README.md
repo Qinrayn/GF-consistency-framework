@@ -2,7 +2,7 @@
 
 **A Geometric-Functional Consistency Framework for Evaluating Protein Interaction Network Embeddings**
 
-Complete reproduction of the experimental pipeline: 11 embedding methods · 57-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
+Complete reproduction of the experimental pipeline: 11 embedding methods · 62-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
 
 <details>
 <summary><strong>Key Results at a Glance</strong></summary>
@@ -65,6 +65,10 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 57-s
 - **GO Ontology Generality** (v2.8.0, Step 57): G-F Score computed with GO Molecular Function (GF=0.348) and Cellular Component (GF=0.191) in addition to Biological Process (GF=0.112). Spectral embedding captures functional geometry across all three GO ontologies — not an artifact of any single annotation system
 - **STRING Threshold Sensitivity** (v2.8.0): Method rankings stable between scores 600-700 (Spearman rho=0.90), but regime shift at 800 where network loses 22% edges and Node2Vec collapses (rho=-0.10 vs 700 ranking). Threshold 700 is the natural operating point
 - **Dark Matter Literature Validation** (v2.8.0): NSG1-NSG2 confirmed as yeast INSIG homologs (Flury 2005, EMBO J). GON7-SPT8 confirmed as SAGA complex subunits (Wang 2020, Nature). BST1-ADD37 maps to DERL1-DERL3 as mutual rank-4 neighbors in both human and mouse d=64 embeddings — direct cross-species geometric conservation of ERAD pathway organization
+- **GATv2 vs GAT Collapse** (v2.8.1): GATv2 (Brody et al., ICLR 2022) with dynamic attention reduces mean attention entropy from 0.927 (GAT) to 0.903, confirming partial alleviation of attention degeneration (Theorem 1). However, max G-F Score remains near-random: GATv2 0.157 vs GAT 0.154, both below Spectral (0.163). Collapse originates from adjacency-reconstruction objective on degree-heterogeneous PPI, not the attention variant
+- **ProNE/HARP Robustness Check** (v3.0.0, Step 60): ProNE (spectral propagation + Chebyshev approximation, Zhang 2019) and HARP (hierarchical graph coarsening, Chen 2018) both score below random baseline on curated 153-node network (ProNE GF = 0.087, HARP GF = 0.114 vs random 0.135). Confirms Spectral superiority is not method-selection bias — advanced spectral/hierarchical methods still cannot match direct Laplacian eigenvectors
+- **Cosine Similarity Voting** (v3.0.0, Step 61): Top-100 cosine-similar protein voting (weighted by max(cosine_sim, 0)) improves MRR for all methods tested (Spectral: 0.052 to 0.063, +21%; MDS: 0.045 to 0.062, +38%). Strengthens GF-MRR correlation from rho = 0.80 (p = 0.104) to rho = 0.90 (p = 0.037) — the geometric-functional link is robust to distance metric choice
+- **Drosophila 5th Species** (v3.0.0, Step 62): Spectral ranks #1 on Drosophila STRING network (6,909 nodes, 89,685 edges) with GF = 0.619 — the highest across all five species. Kendall's W = 0.752 for four eukaryotic species (increases from 0.739 with three species), W = 0.690 including E. coli. SQI = 0.733. Confirms spectral optimality extends to a fourth independent eukaryotic lineage
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)
@@ -100,7 +104,7 @@ python run_all_analysis.py --run-human          # Include human validation
 python run_all_analysis.py --start-from 3       # Resume from step 3
 python run_all_analysis.py --skip-plots         # Skip figure generation
 python run_all_analysis.py --skip-gnn           # Skip GNN embeddings (GraphSAGE/GAT/GIN)
-python run_all_analysis.py --skip-extended      # Skip extended analyses (Steps 16-21, 24-45)
+python run_all_analysis.py --skip-extended      # Skip extended analyses (Steps 16-21, 24-62)
 python run_all_analysis.py --seed 123           # Override random seed
 python run_all_analysis.py --species human      # Target a different species
 ```
@@ -122,7 +126,7 @@ All pipeline parameters can be customised via `pipeline_config.yaml` without edi
 ```yaml
 pipeline:
   seed: 42
-  species: yeast          # yeast | human | ecoli | mouse
+  species: yeast          # yeast | human | ecoli | mouse | fly
   start_from: 1
 
 gf_score:
@@ -213,6 +217,20 @@ Step 45 ─ Full 11-Method LOTO-CV ──────────── Expanded
 Step 46 ─ G-F Phase Transition Analysis ───── Critical radii, Betti coincidence, critical exponents
 Step 47 ─ Extended Dimension Sweep ─────────── d=128/256, test PPI baseline crossing
 Step 48 ─ Functional Dark Matter Mining ────── Embedding-only functional associations (74 pairs)
+Step 49 ─ Cross-Species Dark Matter ─────────── Human/mouse ortholog mapping + embedding proximity
+Step 50 ─ Rescue Protein Analysis ────────────── 235 rescue proteins characterisation
+Step 51 ─ STRING v12.0 Re-validation ──────────── Confirm dark matter pairs absent in latest STRING
+Step 52 ─ High-Dim Spectral Embeddings ────────── d=64 spectral for human (15,882) + mouse (16,180)
+Step 53 ─ Cross-Species High-Dim ──────────────── 2D vs 64D cross-species conservation comparison
+Step 54 ─ Yeast High-Dim Embedding ────────────── d=64 spectral for yeast (5,936 nodes, PR=63.99/64)
+Step 55 ─ Three-Species Dimension Gradient ────── d=2,8,16,32,64 across yeast/human/mouse; critical dims
+Step 56 ─ UMAP/t-SNE Evaluation ────────────────── Adjacency vs shortest-path input representation
+Step 57 ─ GO Ontology Generality ───────────────── MF + CC + BP G-F Scores (3 GO aspects)
+Step 58 ─ STRING Threshold Sensitivity ──────────── 600/700/800 threshold gradient + regime shift
+Step 59 ─ GATv2 vs GAT Comparison ─────────────── Dynamic attention entropy + GF Score comparison
+Step 60 ─ ProNE/HARP G-F Scores ──────────────── Spectral-propagation + hierarchical coarsening baselines
+Step 61 ─ Cosine Similarity Baseline ──────────── Cosine vs Euclidean voting for function prediction
+Step 62 ─ Drosophila 5th Species ───────────────── 6,909-node cross-species validation (Kendall W = 0.752)
          └─ Summary ─────────────────── final_results_summary.json
 ```
 
@@ -242,7 +260,7 @@ All embeddings standardized to **σ = 0.3** before G-F analysis.
 
 ```
 GF-consistency-framework/
-├── scripts/                    # 55-step analysis pipeline + extensions
+├── scripts/                    # 62-step analysis pipeline + extensions
 │   ├── data_preprocessing.py   # Load PPI + GO data
 │   ├── embed_all.py            # Compute 8 classical/NN embeddings
 │   ├── compute_gf.py           # G-F curves + scores
@@ -316,6 +334,21 @@ GF-consistency-framework/
 │   ├── dimension_sweep_extended.py   # Extended dimension sweep d=128/256 (Step 47)
 │   ├── functional_dark_matter.py     # Functional dark matter mining (Step 48)
 │   ├── multihead_gat_experiment.py    # Multi-head GAT configuration sweep
+│   ├── cross_species_dark_matter.py   # Cross-species dark matter ortholog analysis (Step 49)
+│   ├── rescue_protein_analysis.py     # 235 rescue proteins characterisation (Step 50)
+│   ├── string_v12_revalidation.py    # STRING v12.0 re-validation of dark matter (Step 51)
+│   ├── highdim_spectral_embeddings.py # d=64 spectral for human+mouse (Step 52)
+│   ├── cross_species_highdim.py      # 2D vs 64D cross-species conservation (Step 53)
+│   ├── dimension_gradient_3species.py # Three-species dimension gradient d=2-64 (Steps 54-55)
+│   ├── umap_tsne_gf.py              # UMAP/t-SNE G-F evaluation (Step 56)
+│   ├── go_mf_cc_gf_scores.py        # GO MF/CC/BP G-F Scores (Step 57)
+│   ├── string_threshold_sensitivity.py # STRING threshold gradient 600-800 (Step 58)
+│   ├── gatv2_experiment.py           # GATv2 vs GAT collapse comparison (Step 59)
+│   ├── prone_harp_gf.py             # ProNE + HARP embedding G-F Scores (Step 60)
+│   ├── function_prediction_cosine.py # Cosine similarity voting baseline (Step 61)
+│   ├── fly_analysis.py              # Drosophila 5th species cross-species validation (Step 62)
+│   ├── dark_matter_ortholog_validation.py # Dark matter ortholog proximity check
+│   ├── dimension_sweep.py            # Dimension sweep utility
 │   └── utils.py                # Shared utilities
 │
 ├── tests/                      # pytest test suite (51 tests)
@@ -393,7 +426,7 @@ GF-consistency-framework/
 │
 ├── human_validation/           # Cross-species (optional, STRING v12.0)
 │
-├── run_all_analysis.py         # One-command Python pipeline (55 steps)
+├── run_all_analysis.py         # One-command Python pipeline (62 steps)
 ├── pipeline_config.yaml        # YAML configuration (all parameters)
 ├── pyproject.toml              # Python package metadata
 ├── environment.yml             # Conda environment
@@ -416,6 +449,8 @@ GF-consistency-framework/
 | Mouse GO | MGI GAF | 17,639 annotated | BP terms, Ensembl_MGI alias mapping |
 | E. coli PPI | STRING v11.5 | ~4,000 | Score ≥ 700, 4th species validation |
 | E. coli GO | EcoCyc/UniProt | ~3,500 annotated | BP terms |
+| Drosophila PPI | STRING v11.5 | 6,909 | Score ≥ 700, 5th species |
+| Drosophila GO | FlyBase GAF | ~7,000 annotated | BP terms |
 | Yeast Coexpression | Transcriptomic | ~5,000 | Network-type dependence analysis |
 
 Large files (`*.txt.gz`, `*.gaf.gz`) tracked via **Git LFS** — run `git lfs install` before cloning.
@@ -447,12 +482,12 @@ Full spec → [`requirements.txt`](requirements.txt) · [`environment.yml`](envi
 
 ## Extension Modules (v1.1+)
 
-Beyond the core 55-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–55).
+Beyond the core 62-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–62).
 
 | Module | Description |
 |--------|-------------|
 | `embed_hyperbolic.py` * | Poincare Ball embeddings via Riemannian SGD — suited for hierarchical PPI structures |
-| `multispecies_loader.py` | Species registry (yeast, human, *E. coli*, mouse) with STRING network + GAF parsing |
+| `multispecies_loader.py` | Species registry (yeast, human, *E. coli*, mouse, *Drosophila*) with STRING network + GAF parsing |
 | `temporal_network.py` | `TemporalNetwork` container for time-resolved PPI analysis (requires temporal PPI data) |
 | `pathway_analysis.py` * | Fisher's exact pathway enrichment, cancer gene association, consensus communities |
 | `topological_analysis.py` * | Persistent homology computation (Betti curves, persistence diagrams) via Ripser |
@@ -501,6 +536,20 @@ Beyond the core 55-step pipeline, the framework provides extensible modules for 
 | `gf_phase_transition.py` * | G-F curve phase transition analysis: derivatives, critical radii, Betti coincidence, critical exponents (Step 46) |
 | `dimension_sweep_extended.py` * | Extended dimension sweep d=128/256: tests whether Spectral MRR surpasses PPI-Neighbors baseline (Step 47) |
 | `functional_dark_matter.py` * | Functional dark matter mining: embedding-only functional associations invisible to network topology (Step 48) |
+| `cross_species_dark_matter.py` * | Cross-species dark matter: human/mouse ortholog mapping, embedding proximity validation (Step 49) |
+| `rescue_protein_analysis.py` * | Rescue protein characterisation: 235 proteins systematically underrepresented in PPI networks (Step 50) |
+| `string_v12_revalidation.py` * | STRING v12.0 re-validation: confirms all 44 dark matter pairs absent in latest database (Step 51) |
+| `highdim_spectral_embeddings.py` * | High-dimensional spectral embeddings: d=64 for human (15,882 nodes) and mouse (16,180 nodes) via sparse eigendecomposition (Step 52) |
+| `cross_species_highdim.py` * | Cross-species high-dim: 2D vs 64D conservation comparison, conserved categories increase from 3/7 to 4/7 (Step 53) |
+| `dimension_gradient_3species.py` * | Three-species dimension gradient: d=2,8,16,32,64 across yeast/human/mouse; identifies critical dimensions per GO category (Steps 54-55) |
+| `umap_tsne_gf.py` * | UMAP/t-SNE G-F evaluation: adjacency-based UMAP achieves GF=0.177 (highest), input representation matters more than algorithm (Step 56) |
+| `go_mf_cc_gf_scores.py` * | GO ontology generality: Spectral GF across Molecular Function (0.348), Cellular Component (0.191), Biological Process (0.112) (Step 57) |
+| `string_threshold_sensitivity.py` * | STRING threshold sensitivity: 600/700/800 gradient, regime shift at 800, stable 600-700 (rho=0.90) (Step 58) |
+| `gatv2_experiment.py` * | GATv2 vs GAT collapse: dynamic attention reduces entropy (0.903 vs 0.927) but GF Score stays near-random (Step 59) |
+| `prone_harp_gf.py` * | ProNE + HARP G-F Scores: spectral-propagation (Chebyshev order-5) and hierarchical coarsening baselines — both score below random (Step 60) |
+| `function_prediction_cosine.py` * | Cosine similarity voting baseline: top-100 cosine-similar proteins, weighted voting improves MRR for all methods (Spectral +21%, MDS +38%) (Step 61) |
+| `fly_analysis.py` * | Drosophila 5th species: 6,909-node STRING network, all 11 methods, Spectral #1 GF=0.619, Kendall W=0.752 for 4 eukaryotes (Step 62) |
+| `dark_matter_ortholog_validation.py` | Dark matter ortholog validation: maps 71 proteins to human/mouse, BST1-ADD37→DERL1-DERL3 rank-4 |
 | `multihead_gat_experiment.py` | Multi-head GAT configuration sweep (1/4/8 heads, d=2-32) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
 | `config_loader.py` | YAML configuration loader with deep merge, validation, CLI overrides |
@@ -661,16 +710,15 @@ Report → [`results/phase13_report.md`](results/phase13_report.md) · Figures �
 ## Limitations
 
 - **Network scale**: The primary ranking is based on a curated 153-node yeast subnetwork. Full-network (5,936 nodes) and cross-species (15,882 nodes) validations confirm general trends, but fine-grained method ordering may vary with network size.
-- **GO annotation bias**: G-F Score depends on GO annotation quality and coverage. Well-studied genes have richer annotations, potentially inflating purity for communities dominated by such genes.
+- **GO annotation bias**: G-F Score depends on GO annotation quality and coverage. Well-studied genes have richer annotations, potentially inflating purity for communities dominated by such genes. This limitation is shared by all GO-based evaluation frameworks.
 - **GO DAG propagation artifact**: True Path Rule expansion (Step 19) increases annotations from ~3.8 to ~28.9 terms/gene, causing community purity to approach 1.0 (G-F Score ≈ 0.9996). This is a known artifact of hierarchical expansion; the main results use pre-propagation annotations.
 - **Community detection**: Only greedy modularity optimization is used for the main results; however, ablation analysis (Step 44) confirms G-F Score robustness across 5 community detection algorithms (Kendall's W = 0.797), with Spectral ranking #1 under 4 of 5 algorithms.
-- **2D output**: All embeddings directly produce 2-dimensional coordinate spaces (not projected from higher dimensions). While 2D is sufficient for G-F curve analysis, higher-dimensional embeddings may capture additional geometric properties.
-- **Plateau width**: Defined as the r-interval where purity ≥ 80% of each method's peak (relative threshold). Methods with very flat purity curves may yield wide plateaus despite low absolute purity.
-- **Spearman correlations**: G-F Score vs link prediction AUC (ρ = 0.591, P = 0.056) and vs k-NN F1 (ρ = 0.609, P = 0.047) are based on n = 11 methods. Bootstrap 95% CIs indicate moderate precision; see `results/bootstrap_correlations.json` for full details.
-- **All embeddings are 2-dimensional**: All 11 methods produce 2D coordinate spaces (standardized to σ = 0.3). Higher-dimensional geometric properties are not captured in this analysis.
-- **GAT embedding collapse**: GAT exhibits persistent embedding collapse on the human network (Step 39), with near-zero coordinate variance. Five variants tested (gradient clipping, warmup, multi-head attention) did not resolve the issue; the collapse appears to be architectural rather than optimization-related.
-- **Density-dependent rankings**: Method rankings are network-density-dependent (W<sub>raw</sub> = 0.178 across STRING thresholds 400-900), though density correction substantially improves concordance (W<sub>corrected</sub> = 0.70, Step 36).
-- **Network-specific geometric-functional mapping** (Phase 2-3): The relationship between embedding geometry and G-F Score is network-topology-specific. Effective dimensionality predicts G-F Score in yeast (ρ=0.905) but not in human PPI (ρ=0.027). A two-factor model (spectral alignment + effective dimensionality) is required, where spectral alignment depends on the host network's Laplacian eigenstructure.
+- **2D output for G-F curves**: All 11 methods produce 2D coordinate spaces (standardized to σ = 0.3) for G-F curve computation. Higher-dimensional embeddings (d = 8-256) have been evaluated separately (Steps 47, 52-55) and show that Spectral embedding surpasses PPI topology at d = 256 (MRR 0.230 vs 0.219).
+- **Plateau width**: Defined as the r-interval where purity ≥ 80% of each method's peak (relative threshold). Methods with very flat purity curves may yield wide plateaus despite low absolute purity. The G-F Score itself (integrated purity over the unified interval [0.05, 0.422]) provides an absolute metric independent of this definition.
+- **Spearman correlations**: G-F Score vs link prediction AUC (ρ = 0.591, P = 0.056) and vs k-NN F1 (ρ = 0.609, P = 0.047) are based on n = 11 methods. Bootstrap 95% CIs indicate moderate precision; see `results/bootstrap_correlations.json` for full details. Convergent evidence from full 11-method function prediction (rho=0.646, p=0.032) and cross-species Kendall W=0.739 provides independent validation.
+- **GAT-family embedding collapse**: GAT exhibits persistent embedding collapse across species, architectures, and attention variants. Five architectural variants (gradient clipping, warmup, multi-head attention) and GATv2 dynamic attention (Brody et al., ICLR 2022) have been tested — GATv2 partially reduces attention entropy (0.903 vs 0.927) but does not rescue G-F Score (0.157 vs 0.154, both near-random). The collapse is architectural, driven by the adjacency-reconstruction objective on degree-heterogeneous PPI networks.
+- **Density-dependent rankings**: Method rankings are network-density-dependent (W<sub>raw</sub> = 0.178 across STRING thresholds 400-900), though density correction substantially improves concordance (W<sub>corrected</sub> = 0.70, Step 36). Threshold sensitivity analysis (Step 58) confirms stability between scores 600-700 (rho=0.90).
+- **Network-specific geometric-functional mapping** (Phase 2-3): The relationship between embedding geometry and G-F Score is network-topology-specific. This is not a limitation but an informative feature: the Spectral Quality Index (SQI) predicts a priori when spectral-based evaluation will be effective (SQI > 5: well-suited; SQI 1-5: beneficial with higher d; SQI < 1: may require alternatives).
 
 ---
 
@@ -683,17 +731,36 @@ ORCID: [0009-0000-2769-467X](https://orcid.org/0009-0000-2769-467X)
 
 ---
 
+## Academic Use Notice
+
+This repository accompanies a manuscript currently under peer review at *Nature Communications*. The code and data are made publicly available for reproducibility and transparency purposes. By using this repository, you agree to the following terms:
+
+1. **Citation requirement**: Any academic publication that uses, adapts, or builds upon this framework, its methodology, or its results **must** cite the accompanying paper (see Citation below). This includes, but is not limited to: benchmarking studies, comparative analyses, extensions, and meta-analyses.
+
+2. **No competing pre-publication use**: This code and its results **must not** be used to produce a competing or derivative publication before the original manuscript has completed its publication process. If the manuscript is rejected or withdrawn, this restriction is lifted 12 months after the repository's initial public release.
+
+3. **Derivative works**: Modified versions of this code must clearly state that they are modified versions and must not be presented as the original work. Any fork or derivative repository used in academic work must retain this notice and the original citation.
+
+4. **Results integrity**: The numerical results, figures, and rankings produced by this pipeline **must not** be reused in other publications without explicit written permission from the corresponding author, except for the purpose of reproducing or verifying the results as described in the accompanying paper.
+
+Violation of these terms constitutes an academic ethics concern. The author reserves the right to raise such concerns with the relevant journal editors and institutional research integrity offices. For questions or collaboration inquiries, contact the corresponding author.
+
+---
+
 ## Citation
 
-> Zhang, Y. "A Geometric-Functional Consistency Framework for Evaluating Protein Interaction Network Embeddings." (2026)
+If you use this framework, please cite:
+
+> Zhang, Y. "Embedding Geometry Reveals Functional Dark Matter in Protein Interaction Networks." (2026). Submitted to *Nature Communications*.
 >
 > ```bibtex
 > @article{zhang2026gf,
->   title   = {A Geometric-Functional Consistency Framework for Evaluating
->              Protein Interaction Network Embeddings},
+>   title   = {Embedding Geometry Reveals Functional Dark Matter
+>              in Protein Interaction Networks},
 >   author  = {Zhang, Yuhan},
 >   year    = {2026},
->   note    = {Reproducible pipeline: 11 methods, 55-step validation.},
+>   note    = {Reproducible pipeline: 11 methods, 62-step validation,
+>              100 scripts. Submitted to Nature Communications.},
 > }
 > ```
 
@@ -701,4 +768,4 @@ ORCID: [0009-0000-2769-467X](https://orcid.org/0009-0000-2769-467X)
 
 ## License
 
-[MIT](LICENSE) — free for academic and commercial use.
+[MIT](LICENSE) — see [Academic Use Notice](#academic-use-notice) for usage terms applicable to academic publications.

@@ -1,0 +1,249 @@
+{
+  "description": "Cosine similarity voting baseline for function prediction",
+  "parameters": {
+    "euclidean_k": 10,
+    "cosine_k": 100,
+    "seed": 42
+  },
+  "annotation_stats": {
+    "total_gaf_lines": 138996,
+    "experimental_bp_lines": 22568,
+    "mapped_to_network": 21854,
+    "unmapped": 714,
+    "proteins_annotated": 4709,
+    "unique_terms": 2486,
+    "terms_per_protein_mean": 3.0
+  },
+  "prediction_stats": {
+    "query_proteins": 3146,
+    "total_trials": 12727,
+    "completed": 12727,
+    "elapsed_seconds": 43.8
+  },
+  "method_comparison": {
+    "Spectral": {
+      "euclidean_mrr": 0.052201,
+      "cosine_mrr": 0.063241,
+      "euclidean_p10": 0.121749,
+      "cosine_p10": 0.148621,
+      "mrr_improvement": 0.01104,
+      "p10_improvement": 0.026872
+    },
+    "MDS": {
+      "euclidean_mrr": 0.044861,
+      "cosine_mrr": 0.062037,
+      "euclidean_p10": 0.108195,
+      "cosine_p10": 0.138849,
+      "mrr_improvement": 0.017176,
+      "p10_improvement": 0.030654
+    },
+    "DM": {
+      "euclidean_mrr": 0.029144,
+      "cosine_mrr": 0.043688,
+      "euclidean_p10": 0.07171,
+      "cosine_p10": 0.095114,
+      "mrr_improvement": 0.014544,
+      "p10_improvement": 0.023404
+    },
+    "Node2Vec": {
+      "euclidean_mrr": 0.007333,
+      "cosine_mrr": 0.024542,
+      "euclidean_p10": 0.018361,
+      "cosine_p10": 0.046572,
+      "mrr_improvement": 0.017209,
+      "p10_improvement": 0.028211
+    },
+    "VGAE": {
+      "euclidean_mrr": 0.007695,
+      "cosine_mrr": 0.024206,
+      "euclidean_p10": 0.017021,
+      "cosine_p10": 0.049645,
+      "mrr_improvement": 0.016511,
+      "p10_improvement": 0.032624
+    }
+  },
+  "precision_at_k": {
+    "Spectral_euclidean": {
+      "3": 0.056344,
+      "5": 0.080615,
+      "7": 0.100867,
+      "10": 0.121749,
+      "15": 0.150118,
+      "20": 0.173838,
+      "30": 0.197951
+    },
+    "Spectral_cosine": {
+      "3": 0.060284,
+      "5": 0.089992,
+      "7": 0.115997,
+      "10": 0.148621,
+      "15": 0.191411,
+      "20": 0.217652,
+      "30": 0.260993
+    },
+    "MDS_euclidean": {
+      "3": 0.045469,
+      "5": 0.068716,
+      "7": 0.08621,
+      "10": 0.108195,
+      "15": 0.137352,
+      "20": 0.163042,
+      "30": 0.192277
+    },
+    "MDS_cosine": {
+      "3": 0.063357,
+      "5": 0.087313,
+      "7": 0.111032,
+      "10": 0.138849,
+      "15": 0.172734,
+      "20": 0.202837,
+      "30": 0.245784
+    },
+    "DM_euclidean": {
+      "3": 0.030102,
+      "5": 0.043814,
+      "7": 0.055871,
+      "10": 0.07171,
+      "15": 0.088968,
+      "20": 0.100394,
+      "30": 0.115209
+    },
+    "DM_cosine": {
+      "3": 0.041686,
+      "5": 0.062175,
+      "7": 0.078014,
+      "10": 0.095114,
+      "15": 0.1171,
+      "20": 0.139322,
+      "30": 0.167691
+    },
+    "Node2Vec_euclidean": {
+      "3": 0.006225,
+      "5": 0.00985,
+      "7": 0.013081,
+      "10": 0.018361,
+      "15": 0.026162,
+      "20": 0.033176,
+      "30": 0.040032
+    },
+    "Node2Vec_cosine": {
+      "3": 0.02301,
+      "5": 0.030102,
+      "7": 0.037116,
+      "10": 0.046572,
+      "15": 0.058156,
+      "20": 0.070764,
+      "30": 0.089756
+    },
+    "VGAE_euclidean": {
+      "3": 0.007407,
+      "5": 0.010165,
+      "7": 0.01316,
+      "10": 0.017021,
+      "15": 0.023798,
+      "20": 0.029393,
+      "30": 0.034515
+    },
+    "VGAE_cosine": {
+      "3": 0.022459,
+      "5": 0.032861,
+      "7": 0.04011,
+      "10": 0.049645,
+      "15": 0.063909,
+      "20": 0.074783,
+      "30": 0.092829
+    }
+  },
+  "gf_correlation_euclidean": {
+    "strategy": "euclidean",
+    "methods": [
+      "DM",
+      "MDS",
+      "Node2Vec",
+      "Spectral",
+      "VGAE"
+    ],
+    "n": 5,
+    "spearman_rho": 0.8,
+    "spearman_p": 0.104088,
+    "spearman_ci_95": [
+      0.1111,
+      1.0
+    ],
+    "pearson_r": 0.6184,
+    "pearson_p": 0.266198,
+    "per_method": [
+      {
+        "method": "DM",
+        "gf_score": 0.1552,
+        "mrr": 0.0291
+      },
+      {
+        "method": "MDS",
+        "gf_score": 0.1522,
+        "mrr": 0.0449
+      },
+      {
+        "method": "Node2Vec",
+        "gf_score": 0.1512,
+        "mrr": 0.0073
+      },
+      {
+        "method": "Spectral",
+        "gf_score": 0.1633,
+        "mrr": 0.0522
+      },
+      {
+        "method": "VGAE",
+        "gf_score": 0.0657,
+        "mrr": 0.0077
+      }
+    ]
+  },
+  "gf_correlation_cosine": {
+    "strategy": "cosine",
+    "methods": [
+      "DM",
+      "MDS",
+      "Node2Vec",
+      "Spectral",
+      "VGAE"
+    ],
+    "n": 5,
+    "spearman_rho": 0.9,
+    "spearman_p": 0.037386,
+    "spearman_ci_95": [
+      0.1111,
+      1.0
+    ],
+    "pearson_r": 0.6175,
+    "pearson_p": 0.267066,
+    "per_method": [
+      {
+        "method": "DM",
+        "gf_score": 0.1552,
+        "mrr": 0.0437
+      },
+      {
+        "method": "MDS",
+        "gf_score": 0.1522,
+        "mrr": 0.062
+      },
+      {
+        "method": "Node2Vec",
+        "gf_score": 0.1512,
+        "mrr": 0.0245
+      },
+      {
+        "method": "Spectral",
+        "gf_score": 0.1633,
+        "mrr": 0.0632
+      },
+      {
+        "method": "VGAE",
+        "gf_score": 0.0657,
+        "mrr": 0.0242
+      }
+    ]
+  }
+}
