@@ -1,0 +1,197 @@
+{
+  "description": "Function Prediction Atlas: 3 Ontologies x Multi-Dimension",
+  "ontologies": {
+    "P": {
+      "name": "Biological Process",
+      "stats": {
+        "aspect": "P",
+        "total_gaf_lines": 138996,
+        "experimental_annotations": 22568,
+        "mapped_proteins": 4709,
+        "unmapped": 714,
+        "unique_go_terms": 2486
+      },
+      "methods": {
+        "Spectral-d2": {
+          "MRR": 0.06574433771009332,
+          "n_trials": 12690,
+          "PPI_MRR": 0.2187067168896014,
+          "2Hop_MRR": 0.10459870223910459,
+          "Random_MRR": 0.04111864050536933
+        },
+        "Spectral-d64": {
+          "MRR": 0.20528022309122756,
+          "n_trials": 12690
+        },
+        "Spectral-d256": {
+          "MRR": 0.23043910570210516,
+          "n_trials": 12690
+        },
+        "DM-d2": {
+          "MRR": 0.036727516969119946
+        },
+        "MDS-d2": {
+          "MRR": 0.05990536797436454
+        },
+        "DeepWalk-d2": {
+          "MRR": 0.010253127839864005
+        },
+        "Node2Vec-d2": {
+          "MRR": 0.011400497987735837
+        },
+        "VGAE-d2": {
+          "MRR": 0.010800092867501115
+        },
+        "PCA-d2": {
+          "MRR": 0.04383493556376081
+        },
+        "VGAE-feat-d2": {
+          "MRR": 0.012113590346099113
+        },
+        "GIN-d2": {
+          "MRR": 0.010885507779914757
+        },
+        "GAT-d2": {
+          "MRR": 0.012432864646104195
+        },
+        "GraphSAGE-d2": {
+          "MRR": 0.02094615596833759
+        }
+      }
+    },
+    "F": {
+      "name": "Molecular Function",
+      "stats": {
+        "aspect": "F",
+        "total_gaf_lines": 138996,
+        "experimental_annotations": 32132,
+        "mapped_proteins": 4338,
+        "unmapped": 803,
+        "unique_go_terms": 1781
+      },
+      "methods": {
+        "Spectral-d2": {
+          "MRR": 0.28654830773924256,
+          "n_trials": 7274,
+          "PPI_MRR": 0.3572960518219672,
+          "2Hop_MRR": 0.3193502547186603,
+          "Random_MRR": 0.2900457353013965
+        },
+        "Spectral-d64": {
+          "MRR": 0.36248302343154604,
+          "n_trials": 7274
+        },
+        "Spectral-d256": {
+          "MRR": 0.3736285995993946,
+          "n_trials": 7274
+        },
+        "DM-d2": {
+          "MRR": 0.2752807693249349
+        },
+        "MDS-d2": {
+          "MRR": 0.28247348029384267
+        },
+        "DeepWalk-d2": {
+          "MRR": 0.2623175720932661
+        },
+        "Node2Vec-d2": {
+          "MRR": 0.2623364945100044
+        },
+        "VGAE-d2": {
+          "MRR": 0.2596651694418889
+        },
+        "PCA-d2": {
+          "MRR": 0.2785280825786695
+        },
+        "VGAE-feat-d2": {
+          "MRR": 0.2606699499571274
+        },
+        "GIN-d2": {
+          "MRR": 0.2602486277278604
+        },
+        "GAT-d2": {
+          "MRR": 0.2609764385839672
+        },
+        "GraphSAGE-d2": {
+          "MRR": 0.2656342964027735
+        }
+      }
+    },
+    "C": {
+      "name": "Cellular Component",
+      "stats": {
+        "aspect": "C",
+        "total_gaf_lines": 138996,
+        "experimental_annotations": 15632,
+        "mapped_proteins": 4302,
+        "unmapped": 568,
+        "unique_go_terms": 730
+      },
+      "methods": {
+        "Spectral-d2": {
+          "MRR": 0.20894947732258135,
+          "n_trials": 8120,
+          "PPI_MRR": 0.3615979894629574,
+          "2Hop_MRR": 0.24928629296806887,
+          "Random_MRR": 0.1871231087273409
+        },
+        "Spectral-d64": {
+          "MRR": 0.3662605266431528,
+          "n_trials": 8120
+        },
+        "Spectral-d256": {
+          "MRR": 0.3785439700170073,
+          "n_trials": 8120
+        },
+        "DM-d2": {
+          "MRR": 0.17861430979323012
+        },
+        "MDS-d2": {
+          "MRR": 0.22337476156303665
+        },
+        "DeepWalk-d2": {
+          "MRR": 0.1253738818054381
+        },
+        "Node2Vec-d2": {
+          "MRR": 0.12137270622343559
+        },
+        "VGAE-d2": {
+          "MRR": 0.1264042589437746
+        },
+        "PCA-d2": {
+          "MRR": 0.18597936919386154
+        },
+        "VGAE-feat-d2": {
+          "MRR": 0.12822481112344294
+        },
+        "GIN-d2": {
+          "MRR": 0.12631561011520964
+        },
+        "GAT-d2": {
+          "MRR": 0.12870487424288551
+        },
+        "GraphSAGE-d2": {
+          "MRR": 0.1432495678778826
+        }
+      }
+    }
+  },
+  "spectral_dimensions": [
+    2,
+    64,
+    256
+  ],
+  "methods_d2": [
+    "DM",
+    "MDS",
+    "Spectral",
+    "DeepWalk",
+    "Node2Vec",
+    "VGAE",
+    "PCA",
+    "VGAE-feat",
+    "GIN",
+    "GAT",
+    "GraphSAGE"
+  ]
+}

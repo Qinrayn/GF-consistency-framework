@@ -1,0 +1,112 @@
+================================================================
+  Pan-Species Dark Matter Mining (Phase 3.1)
+================================================================
+
+==================================================
+  Yeast (S. cerevisiae)
+==================================================
+  Loading network ...
+  5936 nodes, 120357 edges
+  Computing/loading Spectral d=64 embedding ...
+  Embedding: (5936, 64)
+  Loading GO BP annotations ...
+  4651 annotated proteins, 2479 unique BP terms
+  Mining dark matter pairs ...
+    Checked 500/5936 proteins, 0 DM pairs found so far
+    Checked 1000/5936 proteins, 2 DM pairs found so far
+    Checked 1500/5936 proteins, 6 DM pairs found so far
+    Checked 2500/5936 proteins, 11 DM pairs found so far
+    Checked 3500/5936 proteins, 20 DM pairs found so far
+    Checked 4000/5936 proteins, 25 DM pairs found so far
+    Checked 4500/5936 proteins, 26 DM pairs found so far
+    Checked 5000/5936 proteins, 27 DM pairs found so far
+  Found 35 dark matter pairs in 5.9s
+    Disconnected: 0
+    Multi-term: 3
+    Unique proteins: 47
+
+==================================================
+  Human (H. sapiens)
+==================================================
+  Loading network ...
+  FAILED to load network: [Errno 2] No such file or directory: 'C:\\Users\\ÔÆÇð\\GF-consistency-framework\\data\\human_validation\\9606.protein.links.v12.0.txt.gz'
+
+==================================================
+  Mouse (M. musculus)
+==================================================
+  Loading network ...
+  16180 nodes, 233340 edges
+  Computing/loading Spectral d=64 embedding ...
+  Embedding: (16180, 64)
+  Loading GO BP annotations ...
+  14569 annotated proteins, 18603 unique BP terms
+  Mining dark matter pairs ...
+    Checked 1000/16180 proteins, 1868 DM pairs found so far
+    Checked 1500/16180 proteins, 2779 DM pairs found so far
+    Checked 2000/16180 proteins, 3806 DM pairs found so far
+    Checked 2500/16180 proteins, 4873 DM pairs found so far
+    Checked 3000/16180 proteins, 5803 DM pairs found so far
+    Checked 3500/16180 proteins, 6833 DM pairs found so far
+    Checked 4000/16180 proteins, 7747 DM pairs found so far
+    Checked 4500/16180 proteins, 8781 DM pairs found so far
+    Checked 5000/16180 proteins, 9817 DM pairs found so far
+    Checked 6000/16180 proteins, 12138 DM pairs found so far
+    Checked 6500/16180 proteins, 13313 DM pairs found so far
+    Checked 7000/16180 proteins, 14490 DM pairs found so far
+    Checked 7500/16180 proteins, 15675 DM pairs found so far
+    Checked 8000/16180 proteins, 17182 DM pairs found so far
+    Checked 8500/16180 proteins, 18550 DM pairs found so far
+    Checked 9000/16180 proteins, 19707 DM pairs found so far
+    Checked 9500/16180 proteins, 20809 DM pairs found so far
+    Checked 10000/16180 proteins, 21633 DM pairs found so far
+    Checked 10500/16180 proteins, 22458 DM pairs found so far
+    Checked 11000/16180 proteins, 23577 DM pairs found so far
+    Checked 12000/16180 proteins, 25640 DM pairs found so far
+    Checked 12500/16180 proteins, 26319 DM pairs found so far
+    Checked 13000/16180 proteins, 27313 DM pairs found so far
+    Checked 13500/16180 proteins, 28234 DM pairs found so far
+    Checked 14000/16180 proteins, 29196 DM pairs found so far
+    Checked 14500/16180 proteins, 29989 DM pairs found so far
+    Checked 15000/16180 proteins, 30720 DM pairs found so far
+    Checked 15500/16180 proteins, 31616 DM pairs found so far
+    Checked 16000/16180 proteins, 32371 DM pairs found so far
+  Found 32635 dark matter pairs in 31.0s
+    Disconnected: 0
+    Multi-term: 12212
+    Unique proteins: 6574
+
+==================================================
+  Fly (D. melanogaster)
+==================================================
+  Loading network ...
+  10473 nodes, 140619 edges
+  Computing/loading Spectral d=64 embedding ...
+  Embedding: (10473, 64)
+  Loading GO BP annotations ...
+  0 annotated proteins, 0 unique BP terms
+  SKIP: too few annotated proteins
+
+==================================================
+  E. coli K-12
+==================================================
+  Loading network ...
+  4049 nodes, 33654 edges
+  Computing/loading Spectral d=64 embedding ...
+  Embedding: (4049, 64)
+  Loading GO BP annotations ...
+  0 annotated proteins, 0 unique BP terms
+  SKIP: too few annotated proteins
+
+Saved to C:\Users\ÔÆÇð\GF-consistency-framework\results\dark_matter_pan_species.json
+
+================================================================
+  PAN-SPECIES DARK MATTER SUMMARY
+================================================================
+  Yeast (S. cerevisiae): 35 pairs (0 disconnected, 47 proteins)
+  human: ERROR ([Errno 2] No such file or directory: 'C:\\Users\\ÔÆÇð\\GF-consistency-framework\\data\\human_validation\\9606.protein.links.v12.0.txt.gz')
+  Mouse (M. musculus): 32635 pairs (0 disconnected, 6574 proteins)
+  fly: ERROR (too few annotations)
+  ecoli: ERROR (too few annotations)
+  Saved C:\Users\ÔÆÇð\GF-consistency-framework\figures\Fig88_pan_species_dark_matter.png
+
+Completed in 49.7s (0.8 min)

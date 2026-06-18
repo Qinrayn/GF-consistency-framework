@@ -1,0 +1,118 @@
+================================================================
+Full 11-Method LOTO-CV Function Prediction Analysis
+================================================================
+
+[Step 1] Loading full PPI network...
+  Full network: 5936 nodes, 120357 edges
+
+[Step 2] Computing centrality features...
+  Features shape: (5936, 6)
+
+[Step 1] Computing missing full-network embeddings...
+  PCA: already exists, skipping
+  DeepWalk: already exists, skipping
+  VGAE-feat: already exists, skipping
+  GIN: already exists, skipping
+  GAT: already exists, skipping
+  GraphSAGE: already exists, skipping
+
+[Step 3] Building alias mapping...
+  Alias mapping: 10616 SGD IDs, 2215 ORF names -> STRING IDs
+
+[Step 4] Parsing GAF (experimental BP)...
+  GAF: 138996 lines, 22568 experimental BP, 21854 mapped -> 4709 proteins
+
+[Step 5] Loading all full-network embeddings...
+  DM: 5936 nodes loaded (dim=2)
+  MDS: 5936 nodes loaded (dim=2)
+  Spectral: 5936 nodes loaded (dim=2)
+  DeepWalk: 5936 nodes loaded (dim=2)
+  Node2Vec: 5936 nodes loaded (dim=2)
+  VGAE: 5936 nodes loaded (dim=2)
+  PCA: 5936 nodes loaded (dim=2)
+  VGAE-feat: 5936 nodes loaded (dim=2)
+  GIN: 5936 nodes loaded (dim=2)
+  GAT: 5936 nodes loaded (dim=2)
+  GraphSAGE: 5936 nodes loaded (dim=2)
+  Loaded 11 methods: ['DM', 'DeepWalk', 'GAT', 'GIN', 'GraphSAGE', 'MDS', 'Node2Vec', 'PCA', 'Spectral', 'VGAE', 'VGAE-feat']
+
+[Step 6] Running LOTO-CV predictions...
+
+  Query proteins: 3133 (>= 2 terms each)
+  Total LOTO trials: 12690
+  KNN index built for DM: 5936 nodes
+  KNN index built for MDS: 5936 nodes
+  KNN index built for Spectral: 5936 nodes
+  KNN index built for DeepWalk: 5936 nodes
+  KNN index built for Node2Vec: 5936 nodes
+  KNN index built for VGAE: 5936 nodes
+  KNN index built for PCA: 5936 nodes
+  KNN index built for VGAE-feat: 5936 nodes
+  KNN index built for GIN: 5936 nodes
+  KNN index built for GAT: 5936 nodes
+  KNN index built for GraphSAGE: 5936 nodes
+    Progress: 5000/12690 (39%) -- 219 trials/s -- ETA 35s
+    Progress: 10000/12690 (79%) -- 217 trials/s -- ETA 12s
+
+  Completed 12690 trials in 58.5s (217 trials/s)
+
+[Step 7] Computing metrics...
+
+  Mean Reciprocal Rank:
+    Spectral       : MRR=0.0656
+    MDS            : MRR=0.0599
+    PCA            : MRR=0.0442
+    DM             : MRR=0.0364
+    GraphSAGE      : MRR=0.0209
+    GAT            : MRR=0.0122
+    VGAE-feat      : MRR=0.0120
+    Node2Vec       : MRR=0.0113
+    VGAE           : MRR=0.0110
+    GIN            : MRR=0.0110
+    DeepWalk       : MRR=0.0104
+
+  GF Scores (from 153-node curated network):
+    DM             : GF=0.1552
+    MDS            : GF=0.1522
+    Spectral       : GF=0.1633
+    DeepWalk       : GF=0.1225
+    Node2Vec       : GF=0.1512
+    VGAE           : GF=0.0657
+    PCA            : GF=0.1375
+    VGAE-feat      : GF=0.1238
+    GIN            : GF=0.1217
+    GAT            : GF=0.0694
+    GraphSAGE      : GF=0.0690
+
+  Computing GF Score vs MRR correlation...
+
+  GF Score vs MRR correlation (n=11 methods):
+    Spearman rho = 0.6182 (parametric P = 0.042646)
+    95% CI: [-0.0521, 0.9061]
+    Pearson r  = 0.6007 (P = 0.050659)
+    Permutation P (10,000 shuffles) = 0.051400
+    Significant at p < 0.05: True
+
+[Step 8] Saving results...
+Traceback (most recent call last):
+  File "C:\Users\ÔÆÇð\GF-consistency-framework\scripts\function_prediction_full.py", line 699, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\ÔÆÇð\GF-consistency-framework\scripts\function_prediction_full.py", line 674, in main
+    json.dump(output, f, indent=2, ensure_ascii=False)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ÔÆÇð\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 179, in dump
+    for chunk in iterable:
+                 ^^^^^^^^
+  File "C:\Users\ÔÆÇð\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 433, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "C:\Users\ÔÆÇð\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 407, in _iterencode_dict
+    yield from chunks
+  File "C:\Users\ÔÆÇð\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 407, in _iterencode_dict
+    yield from chunks
+  File "C:\Users\ÔÆÇð\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 440, in _iterencode
+    o = _default(o)
+  File "C:\Users\ÔÆÇð\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+                    f'is not JSON serializable')
+TypeError: Object of type bool is not JSON serializable

@@ -3,7 +3,7 @@
 """
 Master script to run all analyses for the G-F consistency framework.
 
-Version: 2.1.0
+Version: 2.11.0
 
 This script orchestrates the complete analysis pipeline:
 1.  Data preprocessing
@@ -54,20 +54,44 @@ This script orchestrates the complete analysis pipeline:
 46. G-F curve phase transition analysis (critical radii, Betti coincidence)
 47. Extended dimension sweep d=128/256 (test PPI baseline crossing)
 48. Functional dark matter mining (embedding-only functional associations)
+49. Cross-species dark matter conservation (yeast vs human/mouse)
+50. Generate missing supplementary figures (FigS18-S20)
+51. STRING v12.0 re-validation of dark matter pairs
+52. High-dimensional spectral embeddings (human/mouse d=64)
+53. Cross-species conservation in high-dimensional space
+54. Yeast high-dimensional spectral embedding (d=64)
+55. Three-species dimension gradient (d=2,8,16,32,64)
+56. UMAP/t-SNE evaluation (adjacency and shortest-path inputs)
+57. GO ontology generality (MF + CC G-F Scores)
+58. STRING threshold sensitivity (600/700/800)
+59. GATv2 vs GAT collapse comparison
+60. Drosophila 5th species analysis
+61. ProNE/HARP robustness check
+62. Cosine similarity voting baseline
+63. Heat kernel multi-scale analysis
+64. Position encoding comparison (Laplacian PE, RWPE, SignNet)
+65. Cheeger-Spectral G-F bound
+66. Dimension sweep extension (d=512, d=1024)
+67. Multi-ontology function prediction atlas (BP+MF+CC)
+68. Uncharacterized protein mining (511 predictions)
+69. High-dim spectral embeddings for all species
+70. Cross-species function prediction atlas (human+mouse)
+71. Ortholog cross-validation (centroid geometry)
+72. Pan-species dark matter mining (5 species)
 
 Usage:
     python run_all_analysis.py                         # Skip human validation
     python run_all_analysis.py --run-human              # Include human validation
     python run_all_analysis.py --skip-plots             # Skip figure generation
     python run_all_analysis.py --skip-gnn               # Skip GNN embeddings
-    python run_all_analysis.py --skip-extended          # Skip Steps 16-21, 24-48
+    python run_all_analysis.py --skip-extended          # Skip Steps 16-21, 24-72
     python run_all_analysis.py --skip-topological       # Skip Steps 22-23
     python run_all_analysis.py --start-from 3           # Start from step 3
     python run_all_analysis.py --config my_config.yaml  # Custom config file
     gf-consistency --config pipeline_config.yaml        # Via pip entry point
 """
 
-__version__ = "2.6.0"
+__version__ = "2.11.0"
 
 import sys
 import json
@@ -365,11 +389,11 @@ def main():
     parser.add_argument("--skip-plots", action="store_true",
                         help="Skip figure generation")
     parser.add_argument("--start-from", type=int, default=None,
-                        help="Start from a specific step (1-48)")
+                        help="Start from a specific step (1-72)")
     parser.add_argument("--skip-gnn", action="store_true",
                         help="Skip GNN embedding computation (Step 15)")
     parser.add_argument("--skip-extended", action="store_true",
-                        help="Skip extended analysis steps (16-21, 24-48)")
+                        help="Skip extended analysis steps (16-21, 24-72)")
     parser.add_argument("--skip-topological", action="store_true",
                         help="Skip topological analysis steps (22-23)")
     parser.add_argument("--seed", type=int, default=None,
@@ -418,7 +442,7 @@ def main():
     if skip_gnn:
         print("  GNN embeddings: SKIPPED")
     if skip_extended:
-        print("  Extended analysis (Steps 16-21, 24-48): SKIPPED")
+        print("  Extended analysis (Steps 16-21, 24-72): SKIPPED")
     if skip_topological:
         print("  Topological analysis (Steps 22-23): SKIPPED")
     print()
@@ -1133,6 +1157,233 @@ def main():
             import subprocess
             subprocess.run(gradient_cmd, check=True)
         if run_step(run_gradient, "Three-species dimension gradient"):
+            completed += 1
+        else:
+            failed += 1
+
+    # ---- Steps 56-62: Extended Experiments (v2.8.0 - v2.9.0) ----
+
+    # Step 56: UMAP/t-SNE Evaluation
+    if start_from <= 56 and not skip_extended:
+        print_header("Step 56: UMAP/t-SNE Evaluation")
+        umap_cmd = [sys.executable,
+                    str(Path(__file__).parent / "scripts" / "umap_tsne_gf.py")]
+        def run_umap():
+            import subprocess
+            subprocess.run(umap_cmd, check=True)
+        if run_step(run_umap, "UMAP/t-SNE evaluation"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 57: GO Ontology Generality (MF + CC)
+    if start_from <= 57 and not skip_extended:
+        print_header("Step 57: GO Ontology Generality (MF + CC)")
+        go_cmd = [sys.executable,
+                  str(Path(__file__).parent / "scripts" / "go_mf_cc_gf_scores.py")]
+        def run_go_ontology():
+            import subprocess
+            subprocess.run(go_cmd, check=True)
+        if run_step(run_go_ontology, "GO ontology generality"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 58: STRING Threshold Sensitivity
+    if start_from <= 58 and not skip_extended:
+        print_header("Step 58: STRING Threshold Sensitivity")
+        thresh_cmd = [sys.executable,
+                      str(Path(__file__).parent / "scripts" / "string_threshold_sensitivity.py")]
+        def run_threshold():
+            import subprocess
+            subprocess.run(thresh_cmd, check=True)
+        if run_step(run_threshold, "STRING threshold sensitivity"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 59: GATv2 vs GAT Collapse Comparison
+    if start_from <= 59 and not skip_extended:
+        print_header("Step 59: GATv2 vs GAT Collapse Comparison")
+        gatv2_cmd = [sys.executable,
+                     str(Path(__file__).parent / "scripts" / "gatv2_experiment.py")]
+        def run_gatv2():
+            import subprocess
+            subprocess.run(gatv2_cmd, check=True)
+        if run_step(run_gatv2, "GATv2 comparison"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 60: Drosophila 5th Species Analysis
+    if start_from <= 60 and not skip_extended:
+        print_header("Step 60: Drosophila 5th Species Analysis")
+        fly_cmd = [sys.executable,
+                   str(Path(__file__).parent / "scripts" / "fly_analysis.py")]
+        def run_fly():
+            import subprocess
+            subprocess.run(fly_cmd, check=True)
+        if run_step(run_fly, "Drosophila analysis"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 61: ProNE/HARP Robustness Check
+    if start_from <= 61 and not skip_extended:
+        print_header("Step 61: ProNE/HARP Robustness Check")
+        prone_cmd = [sys.executable,
+                     str(Path(__file__).parent / "scripts" / "prone_harp_gf.py")]
+        def run_prone():
+            import subprocess
+            subprocess.run(prone_cmd, check=True)
+        if run_step(run_prone, "ProNE/HARP robustness check"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 62: Cosine Similarity Voting Baseline
+    if start_from <= 62 and not skip_extended:
+        print_header("Step 62: Cosine Similarity Voting Baseline")
+        cosine_cmd = [sys.executable,
+                      str(Path(__file__).parent / "scripts" / "function_prediction_cosine.py")]
+        def run_cosine():
+            import subprocess
+            subprocess.run(cosine_cmd, check=True)
+        if run_step(run_cosine, "Cosine voting baseline"):
+            completed += 1
+        else:
+            failed += 1
+
+    # ---- Steps 63-65: Theoretical Foundations (v2.10.0) ----
+
+    # Step 63: Heat Kernel Multi-Scale Analysis
+    if start_from <= 63 and not skip_extended:
+        print_header("Step 63: Heat Kernel Multi-Scale Analysis")
+        hk_cmd = [sys.executable,
+                  str(Path(__file__).parent / "scripts" / "heat_kernel_multiscale.py")]
+        def run_heat_kernel():
+            import subprocess
+            subprocess.run(hk_cmd, check=True)
+        if run_step(run_heat_kernel, "Heat kernel multi-scale analysis"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 64: Position Encoding Comparison
+    if start_from <= 64 and not skip_extended:
+        print_header("Step 64: Position Encoding Comparison")
+        pe_cmd = [sys.executable,
+                  str(Path(__file__).parent / "scripts" / "position_encoding_comparison.py")]
+        def run_pe():
+            import subprocess
+            subprocess.run(pe_cmd, check=True)
+        if run_step(run_pe, "Position encoding comparison"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 65: Cheeger-Spectral G-F Bound
+    if start_from <= 65 and not skip_extended:
+        print_header("Step 65: Cheeger-Spectral G-F Bound")
+        cheeger_cmd = [sys.executable,
+                       str(Path(__file__).parent / "scripts" / "cheeger_gf_bound.py")]
+        def run_cheeger():
+            import subprocess
+            subprocess.run(cheeger_cmd, check=True)
+        if run_step(run_cheeger, "Cheeger-Spectral G-F bound"):
+            completed += 1
+        else:
+            failed += 1
+
+    # ---- Steps 66-72: Function Prediction Atlas (v2.11.0) ----
+
+    # Step 66: Dimension Sweep Extension (d=512, d=1024)
+    if start_from <= 66 and not skip_extended:
+        print_header("Step 66: Dimension Sweep (d=512, d=1024)")
+        d512_cmd = [sys.executable,
+                    str(Path(__file__).parent / "scripts" / "dimension_sweep_512.py")]
+        def run_d512():
+            import subprocess
+            subprocess.run(d512_cmd, check=True)
+        if run_step(run_d512, "Dimension sweep d=512/1024"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 67: Multi-Ontology Function Prediction Atlas
+    if start_from <= 67 and not skip_extended:
+        print_header("Step 67: Multi-Ontology Function Prediction Atlas")
+        atlas_cmd = [sys.executable,
+                     str(Path(__file__).parent / "scripts" / "function_prediction_atlas.py")]
+        def run_atlas():
+            import subprocess
+            subprocess.run(atlas_cmd, check=True)
+        if run_step(run_atlas, "Function prediction atlas (BP+MF+CC)"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 68: Uncharacterized Protein Mining
+    if start_from <= 68 and not skip_extended:
+        print_header("Step 68: Uncharacterized Protein Mining")
+        unchar_cmd = [sys.executable,
+                      str(Path(__file__).parent / "scripts" / "uncharacterized_prediction.py")]
+        def run_unchar():
+            import subprocess
+            subprocess.run(unchar_cmd, check=True)
+        if run_step(run_unchar, "Uncharacterized protein mining"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 69: Cross-Species Atlas (Human + Mouse)
+    if start_from <= 69 and not skip_extended:
+        print_header("Step 69: Cross-Species Function Prediction Atlas")
+        cs_atlas_cmd = [sys.executable,
+                        str(Path(__file__).parent / "scripts" / "cross_species_atlas.py")]
+        def run_cs_atlas():
+            import subprocess
+            subprocess.run(cs_atlas_cmd, check=True)
+        if run_step(run_cs_atlas, "Cross-species atlas"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 70: Atlas Extension (MF/CC at d=512/1024)
+    if start_from <= 70 and not skip_extended:
+        print_header("Step 70: Atlas Extension (d=512/1024)")
+        ext_cmd = [sys.executable,
+                   str(Path(__file__).parent / "scripts" / "atlas_extension_512.py")]
+        def run_ext():
+            import subprocess
+            subprocess.run(ext_cmd, check=True)
+        if run_step(run_ext, "Atlas extension d=512/1024"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 71: Ortholog Cross-Validation
+    if start_from <= 71 and not skip_extended:
+        print_header("Step 71: Ortholog Cross-Validation")
+        orth_cmd = [sys.executable,
+                    str(Path(__file__).parent / "scripts" / "ortholog_cross_validation.py")]
+        def run_orth():
+            import subprocess
+            subprocess.run(orth_cmd, check=True)
+        if run_step(run_orth, "Ortholog cross-validation"):
+            completed += 1
+        else:
+            failed += 1
+
+    # Step 72: Pan-Species Dark Matter Mining
+    if start_from <= 72 and not skip_extended:
+        print_header("Step 72: Pan-Species Dark Matter Mining")
+        pan_cmd = [sys.executable,
+                   str(Path(__file__).parent / "scripts" / "dark_matter_pan_species.py")]
+        def run_pan():
+            import subprocess
+            subprocess.run(pan_cmd, check=True)
+        if run_step(run_pan, "Pan-species dark matter mining"):
             completed += 1
         else:
             failed += 1

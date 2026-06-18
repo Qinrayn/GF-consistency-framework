@@ -1,0 +1,182 @@
+{
+  "description": "Ortholog Cross-Validation Part A: Functional Centroid Geometry",
+  "embedding_dim": 256,
+  "shared_term_analysis": {
+    "BP": {
+      "n_shared_terms": 616,
+      "species_pairs": {
+        "human-mouse": {
+          "n_common_terms": 616,
+          "pearson_rho": 0.6334026537852004,
+          "pearson_p": 0.0,
+          "spearman_rho": 0.6181684768043639,
+          "spearman_p": 0.0,
+          "mean_centroid_norm_sp1": 1.9537397552309004,
+          "mean_centroid_norm_sp2": 1.45473385473249,
+          "procrustes_distance": 0.7280851340784303,
+          "mean_term_displacement": 0.023134171240508008,
+          "median_term_displacement": 0.01880153447359733
+        },
+        "human-yeast": {
+          "n_common_terms": 616,
+          "pearson_rho": 0.3001339557882564,
+          "pearson_p": 0.0,
+          "spearman_rho": 0.35265879879867856,
+          "spearman_p": 0.0,
+          "mean_centroid_norm_sp1": 1.9537397552309004,
+          "mean_centroid_norm_sp2": 2.314294395548032,
+          "procrustes_distance": 0.9405619884986921,
+          "mean_term_displacement": 0.03313556007199823,
+          "median_term_displacement": 0.028421584371984752
+        },
+        "mouse-yeast": {
+          "n_common_terms": 616,
+          "pearson_rho": 0.32943216873244513,
+          "pearson_p": 0.0,
+          "spearman_rho": 0.3725708102003766,
+          "spearman_p": 0.0,
+          "mean_centroid_norm_sp1": 1.45473385473249,
+          "mean_centroid_norm_sp2": 2.314294395548032,
+          "procrustes_distance": 0.9597032168204669,
+          "mean_term_displacement": 0.032935586417416916,
+          "median_term_displacement": 0.02821801989650466
+        }
+      }
+    },
+    "MF": {
+      "n_shared_terms": 366,
+      "species_pairs": {
+        "human-mouse": {
+          "n_common_terms": 366,
+          "pearson_rho": 0.7448556613652618,
+          "pearson_p": 0.0,
+          "spearman_rho": 0.7206732957922232,
+          "spearman_p": 0.0,
+          "mean_centroid_norm_sp1": 1.6908887347340231,
+          "mean_centroid_norm_sp2": 1.323975612267206,
+          "procrustes_distance": 0.6264995336438967,
+          "mean_term_displacement": 0.02563188344003268,
+          "median_term_displacement": 0.020217732716106957
+        },
+        "human-yeast": {
+          "n_common_terms": 366,
+          "pearson_rho": 0.438327835273063,
+          "pearson_p": 0.0,
+          "spearman_rho": 0.48313014327997894,
+          "spearman_p": 0.0,
+          "mean_centroid_norm_sp1": 1.6908887347340231,
+          "mean_centroid_norm_sp2": 2.1638914441094284,
+          "procrustes_distance": 0.8501852271374845,
+          "mean_term_displacement": 0.03823347974070654,
+          "median_term_displacement": 0.03260374944503629
+        },
+        "mouse-yeast": {
+          "n_common_terms": 366,
+          "pearson_rho": 0.5115610989136244,
+          "pearson_p": 0.0,
+          "spearman_rho": 0.5065225183398913,
+          "spearman_p": 0.0,
+          "mean_centroid_norm_sp1": 1.323975612267206,
+          "mean_centroid_norm_sp2": 2.1638914441094284,
+          "procrustes_distance": 0.8375222383906009,
+          "mean_term_displacement": 0.03743417350094677,
+          "median_term_displacement": 0.031874061220974165
+        }
+      }
+    },
+    "CC": {
+      "n_shared_terms": 275,
+      "species_pairs": {
+        "human-mouse": {
+          "n_common_terms": 275,
+          "pearson_rho": 0.8183286504124212,
+          "pearson_p": 0.0,
+          "spearman_rho": 0.7538582863135642,
+          "spearman_p": 0.0,
+          "mean_centroid_norm_sp1": 2.3880175043952723,
+          "mean_centroid_norm_sp2": 1.688793494149325,
+          "procrustes_distance": 0.5820536108125973,
+          "mean_term_displacement": 0.028320826613527847,
+          "median_term_displacement": 0.02319490589754769
+        },
+        "human-yeast": {
+          "n_common_terms": 275,
+          "pearson_rho": 0.5585023455545087,
+          "pearson_p": 0.0,
+          "spearman_rho": 0.4982987035034355,
+          "spearman_p": 0.0,
+          "mean_centroid_norm_sp1": 2.3880175043952723,
+          "mean_centroid_norm_sp2": 2.5027804610372635,
+          "procrustes_distance": 0.7235149783570831,
+          "mean_term_displacement": 0.03748139745265003,
+          "median_term_displacement": 0.032451573749253775
+        },
+        "mouse-yeast": {
+          "n_common_terms": 275,
+          "pearson_rho": 0.4687684047617375,
+          "pearson_p": 0.0,
+          "spearman_rho": 0.41439733938432005,
+          "spearman_p": 0.0,
+          "mean_centroid_norm_sp1": 1.688793494149325,
+          "mean_centroid_norm_sp2": 2.5027804610372635,
+          "procrustes_distance": 0.8326426707381687,
+          "mean_term_displacement": 0.043422573700582306,
+          "median_term_displacement": 0.038211150122920576
+        }
+      }
+    }
+  },
+  "compactness_analysis": {
+    "BP": {
+      "human": {
+        "mean_radius": 2.012831702311357,
+        "median_radius": 1.767261659091653,
+        "n_terms": 3689
+      },
+      "mouse": {
+        "mean_radius": 1.776117852142866,
+        "median_radius": 1.4620195912227496,
+        "n_terms": 7417
+      },
+      "yeast": {
+        "mean_radius": 2.2301805321995674,
+        "median_radius": 2.1076511150035575,
+        "n_terms": 1191
+      }
+    },
+    "MF": {
+      "human": {
+        "mean_radius": 1.8257593919671389,
+        "median_radius": 1.5916737490973007,
+        "n_terms": 1502
+      },
+      "mouse": {
+        "mean_radius": 1.6749852281045468,
+        "median_radius": 1.2263598210095903,
+        "n_terms": 2315
+      },
+      "yeast": {
+        "mean_radius": 2.1858545804871254,
+        "median_radius": 2.0759469696950474,
+        "n_terms": 523
+      }
+    },
+    "CC": {
+      "human": {
+        "mean_radius": 1.7911712486917102,
+        "median_radius": 1.4932799833669261,
+        "n_terms": 785
+      },
+      "mouse": {
+        "mean_radius": 1.5040795007160155,
+        "median_radius": 1.1677233946081718,
+        "n_terms": 1322
+      },
+      "yeast": {
+        "mean_radius": 1.6985594344178792,
+        "median_radius": 1.252478644199122,
+        "n_terms": 506
+      }
+    }
+  }
+}

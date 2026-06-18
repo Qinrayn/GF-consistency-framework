@@ -1,0 +1,37 @@
+{
+  "description": "Atlas Extension: MF/CC at d=512, d=1024",
+  "results": {
+    "MF": {
+      "512": {
+        "Spectral_MRR": 0.3783224654349722,
+        "n_trials": 7261
+      },
+      "1024": {
+        "Spectral_MRR": 0.3586799705620722,
+        "n_trials": 7261
+      }
+    },
+    "CC": {
+      "512": {
+        "Spectral_MRR": 0.3859074764810047,
+        "n_trials": 8119
+      },
+      "1024": {
+        "Spectral_MRR": 0.31846968255187064,
+        "n_trials": 8119
+      }
+    }
+  },
+  "bp_from_sweep": {
+    "512": {
+      "Spectral_MRR": 0.24361910701187947
+    },
+    "1024": {
+      "Spectral_MRR": 0.2083926983832331
+    }
+  },
+  "ppi_baselines": {
+    "MF": 0.3572960518219672,
+    "CC": 0.3615979894629574
+  }
+}

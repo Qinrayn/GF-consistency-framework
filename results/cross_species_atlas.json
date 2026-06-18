@@ -1,0 +1,271 @@
+{
+  "description": "Cross-Species Function Prediction Atlas v2.11.0",
+  "version": "2.11.0",
+  "spectral_dimensions": [
+    2,
+    64,
+    256
+  ],
+  "species": {
+    "yeast": {
+      "name": "Yeast (S. cerevisiae)",
+      "network_size": 5429,
+      "ontologies": {
+        "BP": {
+          "Spectral-d2": {
+            "MRR": 0.06574433771009332,
+            "n_trials": 12690,
+            "PPI_MRR": 0.2187067168896014,
+            "2Hop_MRR": 0.10459870223910459,
+            "Random_MRR": 0.04111864050536933
+          },
+          "Spectral-d64": {
+            "MRR": 0.20528022309122756,
+            "n_trials": 12690,
+            "PPI_MRR": 0.2187067168896014,
+            "2Hop_MRR": 0.10459870223910459,
+            "Random_MRR": 0.04111864050536933
+          },
+          "Spectral-d256": {
+            "MRR": 0.23043910570210516,
+            "n_trials": 12690,
+            "PPI_MRR": 0.2187067168896014,
+            "2Hop_MRR": 0.10459870223910459,
+            "Random_MRR": 0.04111864050536933
+          }
+        },
+        "MF": {
+          "Spectral-d2": {
+            "MRR": 0.28654830773924256,
+            "n_trials": 7274,
+            "PPI_MRR": 0.3572960518219672,
+            "2Hop_MRR": 0.3193502547186603,
+            "Random_MRR": 0.2900457353013965
+          },
+          "Spectral-d64": {
+            "MRR": 0.36248302343154604,
+            "n_trials": 7274,
+            "PPI_MRR": 0.3572960518219672,
+            "2Hop_MRR": 0.3193502547186603,
+            "Random_MRR": 0.2900457353013965
+          },
+          "Spectral-d256": {
+            "MRR": 0.3736285995993946,
+            "n_trials": 7274,
+            "PPI_MRR": 0.3572960518219672,
+            "2Hop_MRR": 0.3193502547186603,
+            "Random_MRR": 0.2900457353013965
+          }
+        },
+        "CC": {
+          "Spectral-d2": {
+            "MRR": 0.20894947732258135,
+            "n_trials": 8120,
+            "PPI_MRR": 0.3615979894629574,
+            "2Hop_MRR": 0.24928629296806887,
+            "Random_MRR": 0.1871231087273409
+          },
+          "Spectral-d64": {
+            "MRR": 0.3662605266431528,
+            "n_trials": 8120,
+            "PPI_MRR": 0.3615979894629574,
+            "2Hop_MRR": 0.24928629296806887,
+            "Random_MRR": 0.1871231087273409
+          },
+          "Spectral-d256": {
+            "MRR": 0.3785439700170073,
+            "n_trials": 8120,
+            "PPI_MRR": 0.3615979894629574,
+            "2Hop_MRR": 0.24928629296806887,
+            "Random_MRR": 0.1871231087273409
+          }
+        }
+      }
+    },
+    "human": {
+      "name": "Human",
+      "network_size": 15882,
+      "ontologies": {
+        "BP": {
+          "Spectral-d2": {
+            "MRR": 0.026334148616038514,
+            "n_trials": 43029,
+            "PPI_MRR": 0.11616717813436349,
+            "2Hop_MRR": 0.07402351685815782,
+            "Random_MRR": 0.03358780191512454
+          },
+          "Spectral-d64": {
+            "MRR": 0.09931905006009288,
+            "n_trials": 43029
+          },
+          "Spectral-d256": {
+            "MRR": 0.11807652526530815,
+            "n_trials": 43029
+          }
+        },
+        "MF": {
+          "Spectral-d2": {
+            "MRR": 0.2691651114992643,
+            "n_trials": 32843,
+            "PPI_MRR": 0.3095365720395971,
+            "2Hop_MRR": 0.30890850785997387,
+            "Random_MRR": 0.2850766757001351
+          },
+          "Spectral-d64": {
+            "MRR": 0.31634770701065357,
+            "n_trials": 32843
+          },
+          "Spectral-d256": {
+            "MRR": 0.32748590033965,
+            "n_trials": 32843
+          }
+        },
+        "CC": {
+          "Spectral-d2": {
+            "MRR": 0.2068536897822421,
+            "n_trials": 28177,
+            "PPI_MRR": 0.3013615321469337,
+            "2Hop_MRR": 0.2713175496953347,
+            "Random_MRR": 0.1990287985835626
+          },
+          "Spectral-d64": {
+            "MRR": 0.29690074532915367,
+            "n_trials": 28177
+          },
+          "Spectral-d256": {
+            "MRR": 0.31191799995635305,
+            "n_trials": 28177
+          }
+        }
+      }
+    },
+    "mouse": {
+      "name": "Mouse",
+      "network_size": 16180,
+      "ontologies": {
+        "BP": {
+          "Spectral-d2": {
+            "MRR": 0.03035140741614696,
+            "n_trials": 137677,
+            "PPI_MRR": 0.08741802355372018,
+            "2Hop_MRR": 0.06966252186090457,
+            "Random_MRR": 0.02540440349228848
+          },
+          "Spectral-d64": {
+            "MRR": 0.0787452329019723,
+            "n_trials": 137677
+          },
+          "Spectral-d256": {
+            "MRR": 0.09625055383677864,
+            "n_trials": 137677
+          }
+        },
+        "MF": {
+          "Spectral-d2": {
+            "MRR": 0.12375909744467267,
+            "n_trials": 62582,
+            "PPI_MRR": 0.1774988895044803,
+            "2Hop_MRR": 0.17852404280970322,
+            "Random_MRR": 0.12464819265961044
+          },
+          "Spectral-d64": {
+            "MRR": 0.18784683820418344,
+            "n_trials": 62582
+          },
+          "Spectral-d256": {
+            "MRR": 0.20914060287871622,
+            "n_trials": 62582
+          }
+        },
+        "CC": {
+          "Spectral-d2": {
+            "MRR": 0.18270751885297631,
+            "n_trials": 79076,
+            "PPI_MRR": 0.23607974924067804,
+            "2Hop_MRR": 0.22856936859444915,
+            "Random_MRR": 0.1668666713327932
+          },
+          "Spectral-d64": {
+            "MRR": 0.23987938942323087,
+            "n_trials": 79076
+          },
+          "Spectral-d256": {
+            "MRR": 0.25207405906359537,
+            "n_trials": 79076
+          }
+        }
+      }
+    }
+  },
+  "summary": {
+    "yeast": {
+      "BP": {
+        "best_dim": "Spectral-d256",
+        "best_mrr": 0.2304,
+        "ppi_mrr": 0.2187,
+        "exceeds_ppi": true,
+        "improvement": "+5.4%"
+      },
+      "MF": {
+        "best_dim": "Spectral-d256",
+        "best_mrr": 0.3736,
+        "ppi_mrr": 0.3573,
+        "exceeds_ppi": true,
+        "improvement": "+4.6%"
+      },
+      "CC": {
+        "best_dim": "Spectral-d256",
+        "best_mrr": 0.3785,
+        "ppi_mrr": 0.3616,
+        "exceeds_ppi": true,
+        "improvement": "+4.7%"
+      }
+    },
+    "human": {
+      "BP": {
+        "best_dim": "Spectral-d256",
+        "best_mrr": 0.1181,
+        "ppi_mrr": 0.1162,
+        "exceeds_ppi": true,
+        "improvement": "+1.6%"
+      },
+      "MF": {
+        "best_dim": "Spectral-d256",
+        "best_mrr": 0.3275,
+        "ppi_mrr": 0.3095,
+        "exceeds_ppi": true,
+        "improvement": "+5.8%"
+      },
+      "CC": {
+        "best_dim": "Spectral-d256",
+        "best_mrr": 0.3119,
+        "ppi_mrr": 0.3014,
+        "exceeds_ppi": true,
+        "improvement": "+3.5%"
+      }
+    },
+    "mouse": {
+      "BP": {
+        "best_dim": "Spectral-d256",
+        "best_mrr": 0.0963,
+        "ppi_mrr": 0.0874,
+        "exceeds_ppi": true,
+        "improvement": "+10.1%"
+      },
+      "MF": {
+        "best_dim": "Spectral-d256",
+        "best_mrr": 0.2091,
+        "ppi_mrr": 0.1775,
+        "exceeds_ppi": true,
+        "improvement": "+17.8%"
+      },
+      "CC": {
+        "best_dim": "Spectral-d256",
+        "best_mrr": 0.2521,
+        "ppi_mrr": 0.2361,
+        "exceeds_ppi": true,
+        "improvement": "+6.8%"
+      }
+    }
+  }
+}

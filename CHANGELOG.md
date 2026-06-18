@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.11.0] — 2026-06-18
+
+### Added (Steps 66-72: Function Prediction Atlas + Pan-Species Dark Matter)
+- `dimension_sweep_512.py`: Dimension sweep extension to d=512 and d=1024. Peak MRR=0.244 at d=512 (+11.4% above PPI baseline 0.219). d=1024 drops to 0.208 (overfitting). Log-linear R^2=0.961.
+- `function_prediction_atlas.py`: Multi-ontology function prediction atlas across 3 species (yeast/human/mouse) and 3 ontologies (BP/MF/CC). Spectral d=256 exceeds PPI in 9/9 cases.
+- `atlas_extension_512.py`: Atlas extension for MF/CC at d=512/1024. Confirms d=512 as universal optimum across all ontology-species combinations.
+- `uncharacterized_prediction.py`: Mining uncharacterized proteins via embedding KNN. 511 predictions for 285 proteins at d=256.
+- `cross_species_atlas.py`: Cross-species function prediction atlas for human+mouse with full 3-ontology coverage.
+- `ortholog_cross_validation.py`: Human-mouse ortholog centroid geometry analysis. Cross-species geometric conservation rho=0.618.
+- `dark_matter_pan_species.py`: Pan-species dark matter mining across 5 species with uniform criteria. Yeast 35 pairs, mouse 32,635 pairs.
+
+### Changed
+- Version bumped to 2.11.0 across `pyproject.toml`, `scripts/__init__.py`, `run_all_analysis.py`
+- Pipeline expanded from 65 steps to 72 steps
+- `run_all_analysis.py`: added Steps 56-72 orchestration (17 scripts), fixed stale docstring and CLI help text
+- `pipeline_config.yaml`: `start_from` range updated (1-72), `skip_extended` scope (24-72)
+- `CITATION.cff`: updated to v2.11.0
+
+### Fixed
+- `cross_species_atlas.py`: invalid f-string format bug in output logging
+- `cross_species_atlas.json`: rebuilt with corrected LOTO-CV results (Human BP was all zeros)
+- `dark_matter_pan_species.py`: STRING v12.0 header crash (added try/except for header lines)
+
 ## [2.10.0] — 2026-06-18
 
 ### Added (Steps 63-65: Theoretical Foundations — Heat Kernel, Position Encoding, Cheeger Bound)
@@ -23,7 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Abstract: mentions heat kernel and Cheeger-type inequalities
 - 103 scripts, 65-step pipeline, 19 deep analysis modules, 86 figures
 
-## [3.0.0] — 2026-06-17
+## [2.9.0] — 2026-06-17
 
 ### Added (Steps 60-62: 5th Species + ProNE/HARP + Cosine Baseline)
 - `fly_analysis.py`: Drosophila melanogaster as 5th species (6,909 nodes, 89,685 edges, STRING v11.5). 11 methods, Spectral ranks #1 (GF=0.619, highest across all 5 species). Kendall's W=0.752 (4 eukaryotes, HIGHER than 3-species W=0.739). GNN collapse confirmed. SQI=0.73.
@@ -32,11 +55,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `gatv2_experiment.py`: (from v2.8.1) GATv2 dynamic attention reduces entropy (0.903 vs 0.927) but GF stays near-random (0.157 vs 0.154). Collapse from adjacency-reconstruction objective.
 
 ### Changed
-- Version bumped to 3.0.0 across `pyproject.toml`, `scripts/__init__.py`
+- Version bumped to 2.9.0 across `pyproject.toml`, `scripts/__init__.py`
 - Pipeline expanded from 59 steps to 62 steps
 - `pipeline_config.yaml`: `start_from` range updated (1-62)
 - Manuscript: 5 species, Kendall's W=0.752, ProNE/HARP robustness check, cosine baseline, refs [60-61]
-- Cover letter: 5 species, v3.0.0, 100 scripts, 62 steps
+- Cover letter: 5 species, v2.9.0, 100 scripts, 62 steps
 - Abstract: 149/150 words, Body: ~6413 words, 61 references
 
 ## [2.8.1] — 2026-06-17

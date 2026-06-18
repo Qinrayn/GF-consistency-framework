@@ -1,0 +1,754 @@
+{
+  "description": "GF-MRR Bridge: Linking Geometric Quality to Function Prediction",
+  "data_points": [
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "Spectral-d2",
+      "dimension": 2,
+      "gf_score": 0.163,
+      "mrr": 0.06574433771009332
+    },
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "Spectral-d2_relative",
+      "dimension": 2,
+      "gf_score": 0.163,
+      "mrr": 0.3006050232251426
+    },
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "Spectral-d64",
+      "dimension": 64,
+      "gf_score": 0.163,
+      "mrr": 0.20528022309122756
+    },
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "Spectral-d64_relative",
+      "dimension": 64,
+      "gf_score": 0.163,
+      "mrr": 0.938609595583883
+    },
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "Spectral-d256",
+      "dimension": 256,
+      "gf_score": 0.163,
+      "mrr": 0.23043910570210516
+    },
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "Spectral-d256_relative",
+      "dimension": 256,
+      "gf_score": 0.163,
+      "mrr": 1.053644391810911
+    },
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "DM-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.036727516969119946
+    },
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "MDS-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.05990536797436454
+    },
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "DeepWalk-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.010253127839864005
+    },
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "Node2Vec-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.011400497987735837
+    },
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "VGAE-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.010800092867501115
+    },
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "PCA-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.04383493556376081
+    },
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "VGAE-feat-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.012113590346099113
+    },
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "GIN-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.010885507779914757
+    },
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "GAT-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.012432864646104195
+    },
+    {
+      "species": "yeast",
+      "ontology": "P",
+      "method": "GraphSAGE-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.02094615596833759
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "Spectral-d2",
+      "dimension": 2,
+      "gf_score": 0.163,
+      "mrr": 0.28654830773924256
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "Spectral-d2_relative",
+      "dimension": 2,
+      "gf_score": 0.163,
+      "mrr": 0.8019912514511167
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "Spectral-d64",
+      "dimension": 64,
+      "gf_score": 0.163,
+      "mrr": 0.36248302343154604
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "Spectral-d64_relative",
+      "dimension": 64,
+      "gf_score": 0.163,
+      "mrr": 1.014517293384936
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "Spectral-d256",
+      "dimension": 256,
+      "gf_score": 0.163,
+      "mrr": 0.3736285995993946
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "Spectral-d256_relative",
+      "dimension": 256,
+      "gf_score": 0.163,
+      "mrr": 1.0457115260416185
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "DM-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.2752807693249349
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "MDS-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.28247348029384267
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "DeepWalk-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.2623175720932661
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "Node2Vec-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.2623364945100044
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "VGAE-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.2596651694418889
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "PCA-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.2785280825786695
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "VGAE-feat-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.2606699499571274
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "GIN-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.2602486277278604
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "GAT-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.2609764385839672
+    },
+    {
+      "species": "yeast",
+      "ontology": "F",
+      "method": "GraphSAGE-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.2656342964027735
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "Spectral-d2",
+      "dimension": 2,
+      "gf_score": 0.163,
+      "mrr": 0.20894947732258135
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "Spectral-d2_relative",
+      "dimension": 2,
+      "gf_score": 0.163,
+      "mrr": 0.5778502187827745
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "Spectral-d64",
+      "dimension": 64,
+      "gf_score": 0.163,
+      "mrr": 0.3662605266431528
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "Spectral-d64_relative",
+      "dimension": 64,
+      "gf_score": 0.163,
+      "mrr": 1.0128942563732728
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "Spectral-d256",
+      "dimension": 256,
+      "gf_score": 0.163,
+      "mrr": 0.3785439700170073
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "Spectral-d256_relative",
+      "dimension": 256,
+      "gf_score": 0.163,
+      "mrr": 1.046864144845545
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "DM-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.17861430979323012
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "MDS-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.22337476156303665
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "DeepWalk-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.1253738818054381
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "Node2Vec-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.12137270622343559
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "VGAE-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.1264042589437746
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "PCA-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.18597936919386154
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "VGAE-feat-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.12822481112344294
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "GIN-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.12631561011520964
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "GAT-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.12870487424288551
+    },
+    {
+      "species": "yeast",
+      "ontology": "C",
+      "method": "GraphSAGE-d2",
+      "dimension": 2,
+      "gf_score": 0.0,
+      "mrr": 0.1432495678778826
+    },
+    {
+      "species": "yeast",
+      "ontology": "BP",
+      "method": "Spectral-d2",
+      "dimension": 2,
+      "gf_score": 0.163,
+      "mrr": 0.06555
+    },
+    {
+      "species": "yeast",
+      "ontology": "BP",
+      "method": "Spectral-d4",
+      "dimension": 4,
+      "gf_score": 0.163,
+      "mrr": 0.086719
+    },
+    {
+      "species": "yeast",
+      "ontology": "BP",
+      "method": "Spectral-d8",
+      "dimension": 8,
+      "gf_score": 0.163,
+      "mrr": 0.127754
+    },
+    {
+      "species": "yeast",
+      "ontology": "BP",
+      "method": "Spectral-d16",
+      "dimension": 16,
+      "gf_score": 0.163,
+      "mrr": 0.159889
+    },
+    {
+      "species": "yeast",
+      "ontology": "BP",
+      "method": "Spectral-d32",
+      "dimension": 32,
+      "gf_score": 0.163,
+      "mrr": 0.189635
+    },
+    {
+      "species": "yeast",
+      "ontology": "BP",
+      "method": "Spectral-d64",
+      "dimension": 64,
+      "gf_score": 0.163,
+      "mrr": 0.205361
+    },
+    {
+      "species": "yeast",
+      "ontology": "BP",
+      "method": "Spectral-d128",
+      "dimension": 128,
+      "gf_score": 0.163,
+      "mrr": 0.215930956172437
+    },
+    {
+      "species": "yeast",
+      "ontology": "BP",
+      "method": "Spectral-d256",
+      "dimension": 256,
+      "gf_score": 0.163,
+      "mrr": 0.23041747876433502
+    },
+    {
+      "species": "yeast",
+      "ontology": "BP",
+      "method": "Spectral-d512",
+      "dimension": 512,
+      "gf_score": 0.163,
+      "mrr": 0.24361910701187947
+    },
+    {
+      "species": "yeast",
+      "ontology": "BP",
+      "method": "Spectral-d1024",
+      "dimension": 1024,
+      "gf_score": 0.163,
+      "mrr": 0.2083926983832331
+    },
+    {
+      "species": "mouse",
+      "ontology": "BP",
+      "method": "Spectral-d2",
+      "dimension": 2,
+      "gf_score": 0.309,
+      "mrr": 0.03035140741614696
+    },
+    {
+      "species": "mouse",
+      "ontology": "BP",
+      "method": "Spectral-d64",
+      "dimension": 64,
+      "gf_score": 0.309,
+      "mrr": 0.0787452329019723
+    },
+    {
+      "species": "mouse",
+      "ontology": "BP",
+      "method": "Spectral-d256",
+      "dimension": 256,
+      "gf_score": 0.309,
+      "mrr": 0.09625055383677864
+    },
+    {
+      "species": "mouse",
+      "ontology": "MF",
+      "method": "Spectral-d2",
+      "dimension": 2,
+      "gf_score": 0.309,
+      "mrr": 0.12375909744467267
+    },
+    {
+      "species": "mouse",
+      "ontology": "MF",
+      "method": "Spectral-d64",
+      "dimension": 64,
+      "gf_score": 0.309,
+      "mrr": 0.18784683820418344
+    },
+    {
+      "species": "mouse",
+      "ontology": "MF",
+      "method": "Spectral-d256",
+      "dimension": 256,
+      "gf_score": 0.309,
+      "mrr": 0.20914060287871622
+    },
+    {
+      "species": "mouse",
+      "ontology": "CC",
+      "method": "Spectral-d2",
+      "dimension": 2,
+      "gf_score": 0.309,
+      "mrr": 0.18270751885297631
+    },
+    {
+      "species": "mouse",
+      "ontology": "CC",
+      "method": "Spectral-d64",
+      "dimension": 64,
+      "gf_score": 0.309,
+      "mrr": 0.23987938942323087
+    },
+    {
+      "species": "mouse",
+      "ontology": "CC",
+      "method": "Spectral-d256",
+      "dimension": 256,
+      "gf_score": 0.309,
+      "mrr": 0.25207405906359537
+    }
+  ],
+  "analysis": {
+    "n_data_points": 67,
+    "n_d2_points": 37,
+    "model_gf_only": {
+      "rho": 0.23819068012224182,
+      "p": 0.05225584731543151,
+      "R_squared": 0.04927603476937597,
+      "slope": 0.5503858759521982,
+      "intercept": 0.20517983050716632
+    },
+    "model_d2_only": {
+      "rho": -0.0133780245627164,
+      "p": 0.9373621213229685,
+      "R_squared": 0.004095083399100329,
+      "slope": -0.06766451227786352,
+      "intercept": 0.14744586759761605
+    },
+    "model_dimension_only": {
+      "rho": 0.3964422280199975,
+      "p": 0.000896427843515153,
+      "R_squared": 0.18656883080880676,
+      "slope": 0.042743435692547856,
+      "intercept": 0.10965164112199013,
+      "interpretation": "MRR per log2(d) doubling"
+    },
+    "model_gf_plus_logd": {
+      "R_squared": 0.18910054958929523,
+      "coefficients": {
+        "intercept": 0.11300199418947733,
+        "gf_score": -0.1569136297416433,
+        "log2_dimension": 0.04654200368375691
+      }
+    },
+    "model_interaction": {
+      "R_squared": 0.2820431447989111,
+      "coefficients": {
+        "intercept": -0.0318021117010404,
+        "gf_score": 0.9973219545461777,
+        "log2_dimension": 0.12079949774218446,
+        "gf_x_logd": -0.4347886299035074
+      }
+    },
+    "universal_improvement_ratios": [
+      {
+        "ontology": "P",
+        "from_dim": 2,
+        "to_dim": 64,
+        "mrr_ratio": 3.122401567058636,
+        "dim_ratio": 32.0
+      },
+      {
+        "ontology": "P",
+        "from_dim": 64,
+        "to_dim": 256,
+        "mrr_ratio": 1.1225587259796423,
+        "dim_ratio": 4.0
+      },
+      {
+        "ontology": "F",
+        "from_dim": 2,
+        "to_dim": 64,
+        "mrr_ratio": 1.2649979554630757,
+        "dim_ratio": 32.0
+      },
+      {
+        "ontology": "F",
+        "from_dim": 64,
+        "to_dim": 256,
+        "mrr_ratio": 1.0307478569957176,
+        "dim_ratio": 4.0
+      },
+      {
+        "ontology": "C",
+        "from_dim": 2,
+        "to_dim": 64,
+        "mrr_ratio": 1.7528664409038495,
+        "dim_ratio": 32.0
+      },
+      {
+        "ontology": "C",
+        "from_dim": 64,
+        "to_dim": 256,
+        "mrr_ratio": 1.0335374480194046,
+        "dim_ratio": 4.0
+      },
+      {
+        "ontology": "BP",
+        "from_dim": 2,
+        "to_dim": 2,
+        "mrr_ratio": 0.46302681031498033,
+        "dim_ratio": 1.0
+      },
+      {
+        "ontology": "BP",
+        "from_dim": 2,
+        "to_dim": 4,
+        "mrr_ratio": 2.857165692878725,
+        "dim_ratio": 2.0
+      },
+      {
+        "ontology": "BP",
+        "from_dim": 4,
+        "to_dim": 8,
+        "mrr_ratio": 1.4731950322305376,
+        "dim_ratio": 2.0
+      },
+      {
+        "ontology": "BP",
+        "from_dim": 8,
+        "to_dim": 16,
+        "mrr_ratio": 1.251538112309595,
+        "dim_ratio": 2.0
+      },
+      {
+        "ontology": "BP",
+        "from_dim": 16,
+        "to_dim": 32,
+        "mrr_ratio": 1.186041566336646,
+        "dim_ratio": 2.0
+      },
+      {
+        "ontology": "BP",
+        "from_dim": 32,
+        "to_dim": 64,
+        "mrr_ratio": 1.082927729585783,
+        "dim_ratio": 2.0
+      },
+      {
+        "ontology": "BP",
+        "from_dim": 64,
+        "to_dim": 64,
+        "mrr_ratio": 0.38344784502399337,
+        "dim_ratio": 1.0
+      },
+      {
+        "ontology": "BP",
+        "from_dim": 64,
+        "to_dim": 128,
+        "mrr_ratio": 2.742146390515389,
+        "dim_ratio": 2.0
+      },
+      {
+        "ontology": "BP",
+        "from_dim": 128,
+        "to_dim": 256,
+        "mrr_ratio": 1.0670886789401768,
+        "dim_ratio": 2.0
+      },
+      {
+        "ontology": "BP",
+        "from_dim": 256,
+        "to_dim": 256,
+        "mrr_ratio": 0.4177224503668022,
+        "dim_ratio": 1.0
+      },
+      {
+        "ontology": "BP",
+        "from_dim": 256,
+        "to_dim": 512,
+        "mrr_ratio": 2.531093041033384,
+        "dim_ratio": 2.0
+      },
+      {
+        "ontology": "BP",
+        "from_dim": 512,
+        "to_dim": 1024,
+        "mrr_ratio": 0.8554037527650545,
+        "dim_ratio": 2.0
+      },
+      {
+        "ontology": "MF",
+        "from_dim": 2,
+        "to_dim": 64,
+        "mrr_ratio": 1.5178426643597787,
+        "dim_ratio": 32.0
+      },
+      {
+        "ontology": "MF",
+        "from_dim": 64,
+        "to_dim": 256,
+        "mrr_ratio": 1.1133570566217736,
+        "dim_ratio": 4.0
+      },
+      {
+        "ontology": "CC",
+        "from_dim": 2,
+        "to_dim": 64,
+        "mrr_ratio": 1.3129147116066988,
+        "dim_ratio": 32.0
+      },
+      {
+        "ontology": "CC",
+        "from_dim": 64,
+        "to_dim": 256,
+        "mrr_ratio": 1.0508366711691468,
+        "dim_ratio": 4.0
+      }
+    ],
+    "lower_bound_points": [
+      [
+        0.0,
+        0.010253127839864005
+      ],
+      [
+        0.16300000000000003,
+        0.06555
+      ],
+      [
+        0.309,
+        0.03035140741614696
+      ]
+    ]
+  }
+}

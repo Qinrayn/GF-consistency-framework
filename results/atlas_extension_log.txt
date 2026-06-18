@@ -1,0 +1,44 @@
+================================================================
+  Atlas Extension: MF/CC at d=512, d=1024
+================================================================
+
+[1/4] Loading network ...
+  5936 nodes, 120357 edges
+
+[2/4] Parsing annotations ...
+  Alias mapping: 10616 SGD IDs, 2215 ORF names -> STRING IDs
+  Network nodes in aliases: 6691
+  MF: 4336 proteins, 1778 terms
+  CC: 4302 proteins, 730 terms
+
+[3/4] Loading embeddings ...
+  d=512: (5936, 512)
+  d=1024: (5936, 1024)
+
+[4/4] Running LOTO-CV ...
+    [MF] d=512: 3000/7261 (41%) 287/s ETA 15s
+    [MF] d=512: 6000/7261 (83%) 344/s ETA 4s
+    [MF] d=512: 7261 trials in 20.4s -> MRR=0.3783
+    [MF] d=1024: 3000/7261 (41%) 236/s ETA 18s
+    [MF] d=1024: 6000/7261 (83%) 235/s ETA 5s
+    [MF] d=1024: 7261 trials in 30.8s -> MRR=0.3587
+    [CC] d=512: 3000/8119 (37%) 426/s ETA 12s
+    [CC] d=512: 6000/8119 (74%) 427/s ETA 5s
+    [CC] d=512: 8119 trials in 19.0s -> MRR=0.3859
+    [CC] d=1024: 3000/8119 (37%) 236/s ETA 22s
+    [CC] d=1024: 6000/8119 (74%) 235/s ETA 9s
+    [CC] d=1024: 8119 trials in 34.4s -> MRR=0.3185
+
+Saved to C:\Users\ÔÆÇð\GF-consistency-framework\results\atlas_extension_512.json
+
+================================================================
+  SUMMARY: Full Atlas (BP + MF + CC) at d=512 and d=1024
+================================================================
+  BP d=512: MRR=0.2436 vs PPI=0.0000 (+0.0000) [below]
+  BP d=1024: MRR=0.2084 vs PPI=0.0000 (+0.0000) [below]
+  MF d=512: MRR=0.3783 vs PPI=0.3573 (+0.0210) [EXCEEDS]
+  MF d=1024: MRR=0.3587 vs PPI=0.3573 (+0.0014) [EXCEEDS]
+  CC d=512: MRR=0.3859 vs PPI=0.3616 (+0.0243) [EXCEEDS]
+  CC d=1024: MRR=0.3185 vs PPI=0.3616 (-0.0431) [below]
+
+Completed in 106.5s (1.8 min)

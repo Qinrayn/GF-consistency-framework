@@ -1,0 +1,505 @@
+{
+  "description": "Pan-Species Dark Matter Mining (5 species, uniform criteria)",
+  "version": "2.11.0",
+  "criteria": {
+    "min_network_distance": 5,
+    "knn_search_radius": 50,
+    "string_min_score": 700,
+    "go_aspect": "Biological Process (experimental evidence only)",
+    "embedding": "Spectral d=64"
+  },
+  "species_results": {
+    "yeast": {
+      "name": "Yeast (S. cerevisiae)",
+      "network_nodes": 5936,
+      "network_edges": 120357,
+      "annotated_proteins": 4651,
+      "embedding_dim": 64,
+      "total_dm_pairs": 35,
+      "disconnected_pairs": 0,
+      "multi_term_pairs": 3,
+      "unique_dm_proteins": 47,
+      "top_20_pairs": [
+        {
+          "protein_a": "YNL199C",
+          "protein_b": "YOR229W",
+          "emb_dist": 0.012,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0000122",
+            "GO:0045944"
+          ],
+          "n_shared": 2
+        },
+        {
+          "protein_a": "YDR528W",
+          "protein_b": "YJL174W",
+          "emb_dist": 0.0126,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0031505"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YLR390W",
+          "protein_b": "YML050W",
+          "emb_dist": 0.014,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0045454"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YDR506C",
+          "protein_b": "YGL036W",
+          "emb_dist": 0.0147,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0051321"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YLR313C",
+          "protein_b": "YOR315W",
+          "emb_dist": 0.0149,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0007124",
+            "GO:0036267"
+          ],
+          "n_shared": 2
+        },
+        {
+          "protein_a": "YJR062C",
+          "protein_b": "YNL295W",
+          "emb_dist": 0.015,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0030163"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YGL162W",
+          "protein_b": "YNL199C",
+          "emb_dist": 0.0152,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0000122",
+            "GO:0045944"
+          ],
+          "n_shared": 2
+        },
+        {
+          "protein_a": "YLR083C",
+          "protein_b": "YOR315W",
+          "emb_dist": 0.0154,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0007124"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YFL052W",
+          "protein_b": "YMR182C",
+          "emb_dist": 0.016,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0045944"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YDR506C",
+          "protein_b": "YOR229W",
+          "emb_dist": 0.0161,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0051321"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YFL052W",
+          "protein_b": "YLR019W",
+          "emb_dist": 0.0171,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0045944"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YDR512C",
+          "protein_b": "YPR083W",
+          "emb_dist": 0.0172,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0007005"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YFL052W",
+          "protein_b": "YNL199C",
+          "emb_dist": 0.0176,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0045944"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YNL199C",
+          "protein_b": "YPL026C",
+          "emb_dist": 0.0179,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0045944"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YDR223W",
+          "protein_b": "YPL026C",
+          "emb_dist": 0.018,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0045944"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YJL174W",
+          "protein_b": "YLR121C",
+          "emb_dist": 0.0197,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0031505"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YEL052W",
+          "protein_b": "YJR100C",
+          "emb_dist": 0.02,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0034599"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YIR039C",
+          "protein_b": "YJL174W",
+          "emb_dist": 0.0216,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0031505"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YCL048W",
+          "protein_b": "YDR522C",
+          "emb_dist": 0.0239,
+          "network_dist": 6,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0030476"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "YLR139C",
+          "protein_b": "YLR281C",
+          "emb_dist": 0.0281,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0032543"
+          ],
+          "n_shared": 1
+        }
+      ]
+    },
+    "human": {
+      "error": "[Errno 2] No such file or directory: 'C:\\\\Users\\\\\u4e91\u4e18\\\\GF-consistency-framework\\\\data\\\\human_validation\\\\9606.protein.links.v12.0.txt.gz'"
+    },
+    "mouse": {
+      "name": "Mouse (M. musculus)",
+      "network_nodes": 16180,
+      "network_edges": 233340,
+      "annotated_proteins": 14569,
+      "embedding_dim": 64,
+      "total_dm_pairs": 32635,
+      "disconnected_pairs": 0,
+      "multi_term_pairs": 12212,
+      "unique_dm_proteins": 6574,
+      "top_20_pairs": [
+        {
+          "protein_a": "10090.ENSMUSP00000058175",
+          "protein_b": "10090.ENSMUSP00000121753",
+          "emb_dist": 0.0054,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005634"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000035375",
+          "protein_b": "10090.ENSMUSP00000108532",
+          "emb_dist": 0.0064,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005737"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000108532",
+          "protein_b": "10090.ENSMUSP00000122564",
+          "emb_dist": 0.0064,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005737"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000036571",
+          "protein_b": "10090.ENSMUSP00000071896",
+          "emb_dist": 0.0067,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005654"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000060040",
+          "protein_b": "10090.ENSMUSP00000071896",
+          "emb_dist": 0.0067,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005634",
+            "GO:0005654"
+          ],
+          "n_shared": 2
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000099400",
+          "protein_b": "10090.ENSMUSP00000104438",
+          "emb_dist": 0.0068,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005515",
+            "GO:0005634",
+            "GO:0005654",
+            "GO:0045892"
+          ],
+          "n_shared": 4
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000026486",
+          "protein_b": "10090.ENSMUSP00000068987",
+          "emb_dist": 0.007,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005737"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000028188",
+          "protein_b": "10090.ENSMUSP00000038506",
+          "emb_dist": 0.0071,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005576"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000042955",
+          "protein_b": "10090.ENSMUSP00000129589",
+          "emb_dist": 0.0072,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005634",
+            "GO:0005737"
+          ],
+          "n_shared": 2
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000037619",
+          "protein_b": "10090.ENSMUSP00000071815",
+          "emb_dist": 0.0074,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005634",
+            "GO:0005654"
+          ],
+          "n_shared": 2
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000020546",
+          "protein_b": "10090.ENSMUSP00000039628",
+          "emb_dist": 0.0076,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005515"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000028368",
+          "protein_b": "10090.ENSMUSP00000138585",
+          "emb_dist": 0.0079,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0003674"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000032661",
+          "protein_b": "10090.ENSMUSP00000037619",
+          "emb_dist": 0.0079,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005515",
+            "GO:0005634",
+            "GO:0006355",
+            "GO:0045892"
+          ],
+          "n_shared": 4
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000037619",
+          "protein_b": "10090.ENSMUSP00000108181",
+          "emb_dist": 0.0079,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005634",
+            "GO:0005654"
+          ],
+          "n_shared": 2
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000037619",
+          "protein_b": "10090.ENSMUSP00000078587",
+          "emb_dist": 0.0079,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005515",
+            "GO:0005634",
+            "GO:0006355"
+          ],
+          "n_shared": 3
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000044774",
+          "protein_b": "10090.ENSMUSP00000112833",
+          "emb_dist": 0.008,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005737"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000061234",
+          "protein_b": "10090.ENSMUSP00000134642",
+          "emb_dist": 0.008,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0000122",
+            "GO:0005634",
+            "GO:0006357"
+          ],
+          "n_shared": 3
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000104795",
+          "protein_b": "10090.ENSMUSP00000112833",
+          "emb_dist": 0.008,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005737"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000112833",
+          "protein_b": "10090.ENSMUSP00000139354",
+          "emb_dist": 0.008,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0005737"
+          ],
+          "n_shared": 1
+        },
+        {
+          "protein_a": "10090.ENSMUSP00000029546",
+          "protein_b": "10090.ENSMUSP00000067364",
+          "emb_dist": 0.0081,
+          "network_dist": 5,
+          "disconnected": false,
+          "shared_go_terms": [
+            "GO:0016020"
+          ],
+          "n_shared": 1
+        }
+      ]
+    },
+    "fly": {
+      "error": "too few annotations"
+    },
+    "ecoli": {
+      "error": "too few annotations"
+    }
+  }
+}

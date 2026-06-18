@@ -1,0 +1,217 @@
+{
+  "description": "Uncharacterized Protein Function Predictions from d=256 Spectral Embedding",
+  "embedding_dimension": 256,
+  "k_neighbors": 10,
+  "consensus_threshold": 0.5,
+  "min_neighbors_agreed": 3,
+  "network_size": 5936,
+  "annotated_proteins": 5189,
+  "uncharacterized_proteins": 843,
+  "total_predictions": 511,
+  "proteins_predicted": 285,
+  "annotation_stats": {
+    "total_gaf_lines": 138996,
+    "experimental_annotations": 70332,
+    "mapped": 68247,
+    "unmapped": 2085
+  },
+  "per_aspect": {
+    "P": {
+      "name": "Biological Process",
+      "predictions": 113,
+      "proteins": 96
+    },
+    "F": {
+      "name": "Molecular Function",
+      "predictions": 214,
+      "proteins": 196
+    },
+    "C": {
+      "name": "Cellular Component",
+      "predictions": 184,
+      "proteins": 147
+    }
+  },
+  "top_20": [
+    {
+      "protein_id": "YDR115W",
+      "aspect": "F",
+      "go_term": "GO:0003735",
+      "go_name": "structural constituent of ribosome",
+      "score": 1.0,
+      "consensus": 1.0,
+      "n_agreed": 10
+    },
+    {
+      "protein_id": "YBR200W-A",
+      "aspect": "C",
+      "go_term": "GO:0005634",
+      "go_name": "nucleus",
+      "score": 0.9999999101478683,
+      "consensus": 0.5,
+      "n_agreed": 3
+    },
+    {
+      "protein_id": "YJL027C",
+      "aspect": "F",
+      "go_term": "GO:0005515",
+      "go_name": "protein binding",
+      "score": 0.9987432899502525,
+      "consensus": 0.5,
+      "n_agreed": 3
+    },
+    {
+      "protein_id": "YDR149C",
+      "aspect": "F",
+      "go_term": "GO:0005515",
+      "go_name": "protein binding",
+      "score": 0.9162190825945215,
+      "consensus": 0.9,
+      "n_agreed": 9
+    },
+    {
+      "protein_id": "YLR003C",
+      "aspect": "F",
+      "go_term": "GO:0005515",
+      "go_name": "protein binding",
+      "score": 0.9013476474680809,
+      "consensus": 0.9,
+      "n_agreed": 9
+    },
+    {
+      "protein_id": "YIL127C",
+      "aspect": "C",
+      "go_term": "GO:0005730",
+      "go_name": "nucleolus",
+      "score": 0.9003521782326045,
+      "consensus": 1.0,
+      "n_agreed": 9
+    },
+    {
+      "protein_id": "YOL042W",
+      "aspect": "F",
+      "go_term": "GO:0005515",
+      "go_name": "protein binding",
+      "score": 0.8660790923124473,
+      "consensus": 0.9,
+      "n_agreed": 9
+    },
+    {
+      "protein_id": "YHL013C",
+      "aspect": "F",
+      "go_term": "GO:0004843",
+      "go_name": "cysteine-type deubiquitinase activity",
+      "score": 0.8587899824066292,
+      "consensus": 0.8,
+      "n_agreed": 8
+    },
+    {
+      "protein_id": "YLR156W",
+      "aspect": "P",
+      "go_term": "GO:0006530",
+      "go_name": "L-asparagine catabolic process",
+      "score": 0.8137066931682692,
+      "consensus": 0.5555555555555556,
+      "n_agreed": 5
+    },
+    {
+      "protein_id": "YLR156W",
+      "aspect": "F",
+      "go_term": "GO:0004067",
+      "go_name": "asparaginase activity",
+      "score": 0.8137066931682692,
+      "consensus": 0.5555555555555556,
+      "n_agreed": 5
+    },
+    {
+      "protein_id": "YDR008C",
+      "aspect": "P",
+      "go_term": "GO:0006338",
+      "go_name": "chromatin remodeling",
+      "score": 0.8130929774467139,
+      "consensus": 0.8,
+      "n_agreed": 8
+    },
+    {
+      "protein_id": "YLR003C",
+      "aspect": "C",
+      "go_term": "GO:0005730",
+      "go_name": "nucleolus",
+      "score": 0.8095324155386574,
+      "consensus": 0.8,
+      "n_agreed": 8
+    },
+    {
+      "protein_id": "YBL049W",
+      "aspect": "P",
+      "go_term": "GO:0045721",
+      "go_name": "negative regulation of gluconeogenesis",
+      "score": 0.8014679928971666,
+      "consensus": 0.8,
+      "n_agreed": 8
+    },
+    {
+      "protein_id": "YBL049W",
+      "aspect": "P",
+      "go_term": "GO:0043161",
+      "go_name": "proteasome-mediated ubiquitin-dependent protein catabolic process",
+      "score": 0.8014679928971666,
+      "consensus": 0.8,
+      "n_agreed": 8
+    },
+    {
+      "protein_id": "YBL049W",
+      "aspect": "F",
+      "go_term": "GO:0005515",
+      "go_name": "protein binding",
+      "score": 0.8014679928971666,
+      "consensus": 0.8888888888888888,
+      "n_agreed": 8
+    },
+    {
+      "protein_id": "YDL018C",
+      "aspect": "F",
+      "go_term": "GO:0005515",
+      "go_name": "protein binding",
+      "score": 0.7984028828887402,
+      "consensus": 0.8888888888888888,
+      "n_agreed": 8
+    },
+    {
+      "protein_id": "YDR008C",
+      "aspect": "P",
+      "go_term": "GO:0045944",
+      "go_name": "positive regulation of transcription by RNA polymerase II",
+      "score": 0.7945651530095367,
+      "consensus": 0.8,
+      "n_agreed": 8
+    },
+    {
+      "protein_id": "YIL127C",
+      "aspect": "F",
+      "go_term": "GO:0005515",
+      "go_name": "protein binding",
+      "score": 0.79016579792831,
+      "consensus": 0.8888888888888888,
+      "n_agreed": 8
+    },
+    {
+      "protein_id": "YLR156W",
+      "aspect": "C",
+      "go_term": "GO:0030287",
+      "go_name": "cell wall-bounded periplasmic space",
+      "score": 0.7893339794871137,
+      "consensus": 0.5714285714285714,
+      "n_agreed": 4
+    },
+    {
+      "protein_id": "YLR031W",
+      "aspect": "C",
+      "go_term": "GO:0032541",
+      "go_name": "cortical endoplasmic reticulum",
+      "score": 0.7880630098538387,
+      "consensus": 0.8,
+      "n_agreed": 8
+    }
+  ]
+}

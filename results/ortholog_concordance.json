@@ -1,0 +1,216 @@
+{
+  "description": "Ortholog Cross-Validation (Step 71)",
+  "n_yeast_proteins": 50,
+  "n_human_orthologs_found": 0,
+  "n_mouse_orthologs_found": 0,
+  "summary": {
+    "human": {
+      "n_orthologs_with_annotations": 0
+    },
+    "mouse": {
+      "n_orthologs_with_annotations": 0
+    }
+  },
+  "results": [
+    {
+      "yeast_id": "YBR160W",
+      "n_yeast_terms": 52
+    },
+    {
+      "yeast_id": "YER125W",
+      "n_yeast_terms": 51
+    },
+    {
+      "yeast_id": "YDL126C",
+      "n_yeast_terms": 44
+    },
+    {
+      "yeast_id": "YER133W",
+      "n_yeast_terms": 36
+    },
+    {
+      "yeast_id": "YGL058W",
+      "n_yeast_terms": 32
+    },
+    {
+      "yeast_id": "YLL040C",
+      "n_yeast_terms": 32
+    },
+    {
+      "yeast_id": "YNL216W",
+      "n_yeast_terms": 32
+    },
+    {
+      "yeast_id": "YDR477W",
+      "n_yeast_terms": 31
+    },
+    {
+      "yeast_id": "YML010W",
+      "n_yeast_terms": 30
+    },
+    {
+      "yeast_id": "YMR224C",
+      "n_yeast_terms": 30
+    },
+    {
+      "yeast_id": "YNL330C",
+      "n_yeast_terms": 30
+    },
+    {
+      "yeast_id": "YJR066W",
+      "n_yeast_terms": 29
+    },
+    {
+      "yeast_id": "YPL031C",
+      "n_yeast_terms": 29
+    },
+    {
+      "yeast_id": "YFR021W",
+      "n_yeast_terms": 28
+    },
+    {
+      "yeast_id": "YOR326W",
+      "n_yeast_terms": 28
+    },
+    {
+      "yeast_id": "YBL078C",
+      "n_yeast_terms": 27
+    },
+    {
+      "yeast_id": "YBR202W",
+      "n_yeast_terms": 27
+    },
+    {
+      "yeast_id": "YBR279W",
+      "n_yeast_terms": 27
+    },
+    {
+      "yeast_id": "YER164W",
+      "n_yeast_terms": 27
+    },
+    {
+      "yeast_id": "YLR430W",
+      "n_yeast_terms": 27
+    },
+    {
+      "yeast_id": "YPL204W",
+      "n_yeast_terms": 27
+    },
+    {
+      "yeast_id": "YEL013W",
+      "n_yeast_terms": 26
+    },
+    {
+      "yeast_id": "YHR119W",
+      "n_yeast_terms": 26
+    },
+    {
+      "yeast_id": "YDL042C",
+      "n_yeast_terms": 26
+    },
+    {
+      "yeast_id": "YDR283C",
+      "n_yeast_terms": 26
+    },
+    {
+      "yeast_id": "YDR328C",
+      "n_yeast_terms": 26
+    },
+    {
+      "yeast_id": "YGL173C",
+      "n_yeast_terms": 26
+    },
+    {
+      "yeast_id": "YPR165W",
+      "n_yeast_terms": 26
+    },
+    {
+      "yeast_id": "YHR164C",
+      "n_yeast_terms": 25
+    },
+    {
+      "yeast_id": "YFR028C",
+      "n_yeast_terms": 25
+    },
+    {
+      "yeast_id": "YLR229C",
+      "n_yeast_terms": 25
+    },
+    {
+      "yeast_id": "YML061C",
+      "n_yeast_terms": 25
+    },
+    {
+      "yeast_id": "YMR001C",
+      "n_yeast_terms": 25
+    },
+    {
+      "yeast_id": "YMR037C",
+      "n_yeast_terms": 25
+    },
+    {
+      "yeast_id": "YOR001W",
+      "n_yeast_terms": 25
+    },
+    {
+      "yeast_id": "YAR007C",
+      "n_yeast_terms": 24
+    },
+    {
+      "yeast_id": "YHL007C",
+      "n_yeast_terms": 24
+    },
+    {
+      "yeast_id": "YFL038C",
+      "n_yeast_terms": 24
+    },
+    {
+      "yeast_id": "YMR190C",
+      "n_yeast_terms": 24
+    },
+    {
+      "yeast_id": "YNL242W",
+      "n_yeast_terms": 24
+    },
+    {
+      "yeast_id": "YOL115W",
+      "n_yeast_terms": 24
+    },
+    {
+      "yeast_id": "YOR211C",
+      "n_yeast_terms": 24
+    },
+    {
+      "yeast_id": "YBR088C",
+      "n_yeast_terms": 23
+    },
+    {
+      "yeast_id": "YBR109C",
+      "n_yeast_terms": 23
+    },
+    {
+      "yeast_id": "YBR245C",
+      "n_yeast_terms": 23
+    },
+    {
+      "yeast_id": "YER095W",
+      "n_yeast_terms": 23
+    },
+    {
+      "yeast_id": "YER148W",
+      "n_yeast_terms": 23
+    },
+    {
+      "yeast_id": "YKL062W",
+      "n_yeast_terms": 23
+    },
+    {
+      "yeast_id": "YKR003W",
+      "n_yeast_terms": 23
+    },
+    {
+      "yeast_id": "YDL160C",
+      "n_yeast_terms": 23
+    }
+  ]
+}
