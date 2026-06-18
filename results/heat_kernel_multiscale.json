@@ -1,0 +1,271 @@
+{
+  "analysis": "Heat Kernel Multi-Scale Analysis (yeast PPI)",
+  "network": {
+    "n_nodes": 153,
+    "n_edges": 1669
+  },
+  "parameters": {
+    "k_eigenvectors": 50,
+    "n_gf_points": 25,
+    "r_range": [
+      0.05,
+      0.55
+    ],
+    "gf_interval": [
+      0.05,
+      0.422
+    ],
+    "time_scales": [
+      0.01,
+      0.05,
+      0.1,
+      0.25,
+      0.5,
+      1.0,
+      2.0,
+      5.0,
+      10.0,
+      25.0,
+      50.0,
+      100.0
+    ],
+    "seed": 42
+  },
+  "time_scale_results": [
+    {
+      "t": 0.01,
+      "gf_score_2d": 0.12241429157352812,
+      "gf_score_kd": 0.2545176224611709,
+      "peak_purity": 0.2598079943344797,
+      "n_communities": 19,
+      "top_eigenvalue_contribution": 0.9992876653431211,
+      "elapsed_s": 0.06219601631164551
+    },
+    {
+      "t": 0.05,
+      "gf_score_2d": 0.12241429157352812,
+      "gf_score_kd": 0.2545176224611709,
+      "peak_purity": 0.2598079943344797,
+      "n_communities": 19,
+      "top_eigenvalue_contribution": 0.996443397308993,
+      "elapsed_s": 0.05716848373413086
+    },
+    {
+      "t": 0.1,
+      "gf_score_2d": 0.12241429157352812,
+      "gf_score_kd": 0.2545176224611709,
+      "peak_purity": 0.2598079943344797,
+      "n_communities": 19,
+      "top_eigenvalue_contribution": 0.9928994440406876,
+      "elapsed_s": 0.0653383731842041
+    },
+    {
+      "t": 0.25,
+      "gf_score_2d": 0.12241429157352812,
+      "gf_score_kd": 0.2545176224611709,
+      "peak_purity": 0.2598079943344797,
+      "n_communities": 19,
+      "top_eigenvalue_contribution": 0.9823430316817439,
+      "elapsed_s": 0.06707072257995605
+    },
+    {
+      "t": 0.5,
+      "gf_score_2d": 0.12241429157352812,
+      "gf_score_kd": 0.2545176224611709,
+      "peak_purity": 0.2598079943344797,
+      "n_communities": 19,
+      "top_eigenvalue_contribution": 0.9649978318936797,
+      "elapsed_s": 0.06168723106384277
+    },
+    {
+      "t": 1.0,
+      "gf_score_2d": 0.12241429157352812,
+      "gf_score_kd": 0.2545176224611709,
+      "peak_purity": 0.2598079943344797,
+      "n_communities": 19,
+      "top_eigenvalue_contribution": 0.9312208155595024,
+      "elapsed_s": 0.061652421951293945
+    },
+    {
+      "t": 2.0,
+      "gf_score_2d": 0.12240055950260731,
+      "gf_score_kd": 0.25447171480803227,
+      "peak_purity": 0.2593175946177557,
+      "n_communities": 20,
+      "top_eigenvalue_contribution": 0.8671722073313048,
+      "elapsed_s": 0.07366609573364258
+    },
+    {
+      "t": 5.0,
+      "gf_score_2d": 0.12008931952893763,
+      "gf_score_kd": 0.25487177250998455,
+      "peak_purity": 0.2593175946177557,
+      "n_communities": 20,
+      "top_eigenvalue_contribution": 0.7002665407741062,
+      "elapsed_s": 0.08773446083068848
+    },
+    {
+      "t": 10.0,
+      "gf_score_2d": 0.11902164827012436,
+      "gf_score_kd": 0.24552510775875172,
+      "peak_purity": 0.26320290396496215,
+      "n_communities": 21,
+      "top_eigenvalue_contribution": 0.490373228127733,
+      "elapsed_s": 0.09346532821655273
+    },
+    {
+      "t": 25.0,
+      "gf_score_2d": 0.11506788834547362,
+      "gf_score_kd": 0.2226098508544092,
+      "peak_purity": 0.256317811226487,
+      "n_communities": 18,
+      "top_eigenvalue_contribution": 0.1683902259729852,
+      "elapsed_s": 0.0829920768737793
+    },
+    {
+      "t": 50.0,
+      "gf_score_2d": 0.09300767334151286,
+      "gf_score_kd": 0.14243330499290838,
+      "peak_purity": 0.24892301382027407,
+      "n_communities": 16,
+      "top_eigenvalue_contribution": 0.028355268203233017,
+      "elapsed_s": 0.09336209297180176
+    },
+    {
+      "t": 100.0,
+      "gf_score_2d": 0.07525881229800989,
+      "gf_score_kd": 0.1376006475449411,
+      "peak_purity": 0.23689685504753996,
+      "n_communities": 9,
+      "top_eigenvalue_contribution": 0.0008040212348772773,
+      "elapsed_s": 0.08070063591003418
+    }
+  ],
+  "spectral_comparison": {
+    "spectral_gf_this_network": 0.12241429157352812,
+    "spectral_gf_curated_153": 0.16332658400038436,
+    "best_heat_kernel_t": 0.01,
+    "best_heat_kernel_gf_2d": 0.12241429157352812,
+    "best_heat_kernel_gf_kd": 0.25487177250998455,
+    "improvement_2d": 0.0
+  },
+  "optimal_time": {
+    "t_optimal_2d": 0.01,
+    "gf_optimal_2d": 0.12241429157352812,
+    "t_optimal_kd": 5.0,
+    "gf_optimal_kd": 0.25487177250998455,
+    "phase_transition": {
+      "t_before": 25.0,
+      "t_after": 50.0,
+      "delta_GF": -0.073282448000913,
+      "is_sharp": true
+    },
+    "decay_go_coherence_rho": 0.8883073229291716
+  },
+  "spectral_gap": 0.07125884877595184,
+  "t_char": 14.033344871233396,
+  "t_optimal": 0.01,
+  "cheeger_estimate": 0.18875758100795825,
+  "gap_analysis": {
+    "lambda_1": 0.0,
+    "lambda_2": 0.07125884877595184,
+    "lambda_3": 0.09957158403471827,
+    "spectral_gap": 0.07125884877595184,
+    "t_char": 14.033344871233396,
+    "t_opt": 0.01,
+    "t_opt_over_t_char": 0.0007125884877595184,
+    "cheeger_estimate": 0.18875758100795825,
+    "verdict": "NO -- t_opt / t_char = 0.00. The optimal time scale deviates significantly from the characteristic diffusion time."
+  },
+  "cross_scale_correlation": 0.9999999999999999,
+  "cross_scale_detail": {
+    "spearman_rho": 0.9999999999999999,
+    "spearman_p": 1.586425303066468e-181,
+    "gf_heat_kernel": 0.12241429157352812,
+    "gf_spectral": 0.12241429157352812,
+    "peak_r_heat_kernel": 0.05,
+    "peak_r_spectral": 0.05,
+    "purities_heat_kernel": [
+      0.2598079943344797,
+      0.2567969231286898,
+      0.22508565093037178,
+      0.2316999026676446,
+      0.2107159878772782,
+      0.17991928999938156,
+      0.17991928999938156,
+      0.13864978902953587,
+      0.10464135021097046,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881
+    ],
+    "purities_spectral": [
+      0.2598079943344797,
+      0.2567969231286898,
+      0.22508565093037178,
+      0.2316999026676446,
+      0.2107159878772782,
+      0.17991928999938156,
+      0.17991928999938156,
+      0.13864978902953587,
+      0.10464135021097046,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881,
+      0.06217616580310881
+    ]
+  },
+  "r_vals": [
+    0.05,
+    0.07083333333333333,
+    0.09166666666666667,
+    0.1125,
+    0.13333333333333333,
+    0.15416666666666667,
+    0.175,
+    0.1958333333333333,
+    0.21666666666666667,
+    0.2375,
+    0.2583333333333333,
+    0.2791666666666667,
+    0.3,
+    0.3208333333333333,
+    0.3416666666666666,
+    0.3625,
+    0.3833333333333333,
+    0.4041666666666666,
+    0.425,
+    0.4458333333333333,
+    0.4666666666666666,
+    0.4875,
+    0.5083333333333333,
+    0.5291666666666667,
+    0.55
+  ],
+  "summary": "Heat Kernel Multi-Scale Analysis Summary\n==================================================\n\nOptimal diffusion time t* = 0.0100\n  GF Score at t* (2D): 0.12241\n  Spectral GF Score (this network): 0.12241\n  Spectral GF Score (curated 153-node): 0.16333\n\n  Improvement over Spectral: +0.00000\n\nSpectral gap analysis:\n  lambda_2 = 0.07125885\n  t_char = 1/lambda_2 = 14.0333\n  t_opt / t_char = 0.0007\n  Cheeger h ~ 0.188758\n  Verdict: NO -- t_opt / t_char = 0.00. The optimal time scale deviates significantly from the characteristic diffusion time.\n\nCross-scale consistency:\n  Spearman rho (HK vs Spectral GF curves): +1.0000\n  (p = 1.5864e-181)\n\n  Decay-GO coherence correlation: +0.8883"
+}

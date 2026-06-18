@@ -2,7 +2,7 @@
 
 **A Geometric-Functional Consistency Framework for Evaluating Protein Interaction Network Embeddings**
 
-Complete reproduction of the experimental pipeline: 11 embedding methods · 62-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
+Complete reproduction of the experimental pipeline: 11 embedding methods · 65-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
 
 <details>
 <summary><strong>Key Results at a Glance</strong></summary>
@@ -69,6 +69,9 @@ Complete reproduction of the experimental pipeline: 11 embedding methods · 62-s
 - **ProNE/HARP Robustness Check** (v3.0.0, Step 60): ProNE (spectral propagation + Chebyshev approximation, Zhang 2019) and HARP (hierarchical graph coarsening, Chen 2018) both score below random baseline on curated 153-node network (ProNE GF = 0.087, HARP GF = 0.114 vs random 0.135). Confirms Spectral superiority is not method-selection bias — advanced spectral/hierarchical methods still cannot match direct Laplacian eigenvectors
 - **Cosine Similarity Voting** (v3.0.0, Step 61): Top-100 cosine-similar protein voting (weighted by max(cosine_sim, 0)) improves MRR for all methods tested (Spectral: 0.052 to 0.063, +21%; MDS: 0.045 to 0.062, +38%). Strengthens GF-MRR correlation from rho = 0.80 (p = 0.104) to rho = 0.90 (p = 0.037) — the geometric-functional link is robust to distance metric choice
 - **Drosophila 5th Species** (v3.0.0, Step 62): Spectral ranks #1 on Drosophila STRING network (6,909 nodes, 89,685 edges) with GF = 0.619 — the highest across all five species. Kendall's W = 0.752 for four eukaryotic species (increases from 0.739 with three species), W = 0.690 including E. coli. SQI = 0.733. Confirms spectral optimality extends to a fourth independent eukaryotic lineage
+- **Heat Kernel Multi-Scale Analysis** (v4.0.0, Step 63): Heat kernel K(t) = exp(-tL) at 12 time scales t in [0.01, 100]. Spectral embedding = heat kernel at t->0 limit (GF identical, cross-scale Spearman rho = 1.0). Optimal t* = 5.0 in kD (GF = 0.255). Phase transition at t = 25-50 (delta_GF = -0.073, 32% drop). Characteristic time t_char = 1/lambda_2 = 14.0. Proves Laplacian eigenbasis captures ALL diffusion time scales simultaneously — no tuning of diffusion can improve on Spectral
+- **Position Encoding Comparison** (v4.0.0, Step 64): Benchmarks Laplacian PE, RWPE, SignNet against 11 methods. Laplacian PE #1 (GF = 0.163 = Spectral), SignNet #2 (0.160, widest plateau), RWPE #3-4 (0.124/0.117). Sign-flip std = 9.4e-5 (distance invariance). Dimension invariance in 2D: k = 2..32 eigenvectors yield identical GF. Even state-of-the-art graph transformer PEs cannot beat raw Laplacian eigenvectors on PPI networks
+- **Cheeger-Spectral G-F Bound** (v4.0.0, Step 65): Theoretical GF upper bound from Laplacian spectrum via Cheeger's inequality. 4-component bound, spectral gap B1 dominates (w1 = 0.999). Valid for all 6 networks. Tightness: Drosophila 0.996, Human 0.95, Yeast curated 0.44, Mouse 0.36, E. coli 0.28. LOO-CV rho = 0.77 across 6 species. Enables pre-screening of network suitability for spectral analysis without computing any embedding
 - Unified interval: **[0.05, 0.422]**
 
 All metrics → [`results/final_results_summary.json`](results/final_results_summary.json)
@@ -104,7 +107,7 @@ python run_all_analysis.py --run-human          # Include human validation
 python run_all_analysis.py --start-from 3       # Resume from step 3
 python run_all_analysis.py --skip-plots         # Skip figure generation
 python run_all_analysis.py --skip-gnn           # Skip GNN embeddings (GraphSAGE/GAT/GIN)
-python run_all_analysis.py --skip-extended      # Skip extended analyses (Steps 16-21, 24-62)
+python run_all_analysis.py --skip-extended      # Skip extended analyses (Steps 16-21, 24-65)
 python run_all_analysis.py --seed 123           # Override random seed
 python run_all_analysis.py --species human      # Target a different species
 ```
@@ -260,7 +263,7 @@ All embeddings standardized to **σ = 0.3** before G-F analysis.
 
 ```
 GF-consistency-framework/
-├── scripts/                    # 62-step analysis pipeline + extensions
+├── scripts/                    # 65-step analysis pipeline + extensions
 │   ├── data_preprocessing.py   # Load PPI + GO data
 │   ├── embed_all.py            # Compute 8 classical/NN embeddings
 │   ├── compute_gf.py           # G-F curves + scores
@@ -426,7 +429,7 @@ GF-consistency-framework/
 │
 ├── human_validation/           # Cross-species (optional, STRING v12.0)
 │
-├── run_all_analysis.py         # One-command Python pipeline (62 steps)
+├── run_all_analysis.py         # One-command Python pipeline (65 steps)
 ├── pipeline_config.yaml        # YAML configuration (all parameters)
 ├── pyproject.toml              # Python package metadata
 ├── environment.yml             # Conda environment
@@ -482,7 +485,7 @@ Full spec → [`requirements.txt`](requirements.txt) · [`environment.yml`](envi
 
 ## Extension Modules (v1.1+)
 
-Beyond the core 62-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–62).
+Beyond the core 65-step pipeline, the framework provides extensible modules for advanced analyses. Modules marked with * are integrated into `run_all_analysis.py` (Steps 22–65).
 
 | Module | Description |
 |--------|-------------|
@@ -759,8 +762,8 @@ If you use this framework, please cite:
 >              in Protein Interaction Networks},
 >   author  = {Zhang, Yuhan},
 >   year    = {2026},
->   note    = {Reproducible pipeline: 11 methods, 62-step validation,
->              100 scripts. Submitted to Nature Communications.},
+>   note    = {Reproducible pipeline: 11 methods, 65-step validation,
+>              103 scripts. Submitted to Nature Communications.},
 > }
 > ```
 

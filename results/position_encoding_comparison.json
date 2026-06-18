@@ -1,0 +1,311 @@
+{
+  "pe_methods": [
+    {
+      "method": "Laplacian_PE_k2",
+      "gf_score": 0.16332658400038436,
+      "peak_purity": 0.2558458553424948,
+      "plateau_width": 0.10301507537688441
+    },
+    {
+      "method": "RWPE_diagonal_k2",
+      "gf_score": 0.11689592191995167,
+      "peak_purity": 0.23220538199814414,
+      "plateau_width": 0.05527638190954774
+    },
+    {
+      "method": "RWPE_full_r4_PCA2D",
+      "gf_score": 0.12429002359465373,
+      "peak_purity": 0.26274410596487724,
+      "plateau_width": 0.04522613065326633
+    },
+    {
+      "method": "SignNet_k16_PCA2D",
+      "gf_score": 0.15986701296477684,
+      "peak_purity": 0.22547210156153547,
+      "plateau_width": 0.1633165829145729
+    },
+    {
+      "method": "Laplacian_PE_k2",
+      "gf_score": 0.16332658400038436,
+      "peak_purity": 0.2558458553424948,
+      "plateau_width": 0.10301507537688441
+    },
+    {
+      "method": "RWPE_diagonal_k2",
+      "gf_score": 0.11689592191995167,
+      "peak_purity": 0.23220538199814414,
+      "plateau_width": 0.05527638190954774
+    },
+    {
+      "method": "Laplacian_PE_k4",
+      "gf_score": 0.16332658400038436,
+      "peak_purity": 0.2558458553424948,
+      "plateau_width": 0.10301507537688441
+    },
+    {
+      "method": "RWPE_diagonal_k4",
+      "gf_score": 0.11689592191995167,
+      "peak_purity": 0.23220538199814414,
+      "plateau_width": 0.05527638190954774
+    },
+    {
+      "method": "Laplacian_PE_k8",
+      "gf_score": 0.16332658400038436,
+      "peak_purity": 0.2558458553424948,
+      "plateau_width": 0.10301507537688441
+    },
+    {
+      "method": "RWPE_diagonal_k8",
+      "gf_score": 0.11689592191995167,
+      "peak_purity": 0.23220538199814414,
+      "plateau_width": 0.05527638190954774
+    },
+    {
+      "method": "Laplacian_PE_k16",
+      "gf_score": 0.16332658400038436,
+      "peak_purity": 0.2558458553424948,
+      "plateau_width": 0.10301507537688441
+    },
+    {
+      "method": "RWPE_diagonal_k16",
+      "gf_score": 0.11689592191995167,
+      "peak_purity": 0.23220538199814414,
+      "plateau_width": 0.05527638190954774
+    },
+    {
+      "method": "Laplacian_PE_k32",
+      "gf_score": 0.16332658400038436,
+      "peak_purity": 0.2558458553424948,
+      "plateau_width": 0.10301507537688441
+    },
+    {
+      "method": "RWPE_diagonal_k32",
+      "gf_score": 0.11689592191995167,
+      "peak_purity": 0.23220538199814414,
+      "plateau_width": 0.05527638190954774
+    }
+  ],
+  "sign_flip_robustness": {
+    "mean_gf": 0.16244359830173474,
+    "std_gf": 9.392141405329653e-05,
+    "min_gf": 0.16234149496004294,
+    "max_gf": 0.16252999343701247,
+    "n_exhaustive": 4,
+    "n_random": 20,
+    "k_eigenvectors": 16,
+    "theoretical_note": "Euclidean distances are invariant to eigenvector sign flips, so all sign combinations yield identical GF curves when projecting to 2D. Std should be 0 or near-zero (floating point)."
+  },
+  "sign_flip_exhaustive_scores": [
+    0.16252999343701247,
+    0.16234149496004294,
+    0.16234149496004294,
+    0.16252999343701247
+  ],
+  "sign_flip_random_scores": [
+    0.16234149496004294,
+    0.16252999343701247,
+    0.16252999343701247,
+    0.16252999343701247,
+    0.16234149496004294,
+    0.16234149496004294,
+    0.16252999343701247,
+    0.16252999343701247,
+    0.16252999343701247,
+    0.16234149496004294,
+    0.16252999343701247,
+    0.16252999343701247,
+    0.16252999343701247,
+    0.16234149496004294,
+    0.16252999343701247,
+    0.16234149496004294,
+    0.16234149496004294,
+    0.16252999343701247,
+    0.16234149496004294,
+    0.16234149496004294
+  ],
+  "comparison_ranking": [
+    {
+      "rank": 1,
+      "method": "Spectral",
+      "gf_score": 0.16332658400038436,
+      "category": "existing"
+    },
+    {
+      "rank": 2,
+      "method": "Laplacian_PE_k2",
+      "gf_score": 0.16332658400038436,
+      "category": "PE_method"
+    },
+    {
+      "rank": 3,
+      "method": "Laplacian_PE_k2",
+      "gf_score": 0.16332658400038436,
+      "category": "PE_method"
+    },
+    {
+      "rank": 4,
+      "method": "Laplacian_PE_k4",
+      "gf_score": 0.16332658400038436,
+      "category": "PE_method"
+    },
+    {
+      "rank": 5,
+      "method": "Laplacian_PE_k8",
+      "gf_score": 0.16332658400038436,
+      "category": "PE_method"
+    },
+    {
+      "rank": 6,
+      "method": "Laplacian_PE_k16",
+      "gf_score": 0.16332658400038436,
+      "category": "PE_method"
+    },
+    {
+      "rank": 7,
+      "method": "Laplacian_PE_k32",
+      "gf_score": 0.16332658400038436,
+      "category": "PE_method"
+    },
+    {
+      "rank": 8,
+      "method": "SignNet_k16_PCA2D",
+      "gf_score": 0.15986701296477684,
+      "category": "PE_method"
+    },
+    {
+      "rank": 9,
+      "method": "DM",
+      "gf_score": 0.15518241816105013,
+      "category": "existing"
+    },
+    {
+      "rank": 10,
+      "method": "MDS",
+      "gf_score": 0.152155432912679,
+      "category": "existing"
+    },
+    {
+      "rank": 11,
+      "method": "Node2Vec",
+      "gf_score": 0.1511706117501923,
+      "category": "existing"
+    },
+    {
+      "rank": 12,
+      "method": "PCA",
+      "gf_score": 0.13753060668252517,
+      "category": "existing"
+    },
+    {
+      "rank": 13,
+      "method": "RWPE_full_r4_PCA2D",
+      "gf_score": 0.12429002359465373,
+      "category": "PE_method"
+    },
+    {
+      "rank": 14,
+      "method": "VGAE-feat",
+      "gf_score": 0.12384417529354565,
+      "category": "existing"
+    },
+    {
+      "rank": 15,
+      "method": "DeepWalk",
+      "gf_score": 0.1225356361238432,
+      "category": "existing"
+    },
+    {
+      "rank": 16,
+      "method": "GIN",
+      "gf_score": 0.1217,
+      "category": "existing"
+    },
+    {
+      "rank": 17,
+      "method": "RWPE_diagonal_k2",
+      "gf_score": 0.11689592191995167,
+      "category": "PE_method"
+    },
+    {
+      "rank": 18,
+      "method": "RWPE_diagonal_k2",
+      "gf_score": 0.11689592191995167,
+      "category": "PE_method"
+    },
+    {
+      "rank": 19,
+      "method": "RWPE_diagonal_k4",
+      "gf_score": 0.11689592191995167,
+      "category": "PE_method"
+    },
+    {
+      "rank": 20,
+      "method": "RWPE_diagonal_k8",
+      "gf_score": 0.11689592191995167,
+      "category": "PE_method"
+    },
+    {
+      "rank": 21,
+      "method": "RWPE_diagonal_k16",
+      "gf_score": 0.11689592191995167,
+      "category": "PE_method"
+    },
+    {
+      "rank": 22,
+      "method": "RWPE_diagonal_k32",
+      "gf_score": 0.11689592191995167,
+      "category": "PE_method"
+    },
+    {
+      "rank": 23,
+      "method": "GAT",
+      "gf_score": 0.0694,
+      "category": "existing"
+    },
+    {
+      "rank": 24,
+      "method": "GraphSAGE",
+      "gf_score": 0.069,
+      "category": "existing"
+    },
+    {
+      "rank": 25,
+      "method": "VGAE",
+      "gf_score": 0.06567018452344808,
+      "category": "existing"
+    }
+  ],
+  "existing_methods": {
+    "DM": 0.15518241816105013,
+    "MDS": 0.152155432912679,
+    "Spectral": 0.16332658400038436,
+    "DeepWalk": 0.1225356361238432,
+    "Node2Vec": 0.1511706117501923,
+    "VGAE": 0.06567018452344808,
+    "PCA": 0.13753060668252517,
+    "VGAE-feat": 0.12384417529354565,
+    "GraphSAGE": 0.069,
+    "GAT": 0.0694,
+    "GIN": 0.1217
+  },
+  "dimension_invariance_note": "When projecting to 2D, the first 2 PE dimensions are identical regardless of k (total dimensions computed). This means Laplacian_PE_k2 and Laplacian_PE_k32 have the same GF Score when evaluated in 2D. The benefit of higher-k PEs only manifests when the GF curve is computed in the full k-D space.",
+  "parameters": {
+    "rwpe_steps": 16,
+    "rwpe_full_steps": 4,
+    "signnet_k": 16,
+    "sign_flip_exhaustive": 4,
+    "sign_flip_random": 20,
+    "dim_sweep": [
+      2,
+      4,
+      8,
+      16,
+      32
+    ],
+    "target_std": 0.3,
+    "gf_r_min": 0.05,
+    "gf_r_max": 0.422,
+    "n_points": 200,
+    "seed": 42
+  }
+}

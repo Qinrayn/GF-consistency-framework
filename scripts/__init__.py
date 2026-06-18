@@ -1,7 +1,7 @@
 """
 scripts/ — G-F Consistency Framework analysis pipeline.
 
-This package contains the 62-step reproducible analysis pipeline for
+This package contains the 65-step reproducible analysis pipeline for
 evaluating protein interaction network embeddings via geometric-functional
 consistency.
 
@@ -134,6 +134,12 @@ prone_harp_gf                   Step 60: ProNE + HARP embedding G-F Scores (spec
 function_prediction_cosine      Step 61: Cosine similarity voting baseline for function prediction
 fly_analysis                    Step 62: Drosophila melanogaster 5th species cross-species validation (6,909 nodes)
 
+Modules (Steps 63-65: theoretical foundations — heat kernel, position encoding, Cheeger bound)
+-----------------------------------------------------------------------------------------------
+heat_kernel_multiscale          Step 63: Heat kernel K(t)=exp(-tL) multi-scale analysis (12 time scales, Spectral = t->0 limit)
+position_encoding_comparison    Step 64: Graph transformer PE benchmark (Laplacian PE, RWPE, SignNet; raw eigenvectors optimal)
+cheeger_gf_bound                Step 65: Cheeger-Spectral G-F upper bound theorem (6 networks, tightness 0.95-0.996)
+
 Supplementary experiment modules
 ----------------------------------
 multihead_gat_experiment        Multi-head GAT configuration sweep (1/4/8 heads, d=2-32)
@@ -152,4 +158,4 @@ robustness_analysis           Extended 30-subset convergence analysis
 visualization_helpers         Okabe-Ito colorblind-safe plotting utilities
 """
 
-__version__ = "2.9.0"
+__version__ = "2.10.0"

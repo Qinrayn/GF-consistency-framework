@@ -7,7 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.9.0] — 2026-06-17
+## [2.10.0] — 2026-06-18
+
+### Added (Steps 63-65: Theoretical Foundations — Heat Kernel, Position Encoding, Cheeger Bound)
+- `heat_kernel_multiscale.py`: Heat kernel K(t) = exp(-tL) multi-scale analysis at 12 logarithmically spaced time scales t in [0.01, 100]. Proves Spectral embedding = heat kernel at t->0 (GF identical, rho=1.0 across all scales). Optimal t*=5.0 in kD (GF=0.255). Phase transition at t=25-50 (delta_GF=-0.073). Characteristic diffusion time t_char=1/lambda_2=14.0. Decay-GO coherence rho=0.888.
+- `position_encoding_comparison.py`: Benchmarks 4 PE families — Laplacian PE, RWPE (diagonal + full landing probabilities), SignNet — against 11 existing methods. Laplacian PE #1 (GF=0.163 = Spectral), SignNet #2 (0.160, widest plateau 0.163), RWPE #3-4 (0.124/0.117). Sign-flip std=9.4e-5. Dimension invariance in 2D (k=2..32 identical GF).
+- `cheeger_gf_bound.py`: Derives theoretical GF upper bound from Laplacian spectrum via Cheeger's inequality. 4-component bound (spectral gap B1 dominates, w1=0.999). Valid for all 6 networks. Tightness: Drosophila 0.996, Human 0.95, Yeast curated 0.44, Yeast full 0.40, Mouse 0.36, E. coli 0.28. LOO-CV Spearman rho=0.77.
+
+### Changed
+- Version bumped to 2.10.0 across `pyproject.toml`, `scripts/__init__.py`
+- Pipeline expanded from 62 steps to 65 steps
+- `pipeline_config.yaml`: `start_from` range updated (1-65), `skip_extended` scope (24-65)
+- Manuscript: new Section 3.11 (Theoretical Foundations), Discussion paragraph (Theoretical unification), updated Conclusions, refs [62-64] (GraphiT/RWPE, SignNet, multi-way Cheeger). 64 references total.
+- Cover letter: point 2 expanded with heat kernel + PE + Cheeger theoretical results
+- Abstract: mentions heat kernel and Cheeger-type inequalities
+- 103 scripts, 65-step pipeline, 19 deep analysis modules, 86 figures
+
+## [3.0.0] — 2026-06-17
 
 ### Added (Steps 60-62: 5th Species + ProNE/HARP + Cosine Baseline)
 - `fly_analysis.py`: Drosophila melanogaster as 5th species (6,909 nodes, 89,685 edges, STRING v11.5). 11 methods, Spectral ranks #1 (GF=0.619, highest across all 5 species). Kendall's W=0.752 (4 eukaryotes, HIGHER than 3-species W=0.739). GNN collapse confirmed. SQI=0.73.
@@ -16,11 +32,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `gatv2_experiment.py`: (from v2.8.1) GATv2 dynamic attention reduces entropy (0.903 vs 0.927) but GF stays near-random (0.157 vs 0.154). Collapse from adjacency-reconstruction objective.
 
 ### Changed
-- Version bumped to 2.9.0 across `pyproject.toml`, `scripts/__init__.py`
+- Version bumped to 3.0.0 across `pyproject.toml`, `scripts/__init__.py`
 - Pipeline expanded from 59 steps to 62 steps
 - `pipeline_config.yaml`: `start_from` range updated (1-62)
 - Manuscript: 5 species, Kendall's W=0.752, ProNE/HARP robustness check, cosine baseline, refs [60-61]
-- Cover letter: 5 species, v2.9.0, 100 scripts, 62 steps
+- Cover letter: 5 species, v3.0.0, 100 scripts, 62 steps
 - Abstract: 149/150 words, Body: ~6413 words, 61 references
 
 ## [2.8.1] — 2026-06-17
