@@ -77,9 +77,7 @@ def load_yeast_full():
 
 def load_human_full():
     G = nx.Graph()
-    fpath = Path("human_validation/9606.protein.links.v12.0.txt.gz")
-    if not fpath.exists():
-        fpath = DATA.parent / "human_validation" / "9606.protein.links.v12.0.txt.gz"
+    fpath = DATA.parent / "human_validation" / "9606.protein.links.v12.0.txt.gz"
     with gzip.open(str(fpath), "rt", encoding="utf-8") as f:
         f.readline()
         for line in f:

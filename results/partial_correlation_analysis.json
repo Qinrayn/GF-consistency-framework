@@ -1,0 +1,184 @@
+{
+  "analysis": "Partial Correlation: GF Score vs Downstream Tasks",
+  "n_methods": 11,
+  "methods": [
+    "DM",
+    "DeepWalk",
+    "GAT",
+    "GIN",
+    "GraphSAGE",
+    "MDS",
+    "Node2Vec",
+    "PCA",
+    "Spectral",
+    "VGAE",
+    "VGAE-feat"
+  ],
+  "per_method": {
+    "DM": {
+      "gf_score": 0.1552,
+      "link_pred_auc": 0.7263,
+      "knn_f1": 0.5126,
+      "effective_rank": 1.9995557068340772,
+      "mrr": 0.036588,
+      "is_gnn": 0.0
+    },
+    "DeepWalk": {
+      "gf_score": 0.1225,
+      "link_pred_auc": 0.4888,
+      "knn_f1": 0.1933,
+      "effective_rank": 1.459916688289283,
+      "mrr": 0.010178,
+      "is_gnn": 0.0
+    },
+    "GAT": {
+      "gf_score": 0.0694,
+      "link_pred_auc": 0.5335,
+      "knn_f1": 0.1597,
+      "effective_rank": 1.01885986328125,
+      "mrr": 0.012341,
+      "is_gnn": 1.0
+    },
+    "GIN": {
+      "gf_score": 0.1217,
+      "link_pred_auc": 0.4827,
+      "knn_f1": 0.2101,
+      "effective_rank": 1.1552284955978394,
+      "mrr": 0.011005,
+      "is_gnn": 1.0
+    },
+    "GraphSAGE": {
+      "gf_score": 0.069,
+      "link_pred_auc": 0.5307,
+      "knn_f1": 0.1765,
+      "effective_rank": 1.0449717044830322,
+      "mrr": 0.020926,
+      "is_gnn": 1.0
+    },
+    "MDS": {
+      "gf_score": 0.1522,
+      "link_pred_auc": 0.9039,
+      "knn_f1": 0.6387,
+      "effective_rank": 1.9226748094335995,
+      "mrr": 0.059979,
+      "is_gnn": 0.0
+    },
+    "Node2Vec": {
+      "gf_score": 0.1512,
+      "link_pred_auc": 0.4913,
+      "knn_f1": 0.1849,
+      "effective_rank": 1.57069737441704,
+      "mrr": 0.011195,
+      "is_gnn": 0.0
+    },
+    "PCA": {
+      "gf_score": 0.1375,
+      "link_pred_auc": 0.6781,
+      "knn_f1": 0.521,
+      "effective_rank": 1.257502315808353,
+      "mrr": 0.043963,
+      "is_gnn": 0.0
+    },
+    "Spectral": {
+      "gf_score": 0.1633,
+      "link_pred_auc": 0.8849,
+      "knn_f1": 0.6723,
+      "effective_rank": 1.9991836496012487,
+      "mrr": 0.065758,
+      "is_gnn": 0.0
+    },
+    "VGAE": {
+      "gf_score": 0.0657,
+      "link_pred_auc": 0.4908,
+      "knn_f1": 0.2269,
+      "effective_rank": 1.0019327402114868,
+      "mrr": 0.010769,
+      "is_gnn": 1.0
+    },
+    "VGAE-feat": {
+      "gf_score": 0.1238,
+      "link_pred_auc": 0.4664,
+      "knn_f1": 0.1681,
+      "effective_rank": 1.004763126373291,
+      "mrr": 0.011892,
+      "is_gnn": 1.0
+    }
+  },
+  "pairwise_spearman": {
+    "gf_vs_link_pred_auc": {
+      "rho": 0.5909090909090909,
+      "p": 0.055575604288774685
+    },
+    "gf_vs_knn_f1": {
+      "rho": 0.6090909090909091,
+      "p": 0.046695709354098905
+    },
+    "gf_vs_mrr": {
+      "rho": 0.6454545454545455,
+      "p": 0.03196279932801746
+    },
+    "gf_vs_effective_rank": {
+      "rho": 0.8727272727272729,
+      "p": 0.00045461505140964044
+    },
+    "auc_vs_effective_rank": {
+      "rho": 0.6545454545454547,
+      "p": 0.028864598957001903
+    },
+    "f1_vs_effective_rank": {
+      "rho": 0.6272727272727273,
+      "p": 0.03884525362035334
+    },
+    "mrr_vs_effective_rank": {
+      "rho": 0.5272727272727273,
+      "p": 0.09556521835315425
+    }
+  },
+  "partial_correlations": {
+    "controlling_effective_rank": {
+      "gf_vs_link_pred_auc": {
+        "rho": 0.30000000000000004,
+        "p": 0.39969146875000017
+      },
+      "gf_vs_knn_f1": {
+        "rho": 0.29090909090909095,
+        "p": 0.41481115906993393
+      },
+      "gf_vs_mrr": {
+        "rho": 0.5,
+        "p": 0.14111328125
+      }
+    },
+    "controlling_gnn_indicator": {
+      "gf_vs_link_pred_auc": {
+        "rho": 0.21818181818181823,
+        "p": 0.5448054658622332
+      },
+      "gf_vs_knn_f1": {
+        "rho": 0.16363636363636366,
+        "p": 0.6514773427962428
+      },
+      "gf_vs_mrr": {
+        "rho": 0.4000000000000001,
+        "p": 0.25207199999999985
+      }
+    },
+    "controlling_eff_rank_and_gnn": {
+      "gf_vs_link_pred_auc": {
+        "rho": 0.3181818181818182,
+        "p": 0.40403012876978517
+      },
+      "gf_vs_knn_f1": {
+        "rho": 0.17272727272727276,
+        "p": 0.6567543141856822
+      },
+      "gf_vs_mrr": {
+        "rho": 0.5818181818181819,
+        "p": 0.10028063409650523
+      }
+    }
+  },
+  "interpretation": {
+    "note": "Partial correlations control for effective rank and GNN architecture as potential confounders. All correlations are exploratory (n=11 methods); results should be interpreted with caution given the small sample size."
+  }
+}

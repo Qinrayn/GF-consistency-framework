@@ -1,34 +1,40 @@
 #!/usr/bin/env python3
 """
-gat_collapse_formal_proof.py -- Phase 6: Formal Proofs of GAT Collapse
-======================================================================
+gat_collapse_formal_proof.py -- Phase 6: GAT Collapse Analysis
+==============================================================
 
-Formalises the Phase 4 empirical observations into three rigorous theorems
-with complete proofs, and verifies all theorem conditions numerically on
-the curated 153-node yeast PPI.
+Develops three propositions with theoretical justification and empirical
+verification for the GAT collapse phenomenon on PPI networks.
 
-Theorem 1 (Attention Degeneration Bound — at Random Initialisation)
+Proposition 1 (Attention Degeneration at Random Initialisation)
     On a graph with degree CV = c_v, single-head GATConv attention entropy
-    satisfies H_norm >= 1 - O(1/(n * c_v^2)) at random initialisation.
-    Training may reduce entropy below this bound (e.g., trained GAT 0.973,
-    GATv2 0.903), but the initial near-uniformity biases the optimisation
-    trajectory toward degenerate attention.
+    satisfies H_norm >= 1 - C/(n * c_v^2 * log(d_bar)) at random
+    initialisation, where C depends on the feature norm and weight
+    initialisation distribution.  Training may reduce entropy below this
+    bound (e.g., trained GAT 0.973, GATv2 0.903), but the initial near-
+    uniformity biases the optimisation trajectory toward degenerate
+    attention.
 
-Theorem 2 (Effective Rank Bound for Mean-Aggregation GNN)
+Proposition 2 (Effective Rank Bottleneck for Mean-Aggregation GNN)
     A 2-layer mean-aggregation GNN with latent_dim d and inner-product
-    decoder produces embeddings with eff_rank <= d, and under rank-deficient
-    weight products, eff_rank approaches 1.
+    decoder produces embeddings whose effective rank is constrained by
+    the smoothing properties of D^{-1}A.  While pointwise nonlinearities
+    can increase algebraic rank, the mean-aggregation operator acts as a
+    low-pass filter that concentrates signal in the leading eigenvectors,
+    producing rapid singular-value decay and eff_rank approaching 1.
 
-Theorem 3 (G-F Score Upper Bound for Rank-1 Embeddings)
-    For embeddings with eff_rank -> 1 (all points on a line), G-F Score is
-    bounded by the 1D interval purity of the optimal GO-aligned ordering.
+Proposition 3 (G-F Score Bound for Near-Rank-1 Embeddings)
+    For embeddings with eff_rank approaching 1 (points approximately
+    collinear), the G-F Score is empirically bounded by the 1D interval
+    purity of the optimal GO-aligned ordering.  This is a geometric
+    observation verified numerically rather than a strict theorem.
 
 Combined Corollary:
-    GAT on degree-heterogeneous PPI networks produces near-random G-F Scores
-    as a necessary consequence of its architecture.  Theorem 1 governs the
-    initialisation regime; training can reduce entropy but the adjacency-
-    reconstruction objective (Theorem 2) constrains effective rank regardless
-    of attention variant.
+    GAT on degree-heterogeneous PPI networks produces near-random G-F
+    Scores as a consequence of its architecture.  Proposition 1 governs
+    the initialisation regime; training can reduce entropy but the
+    adjacency-reconstruction objective (Proposition 2) constrains
+    effective rank regardless of attention variant.
 
 Outputs:
   - results/gat_collapse_formal_proof.json
@@ -73,13 +79,13 @@ METHOD_COLORS = {
 
 
 # ================================================================
-# THEOREM 1: Attention Degeneration Bound
+# PROPOSITION 1: Attention Degeneration Bound
 # ================================================================
 
 def verify_theorem_1(G, nodes, features):
     """
-    Theorem 1 (Attention Degeneration Bound)
-    -----------------------------------------
+    Proposition 1 (Attention Degeneration at Random Initialisation)
+    ---------------------------------------------------------------
     Let G = (V, E) be a graph with n nodes and degree distribution
     having mean d_bar and coefficient of variation c_v.  Consider a
     single-head GATConv with attention mechanism:
@@ -91,23 +97,27 @@ def verify_theorem_1(G, nodes, features):
     W, a are randomly initialised.  Then:
 
     (a) For each node i, the variance of pre-softmax coefficients
-        satisfies Var_j[e_ij] <= C * ||W a||^2 * sigma_h^2 / d_i
+        satisfies Var_j[e_ij] <= ||W a||^2 * sigma_h^2 / d_i
         where sigma_h^2 is the feature variance across neighbors.
 
-    (b) By concentration of softmax, the normalized attention entropy
-        satisfies H_norm(i) = H(alpha_i) / log(d_i)
+    (b) By concentration of softmax (bounded-differences inequality),
+        the normalised attention entropy satisfies:
+        H_norm(i) = H(alpha_i) / log(d_i)
             >= 1 - Var_j[e_ij] / (2 * log(d_i))
 
-    (c) Averaging over all nodes and using the relation between feature
-        variance and degree CV:
+    (c) Averaging over all nodes, the bound takes the form:
         E[H_norm] >= 1 - C / (n * c_v^2 * log(d_bar))
 
-    Therefore, for large n or moderate c_v, attention is near-uniform.
+        where C = E[||W a||^2] * sigma_h^2 is determined by the
+        weight initialisation variance and feature statistics.
+        For Xavier-initialised W and a with variance 2/(p + h), and
+        features with variance sigma_h^2, C = O(sigma_h^2 * h/(p+h)).
 
     Numerical verification:
-      - Compute the actual bound from network statistics
-      - Compare with empirical GAT attention entropy (0.973)
-      - Test across 10 random initialisations
+      - Compute C analytically from init distribution and features
+      - Estimate C empirically from 10 random initialisations
+        (consistency check, not definition)
+      - Compare with trained GAT attention entropy (0.973)
     """
     import torch
     from torch_geometric.nn import GATConv
@@ -185,7 +195,8 @@ def verify_theorem_1(G, nodes, features):
         "feature_variance": feat_var,
         "theoretical_bound": {
             "H_norm_lower_bound": H_bound,
-            "constant_C": C_est,
+            "C_empirical_estimate": C_est,
+            "C_definition": "C = E[||Wa||^2] * sigma_h^2 (init variance x feature variance)",
             "formula": "E[H_norm] >= 1 - C/(n * CV^2 * log(d_bar))",
         },
         "empirical": {
@@ -200,43 +211,55 @@ def verify_theorem_1(G, nodes, features):
             "trained_near_bound": abs(H_norm_mean - 0.9731) < 0.05,
             "interpretation": (
                 f"With CV={c_v:.3f}, n={n}, d_bar={d_bar:.1f}, "
-                f"the bound gives H_norm >= {H_bound:.4f} at random initialisation. "
+                f"the bound gives H_norm >= {H_bound:.4f} at random initialisation "
+                f"(C estimated empirically = {C_est:.4f}). "
                 f"Empirical (random init): {H_norm_mean:.4f}. "
-                f"Trained GAT: 0.9731 (may be below bound — training changes weights). "
-                f"Bound characterises initialisation regime."
+                f"Trained GAT: 0.9731 (may fall below bound -- training changes "
+                f"weights away from init). "
+                f"Bound characterises initialisation regime only."
             ),
         },
     }
 
 
 # ================================================================
-# THEOREM 2: Effective Rank Bound
+# PROPOSITION 2: Effective Rank Bottleneck
 # ================================================================
 
 def verify_theorem_2(G, nodes, all_embeddings, gf_scores):
     """
-    Theorem 2 (Effective Rank Bound for Mean-Aggregation GNN)
-    ---------------------------------------------------------
+    Proposition 2 (Effective Rank Bottleneck for Mean-Aggregation GNN)
+    -------------------------------------------------------------------
     Let Z = f(X, A; W) be the output of a 2-layer mean-aggregation GNN:
 
         H = sigma(D^{-1} A X W_1)       (layer 1, mean aggregation)
         Z = sigma(D^{-1} A H W_2)       (layer 2)
 
     where X in R^{n x p}, W_1 in R^{p x h}, W_2 in R^{h x d},
-    sigma is a pointwise nonlinearity.
+    sigma is a pointwise nonlinearity (e.g., ReLU + BatchNorm).
 
-    (a) rank(Z) <= min(n, rank(W_1 W_2)) <= d.
-        (Each layer is a composition of linear maps and monotone
-         nonlinearities; rank cannot exceed the narrowest bottleneck.)
+    (a) Without the nonlinearity, the linear composition
+        Z_lin = (D^{-1}A)^2 X W_1 W_2 satisfies rank(Z_lin) <= min(p, h, d).
+        The pointwise nonlinearity sigma can increase algebraic rank
+        (e.g., ReLU applied to a rank-r matrix can produce full rank).
+        Therefore we bound EFFECTIVE rank (participation ratio), not
+        algebraic rank.
 
     (b) Effective rank (participation ratio) satisfies:
-        eff_rank(Z) = (sum sigma_i^2)^2 / sum(sigma_i^4) <= rank(Z) <= d
+        eff_rank(Z) = (sum sigma_i^2)^2 / sum(sigma_i^4)
 
-    (c) If sigma is ReLU and the pre-activation matrix has rows that
-        cluster in a low-dimensional subspace (as happens when D^{-1}A
-        smooths features), then the singular values decay rapidly:
+        While algebraic rank can be full, the smoothing operator
+        D^{-1}A acts as a low-pass graph filter: it attenuates
+        high-frequency components (eigenvectors with small eigenvalues
+        of the normalised Laplacian). After two layers of smoothing,
+        the embedding signal is concentrated in the leading eigenvectors,
+        producing rapid singular-value decay:
         sigma_1 >> sigma_2 >= ... >= sigma_d
-        leading to eff_rank approaching 1.
+
+    (c) For degree-heterogeneous PPI networks (high CV), the mean
+        aggregation D^{-1}A averages over highly variable neighbourhood
+        sizes, further concentrating the representation. This produces
+        eff_rank approaching 1 even when algebraic rank is full.
 
     (d) With inner-product decoder loss L = BCE(sigmoid(Z Z^T), A),
         the optimal Z* satisfies:
@@ -249,7 +272,8 @@ def verify_theorem_2(G, nodes, all_embeddings, gf_scores):
     Numerical verification:
       - Compute eff_rank for all 11 methods
       - Show that GNN methods (mean-aggregation) have lowest eff_rank
-      - Demonstrate rank-eff_rank gap (algebraic rank = d but eff_rank << d)
+      - Demonstrate rapid singular-value decay (algebraic rank may be
+        full but eff_rank << algebraic rank)
       - Correlate eff_rank with G-F Score
     """
     results = {}
@@ -306,7 +330,7 @@ def verify_theorem_2(G, nodes, all_embeddings, gf_scores):
     rho, p = spearmanr(eff_ranks, gfs) if len(methods_with_gf) >= 4 else (0, 1)
 
     return {
-        "theorem": "Effective Rank Bound for Mean-Aggregation GNN",
+        "theorem": "Proposition 2: Effective Rank Bottleneck for Mean-Aggregation GNN",
         "method_results": {m: {k: v for k, v in r.items() if k != "singular_values"}
                            for m, r in results.items()},
         "verification": {
@@ -319,23 +343,27 @@ def verify_theorem_2(G, nodes, all_embeddings, gf_scores):
                 f"GNN methods: mean eff_rank = {np.mean(gnn_eff_ranks):.3f}. "
                 f"Non-GNN methods: mean eff_rank = {np.mean(non_gnn_eff_ranks):.3f}. "
                 f"eff_rank vs G-F Score: rho={rho:.3f} (p={p:.3f}). "
-                f"GNN mean-aggregation produces lower effective rank, "
-                f"confirming Theorem 2."
+                f"Mean aggregation acts as low-pass filter, concentrating signal "
+                f"in leading singular vectors and reducing effective rank. "
+                f"Algebraic rank may be full (nonlinearity effect) but eff_rank "
+                f"captures the meaningful dimensionality."
             ),
         },
     }
 
 
 # ================================================================
-# THEOREM 3: G-F Score Upper Bound for Low-Rank Embeddings
+# PROPOSITION 3: G-F Score Constraint for Low-Rank Embeddings
 # ================================================================
 
 def verify_theorem_3(G, nodes, go_map, all_embeddings, gf_scores):
     """
-    Theorem 3 (G-F Score Upper Bound for Rank-1 Embeddings)
-    -------------------------------------------------------
-    Let Z in R^{n x 2} be an embedding with effective rank r_eff -> 1.
-    Then the points Z_1, ..., Z_n lie approximately on a line L.
+    Proposition 3 (G-F Score Constraint for Low Effective Rank)
+    -----------------------------------------------------------
+    Let Z in R^{n x 2} be an embedding with effective rank r_eff.
+    When r_eff is close to 1, the points Z_1, ..., Z_n lie approximately
+    on a line L.  This is a geometric observation verified numerically,
+    not a strict theorem.
 
     (a) For any radius r, a ball B(z, r) intersects L in an interval
         [a, b] of length at most 2r.
@@ -343,22 +371,27 @@ def verify_theorem_3(G, nodes, go_map, all_embeddings, gf_scores):
     (b) The functional purity of this interval is:
         purity(B) = max_t |{i : z_i in B, t in GO(i)}| / |GO terms in B|
 
-    (c) Since the embedding is 1D, the maximum purity over all balls
-        is equivalent to the maximum purity over all intervals of the
-        1D projection.  This is bounded by:
+    (c) Since the embedding is approximately 1D, the maximum purity
+        over all balls is well-approximated by the maximum purity over
+        all intervals of the 1D projection.  This is bounded by:
         purity_max <= max over all contiguous subsequences of the
         1D ordering of (dominant GO term count / total GO terms)
 
     (d) The G-F Score (integral of purity over [r_min, r_max]) is
-        therefore bounded by the 1D interval purity of the best
+        therefore constrained by the 1D interval purity of the best
         GO-aligned ordering.
+
+    Continuous formulation:
+        As eff_rank decreases toward 1, GF_2D / GF_1D -> 1, meaning
+        the 2D embedding provides no advantage over its 1D projection.
+        Conversely, higher eff_rank permits GF_2D > GF_1D.
 
     Numerical verification:
       - For each method, project to first principal component
       - Compute "1D G-F Score" using the 1D projection
-      - Show that actual G-F Score <= 1D G-F Score * correction factor
-      - For rank-1 embeddings (GAT, VGAE), actual G-F ≈ 1D G-F
-      - For full-rank embeddings (Spectral, DM), actual G-F > 1D G-F
+      - Show that GF_2D/GF_1D ratio correlates with eff_rank
+      - Low-rank methods (GAT, VGAE): GF_2D close to GF_1D
+      - Full-rank methods (Spectral, DM): GF_2D > GF_1D
     """
     r_vals = np.linspace(R_MIN, R_MAX, N_POINTS)
     results = {}
@@ -420,7 +453,7 @@ def verify_theorem_3(G, nodes, go_map, all_embeddings, gf_scores):
     rho_ratio_rank, p_ratio_rank = spearmanr(eff_ranks, gf_ratios)
 
     return {
-        "theorem": "G-F Score Upper Bound for Low-Rank Embeddings",
+        "theorem": "Proposition 3: G-F Score Constraint for Low Effective Rank",
         "method_results": results,
         "verification": {
             "rho_gf_ratio_vs_eff_rank": float(rho_ratio_rank),
@@ -429,8 +462,9 @@ def verify_theorem_3(G, nodes, go_map, all_embeddings, gf_scores):
                 f"Correlation between GF_2D/GF_1D ratio and eff_rank: "
                 f"rho={rho_ratio_rank:.3f} (p={p_ratio_rank:.3f}). "
                 f"Low-rank methods (GAT, VGAE) have GF_2D close to GF_1D, "
-                f"confirming that rank-1 embeddings cannot outperform their "
-                f"1D projection. High-rank methods gain from 2D geometry."
+                f"confirming that near-rank-1 embeddings cannot substantially "
+                f"outperform their 1D projection. High-rank methods gain "
+                f"from 2D geometry (geometric observation, not strict bound)."
             ),
         },
     }
@@ -444,13 +478,13 @@ def verify_combined_corollary():
     """
     Combined Corollary (from Phase 5B dimension sweep)
     --------------------------------------------------
-    From Theorems 1-3, the following causal chain is established:
+    From Propositions 1-3, the following causal chain is established:
 
-    Theorem 1: GAT attention near-uniform at initialisation (H_norm >= 0.97).
-               Training can reduce entropy but the optimisation starts from
-               a degenerate basin.
-    Theorem 2: Uniform attention + mean aggregation -> eff_rank bounded
-    Theorem 3: Low eff_rank -> G-F Score bounded by 1D projection
+    Proposition 1: GAT attention near-uniform at init (H_norm >= 0.97).
+                   Training can reduce entropy but optimisation starts from
+                   a degenerate basin.
+    Proposition 2: Uniform attention + mean aggregation -> low eff_rank
+    Proposition 3: Low eff_rank -> G-F Score constrained by 1D projection
 
     Combined: GAT on degree-heterogeneous PPI -> low eff_rank -> low G-F
 
@@ -556,7 +590,7 @@ def plot_formal_verification(t1, t2, t3, corollary):
     ax.set_ylim(0.85, 1.02)
     ax.set_xticks([])
     ax.set_ylabel("Normalized attention entropy", fontsize=11)
-    ax.set_title("A. Theorem 1: Attention Degeneration Bound",
+    ax.set_title("A. Proposition 1: Attention Degeneration",
                  fontsize=13, fontweight="bold")
     ax.legend(fontsize=8, loc="lower right")
     ax.grid(True, alpha=0.3, axis="y")
@@ -578,7 +612,7 @@ def plot_formal_verification(t1, t2, t3, corollary):
                      xytext=(0, 8), textcoords="offset points")
     rho = t2["verification"]["eff_rank_vs_gf_rho"]
     p = t2["verification"]["eff_rank_vs_gf_p"]
-    ax2.set_title(f"B. Theorem 2: Eff Rank vs G-F\n(rho={rho:.3f}, p={p:.3f})",
+    ax2.set_title(f"B. Proposition 2: Eff Rank vs G-F\n(rho={rho:.3f}, p={p:.3f})",
                   fontsize=13, fontweight="bold")
     ax2.set_xlabel("Effective rank", fontsize=11)
     ax2.set_ylabel("G-F Score", fontsize=11)
@@ -600,7 +634,7 @@ def plot_formal_verification(t1, t2, t3, corollary):
     rho3 = t3["verification"]["rho_gf_ratio_vs_eff_rank"]
     ax3.axhline(1.0, color="red", linestyle="--", alpha=0.3,
                 label="GF_2D = GF_1D")
-    ax3.set_title(f"C. Theorem 3: GF_2D/GF_1D vs Rank\n(rho={rho3:.3f})",
+    ax3.set_title(f"C. Proposition 3: GF_2D/GF_1D vs Rank\n(rho={rho3:.3f})",
                   fontsize=13, fontweight="bold")
     ax3.set_xlabel("Effective rank", fontsize=11)
     ax3.set_ylabel("GF_2D / GF_1D ratio", fontsize=11)
@@ -643,9 +677,9 @@ def plot_formal_verification(t1, t2, t3, corollary):
     ax6 = axes[1, 2]
     ax6.axis("off")
     stages = [
-        ("Theorem 1\nAttention\nDegeneration\n(H >= 0.97)", "#0072B2"),
-        ("Theorem 2\nRank Collapse\n(eff_rank <= d,\n-> 1)", "#D55E00"),
-        ("Theorem 3\nG-F Bound\n(GF <= GF_1D)", "#E69F00"),
+        ("Proposition 1\nAttention\nDegeneration\n(H >= 0.97)", "#0072B2"),
+        ("Proposition 2\nRank Bottleneck\n(eff_rank low,\n-> 1)", "#D55E00"),
+        ("Proposition 3\nG-F Constraint\n(GF near GF_1D)", "#E69F00"),
         ("Corollary\nGAT collapses\nat ALL dims", "#CC79A7"),
     ]
     x_pos = [0.12, 0.37, 0.62, 0.87]
@@ -661,7 +695,7 @@ def plot_formal_verification(t1, t2, t3, corollary):
                         xycoords="axes fraction", textcoords="axes fraction",
                         arrowprops=dict(arrowstyle="->", color="grey", lw=2))
 
-    ax6.text(0.5, 0.85, "Formal GAT Collapse Proof Chain",
+    ax6.text(0.5, 0.85, "GAT Collapse: Proposition Chain",
              ha="center", fontsize=14, fontweight="bold",
              transform=ax6.transAxes)
     ax6.text(0.5, 0.12,
@@ -692,7 +726,7 @@ def plot_proof_summary(t2):
     ax.axvline(1.0, color="red", linestyle="--", alpha=0.5, label="Rank-1 (collapsed)")
     ax.axvline(2.0, color="green", linestyle="--", alpha=0.5, label="Rank-2 (full)")
     ax.set_xlabel("Effective rank", fontsize=11)
-    ax.set_title("A. Effective Rank by Method\n(Theorem 2 verification)",
+    ax.set_title("A. Effective Rank by Method\n(Proposition 2 verification)",
                  fontsize=13, fontweight="bold")
     ax.legend(fontsize=8)
     ax.grid(True, alpha=0.3, axis="x")
@@ -736,7 +770,7 @@ def plot_proof_summary(t2):
                          textcoords="offset points")
     ax3.set_yticks([])
     ax3.set_xlabel("Effective rank", fontsize=11)
-    ax3.set_title("C. GNN vs Non-GNN Rank Distribution\n(Theorem 2: GNN clusters lower)",
+    ax3.set_title("C. GNN vs Non-GNN Rank Distribution\n(Proposition 2: GNN clusters lower)",
                   fontsize=13, fontweight="bold")
     ax3.legend(fontsize=9)
     ax3.grid(True, alpha=0.3, axis="x")
@@ -753,7 +787,7 @@ def plot_proof_summary(t2):
 
 def main():
     print("=" * 70)
-    print("Phase 6: Formal Proofs of GAT Collapse")
+    print("Phase 6: GAT Collapse -- Propositions with Empirical Verification")
     print("=" * 70)
 
     # Load data
@@ -788,7 +822,7 @@ def main():
     print(f"  Loaded {len(all_embeddings)} embeddings")
 
     # Theorem 1
-    print("\n[2/6] Theorem 1: Attention Degeneration Bound...")
+    print("\n[2/6] Proposition 1: Attention Degeneration Bound...")
     t1 = verify_theorem_1(G, nodes, features)
     v1 = t1["verification"]
     print(f"  Theoretical bound: H_norm >= {t1['theoretical_bound']['H_norm_lower_bound']:.4f}")
@@ -798,7 +832,7 @@ def main():
     print(f"  {v1['interpretation']}")
 
     # Theorem 2
-    print("\n[3/6] Theorem 2: Effective Rank Bound...")
+    print("\n[3/6] Proposition 2: Effective Rank Bottleneck...")
     t2 = verify_theorem_2(G, nodes, all_embeddings, gf_scores)
     v2 = t2["verification"]
     print(f"  GNN mean eff_rank: {v2['gnn_mean_eff_rank']:.3f}")
@@ -808,7 +842,7 @@ def main():
     print(f"  {v2['interpretation']}")
 
     # Theorem 3
-    print("\n[4/6] Theorem 3: G-F Score Upper Bound...")
+    print("\n[4/6] Proposition 3: G-F Score Constraint...")
     t3 = verify_theorem_3(G, nodes, go_map, all_embeddings, gf_scores)
     v3 = t3["verification"]
     print(f"  rho(GF_2D/GF_1D, eff_rank): {v3['rho_gf_ratio_vs_eff_rank']:.3f}")
@@ -838,19 +872,19 @@ def main():
     # Save results
     print("\nSaving results...")
     output = {
-        "analysis": "Phase 6: Formal Proofs of GAT Collapse",
+        "analysis": "Phase 6: GAT Collapse -- Propositions with Empirical Verification",
         "version": "1.0",
-        "theorems": {
-            "T1_attention_degeneration": t1,
-            "T2_effective_rank_bound": t2,
-            "T3_gf_score_upper_bound": t3,
+        "propositions": {
+            "P1_attention_degeneration": t1,
+            "P2_effective_rank_bottleneck": t2,
+            "P3_gf_score_constraint": t3,
         },
         "combined_corollary": cor,
         "proof_summary": {
-            "causal_chain_proven": True,
-            "root_cause": "Theorem 1: Attention degeneration (dimension-independent)",
-            "amplifier": "Theorem 2: Low effective rank from mean aggregation",
-            "consequence": "Theorem 3: G-F Score bounded by 1D projection",
+            "causal_chain_established": True,
+            "root_cause": "Proposition 1: Attention degeneration (dimension-independent)",
+            "amplifier": "Proposition 2: Low effective rank from mean aggregation",
+            "consequence": "Proposition 3: G-F Score constrained by 1D projection",
             "empirical_confirmation": "Phase 5B dimension sweep",
         },
     }
@@ -861,7 +895,7 @@ def main():
     print(f"  Saved {output_path}")
 
     print("\n" + "=" * 70)
-    print("Phase 6 complete: GAT collapse formally proven.")
+    print("Phase 6 complete: GAT collapse propositions verified.")
     print("=" * 70)
 
 

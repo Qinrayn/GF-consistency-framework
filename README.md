@@ -766,19 +766,19 @@ Development began in February 2026. Pre-submission verification and documentatio
 
 ---
 
-## Academic Use Notice
+## Academic Citation
 
-This repository accompanies a manuscript currently under peer review at *Nature Communications*. The code and data are made publicly available for reproducibility and transparency purposes. By using this repository, you agree to the following terms:
+This repository accompanies a manuscript submitted to *Nature Communications*. The code is released under the [MIT License](LICENSE) to support reproducibility and open science. We kindly request that any academic publication using, adapting, or building upon this framework cite the accompanying paper (see [Citation](#citation) below). Modified versions should clearly indicate that they are derivatives.
 
-1. **Citation requirement**: Any academic publication that uses, adapts, or builds upon this framework, its methodology, or its results **must** cite the accompanying paper (see Citation below). This includes, but is not limited to: benchmarking studies, comparative analyses, extensions, and meta-analyses.
+---
 
-2. **No competing pre-publication use**: This code and its results **must not** be used to produce a competing or derivative publication before the original manuscript has completed its publication process. If the manuscript is rejected or withdrawn, this restriction is lifted 12 months after the repository's initial public release.
+## Author Contributions
 
-3. **Derivative works**: Modified versions of this code must clearly state that they are modified versions and must not be presented as the original work. Any fork or derivative repository used in academic work must retain this notice and the original citation.
+Y.Z. conceived the study, designed the G-F consistency framework, implemented all 18 embedding methods and 72-step analysis pipeline, performed the cross-species validation (5 species), derived the mathematical propositions, conducted the functional dark matter analysis, wrote all 110 scripts, generated all figures, and wrote the manuscript.
 
-4. **Results integrity**: The numerical results, figures, and rankings produced by this pipeline **must not** be reused in other publications without explicit written permission from the corresponding author, except for the purpose of reproducing or verifying the results as described in the accompanying paper.
+## Competing Interests
 
-Violation of these terms constitutes an academic ethics concern. The author reserves the right to raise such concerns with the relevant journal editors and institutional research integrity offices. For questions or collaboration inquiries, contact the corresponding author.
+The author declares no competing interests.
 
 ---
 
@@ -803,4 +803,4 @@ If you use this framework, please cite:
 
 ## License
 
-[MIT](LICENSE) — see [Academic Use Notice](#academic-use-notice) for usage terms applicable to academic publications.
+[MIT](LICENSE)
