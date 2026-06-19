@@ -753,10 +753,16 @@ Report → [`results/phase13_report.md`](results/phase13_report.md) · Figures �
 
 ## Author
 
-**Yuhan Zhang (张宇涵)**  
-Department of Chemical Engineering and Pharmacy, Guangling College, Yangzhou University  
-Correspondence: qinray@hotmail.com  
+**Yuhan Zhang (张宇涵)**
+Department of Chemical Engineering and Pharmacy, Guangling College, Yangzhou University
+Correspondence: qinray@hotmail.com
 ORCID: [0009-0000-2769-467X](https://orcid.org/0009-0000-2769-467X)
+
+---
+
+## History
+
+Development began in February 2026. The framework was publicly released in June 2026 alongside a manuscript submitted to *Nature Communications*.
 
 ---
 
