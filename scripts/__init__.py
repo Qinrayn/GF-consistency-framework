@@ -142,11 +142,11 @@ cheeger_gf_bound                Step 65: Cheeger-Spectral G-F upper bound theore
 
 Modules (Steps 66-72: function prediction atlas and pan-species dark matter)
 -------------------------------------------------------------------------------
-dimension_sweep_512_1024        Step 66: Dimension sweep extension d=512, d=1024 (test PPI baseline crossing at high dim)
+dimension_sweep_512             Step 66: Dimension sweep extension d=512, d=1024 (test PPI baseline crossing at high dim)
 function_prediction_atlas       Step 67: Multi-ontology function prediction atlas (BP/MF/CC x 3 species, Spectral d=256 > PPI in 9/9)
-uncharacterized_protein_mining  Step 68: Uncharacterized protein mining via embedding-space function prediction
+uncharacterized_prediction      Step 68: Uncharacterized protein mining via embedding-space function prediction
 cross_species_atlas             Step 69: Cross-species function prediction atlas (human + mouse at d=256/512)
-atlas_extension                 Step 70: Atlas extension — MF/CC ontologies at d=512/1024
+atlas_extension_512             Step 70: Atlas extension — MF/CC ontologies at d=512/1024
 ortholog_cross_validation       Step 71: Ortholog cross-validation — conserved function prediction across species
 dark_matter_pan_species         Step 72: Pan-species dark matter mining (44 high-confidence functional pairs across 5 species)
 

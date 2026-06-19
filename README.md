@@ -66,9 +66,9 @@ Complete reproduction of the experimental pipeline: 18 embedding methods · 72-s
 - **STRING Threshold Sensitivity** (v2.8.0): Method rankings stable between scores 600-700 (Spearman rho=0.90), but regime shift at 800 where network loses 22% edges and Node2Vec collapses (rho=-0.10 vs 700 ranking). Threshold 700 is the natural operating point
 - **Dark Matter Literature Validation** (v2.8.0): NSG1-NSG2 confirmed as yeast INSIG homologs (Flury 2005, EMBO J). GON7-SPT8 confirmed as SAGA complex subunits (Wang 2020, Nature). BST1-ADD37 maps to DERL1-DERL3 as mutual rank-4 neighbors in both human and mouse d=64 embeddings — direct cross-species geometric conservation of ERAD pathway organization
 - **GATv2 vs GAT Collapse** (v2.8.1): GATv2 (Brody et al., ICLR 2022) with dynamic attention reduces mean attention entropy from 0.927 (GAT) to 0.903, confirming partial alleviation of attention degeneration (Theorem 1). However, max G-F Score remains near-random: GATv2 0.157 vs GAT 0.154, both below Spectral (0.163). Collapse originates from adjacency-reconstruction objective on degree-heterogeneous PPI, not the attention variant
-- **ProNE/HARP Robustness Check** (v2.9.0, Step 60): ProNE (spectral propagation + Chebyshev approximation, Zhang 2019) and HARP (hierarchical graph coarsening, Chen 2018) both score below random baseline on curated 153-node network (ProNE GF = 0.087, HARP GF = 0.114 vs random 0.135). Confirms Spectral superiority is not method-selection bias — advanced spectral/hierarchical methods still cannot match direct Laplacian eigenvectors
-- **Cosine Similarity Voting** (v2.9.0, Step 61): Top-100 cosine-similar protein voting (weighted by max(cosine_sim, 0)) improves MRR for all methods tested (Spectral: 0.052 to 0.063, +21%; MDS: 0.045 to 0.062, +38%). Strengthens GF-MRR correlation from rho = 0.80 (p = 0.104) to rho = 0.90 (p = 0.037) — the geometric-functional link is robust to distance metric choice
-- **Drosophila 5th Species** (v2.9.0, Step 62): Spectral ranks #1 on Drosophila STRING network (6,909 nodes, 89,685 edges) with GF = 0.619 — the highest across all five species. Kendall's W = 0.752 for four eukaryotic species (increases from 0.739 with three species), W = 0.690 including E. coli. SQI = 0.733. Confirms spectral optimality extends to a fourth independent eukaryotic lineage
+- **Drosophila 5th Species** (v2.9.0, Step 60): Spectral ranks #1 on Drosophila STRING network (6,909 nodes, 89,685 edges) with GF = 0.619 — the highest across all five species. Kendall's W = 0.752 for four eukaryotic species (increases from 0.739 with three species), W = 0.690 including E. coli. SQI = 0.733. Confirms spectral optimality extends to a fourth independent eukaryotic lineage
+- **ProNE/HARP Robustness Check** (v2.9.0, Step 61): ProNE (spectral propagation + Chebyshev approximation, Zhang 2019) and HARP (hierarchical graph coarsening, Chen 2018) both score below random baseline on curated 153-node network (ProNE GF = 0.087, HARP GF = 0.114 vs random 0.135). Confirms Spectral superiority is not method-selection bias — advanced spectral/hierarchical methods still cannot match direct Laplacian eigenvectors
+- **Cosine Similarity Voting** (v2.9.0, Step 62): Top-100 cosine-similar protein voting (weighted by max(cosine_sim, 0)) improves MRR for all methods tested (Spectral: 0.052 to 0.063, +21%; MDS: 0.045 to 0.062, +38%). Strengthens GF-MRR correlation from rho = 0.80 (p = 0.104) to rho = 0.90 (p = 0.037) — the geometric-functional link is robust to distance metric choice
 - **Heat Kernel Multi-Scale Analysis** (v2.10.0, Step 63): Heat kernel K(t) = exp(-tL) at 12 time scales t in [0.01, 100]. Spectral embedding = heat kernel at t->0 limit (GF identical, cross-scale Spearman rho = 1.0). Optimal t* = 5.0 in kD (GF = 0.255). Phase transition at t = 25-50 (delta_GF = -0.073, 32% drop). Characteristic time t_char = 1/lambda_2 = 14.0. Proves Laplacian eigenbasis captures ALL diffusion time scales simultaneously — no tuning of diffusion can improve on Spectral
 - **Position Encoding Comparison** (v2.10.0, Step 64): Benchmarks Laplacian PE, RWPE, SignNet against 11 methods. Laplacian PE #1 (GF = 0.163 = Spectral), SignNet #2 (0.160, widest plateau), RWPE #3-4 (0.124/0.117). Sign-flip std = 9.4e-5 (distance invariance). Dimension invariance in 2D: k = 2..32 eigenvectors yield identical GF. Even recent graph transformer PEs (GraphiT, SignNet) cannot beat raw Laplacian eigenvectors on PPI networks
 - **Cheeger-Spectral G-F Bound** (v2.10.0, Step 65): Theoretical GF upper bound from Laplacian spectrum via Cheeger's inequality. 4-component bound, spectral gap B1 dominates (w1 = 0.999). Valid for all 6 networks. Tightness: Drosophila 0.996, Human 0.95, Yeast curated 0.44, Mouse 0.36, E. coli 0.28. LOO-CV rho = 0.77 across 6 species. Enables pre-screening of network suitability for spectral analysis without computing any embedding
@@ -234,9 +234,9 @@ Step 56 ─ UMAP/t-SNE Evaluation ───────────────�
 Step 57 ─ GO Ontology Generality ───────────────── MF + CC + BP G-F Scores (3 GO aspects)
 Step 58 ─ STRING Threshold Sensitivity ──────────── 600/700/800 threshold gradient + regime shift
 Step 59 ─ GATv2 vs GAT Comparison ─────────────── Dynamic attention entropy + GF Score comparison
-Step 60 ─ ProNE/HARP G-F Scores ──────────────── Spectral-propagation + hierarchical coarsening baselines
-Step 61 ─ Cosine Similarity Baseline ──────────── Cosine vs Euclidean voting for function prediction
-Step 62 ─ Drosophila 5th Species ───────────────── 6,909-node cross-species validation (Kendall W = 0.752)
+Step 60 ─ Drosophila 5th Species ──────────────── 6,909-node cross-species validation (Kendall W = 0.752)
+Step 61 ─ ProNE/HARP G-F Scores ──────────────── Spectral-propagation + hierarchical coarsening baselines
+Step 62 ─ Cosine Similarity Baseline ──────────── Cosine vs Euclidean voting for function prediction
          └─ Summary ─────────────────── final_results_summary.json
 ```
 
@@ -555,7 +555,7 @@ Beyond the core 72-step pipeline, the framework provides extensible modules for 
 | `dimension_sweep_extended.py` * | Extended dimension sweep d=128/256: tests whether Spectral MRR surpasses PPI-Neighbors baseline (Step 47) |
 | `functional_dark_matter.py` * | Functional dark matter mining: embedding-only functional associations invisible to network topology (Step 48) |
 | `cross_species_dark_matter.py` * | Cross-species dark matter: human/mouse ortholog mapping, embedding proximity validation (Step 49) |
-| `rescue_protein_analysis.py` * | Rescue protein characterisation: 235 proteins systematically underrepresented in PPI networks (Step 50) |
+| `rescue_protein_analysis.py` * | Rescue protein characterisation: 235 proteins systematically underrepresented in PPI networks |
 | `string_v12_revalidation.py` * | STRING v12.0 re-validation: confirms all 44 dark matter pairs absent in latest database (Step 51) |
 | `highdim_spectral_embeddings.py` * | High-dimensional spectral embeddings: d=64 for human (15,882 nodes) and mouse (16,180 nodes) via sparse eigendecomposition (Step 52) |
 | `cross_species_highdim.py` * | Cross-species high-dim: 2D vs 64D conservation comparison, conserved categories increase from 3/7 to 4/7 (Step 53) |
@@ -564,9 +564,9 @@ Beyond the core 72-step pipeline, the framework provides extensible modules for 
 | `go_mf_cc_gf_scores.py` * | GO ontology generality: Spectral GF across Molecular Function (0.348), Cellular Component (0.191), Biological Process (0.112) (Step 57) |
 | `string_threshold_sensitivity.py` * | STRING threshold sensitivity: 600/700/800 gradient, regime shift at 800, stable 600-700 (rho=0.90) (Step 58) |
 | `gatv2_experiment.py` * | GATv2 vs GAT collapse: dynamic attention reduces entropy (0.903 vs 0.927) but GF Score stays near-random (Step 59) |
-| `prone_harp_gf.py` * | ProNE + HARP G-F Scores: spectral-propagation (Chebyshev order-5) and hierarchical coarsening baselines — both score below random (Step 60) |
-| `function_prediction_cosine.py` * | Cosine similarity voting baseline: top-100 cosine-similar proteins, weighted voting improves MRR for all methods (Spectral +21%, MDS +38%) (Step 61) |
-| `fly_analysis.py` * | Drosophila 5th species: 6,909-node STRING network, all 11 methods, Spectral #1 GF=0.619, Kendall W=0.752 for 4 eukaryotes (Step 62) |
+| `fly_analysis.py` * | Drosophila 5th species: 6,909-node STRING network, all 11 methods, Spectral #1 GF=0.619, Kendall W=0.752 for 4 eukaryotes (Step 60) |
+| `prone_harp_gf.py` * | ProNE + HARP G-F Scores: spectral-propagation (Chebyshev order-5) and hierarchical coarsening baselines — both score below random (Step 61) |
+| `function_prediction_cosine.py` * | Cosine similarity voting baseline: top-100 cosine-similar proteins, weighted voting improves MRR for all methods (Spectral +21%, MDS +38%) (Step 62) |
 | `dark_matter_ortholog_validation.py` | Dark matter ortholog validation: maps 71 proteins to human/mouse, BST1-ADD37→DERL1-DERL3 rank-4 |
 | `multihead_gat_experiment.py` | Multi-head GAT configuration sweep (1/4/8 heads, d=2-32) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
@@ -778,7 +778,7 @@ If you use this framework, please cite:
 >   author  = {Zhang, Yuhan},
 >   year    = {2026},
 >   note    = {Reproducible pipeline: 18 methods, 72-step validation,
->              113 scripts. Submitted to Nature Communications.},
+>              110 scripts. Submitted to Nature Communications.},
 > }
 > ```
 
