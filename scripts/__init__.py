@@ -1,7 +1,7 @@
 """
 scripts/ — G-F Consistency Framework analysis pipeline.
 
-This package contains the 65-step reproducible analysis pipeline for
+This package contains the 72-step reproducible analysis pipeline for
 evaluating protein interaction network embeddings via geometric-functional
 consistency.
 
@@ -128,17 +128,27 @@ go_mf_cc_gf_scores              Step 57: GO Molecular Function + Cellular Compon
 string_threshold_sensitivity    Step 58: STRING threshold gradient 600-800 (regime shift at 800)
 gatv2_experiment                Step 59: GATv2 vs GAT collapse comparison (Brody et al., ICLR 2022)
 
-Modules (Steps 60-62: robustness baselines and 5th species validation)
-------------------------------------------------------------------------
-prone_harp_gf                   Step 60: ProNE + HARP embedding G-F Scores (spectral-propagation and hierarchical coarsening baselines)
-function_prediction_cosine      Step 61: Cosine similarity voting baseline for function prediction
-fly_analysis                    Step 62: Drosophila melanogaster 5th species cross-species validation (6,909 nodes)
+Modules (Steps 60-62: 5th species, robustness baselines)
+-----------------------------------------------------------
+fly_analysis                    Step 60: Drosophila melanogaster 5th species cross-species validation (6,909 nodes)
+prone_harp_gf                   Step 61: ProNE + HARP embedding G-F Scores (spectral-propagation and hierarchical coarsening baselines)
+function_prediction_cosine      Step 62: Cosine similarity voting baseline for function prediction
 
 Modules (Steps 63-65: theoretical foundations — heat kernel, position encoding, Cheeger bound)
 -----------------------------------------------------------------------------------------------
 heat_kernel_multiscale          Step 63: Heat kernel K(t)=exp(-tL) multi-scale analysis (12 time scales, Spectral = t->0 limit)
 position_encoding_comparison    Step 64: Graph transformer PE benchmark (Laplacian PE, RWPE, SignNet; raw eigenvectors optimal)
 cheeger_gf_bound                Step 65: Cheeger-Spectral G-F upper bound theorem (6 networks, tightness 0.95-0.996)
+
+Modules (Steps 66-72: function prediction atlas and pan-species dark matter)
+-------------------------------------------------------------------------------
+dimension_sweep_512_1024        Step 66: Dimension sweep extension d=512, d=1024 (test PPI baseline crossing at high dim)
+function_prediction_atlas       Step 67: Multi-ontology function prediction atlas (BP/MF/CC x 3 species, Spectral d=256 > PPI in 9/9)
+uncharacterized_protein_mining  Step 68: Uncharacterized protein mining via embedding-space function prediction
+cross_species_atlas             Step 69: Cross-species function prediction atlas (human + mouse at d=256/512)
+atlas_extension                 Step 70: Atlas extension — MF/CC ontologies at d=512/1024
+ortholog_cross_validation       Step 71: Ortholog cross-validation — conserved function prediction across species
+dark_matter_pan_species         Step 72: Pan-species dark matter mining (44 high-confidence functional pairs across 5 species)
 
 Supplementary experiment modules
 ----------------------------------

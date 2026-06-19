@@ -2,7 +2,7 @@
 
 **A Geometric-Functional Consistency Framework for Evaluating Protein Interaction Network Embeddings**
 
-Complete reproduction of the experimental pipeline: 11 embedding methods · 72-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
+Complete reproduction of the experimental pipeline: 18 embedding methods · 72-step validation workflow · 200-point G-F curve sampling · publication-quality figures · `random_seed = 42`
 
 <details>
 <summary><strong>Key Results at a Glance</strong></summary>
@@ -341,7 +341,7 @@ GF-consistency-framework/
 │   ├── functional_dark_matter.py     # Functional dark matter mining (Step 48)
 │   ├── multihead_gat_experiment.py    # Multi-head GAT configuration sweep
 │   ├── cross_species_dark_matter.py   # Cross-species dark matter ortholog analysis (Step 49)
-│   ├── rescue_protein_analysis.py     # 235 rescue proteins characterisation (Step 50)
+│   ├── generate_missing_figures.py   # Generate missing supplementary figures FigS18-S20 (Step 50)
 │   ├── string_v12_revalidation.py    # STRING v12.0 re-validation of dark matter (Step 51)
 │   ├── highdim_spectral_embeddings.py # d=64 spectral for human+mouse (Step 52)
 │   ├── cross_species_highdim.py      # 2D vs 64D cross-species conservation (Step 53)
@@ -350,10 +350,21 @@ GF-consistency-framework/
 │   ├── go_mf_cc_gf_scores.py        # GO MF/CC/BP G-F Scores (Step 57)
 │   ├── string_threshold_sensitivity.py # STRING threshold gradient 600-800 (Step 58)
 │   ├── gatv2_experiment.py           # GATv2 vs GAT collapse comparison (Step 59)
-│   ├── prone_harp_gf.py             # ProNE + HARP embedding G-F Scores (Step 60)
-│   ├── function_prediction_cosine.py # Cosine similarity voting baseline (Step 61)
-│   ├── fly_analysis.py              # Drosophila 5th species cross-species validation (Step 62)
+│   ├── fly_analysis.py              # Drosophila 5th species cross-species validation (Step 60)
+│   ├── prone_harp_gf.py             # ProNE + HARP embedding G-F Scores (Step 61)
+│   ├── function_prediction_cosine.py # Cosine similarity voting baseline (Step 62)
+│   ├── heat_kernel_multiscale.py    # Heat kernel K(t)=exp(-tL) multi-scale analysis (Step 63)
+│   ├── position_encoding_comparison.py # Graph transformer PE benchmark: Laplacian, RWPE, SignNet (Step 64)
+│   ├── cheeger_gf_bound.py          # Cheeger-Spectral G-F upper bound theorem (Step 65)
+│   ├── dimension_sweep_512.py       # Dimension sweep extension d=512, d=1024 (Step 66)
+│   ├── function_prediction_atlas.py # Multi-ontology function prediction atlas BP/MF/CC (Step 67)
+│   ├── uncharacterized_prediction.py # Uncharacterized protein mining via embedding-space prediction (Step 68)
+│   ├── cross_species_atlas.py       # Cross-species function prediction atlas: human + mouse (Step 69)
+│   ├── atlas_extension_512.py       # Atlas extension — MF/CC ontologies at d=512/1024 (Step 70)
+│   ├── ortholog_cross_validation.py # Ortholog cross-validation across species (Step 71)
+│   ├── dark_matter_pan_species.py   # Pan-species dark matter mining (Step 72)
 │   ├── dark_matter_ortholog_validation.py # Dark matter ortholog proximity check
+│   ├── rescue_protein_analysis.py    # Rescue protein characterisation — GO enrichment, topology
 │   ├── dimension_sweep.py            # Dimension sweep utility
 │   └── utils.py                # Shared utilities
 │
@@ -766,7 +777,7 @@ If you use this framework, please cite:
 >              in Protein Interaction Networks},
 >   author  = {Zhang, Yuhan},
 >   year    = {2026},
->   note    = {Reproducible pipeline: 11 methods, 72-step validation,
+>   note    = {Reproducible pipeline: 18 methods, 72-step validation,
 >              113 scripts. Submitted to Nature Communications.},
 > }
 > ```

@@ -74,8 +74,8 @@ This script orchestrates the complete analysis pipeline:
 66. Dimension sweep extension (d=512, d=1024)
 67. Multi-ontology function prediction atlas (BP+MF+CC)
 68. Uncharacterized protein mining (511 predictions)
-69. High-dim spectral embeddings for all species
-70. Cross-species function prediction atlas (human+mouse)
+69. Cross-species function prediction atlas (human + mouse)
+70. Atlas extension — MF/CC ontologies at d=512/1024
 71. Ortholog cross-validation (centroid geometry)
 72. Pan-species dark matter mining (5 species)
 

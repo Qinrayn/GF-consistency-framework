@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 benchmark_runtime.py
-Benchmark the 14-step G-F consistency analysis pipeline and perform
+Benchmark the 72-step G-F consistency analysis pipeline and perform
 theoretical complexity analysis.
 
 This script:
