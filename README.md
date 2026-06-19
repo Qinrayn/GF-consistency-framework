@@ -224,7 +224,7 @@ Step 46 ─ G-F Phase Transition Analysis ───── Critical radii, Betti 
 Step 47 ─ Extended Dimension Sweep ─────────── d=128/256, test PPI baseline crossing
 Step 48 ─ Functional Dark Matter Mining ────── Embedding-only functional associations (74 pairs)
 Step 49 ─ Cross-Species Dark Matter ─────────── Human/mouse ortholog mapping + embedding proximity
-Step 50 ─ Rescue Protein Analysis ────────────── 235 rescue proteins characterisation
+Step 50 ─ Generate Missing Figures ──────────────── Supplementary figures FigS18-S20
 Step 51 ─ STRING v12.0 Re-validation ──────────── Confirm dark matter pairs absent in latest STRING
 Step 52 ─ High-Dim Spectral Embeddings ────────── d=64 spectral for human (15,882) + mouse (16,180)
 Step 53 ─ Cross-Species High-Dim ──────────────── 2D vs 64D cross-species conservation comparison
@@ -555,6 +555,7 @@ Beyond the core 72-step pipeline, the framework provides extensible modules for 
 | `dimension_sweep_extended.py` * | Extended dimension sweep d=128/256: tests whether Spectral MRR surpasses PPI-Neighbors baseline (Step 47) |
 | `functional_dark_matter.py` * | Functional dark matter mining: embedding-only functional associations invisible to network topology (Step 48) |
 | `cross_species_dark_matter.py` * | Cross-species dark matter: human/mouse ortholog mapping, embedding proximity validation (Step 49) |
+| `generate_missing_figures.py` * | Generate missing supplementary figures FigS18-S20: GAT theorem, community ablation, coexpression GF curves (Step 50) |
 | `rescue_protein_analysis.py` * | Rescue protein characterisation: 235 proteins systematically underrepresented in PPI networks |
 | `string_v12_revalidation.py` * | STRING v12.0 re-validation: confirms all 44 dark matter pairs absent in latest database (Step 51) |
 | `highdim_spectral_embeddings.py` * | High-dimensional spectral embeddings: d=64 for human (15,882 nodes) and mouse (16,180 nodes) via sparse eigendecomposition (Step 52) |
@@ -567,6 +568,16 @@ Beyond the core 72-step pipeline, the framework provides extensible modules for 
 | `fly_analysis.py` * | Drosophila 5th species: 6,909-node STRING network, all 11 methods, Spectral #1 GF=0.619, Kendall W=0.752 for 4 eukaryotes (Step 60) |
 | `prone_harp_gf.py` * | ProNE + HARP G-F Scores: spectral-propagation (Chebyshev order-5) and hierarchical coarsening baselines — both score below random (Step 61) |
 | `function_prediction_cosine.py` * | Cosine similarity voting baseline: top-100 cosine-similar proteins, weighted voting improves MRR for all methods (Spectral +21%, MDS +38%) (Step 62) |
+| `heat_kernel_multiscale.py` * | Heat kernel K(t) = exp(-tL) multi-scale analysis: Spectral = t->0 limit, optimal t*=5.0, phase transition at t=25-50 (Step 63) |
+| `position_encoding_comparison.py` * | Graph transformer PE benchmark: Laplacian PE, RWPE, SignNet vs 11 methods (Step 64) |
+| `cheeger_gf_bound.py` * | Cheeger-Spectral G-F upper bound theorem: 4-component bound, tightness 0.95-0.996 (Step 65) |
+| `dimension_sweep_512.py` * | Dimension sweep extension d=512, d=1024: peak MRR at d=512 (+11.4% above PPI) (Step 66) |
+| `function_prediction_atlas.py` * | Multi-ontology function prediction atlas: BP/MF/CC x 3 species, Spectral d=256 > PPI in 9/9 (Step 67) |
+| `uncharacterized_prediction.py` * | Uncharacterized protein mining: 511 predictions for 285 proteins via embedding KNN (Step 68) |
+| `cross_species_atlas.py` * | Cross-species function prediction atlas: human + mouse, full 3-ontology coverage (Step 69) |
+| `atlas_extension_512.py` * | Atlas extension — MF/CC ontologies at d=512/1024: confirms d=512 as universal optimum (Step 70) |
+| `ortholog_cross_validation.py` * | Ortholog cross-validation: human-mouse centroid geometry, cross-species geometric conservation rho=0.618 (Step 71) |
+| `dark_matter_pan_species.py` * | Pan-species dark matter mining: 44 high-confidence pairs across 5 species with uniform criteria (Step 72) |
 | `dark_matter_ortholog_validation.py` | Dark matter ortholog validation: maps 71 proteins to human/mouse, BST1-ADD37→DERL1-DERL3 rank-4 |
 | `multihead_gat_experiment.py` | Multi-head GAT configuration sweep (1/4/8 heads, d=2-32) |
 | `input_validator.py` | Pre-flight validation for networks, embeddings, GO annotations |
