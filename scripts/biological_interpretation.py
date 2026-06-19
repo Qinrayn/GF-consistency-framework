@@ -1439,7 +1439,7 @@ def main():
     # ---- Load G-F Scores ----
     results_file = results_dir / "final_results_summary.json"
     if results_file.exists():
-        with open(results_file) as f:
+        with open(results_file, encoding="utf-8") as f:
             full_results = json.load(f)
         gf_scores = full_results.get("gf_scores", DEFAULT_GF_SCORES)
         print(f"\nLoaded G-F Scores from {results_file}")
@@ -1538,7 +1538,7 @@ def main():
         }
 
     output_file = results_dir / "biological_interpretation.json"
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         json.dump(output_data, f, indent=2, default=str)
     print(f"\nSaved interpretation to: {output_file}")
 

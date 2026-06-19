@@ -251,8 +251,22 @@ def compute_transition_sharpness(r, purity):
 
     peak_val = np.max(purity)
     half_max = peak_val / 2.0
-    above_half = r[purity >= half_max]
-    fwhm = float(above_half[-1] - above_half[0]) if len(above_half) >= 2 else None
+    above_mask = purity >= half_max
+    # Find contiguous runs above half-max and pick the widest one
+    fwhm = None
+    if np.any(above_mask):
+        diffs = np.diff(above_mask.astype(int))
+        starts = np.where(diffs == 1)[0] + 1
+        ends = np.where(diffs == -1)[0] + 1
+        # Handle edge cases where the run starts at index 0 or ends at last index
+        if above_mask[0]:
+            starts = np.concatenate(([0], starts))
+        if above_mask[-1]:
+            ends = np.concatenate((ends, [len(above_mask)]))
+        if len(starts) > 0 and len(starts) == len(ends):
+            widths = ends - starts
+            best = np.argmax(widths)
+            fwhm = float(r[ends[best] - 1] - r[starts[best]])
 
     baseline = np.mean(purity[:10])  # first 10 points as baseline
     prominence = float(peak_val - baseline)

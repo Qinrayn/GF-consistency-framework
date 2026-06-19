@@ -212,12 +212,13 @@ def spearman_correlation_analysis(
     def _interpret(rho: float) -> str:
         """Interpret correlation strength per research design guidelines."""
         abs_rho = abs(rho)
+        sign_prefix = "inverse " if rho < 0 else ""
         if abs_rho > 0.7:
-            return "strong_positive (G-F Score as proxy for embedding utility)"
+            return f"{sign_prefix}strong_positive (G-F Score as proxy for embedding utility)"
         elif abs_rho > 0.4:
-            return "moderate_positive (G-F Score as complementary metric)"
+            return f"{sign_prefix}moderate_positive (G-F Score as complementary metric)"
         else:
-            return "weak/independent (G-F Score captures unique quality dimension)"
+            return f"{sign_prefix}weak/independent (G-F Score captures unique quality dimension)"
 
     # --- Pooled analysis ---
     pooled = _spearman_with_ci(
@@ -799,7 +800,7 @@ def main():
     """
     import json
     from pathlib import Path
-    from scripts.utils import (
+    from utils import (
         SEED, get_results_dir,
     )
 

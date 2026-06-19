@@ -372,7 +372,7 @@ def run_pathway_analysis(
         output_dir = Path(output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
         outfile = output_dir / "pathway_analysis.json"
-        with open(outfile, "w") as f:
+        with open(outfile, "w", encoding="utf-8") as f:
             json.dump(all_results, f, indent=2, default=str)
         logger.info("Saved pathway analysis to %s", outfile)
 
@@ -396,7 +396,7 @@ def main():
     import numpy as np
     from pathlib import Path
     from networkx.algorithms.community import greedy_modularity_communities
-    from scripts.utils import (
+    from utils import (
         SEED, get_data_dir, get_results_dir, get_embeddings_dir,
         load_curated_network, load_embedding, precompute_distance_matrix,
         build_spatial_graph_fast,
@@ -414,7 +414,7 @@ def main():
     if not gf_file.exists():
         print("G-F scores not found. Run Step 3 (compute_gf.py) first.")
         return
-    with open(gf_file) as f:
+    with open(gf_file, encoding="utf-8") as f:
         gf_data = json.load(f)
     scores = gf_data.get("scores", {})
     if not scores:
@@ -433,7 +433,7 @@ def main():
     aligned = coords[idx]
 
     # Find peak-purity threshold via a quick r-sweep
-    from scripts.utils import compute_gf_curve, R_MIN, R_MAX, N_POINTS
+    from utils import compute_gf_curve, R_MIN, R_MAX, N_POINTS
     r_vals = np.linspace(R_MIN, R_MAX, N_POINTS)
     purities, _ = compute_gf_curve(aligned, common, go_map, r_vals)
     peak_idx = int(np.argmax(purities))

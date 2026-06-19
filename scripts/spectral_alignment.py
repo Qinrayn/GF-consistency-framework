@@ -19,6 +19,13 @@ Outputs:
   - results/spectral_alignment.json
   - figures/Fig34_spectral_decomposition.png
   - figures/Fig35_spectral_alignment.png
+
+Note on terminology:
+  The "effective dimensionality" used here is the PCA eigenvalue
+  participation ratio from Phase 1 (deep_geometric_analysis.json).
+  Phase 4/7 use a different metric: SVD singular-value participation
+  ratio ("effective rank").  Both measure how evenly the embedding
+  uses its dimensions, but they are computed from different spectra.
 """
 
 import sys

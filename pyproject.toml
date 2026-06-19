@@ -47,7 +47,7 @@ dependencies = [
     "pyyaml>=6.0",
     "ripser>=0.6.0",
     "persim>=0.3.0",
-    "gudhi>=0.10.0",
+    "gudhi>=3.8.0",
 ]
 
 [project.optional-dependencies]

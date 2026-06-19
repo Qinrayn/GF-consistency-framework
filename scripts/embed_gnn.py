@@ -830,6 +830,17 @@ def main() -> None:
         np.random.seed(SEED)
         try:
             coords = embed_fn()
+
+            # Collapse detection via pairwise distance statistics
+            from scipy.spatial.distance import pdist
+            dists = pdist(coords)
+            if len(dists) > 0:
+                median_dist = float(np.median(dists))
+                cv = float(np.std(dists) / (np.mean(dists) + 1e-12))
+                if cv < 0.05:
+                    print(f"  WARNING: {method_name} embedding appears collapsed "
+                          f"(median dist = {median_dist:.6f}, CV = {cv:.4f})")
+
             save_embedding(coords, nodes, method_name, subset, emb_dir)
             computed_coords[method_name] = coords
             print(f"  {method_name}: std={np.std(coords):.4f}, "

@@ -7,6 +7,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed — Comprehensive Code Audit (2026-06-19)
+
+**Scope:** 8-way parallel audit of all 530 files / 110 scripts. 32 files modified (+146/−83 lines). All Python files compile. 6 affected pipeline steps re-run with consistent results.
+
+**CRITICAL fixes (wrong results):**
+
+- `visualization_helpers.py` (C3): NaN handling in scatter plots changed from independent `dropna` to joint valid mask (`data[[gf_col, metric_col]].notna().all(axis=1)`), preventing misaligned x/y pairs
+- `robustness_analysis.py` (C4): Randomization null test was broken — closure now builds `permuted_go_map` from `zip(common, permuted_labels)` and passes it to `compute_gf_curve`, so permuted labels actually affect the result
+- `topological_stats.py` (C5): Integration interval used wrong constants `R_MIN/R_MAX` (0.05/0.55) instead of `GF_R_MIN/GF_R_MAX` (0.05/0.422) for topological GF Score computation
+- `embed_hyperbolic.py` (C6): Positional argument mismatch — `poincare_ball_embedding(G, nodes, dim=2, ...)` corrected to `poincare_ball_embedding(G, dim=2, ..., nodelist=nodes)`
+- `functional_dark_matter.py` (C7): `n_total_pairs` was a placeholder (`sum(1 for _ in range(1))` = 1) — now computes actual combinatorial count `sum(d*(d-1)//2)` per DM protein
+- `function_prediction_atlas.py` (C8): `load_embedding("Spectral", "full")` return value was not unpacked — fixed to `raw_coords, emb_nodes = load_embedding(...)`
+- `gatv2_experiment.py` (C9): Effective rank used linear entropy formula instead of participation ratio `(sum(s^2))^2 / sum(s^4)`
+
+**HIGH fixes (logic errors):**
+
+- `mouse_data_prep.py` + `mouse_embeddings_full.py` (H1): Mouse protein IDs now strip `10090.` prefix to match `multispecies_loader` convention
+- `topological_stats.py` (H2): `np.trapezoid` replaced with `scipy.integrate.trapezoid` (with backward-compatible alias)
+- `embed_hyperbolic.py` (H10): Learning rate mutation — added `current_lr = lr` at function start, used `current_lr` in training loop
+- `multispecies_loader.py`: Added Drosophila melanogaster (taxon 7227) to SPECIES_REGISTRY; fixed STRING version v12.0 → v11.5; fixed import path `from scripts.utils import` → `from utils import`
+
+**MEDIUM fixes (consistency/quality):**
+
+- `tda_geometry_bridge.py` (M4): Removed `or True` dead branch, added bounds checking
+- `position_encoding_comparison.py` (M6): Removed spurious `+ 24` from cache hit count
+- `gf_phase_transition.py` (M7): FWHM now uses widest contiguous above-half-max region instead of first crossing
+- `config_loader.py` (M9): Species whitelist expanded to include mouse, fly, ecoli
+- `statistical_analysis.py` (M13): Added `"inverse "` prefix for negative rho in `_interpret()`
+- `dark_matter_ortholog_validation.py` (M14): Removed duplicate "YAP6" entry
+- 11 files received `encoding="utf-8"`: atlas_extension_512, randomization_control, sampling_density, gf_score_sensitivity, metric_comparison, link_prediction, downstream_knn, geometric_analysis, pathway_analysis, biological_interpretation, semantic_similarity_analysis
+- 3 files had import paths fixed (`from scripts.utils import` → `from utils import`): statistical_analysis.py, robustness_analysis.py, pathway_analysis.py
+- `pyproject.toml`: gudhi dependency `>=0.10.0` → `>=3.8.0` (correct minimum version)
+
+**LOW fixes (style/cosmetic):**
+
+- `topological_stats.py` (L5): Significance stars corrected to standard convention (*** p<0.001, ** p<0.01, * p<0.05, ns p>=0.05)
+- `embed_gnn.py`: Added pdist-based embedding collapse detection (CV < 0.05 warning)
+
+**Re-run results after fixes (2026-06-19):**
+
+- `function_prediction.py`: Spearman rho=0.900, Spectral MRR=0.066 (unchanged — hidden_term rollback restored original correct behavior)
+- `function_prediction_cosine.py`: Euclidean rho=0.900, Cosine rho=0.900, cosine improved 5/5 methods (unchanged)
+- `function_prediction_full.py`: 11 methods, 12,690 trials, rho=0.646 (unchanged)
+- `functional_dark_matter.py`: **44 pairs** (was 74 — `n_total_pairs` fix corrected enrichment denominator), 71 proteins, 2 high-confidence (was ~7), top pair YHR133C-YNL156C score=7
+- `topological_stats.py`: Topo GF Score rho=0.945 (consistent), Topo Consistency rho=-0.382 (ns, interval correction changed absolute values)
+- `gatv2_experiment.py`: effective_rank via participation ratio: GATv2=1.016, GAT=1.076 (formula correction)
+
+**hidden_term rollback (C1 reversal):**
+
+Initial audit added `if t != hidden_term` filtering to neighbor annotations in `function_prediction.py`, `function_prediction_cosine.py`, `function_prediction_full.py`. This made LOTO-CV prediction impossible (MRR=0.000) because in LOTO-CV the hidden term is removed from the QUERY protein only — neighbors must retain ALL their terms for voting. All 3 files reverted to original behavior. Post-rollback MRR restored to non-zero values.
+
 ## [2.11.0] — 2026-06-18
 
 ### Added (Steps 66-72: Function Prediction Atlas + Pan-Species Dark Matter)

@@ -128,8 +128,8 @@ def _per_node_entropy(edge_index_np, alpha_1d, n_nodes, degrees):
 def compute_effective_rank(coords):
     """Compute effective rank of an embedding matrix via SVD.
 
-    effective_rank = exp(H(p))
-    where p_i = s_i / sum(s_j), s = singular values, H = Shannon entropy.
+    Uses participation ratio of squared singular values:
+    effective_rank = (sum(s_i^2))^2 / sum(s_i^4)
 
     Returns 1.0 for rank-1 matrices, d for full-rank isotropic matrices.
     """
@@ -137,9 +137,11 @@ def compute_effective_rank(coords):
     s = s[s > 1e-10]
     if len(s) == 0:
         return 1.0
-    p = s / s.sum()
-    entropy = -np.sum(p * np.log(p + 1e-12))
-    return float(np.exp(entropy))
+    S_sq = s ** 2
+    total = S_sq.sum()
+    if total < 1e-12:
+        return 1.0
+    return float((total ** 2) / max((S_sq ** 2).sum(), 1e-10))
 
 
 # ============================================================

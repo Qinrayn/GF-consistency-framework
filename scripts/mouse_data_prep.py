@@ -14,7 +14,8 @@ ID mapping strategy:
   STRING protein IDs (e.g. 10090.ENSMUSP00000000001) are mapped to gene
   symbols via the Ensembl_MGI alias source, which provides the bridge
   to MGI GAF gene symbols (column 2). The resulting GO annotation JSON
-  is keyed by STRING protein IDs (with species prefix).
+  is keyed by STRING protein IDs (species prefix stripped, e.g.
+  ENSMUSP00000000001) to match the multispecies_loader convention.
 
 Outputs:
   - data/10090.protein.links.v11.5.txt.gz  (raw STRING)
@@ -83,7 +84,7 @@ def download_file(url, dest, desc=""):
 
 
 def load_string_network(string_file, min_score=MIN_SCORE):
-    """Load mouse STRING network, keeping species prefix on protein IDs."""
+    """Load mouse STRING network, stripping species prefix from protein IDs."""
     G = nx.Graph()
     with gzip.open(str(string_file), "rt", encoding="utf-8") as f:
         f.readline()  # skip header
@@ -93,7 +94,10 @@ def load_string_network(string_file, min_score=MIN_SCORE):
                 continue
             p1, p2, score = parts
             if int(score) >= min_score:
-                G.add_edge(p1, p2)
+                # Strip species prefix to match multispecies_loader convention
+                p1_clean = p1.split(".", 1)[-1] if "." in p1 else p1
+                p2_clean = p2.split(".", 1)[-1] if "." in p2 else p2
+                G.add_edge(p1_clean, p2_clean)
 
     if G.number_of_nodes() == 0:
         print("  [warning] No edges passed score filter")
@@ -128,7 +132,9 @@ def build_alias_map(alias_file):
                 n_entries += 1
                 # alias is the gene symbol (e.g., "Gnai3")
                 if alias not in gene_to_string:
-                    gene_to_string[alias] = string_id
+                    # Strip species prefix to match multispecies_loader convention
+                    clean_id = string_id.split(".", 1)[-1] if "." in string_id else string_id
+                    gene_to_string[alias] = clean_id
 
     return gene_to_string, n_entries
 

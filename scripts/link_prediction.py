@@ -54,7 +54,7 @@ def main():
     gf_scores = {}
     scores_file = results_dir / "gf_scores.json"
     if scores_file.exists():
-        with open(scores_file) as f:
+        with open(scores_file, encoding="utf-8") as f:
             scores_data = json.load(f)
         gf_scores = scores_data.get("scores", {})
     else:
@@ -177,7 +177,7 @@ def main():
     }
     
     output_file = results_dir / "link_prediction.json"
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2)
     print(f"\nSaved to: {output_file}")
     

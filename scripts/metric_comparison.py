@@ -48,7 +48,7 @@ np.random.seed(SEED)
 def load_edgelist(path):
     """Load edge list as set of frozensets."""
     edges = set()
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         for line in f:
             parts = line.strip().split()
             if len(parts) >= 2:
@@ -65,7 +65,7 @@ def load_embedding(method_name):
         return None, None
 
     coords = np.load(npy_path)
-    with open(nodes_path) as f:
+    with open(nodes_path, encoding="utf-8") as f:
         nodes = json.load(f)
 
     return coords, nodes
@@ -73,7 +73,7 @@ def load_embedding(method_name):
 
 def load_go_map(path):
     """Load gene -> GO term mapping."""
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         raw = json.load(f)
 
     # Map gene -> dominant GO term (most frequent)
@@ -276,12 +276,12 @@ def main():
     print(f"  GO-annotated genes: {len(go_labels)}")
 
     # Load G-F Scores
-    with open(RESULTS_DIR / "gf_scores.json") as f:
+    with open(RESULTS_DIR / "gf_scores.json", encoding="utf-8") as f:
         gf_data = json.load(f)
     gf_scores = gf_data["scores"]
 
     # Also load GNN G-F scores
-    with open(RESULTS_DIR / "gnn_gf_scores.json") as f:
+    with open(RESULTS_DIR / "gnn_gf_scores.json", encoding="utf-8") as f:
         gnn_data = json.load(f)
     gf_scores.update(gnn_data["gf_scores"])
 
@@ -368,7 +368,7 @@ def main():
     }
 
     output_path = RESULTS_DIR / "metric_comparison.json"
-    with open(output_path, "w") as f:
+    with open(output_path, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2)
     print(f"\nResults saved to: {output_path}")
 

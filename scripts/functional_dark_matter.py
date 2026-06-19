@@ -429,7 +429,11 @@ def characterise_dark_matter(dm_pairs, annotations, graph, go_terms_info):
         bg_term_counts.update(terms)
 
     n_dm_pairs = len(dm_pairs)
-    n_total_pairs = sum(1 for _ in range(1))  # placeholder
+    n_total_pairs = sum(
+        graph.degree(n) * (graph.degree(n) - 1) // 2
+        for n in dm_proteins
+        if n in graph
+    )
     # Approximate total possible pairs
     n_annotated = sum(1 for pid in annotations if pid in set(graph.nodes()))
     n_total_possible = n_annotated * (n_annotated - 1) // 2

@@ -10,6 +10,7 @@ Supported species (built-in):
 - ``human`` (Homo sapiens, taxon 9606)
 - ``ecoli`` (Escherichia coli K-12, taxon 511145)
 - ``mouse`` (Mus musculus, taxon 10090)
+- ``fly`` (Drosophila melanogaster, taxon 7227)
 
 Usage
 -----
@@ -66,6 +67,14 @@ SPECIES_REGISTRY: dict[str, dict] = {
         "name": "Mus musculus",
         "default_curated_nodes": None,
         "go_db": "gene_association.mgi.gaf.gz",
+        "default_min_score": 700,
+    },
+    "fly": {
+        "taxon_id": "7227",
+        "string_prefix": "7227",
+        "name": "Drosophila melanogaster",
+        "default_curated_nodes": None,
+        "go_db": "fb.gaf.gz",
         "default_min_score": 700,
     },
 }
@@ -299,7 +308,7 @@ def main():
     """
     import json
     from pathlib import Path
-    from scripts.utils import get_data_dir
+    from utils import get_data_dir
 
     data_dir = get_data_dir()
     print("Registered species and data availability:")
@@ -308,7 +317,7 @@ def main():
     for name, meta in SPECIES_REGISTRY.items():
         species_dir = data_dir / name
         has_data = species_dir.exists()
-        string_file = species_dir / f"{meta['string_prefix']}.protein.links.v12.0.txt.gz" \
+        string_file = species_dir / f"{meta['string_prefix']}.protein.links.v11.5.txt.gz" \
             if has_data else None
         has_string = string_file is not None and string_file.exists()
 

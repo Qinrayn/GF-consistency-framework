@@ -345,10 +345,10 @@ def plot_spearman_scatter(
     # Linear regression line
     from scipy import stats as sp_stats
 
-    x = data[gf_col].dropna().values
-    y = data[metric_col].dropna().values
-    valid = ~(np.isnan(x) | np.isnan(y))
-    x_v, y_v = x[valid], y[valid]
+    # Drop rows where EITHER column is NaN (joint drop to keep x/y aligned)
+    valid_mask = data[[gf_col, metric_col]].notna().all(axis=1)
+    x_v = data.loc[valid_mask, gf_col].values
+    y_v = data.loc[valid_mask, metric_col].values
 
     if len(x_v) >= 3:
         slope, intercept, _, _, _ = sp_stats.linregress(x_v, y_v)

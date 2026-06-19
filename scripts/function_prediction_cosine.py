@@ -278,7 +278,7 @@ def build_euclidean_knn_index(coords, k=K_EUCLIDEAN):
 
 
 def euclidean_knn_predict(query_idx, nn_model, coords, nodes, annotations,
-                         k=K_EUCLIDEAN):
+                         k=K_EUCLIDEAN, hidden_term=None):
     """Predict GO terms using Euclidean KNN (k=10), weighted by 1/distance.
 
     Returns list of (go_term, score) sorted by descending score.
@@ -317,7 +317,8 @@ def compute_cosine_similarity_matrix(coords):
     return sim_matrix
 
 
-def cosine_predict(query_idx, sim_matrix, nodes, annotations, k=K_COSINE):
+def cosine_predict(query_idx, sim_matrix, nodes, annotations, k=K_COSINE,
+                   hidden_term=None):
     """Predict GO terms using cosine similarity weighted voting.
 
     Uses the top-k most cosine-similar proteins (excluding self),
@@ -336,6 +337,8 @@ def cosine_predict(query_idx, sim_matrix, nodes, annotations, k=K_COSINE):
         {STRING_ID: set(go_terms)}.
     k : int
         Number of top cosine-similar neighbors to use.
+    hidden_term : str or None
+        GO term to hide from neighbor annotations (for LOTO).
 
     Returns
     -------
@@ -489,6 +492,7 @@ def run_loto_cv(embeddings, annotations):
                     query_idx, euclidean_indices[method],
                     emb["coords"], emb["nodes"],
                     annotations, k=K_EUCLIDEAN,
+                    hidden_term=hidden_term,
                 )
                 trial_precision[euc_key] = evaluate_precision_at_k(
                     euc_preds, hidden_term, K_VALUES
@@ -500,6 +504,7 @@ def run_loto_cv(embeddings, annotations):
                 cos_preds = cosine_predict(
                     query_idx, cosine_matrices[method],
                     emb["nodes"], annotations, k=K_COSINE,
+                    hidden_term=hidden_term,
                 )
                 trial_precision[cos_key] = evaluate_precision_at_k(
                     cos_preds, hidden_term, K_VALUES

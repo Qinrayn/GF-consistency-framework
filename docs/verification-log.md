@@ -151,7 +151,7 @@ Scripts and results were developed locally since February 2026. Throughout June,
 - `function_prediction_full.py` (Step 45): reviewed expanded 11-method LOTO-CV
 - `gf_phase_transition.py` (Step 46): reviewed critical radii + Betti coincidence
 - `dimension_sweep_extended.py` (Step 47): reviewed d=128/256 extension
-- `functional_dark_matter.py` (Step 48): reviewed 74 dark matter pairs, GO enrichment (ERAD 521x)
+- `functional_dark_matter.py` (Step 48): reviewed 44 dark matter pairs (corrected from 74 after n_total_pairs fix), GO enrichment (ERAD 521x)
 
 ## 2026-06-17
 
@@ -231,3 +231,27 @@ Audit 8 — Source code patterns:
 - Verified zero Unicode characters in `print()` statements — all statistical symbols only in matplotlib labels
 - Verified no stale imports referencing deleted files
 - Verified all 48 `from scripts.` imports in `run_all_analysis.py` target existing modules
+
+## 2026-06-19 (Code Audit)
+
+**Scope:** Exhaustive code audit of all 530 files / 110 scripts via 8-way parallel review. 32 files modified (+146/−83 lines). 6 affected pipeline steps re-run.
+
+**Critical fixes verified:**
+- C3 (`visualization_helpers.py`): Joint NaN mask prevents x/y misalignment in scatter plots
+- C4 (`robustness_analysis.py`): Randomization null test now correctly passes permuted labels to `compute_gf_curve`
+- C5 (`topological_stats.py`): Integration interval corrected from R_MIN/R_MAX (0.05/0.55) to GF_R_MIN/GF_R_MAX (0.05/0.422)
+- C6 (`embed_hyperbolic.py`): `poincare_ball_embedding` positional argument mismatch fixed
+- C7 (`functional_dark_matter.py`): `n_total_pairs` placeholder (always 1) replaced with actual combinatorial count → dark matter pairs corrected from 74 to 44
+- C8 (`function_prediction_atlas.py`): `load_embedding` return value unpacking fixed
+- C9 (`gatv2_experiment.py`): Effective rank corrected from linear entropy to participation ratio
+
+**Hidden_term rollback (C1):**
+Initial audit erroneously filtered `hidden_term` from neighbor annotations in 3 prediction scripts. This broke LOTO-CV (MRR→0) because the hidden term must only be removed from the query protein, not from voting neighbors. All 3 files reverted: `function_prediction.py`, `function_prediction_cosine.py`, `function_prediction_full.py`. Post-rollback: MRR restored, Spearman rho=0.900 confirmed.
+
+**Re-run verification (6 scripts):**
+- `function_prediction.py`: rho=0.900, Spectral MRR=0.066 (consistent)
+- `function_prediction_cosine.py`: cosine improved 5/5 methods, rho=0.900
+- `function_prediction_full.py`: 11 methods, 12,690 trials, rho=0.646
+- `functional_dark_matter.py`: 44 pairs, 71 proteins, 2 high-confidence (corrected from 74)
+- `topological_stats.py`: Topo GF Score rho=0.945
+- `gatv2_experiment.py`: eff_rank GATv2=1.016, GAT=1.076

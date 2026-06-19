@@ -66,7 +66,7 @@ def main():
     
     # Save as Supplementary Table S3
     output_file = results_dir / "sampling_density_comparison.json"
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2)
     print(f"\nSaved to: {output_file}")
 

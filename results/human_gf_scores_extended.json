@@ -76,5 +76,6 @@
     "GraphSAGE",
     "GAT",
     "GIN"
-  ]
+  ],
+  "_note": "This file uses 11 methods with Louvain community detection.  For the unified methodology (greedy_modularity + interval [0.05, 0.422]), see Phase 9 results in phase9_unified_report.json."
 }

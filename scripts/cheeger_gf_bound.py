@@ -1089,6 +1089,13 @@ def main():
         print("  MAE             = %.4f" % mae)
         print("  Spearman rho    = %.4f  (p = %.4f)" % (rho, pval))
         print("  Valid bounds    = %d / %d" % (n_valid, len(loo_results)))
+
+        if n_valid < len(loo_results):
+            violations = [r["held_out"] for r in loo_results if not r["valid"]]
+            print("  NOTE: Bound violated on held-out %s.  Calibrated"
+                  % ", ".join(violations))
+            print("        parameters may not generalise to networks with")
+            print("        extreme spectral properties outside the training set.")
     else:
         mae, rho, pval = 0.0, 0.0, 1.0
         print("  Insufficient data for LOO-CV.")
@@ -1134,6 +1141,11 @@ def main():
             "spearman_rho": float(rho),
             "p_value": float(pval),
             "per_fold": loo_results,
+            "note": (
+                "Calibrated parameters may not generalise to held-out species.  "
+                "Bound violations indicate the spectral gap bound is loose for "
+                "networks whose GF Score is high relative to their spectral gap."
+            ),
         },
         "proposition": proposition,
         "eigenvalue_spectra": spectrum_data,

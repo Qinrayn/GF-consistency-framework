@@ -176,7 +176,7 @@ def run():
         nodes_path = EMB / f"Spectral_d{dim}_full_nodes.json"
         if emb_path.exists():
             coords = np.load(str(emb_path))
-            with open(nodes_path) as f:
+            with open(nodes_path, encoding="utf-8") as f:
                 nodes = json.load(f)
             embeddings[dim] = (coords, nodes)
             print(f"  d={dim}: {coords.shape}")
@@ -198,7 +198,7 @@ def run():
     bp_results = {}
     bp_file = RESULTS / "dimension_sweep_512.json"
     if bp_file.exists():
-        bp_data = json.load(open(bp_file))
+        bp_data = json.load(open(bp_file, encoding="utf-8"))
         for dim in NEW_DIMENSIONS:
             mrr = bp_data["mrr_by_dimension"].get(str(dim), 0.0)
             bp_results[str(dim)] = {"Spectral_MRR": float(mrr)}
@@ -207,7 +207,7 @@ def run():
     atlas_file = RESULTS / "function_prediction_atlas.json"
     ppi_baselines = {}
     if atlas_file.exists():
-        atlas_data = json.load(open(atlas_file))
+        atlas_data = json.load(open(atlas_file, encoding="utf-8"))
         for code, label in ASPECTS.items():
             ont_data = atlas_data.get("ontologies", {}).get(code, {})
             for m, r in ont_data.get("methods", {}).items():
@@ -223,7 +223,7 @@ def run():
     }
 
     out_file = RESULTS / "atlas_extension_512.json"
-    with open(out_file, "w") as f:
+    with open(out_file, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2)
     print(f"\nSaved to {out_file}")
 

@@ -75,7 +75,6 @@ CURATED_ORTHOLOGS = {
     "SPT8": (["TAF1", "TAF5"], ["Taf1", "Taf5"]),
     "GAT4": (["ZNF143", "ZNF263"], ["Znf143", "Znf263"]),
     "CBF1": (["USF1", "USF2", "MAX"], ["Usf1", "Usf2", "Max"]),
-    "YAP6": (["FOS", "JUN"], ["Fos", "Jun"]),
     "ARG82": (["IPMK"], ["Ipmk"]),
     "VHR1": (["DUSP3", "DUSP4"], ["Dusp3", "Dusp4"]),
     "GON7": (["GON7"], ["Gon7"]),

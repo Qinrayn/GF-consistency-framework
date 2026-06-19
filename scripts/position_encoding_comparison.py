@@ -571,7 +571,7 @@ def main():
     elapsed = time.time() - t0
     print("Total time: %.1f seconds" % elapsed)
     print("GF curve cache hits: %d computations avoided" %
-          (len(all_results) + 24 - len(_gf_cache)))
+          (len(all_results) - len(_gf_cache)))
     print(BANNER)
 
 

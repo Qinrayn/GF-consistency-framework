@@ -221,8 +221,8 @@ def _validate(config: dict) -> list[str]:
 
     # Species check
     species = config.get("pipeline", {}).get("species", "yeast")
-    if species not in ("yeast", "human"):
-        warnings.append(f"Unknown species '{species}' (expected yeast or human)")
+    if species not in ("yeast", "human", "mouse", "fly", "ecoli"):
+        warnings.append(f"Unknown species '{species}' (expected yeast, human, mouse, fly, or ecoli)")
 
     return warnings
 

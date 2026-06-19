@@ -28,34 +28,34 @@ Leave-one-term-out (LOTO) cross-validation on the full yeast STRING network (470
 
 | Method | P@3 | P@5 | P@7 | P@10 | P@15 | P@20 | P@30 |
 |--------|---|---|---|---|---|---|---|
-| DM | 0.036 | 0.054 | 0.067 | 0.084 | 0.106 | 0.125 | 0.150 |
-| MDS | 0.058 | 0.088 | 0.111 | 0.136 | 0.172 | 0.204 | 0.254 |
-| Spectral | 0.068 | 0.097 | 0.121 | 0.148 | 0.180 | 0.209 | 0.252 |
-| Node2Vec | 0.009 | 0.013 | 0.018 | 0.023 | 0.031 | 0.040 | 0.055 |
-| VGAE | 0.009 | 0.014 | 0.017 | 0.023 | 0.030 | 0.038 | 0.050 |
-| PPI-Neighbors | 0.246 | 0.331 | 0.384 | 0.442 | 0.506 | 0.547 | 0.606 |
-| 2-Hop Diffusion | 0.107 | 0.147 | 0.181 | 0.222 | 0.276 | 0.317 | 0.383 |
+| DM | 0.037 | 0.055 | 0.068 | 0.084 | 0.106 | 0.124 | 0.149 |
+| MDS | 0.057 | 0.088 | 0.111 | 0.135 | 0.173 | 0.203 | 0.253 |
+| Spectral | 0.067 | 0.098 | 0.122 | 0.147 | 0.181 | 0.209 | 0.251 |
+| Node2Vec | 0.009 | 0.013 | 0.017 | 0.022 | 0.031 | 0.040 | 0.055 |
+| VGAE | 0.009 | 0.013 | 0.017 | 0.022 | 0.031 | 0.038 | 0.050 |
+| PPI-Neighbors | 0.247 | 0.331 | 0.384 | 0.443 | 0.506 | 0.548 | 0.606 |
+| 2-Hop Diffusion | 0.106 | 0.146 | 0.180 | 0.222 | 0.275 | 0.317 | 0.383 |
 | Random | 0.037 | 0.049 | 0.059 | 0.073 | 0.095 | 0.118 | 0.156 |
 
 ## Results: Mean Reciprocal Rank
 
 | Method | MRR |
 |--------|-----|
-| PPI-Neighbors | 0.2189 |
-| 2-Hop Diffusion | 0.1047 |
-| Spectral | 0.0657 |
+| PPI-Neighbors | 0.2188 |
+| 2-Hop Diffusion | 0.1046 |
+| Spectral | 0.0656 |
 | MDS | 0.0601 |
 | Random | 0.0411 |
 | DM | 0.0368 |
-| Node2Vec | 0.0115 |
-| VGAE | 0.0111 |
+| Node2Vec | 0.0111 |
+| VGAE | 0.0109 |
 
 ## GF Score Correlation (Closing Loop)
 
 - Spearman ρ = 0.9
 - P-value = 0.037386
 - 95% CI: [0.1111, 1.0]
-- Pearson r = 0.6182
+- Pearson r = 0.6174
 - n = 5
 
 ### Leave-One-Out Sensitivity
@@ -79,4 +79,4 @@ The correlation between curated-network GF Score and full-network prediction acc
 - Exact term matching only (no semantic similarity)
 - BP aspect only (MF and CC not tested)
 
-*Generated: 2026-06-15 18:51*
+*Generated: 2026-06-19 11:27*

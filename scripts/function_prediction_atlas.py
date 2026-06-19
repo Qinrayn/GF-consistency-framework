@@ -326,12 +326,9 @@ def run():
         if dim == 2:
             # Load existing 2D embedding
             try:
-                emb = load_embedding("Spectral", "full")
-                coords = rescale_coordinates(emb, target_std=TARGET_STD)
-                nodes_path = EMB / "Spectral_full_nodes.json"
-                with open(nodes_path) as f:
-                    nodes = json.load(f)
-                spectral_embeddings[dim] = (coords, nodes)
+                raw_coords, emb_nodes = load_embedding("Spectral", "full")
+                coords = rescale_coordinates(raw_coords, target_std=TARGET_STD)
+                spectral_embeddings[dim] = (coords, emb_nodes)
                 print(f"  d={dim}: loaded existing ({coords.shape})")
                 continue
             except Exception:

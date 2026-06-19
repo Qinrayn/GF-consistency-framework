@@ -13,6 +13,10 @@ This script answers:
   1. At what diffusion time scale t does the PPI network's functional
      organisation become most visible?
   2. Does the Spectral embedding capture all scales simultaneously?
+     (Note: in 2D the GF Score is trivially constant because the first
+     two eigenvectors are identical regardless of t; the kD embedding
+     using all k eigenvectors with t-dependent weighting shows genuine
+     variation.)
   3. Is the optimal time scale governed by the spectral gap?
 
 Output
@@ -723,6 +727,8 @@ def _build_summary(records, t_opt, gf_opt, gf_spectral,
         f"  Spearman rho (HK vs Spectral GF curves): "
         f"{cross_scale['spearman_rho']:+.4f}",
         f"  (p = {cross_scale['spearman_p']:.4e})",
+        "  Note: 2D GF Score is constant across t (same first two eigenvectors).",
+        "  kD GF Score varies with t; optimal t* captures full spectral information.",
         "",
     ]
     if rho_decay is not None:

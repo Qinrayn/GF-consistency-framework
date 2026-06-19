@@ -31,10 +31,12 @@ from scipy import stats
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from utils import (
-    SEED, R_MIN, R_MAX, N_POINTS,
+    SEED, N_POINTS,
+    GF_R_MIN, GF_R_MAX,
     ALL_METHODS,
     get_results_dir, get_figures_dir,
 )
+from scipy.integrate import trapezoid as _trapezoid
 
 # ── colour palette (consistent with rest of project) ──────────────────
 METHOD_COLORS = {
@@ -81,7 +83,7 @@ def load_all_data():
 
 
 def compute_topo_gf_scores(topo_data):
-    """Compute topological G-F score = integral of topo_purity over [R_MIN, R_MAX]."""
+    """Compute topological G-F score = integral of topo_purity over [GF_R_MIN, GF_R_MAX]."""
     r_vals = np.array(topo_data['r_vals'])
     topo_gf = {}
     for method in topo_data['methods']:
@@ -89,15 +91,15 @@ def compute_topo_gf_scores(topo_data):
         topo_purities = np.array(curve['topo_purities'])
         std_purities = np.array(curve['standard_purities'])
 
-        # Restrict to [R_MIN, R_MAX]
-        mask = (r_vals >= R_MIN) & (r_vals <= R_MAX)
+        # Restrict to [GF_R_MIN, GF_R_MAX] — unified paper interval
+        mask = (r_vals >= GF_R_MIN) & (r_vals <= GF_R_MAX)
         r_sub = r_vals[mask]
         tp_sub = topo_purities[mask]
         sp_sub = std_purities[mask]
 
         if len(r_sub) > 1:
-            topo_gf[method] = float(np.trapezoid(tp_sub, r_sub))
-            std_gf_recomputed = float(np.trapezoid(sp_sub, r_sub))
+            topo_gf[method] = float(_trapezoid(tp_sub, r_sub))
+            std_gf_recomputed = float(_trapezoid(sp_sub, r_sub))
         else:
             topo_gf[method] = 0.0
             std_gf_recomputed = 0.0
@@ -171,7 +173,7 @@ def spearman_analysis(table):
             'n': len(valid),
         }
         print(f"  {label:35s}: rho = {rho:+.4f}  (p = {pval:.4f})  "
-              f"{'***' if pval < 0.01 else '**' if pval < 0.05 else ''}")
+              f"{'***' if pval < 0.001 else '**' if pval < 0.01 else '*' if pval < 0.05 else 'ns'}")
 
     return results
 

@@ -72,7 +72,10 @@ def load_mouse_network():
         for line in f:
             parts = line.strip().split()
             if len(parts) == 3 and int(parts[2]) >= SCORE_THRESHOLD:
-                G.add_edge(parts[0], parts[1])
+                # Strip species prefix to match multispecies_loader convention
+                p1 = parts[0].split(".", 1)[-1] if "." in parts[0] else parts[0]
+                p2 = parts[1].split(".", 1)[-1] if "." in parts[1] else parts[1]
+                G.add_edge(p1, p2)
     largest_cc = max(nx.connected_components(G), key=len)
     G = G.subgraph(largest_cc).copy()
     return G

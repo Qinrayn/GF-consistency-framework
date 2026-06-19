@@ -4,8 +4,9 @@ tda_geometry_bridge.py -- Phase 7: TDA-Geometry Bridge
 ======================================================
 
 Bridges the topological data analysis (persistent homology) with the
-geometric-functional framework (spectral alignment + effective
-dimensionality) to build a unified three-factor predictor of G-F Score.
+geometric-functional framework (spectral alignment + SVD effective
+rank, as distinct from the PCA effective dimensionality of Phase 3)
+to build a unified three-factor predictor of G-F Score.
 
 Key questions:
   1. Does persistent homology predict G-F Score independently of spectral
@@ -270,6 +271,14 @@ def compute_multi_factor_models(methods, features):
         "weights": best_weights,
         "rho": best_rho,
         "p": best_p,
+        "note": (
+            "When the best TDA predictor is topo_gf_score, the optimised "
+            "model assigns all weight to it (w1=w2=0, w3=1).  This is "
+            "because topo_gf_score is a topological re-computation of the "
+            "G-F Score itself, not an independent variable.  The genuine "
+            "multi-factor comparison should use h1_max_persistence or "
+            "h1_topological_complexity as the third factor."
+        ),
     }
 
     # Single-factor baselines
@@ -381,13 +390,14 @@ def analyze_betti_transitions():
             h1_peak_count = 0
             h1_width = 0
 
+        _idx_gf = np.searchsorted(r_vals, 0.05)
         results[method] = {
             "r_half_merge": r_half_merge,
             "r_h1_peak": r_h1_peak,
             "h1_peak_count": h1_peak_count,
             "h1_width": h1_width,
-            "b0_at_gf_min": float(b0[np.searchsorted(r_vals, 0.05)]) if 0.05 in r_vals or True else 0,
-            "b1_at_gf_min": float(b1[np.searchsorted(r_vals, 0.05)]) if 0.05 in r_vals or True else 0,
+            "b0_at_gf_min": float(b0[_idx_gf]) if 0.05 in r_vals and _idx_gf < len(b0) else 0,
+            "b1_at_gf_min": float(b1[_idx_gf]) if 0.05 in r_vals and _idx_gf < len(b1) else 0,
         }
 
     return results

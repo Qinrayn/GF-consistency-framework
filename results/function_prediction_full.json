@@ -26,20 +26,20 @@
     "query_proteins": 3133,
     "total_trials": 12690,
     "completed": 12690,
-    "elapsed_seconds": 60.3
+    "elapsed_seconds": 62.4
   },
   "mean_reciprocal_rank": {
-    "DM": 0.036707,
-    "MDS": 0.060027,
-    "Spectral": 0.065751,
-    "DeepWalk": 0.010257,
-    "Node2Vec": 0.011191,
-    "VGAE": 0.010657,
-    "PCA": 0.043786,
-    "VGAE-feat": 0.012003,
-    "GIN": 0.010871,
-    "GAT": 0.012379,
-    "GraphSAGE": 0.021024
+    "DM": 0.036588,
+    "MDS": 0.059979,
+    "Spectral": 0.065758,
+    "DeepWalk": 0.010178,
+    "Node2Vec": 0.011195,
+    "VGAE": 0.010769,
+    "PCA": 0.043963,
+    "VGAE-feat": 0.011892,
+    "GIN": 0.011005,
+    "GAT": 0.012341,
+    "GraphSAGE": 0.020926
   },
   "gf_scores": {
     "DM": 0.155182,
@@ -75,8 +75,8 @@
       -0.0141,
       0.9242
     ],
-    "pearson_r": 0.6007,
-    "pearson_p": 0.050643,
+    "pearson_r": 0.6004,
+    "pearson_p": 0.050789,
     "permutation_p": 0.0405,
     "permutation_n": 10000,
     "loo_sensitivity": {
@@ -97,27 +97,27 @@
       {
         "method": "DM",
         "gf_score": 0.1552,
-        "mrr": 0.0367
+        "mrr": 0.0366
       },
       {
         "method": "DeepWalk",
         "gf_score": 0.1225,
-        "mrr": 0.0103
+        "mrr": 0.0102
       },
       {
         "method": "GAT",
         "gf_score": 0.0694,
-        "mrr": 0.0124
+        "mrr": 0.0123
       },
       {
         "method": "GIN",
         "gf_score": 0.1217,
-        "mrr": 0.0109
+        "mrr": 0.011
       },
       {
         "method": "GraphSAGE",
         "gf_score": 0.069,
-        "mrr": 0.021
+        "mrr": 0.0209
       },
       {
         "method": "MDS",
@@ -132,7 +132,7 @@
       {
         "method": "PCA",
         "gf_score": 0.1375,
-        "mrr": 0.0438
+        "mrr": 0.044
       },
       {
         "method": "Spectral",
@@ -142,12 +142,12 @@
       {
         "method": "VGAE",
         "gf_score": 0.0657,
-        "mrr": 0.0107
+        "mrr": 0.0108
       },
       {
         "method": "VGAE-feat",
         "gf_score": 0.1238,
-        "mrr": 0.012
+        "mrr": 0.0119
       }
     ]
   }

@@ -375,7 +375,8 @@ def build_knn_index(coords):
     return nn
 
 
-def knn_predict_fast(query_idx, nn_model, coords, nodes, annotations, k=10):
+def knn_predict_fast(query_idx, nn_model, coords, nodes, annotations, k=10,
+                     hidden_term=None):
     """Fast KNN prediction using pre-built index."""
     query_coord = coords[query_idx:query_idx + 1]
     n_neighbors = min(k + 1, len(coords))
@@ -434,6 +435,7 @@ def run_loto_cv(embeddings, graph, annotations):
                     query_idx, knn_indices[method],
                     emb["coords"], emb["nodes"],
                     annotations, k=K_MAX,
+                    hidden_term=hidden_term,
                 )
                 pred_terms = [t for t, _ in preds]
                 try:

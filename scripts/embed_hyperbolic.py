@@ -151,6 +151,7 @@ def poincare_ball_embedding(
     (n, dim) array of Poincare Ball coordinates
     """
     np.random.seed(seed)
+    current_lr = lr
 
     if nodelist is None:
         nodelist = list(G.nodes())
@@ -206,12 +207,12 @@ def poincare_ball_embedding(
             riem_grad = grad_u / (lambda_u ** 2 + _EPS)
 
             # Update with retraction
-            coords[u] = _exp_map(z_u[np.newaxis], -lr * riem_grad[np.newaxis])[0]
+            coords[u] = _exp_map(z_u[np.newaxis], -current_lr * riem_grad[np.newaxis])[0]
             coords[u] = _project_to_ball(coords[u][np.newaxis])[0]
 
         # Decay learning rate
         if (epoch + 1) % 100 == 0:
-            lr *= 0.8
+            current_lr *= 0.8
 
     return coords
 
@@ -304,7 +305,7 @@ def main():
 
     # Compute Poincare Ball embedding
     print("Computing Poincare Ball embedding (dim=2, epochs=300)...")
-    coords = poincare_ball_embedding(G, nodes, dim=2, epochs=300, lr=0.01)
+    coords = poincare_ball_embedding(G, dim=2, epochs=300, lr=0.01, nodelist=nodes)
 
     # Save embedding
     emb_file = emb_dir / "hyperbolic_153.npy"

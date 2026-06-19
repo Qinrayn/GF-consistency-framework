@@ -727,7 +727,7 @@ def main():
     import json
     import numpy as np
     from pathlib import Path
-    from scripts.utils import (
+    from utils import (
         SEED, GF_R_MIN, GF_R_MAX,
         get_data_dir, get_results_dir, get_embeddings_dir,
         load_curated_network, load_embedding, compute_gf_curve,
@@ -792,7 +792,9 @@ def main():
     gf_observed = gf_score_fn(annotated_arr)
 
     def gf_score_fn_labels(permuted_labels):
-        return gf_score_fn(annotated_arr)
+        permuted_go_map = {n: lbl for n, lbl in zip(common, permuted_labels)}
+        purities, _ = compute_gf_curve(aligned, common, permuted_go_map, r_vals)
+        return compute_gf_score(r_vals, purities, GF_R_MIN, GF_R_MAX)
 
     null_test = randomization_null_test(
         gf_observed=gf_observed,

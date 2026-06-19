@@ -90,7 +90,7 @@ def _load_embedding(method: str, common_nodes: list):
     else:
         return None
     coords = np.load(npy_path)
-    with open(nodes_path) as f:
+    with open(nodes_path, encoding="utf-8") as f:
         emb_nodes = json.load(f)
     node_to_idx = {n: i for i, n in enumerate(emb_nodes)}
     indices = [node_to_idx[n] for n in common_nodes if n in node_to_idx]
@@ -282,7 +282,7 @@ def main():
     }
 
     json_path = RESULTS_DIR / "semantic_purity_analysis.json"
-    with open(json_path, "w") as f:
+    with open(json_path, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2)
     logger.info("Results saved to %s", json_path)
 

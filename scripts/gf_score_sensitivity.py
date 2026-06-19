@@ -53,7 +53,7 @@ def main():
             print(f"Error: {curves_file} not found. Run compute_gf.py first.")
             sys.exit(1)
     else:
-        with open(curves_file) as f:
+        with open(curves_file, encoding="utf-8") as f:
             gf_curves = json.load(f)
 
     r_vals = np.array(gf_curves["r"])
@@ -134,7 +134,7 @@ def main():
     }
 
     output_file = output_dir / "gf_score_sensitivity.json"
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2)
     print(f"\nSaved to: {output_file}")
 
