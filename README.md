@@ -762,7 +762,7 @@ ORCID: [0009-0000-2769-467X](https://orcid.org/0009-0000-2769-467X)
 
 ## History
 
-Development began in February 2026. The framework was publicly released in June 2026 alongside a manuscript submitted to *Nature Communications*.
+Development began in February 2026. Pre-submission verification and documentation review took place throughout June 2026 (see [`docs/verification-log.md`](docs/verification-log.md)). The framework was publicly released alongside a manuscript submitted to *Nature Communications*.
 
 ---
 
