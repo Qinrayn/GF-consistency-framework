@@ -4,10 +4,10 @@ bootstrap_stability.py
 Step 32: Bootstrap Stability Analysis for G-F Score Rankings.
 
 Tests whether the observed G-F Score rank ordering is statistically robust
-by computing GF Scores on 30 bootstrap resamples (80% sampling with
+by computing GF Scores on 1000 bootstrap resamples (80% sampling with
 replacement) of the 153 curated GO-annotated genes.
 
-Uses Louvain community detection for O(n log n) performance.
+Uses greedy_modularity_communities to match the main pipeline (compute_gf.py).
 
 Analyses:
   1. 95% bootstrap confidence intervals for each method's G-F Score.
@@ -37,21 +37,21 @@ from utils import (
     precompute_distance_matrix,
 )
 
-N_BOOTSTRAP = 30
+N_BOOTSTRAP = 1000
 SAMPLE_FRAC = 0.80
 R_MIN = 0.05
 R_MAX = 0.55
-N_POINTS = 100
+N_POINTS = 30
 MAX_EDGES = 200_000
 
 
-def compute_gf_curve_louvain(coords, nodes, go_map, r_vals):
-    """Fast G-F curve using Louvain community detection.
+def compute_gf_curve_greedy(coords, nodes, go_map, r_vals):
+    """G-F curve using greedy_modularity_communities.
 
-    Mirrors compute_gf_curve but uses python-louvain for O(n log n)
-    community detection instead of greedy_modularity_communities.
+    Mirrors compute_gf_curve from utils.py.  Uses
+    greedy_modularity_communities for consistency with the main pipeline.
     """
-    import community as community_louvain
+    from networkx.algorithms.community import greedy_modularity_communities
     from scipy.spatial.distance import pdist, squareform
 
     dist_matrix = squareform(pdist(coords))
@@ -94,12 +94,8 @@ def compute_gf_curve_louvain(coords, nodes, go_map, r_vals):
                 mod_val = 0.0
             else:
                 try:
-                    partition = community_louvain.best_partition(G_r, random_state=SEED)
-                    groups = defaultdict(set)
-                    for node, comm in partition.items():
-                        groups[comm].add(node)
-                    communities = [frozenset(g) for g in groups.values()]
-                    mod_val = community_louvain.modularity(partition, G_r)
+                    communities = list(greedy_modularity_communities(G_r))
+                    mod_val = nx.community.modularity(G_r, communities)
                 except Exception:
                     communities = [frozenset(c) for c in nx.connected_components(G_r)]
                     mod_val = 0.0
@@ -173,7 +169,7 @@ def main():
         valid_coords = coords[[node_to_idx[n_i] for n_i in valid_nodes]]
 
         t0 = time.time()
-        purities, _ = compute_gf_curve_louvain(valid_coords, valid_nodes, go_map, r_vals)
+        purities, _ = compute_gf_curve_greedy(valid_coords, valid_nodes, go_map, r_vals)
         gf_score = compute_gf_score(r_vals, purities, GF_R_MIN, GF_R_MAX)
         elapsed = time.time() - t0
         observed_scores[method] = float(gf_score)
@@ -213,7 +209,7 @@ def main():
             valid_go = {n_i: boot_go[n_i] for n_i in valid_boot_nodes if n_i in boot_go}
 
             try:
-                purities, _ = compute_gf_curve_louvain(
+                purities, _ = compute_gf_curve_greedy(
                     valid_coords, valid_boot_nodes, valid_go, r_vals
                 )
                 gf = compute_gf_score(r_vals, purities, GF_R_MIN, GF_R_MAX)
@@ -221,7 +217,7 @@ def main():
             except Exception:
                 pass
 
-        if (b + 1) % 5 == 0 or b == 0:
+        if (b + 1) % 50 == 0 or b == 0:
             elapsed = time.time() - t_start
             rate = elapsed / (b + 1)
             remaining = rate * (N_BOOTSTRAP - b - 1)
@@ -384,7 +380,7 @@ def _generate_figure(methods, stats, pairwise, observed, figures_dir):
         ax3.text(bar.get_width() + 0.003, bar.get_y() + bar.get_height() / 2,
                  f"{cv:.3f}", va="center", fontsize=8)
 
-    fig.suptitle("Fig 19 — Bootstrap Stability of G-F Score Rankings (30 resamples, 80% sampling)",
+    fig.suptitle("Fig 19 — Bootstrap Stability of G-F Score Rankings (1000 resamples, 80% sampling)",
                  fontsize=11, fontweight="bold", y=1.02)
     fig.tight_layout()
 

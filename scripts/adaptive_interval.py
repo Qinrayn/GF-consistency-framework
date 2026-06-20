@@ -415,10 +415,11 @@ def _compute_random_baseline_std(
 
     The ``random_baseline_purity`` field in the curves JSON is a list of
     per-r purity values *averaged across shuffles*.  The variation across
-    r is dominated by the shape of the curve, not by shuffle noise.  To
-    estimate the shuffle-to-shuffle standard deviation we divide the
-    across-r standard deviation by ``sqrt(n_shuffles)``, recovering an
-    approximate per-shuffle standard error.
+    r captures the shape of the baseline curve, which serves as a
+    conservative proxy for the uncertainty in the random baseline level.
+    We use the across-r standard deviation directly — no additional
+    division by ``sqrt(n_shuffles)`` — to avoid double-attenuation (the
+    stored curve is already averaged, so its std is already reduced).
 
     Parameters
     ----------
@@ -437,11 +438,10 @@ def _compute_random_baseline_std(
     if rb is not None and len(rb) > 0:
         rb_arr = np.array(rb)
         mean_val: float = float(np.mean(rb_arr))
-        # The stored curve is averaged over n_shuffles runs, so its
-        # pointwise std underestimates the per-shuffle std by sqrt(n).
-        # We use across-r std / sqrt(n_shuffles) as a conservative
-        # estimate of the shuffle-to-shuffle standard error of the mean.
-        std_val: float = float(np.std(rb_arr, ddof=0)) / np.sqrt(n_shuffles)
+        # The stored curve is already averaged over n_shuffles runs, so
+        # its across-r std is already attenuated.  Use it directly as
+        # the uncertainty measure (no further sqrt(n) division).
+        std_val: float = float(np.std(rb_arr, ddof=0))
         return mean_val, std_val
     return FALLBACK_RB_MEAN, FALLBACK_RB_STD  # conservative fallback
 

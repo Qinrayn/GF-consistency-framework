@@ -34,6 +34,7 @@ from collections import Counter, defaultdict
 import numpy as np
 import networkx as nx
 from scipy.stats import spearmanr, hypergeom
+from scipy.stats import false_discovery_control
 from scipy.spatial.distance import pdist, squareform
 import matplotlib
 matplotlib.use("Agg")
@@ -341,7 +342,8 @@ def go_enrichment_hypergeom(comm_node_indices, all_nodes, go_map, bp_terms,
     """
     Hypergeometric enrichment of GO BP terms in each community.
 
-    Returns per-community list of dicts with best enrichment results.
+    Returns per-community list of dicts with enrichment results including
+    Benjamini-Hochberg FDR-corrected p-values.
     """
     n_total = len(all_nodes)
 
@@ -368,8 +370,10 @@ def go_enrichment_hypergeom(comm_node_indices, all_nodes, go_map, bp_terms,
         comm_list = list(comm)
         k = len(comm_list)
         if k < min_community_size:
-            results.append({"size": k, "n_enriched": 0, "best_p": 1.0,
-                            "best_term": None, "best_odds_ratio": 0.0})
+            results.append({"size": k, "n_enriched": 0,
+                            "best_p": 1.0, "best_p_fdr": 1.0,
+                            "best_term": None, "best_odds_ratio": 0.0,
+                            "n_tested": 0})
             continue
 
         # Genes in community with BP annotations
@@ -377,9 +381,9 @@ def go_enrichment_hypergeom(comm_node_indices, all_nodes, go_map, bp_terms,
         n_in_comm = len(comm_genes)
 
         # Test each BP term
-        best_p = 1.0
-        best_term = None
-        best_or = 0.0
+        all_pvals = []
+        all_terms = []
+        all_ors = []
         n_enriched = 0
         n_tested = 0
 
@@ -406,20 +410,42 @@ def go_enrichment_hypergeom(comm_node_indices, all_nodes, go_map, bp_terms,
             else:
                 odds_ratio = float("inf") if a > 0 else 0.0
 
-            if p_val < best_p:
-                best_p = p_val
-                best_term = term
-                best_or = odds_ratio
+            all_pvals.append(p_val)
+            all_terms.append(term)
+            all_ors.append(odds_ratio)
             if p_val < 0.05:
                 n_enriched += 1
+
+        if not all_pvals:
+            results.append({
+                "size": k, "n_tested": 0, "n_enriched": 0,
+                "best_p": 1.0, "best_p_fdr": 1.0,
+                "best_term": None, "best_odds_ratio": 0.0,
+            })
+            continue
+
+        # Benjamini-Hochberg FDR correction
+        pvals_arr = np.array(all_pvals)
+        try:
+            pvals_fdr = false_discovery_control(pvals_arr, method='bh')
+        except Exception:
+            pvals_fdr = pvals_arr  # fallback: no correction
+
+        # Find best (raw) p-value and its FDR-corrected counterpart
+        best_idx = int(np.argmin(pvals_arr))
+        best_p = float(pvals_arr[best_idx])
+        best_p_fdr = float(pvals_fdr[best_idx])
+        best_term = all_terms[best_idx]
+        best_or = all_ors[best_idx]
 
         results.append({
             "size": k,
             "n_tested": n_tested,
             "n_enriched": n_enriched,
-            "best_p": float(best_p),
+            "best_p": best_p,
+            "best_p_fdr": best_p_fdr,
             "best_term": best_term,
-            "best_odds_ratio": float(min(best_or, 1e6)),
+            "best_odds_ratio": float(best_or) if not np.isinf(best_or) else 1e6,
         })
 
     return results
@@ -715,18 +741,24 @@ def run():
         enrich = go_enrichment_hypergeom(
             comms, common, sub_human_go, bp_terms)
         n_sig = sum(1 for e in enrich if e["best_p"] < 0.05)
-        median_best_p = float(np.median([e["best_p"] for e in enrich
-                                         if e["size"] >= 3])) if enrich else 1.0
+        n_sig_fdr = sum(1 for e in enrich if e.get("best_p_fdr", 1.0) < 0.05)
+        valid_ps = [e for e in enrich if e["size"] >= 3]
+        median_best_p = float(np.median([e["best_p"] for e in valid_ps])) if valid_ps else 1.0
+        median_best_p_fdr = float(np.median([e.get("best_p_fdr", 1.0) for e in valid_ps])) if valid_ps else 1.0
 
         human_enrichment[method] = {
             "n_communities": len(comms),
             "n_significant_05": n_sig,
+            "n_significant_fdr_05": n_sig_fdr,
             "frac_significant": round(n_sig / len(comms), 3) if comms else 0,
+            "frac_significant_fdr": round(n_sig_fdr / len(comms), 3) if comms else 0,
             "median_best_p": median_best_p,
+            "median_best_p_fdr": median_best_p_fdr,
             "mean_community_size": round(np.mean([len(c) for c in comms]), 1),
             "communities": enrich,
         }
         print(f"    {method:<12}: {len(comms)} comms, {n_sig} sig (p<0.05), "
+              f"{n_sig_fdr} sig (FDR<0.05), "
               f"median_best_p={median_best_p:.2e}", flush=True)
 
     print(f"  Human enrichment: {time.time()-t1:.1f}s", flush=True)
@@ -770,18 +802,24 @@ def run():
         enrich = go_enrichment_hypergeom(
             comms, common, sub_mouse_go, bp_terms)
         n_sig = sum(1 for e in enrich if e["best_p"] < 0.05)
-        median_best_p = float(np.median([e["best_p"] for e in enrich
-                                         if e["size"] >= 3])) if enrich else 1.0
+        n_sig_fdr = sum(1 for e in enrich if e.get("best_p_fdr", 1.0) < 0.05)
+        valid_ps = [e for e in enrich if e["size"] >= 3]
+        median_best_p = float(np.median([e["best_p"] for e in valid_ps])) if valid_ps else 1.0
+        median_best_p_fdr = float(np.median([e.get("best_p_fdr", 1.0) for e in valid_ps])) if valid_ps else 1.0
 
         mouse_enrichment[method] = {
             "n_communities": len(comms),
             "n_significant_05": n_sig,
+            "n_significant_fdr_05": n_sig_fdr,
             "frac_significant": round(n_sig / len(comms), 3) if comms else 0,
+            "frac_significant_fdr": round(n_sig_fdr / len(comms), 3) if comms else 0,
             "median_best_p": median_best_p,
+            "median_best_p_fdr": median_best_p_fdr,
             "mean_community_size": round(np.mean([len(c) for c in comms]), 1),
             "communities": enrich,
         }
         print(f"    {method:<12}: {len(comms)} comms, {n_sig} sig (p<0.05), "
+              f"{n_sig_fdr} sig (FDR<0.05), "
               f"median_best_p={median_best_p:.2e}", flush=True)
 
     print(f"  Mouse enrichment: {time.time()-t2:.1f}s", flush=True)
@@ -806,18 +844,24 @@ def run():
         enrich = go_enrichment_hypergeom(
             comms, yeast_nodes, yeast_go, bp_terms)
         n_sig = sum(1 for e in enrich if e["best_p"] < 0.05)
-        median_best_p = float(np.median([e["best_p"] for e in enrich
-                                         if e["size"] >= 3])) if enrich else 1.0
+        n_sig_fdr = sum(1 for e in enrich if e.get("best_p_fdr", 1.0) < 0.05)
+        valid_ps = [e for e in enrich if e["size"] >= 3]
+        median_best_p = float(np.median([e["best_p"] for e in valid_ps])) if valid_ps else 1.0
+        median_best_p_fdr = float(np.median([e.get("best_p_fdr", 1.0) for e in valid_ps])) if valid_ps else 1.0
 
         yeast_enrichment[method] = {
             "n_communities": len(comms),
             "n_significant_05": n_sig,
+            "n_significant_fdr_05": n_sig_fdr,
             "frac_significant": round(n_sig / len(comms), 3) if comms else 0,
+            "frac_significant_fdr": round(n_sig_fdr / len(comms), 3) if comms else 0,
             "median_best_p": median_best_p,
+            "median_best_p_fdr": median_best_p_fdr,
             "mean_community_size": round(np.mean([len(c) for c in comms]), 1),
             "communities": enrich,
         }
         print(f"    {method:<12}: {len(comms)} comms, {n_sig} sig (p<0.05), "
+              f"{n_sig_fdr} sig (FDR<0.05), "
               f"median_best_p={median_best_p:.2e}", flush=True)
 
     print(f"  Yeast enrichment: {time.time()-t3:.1f}s", flush=True)
@@ -907,6 +951,7 @@ def run():
                         top_terms.append({
                             "community_size": c["size"],
                             "best_p": c["best_p"],
+                            "best_p_fdr": c.get("best_p_fdr", c["best_p"]),
                             "best_term": c["best_term"],
                             "term_name": term_names.get(c["best_term"], ""),
                             "odds_ratio": c["best_odds_ratio"],
@@ -1282,16 +1327,21 @@ def run_part_a_only():
             continue
         enrich = go_enrichment_hypergeom(comms, common, sub_human_go, bp_terms)
         n_sig = sum(1 for e in enrich if e["best_p"] < 0.05)
-        median_best_p = float(np.median([e["best_p"] for e in enrich
-                                         if e["size"] >= 3])) if enrich else 1.0
+        n_sig_fdr = sum(1 for e in enrich if e.get("best_p_fdr", 1.0) < 0.05)
+        valid_ps = [e for e in enrich if e["size"] >= 3]
+        median_best_p = float(np.median([e["best_p"] for e in valid_ps])) if valid_ps else 1.0
+        median_best_p_fdr = float(np.median([e.get("best_p_fdr", 1.0) for e in valid_ps])) if valid_ps else 1.0
         human_enrichment[method] = {
             "n_communities": len(comms), "n_significant_05": n_sig,
+            "n_significant_fdr_05": n_sig_fdr,
             "frac_significant": round(n_sig / len(comms), 3) if comms else 0,
+            "frac_significant_fdr": round(n_sig_fdr / len(comms), 3) if comms else 0,
             "median_best_p": median_best_p,
+            "median_best_p_fdr": median_best_p_fdr,
             "mean_community_size": round(np.mean([len(c) for c in comms]), 1),
             "communities": enrich,
         }
-        print(f"    {method:<12}: {len(comms)} comms, {n_sig} sig", flush=True)
+        print(f"    {method:<12}: {len(comms)} comms, {n_sig} sig, {n_sig_fdr} sig(FDR)", flush=True)
     print(f"  Human: {time.time()-t1:.1f}s", flush=True)
     enrichment_results["human"] = human_enrichment
 
@@ -1328,16 +1378,21 @@ def run_part_a_only():
             continue
         enrich = go_enrichment_hypergeom(comms, common, sub_mouse_go, bp_terms)
         n_sig = sum(1 for e in enrich if e["best_p"] < 0.05)
-        median_best_p = float(np.median([e["best_p"] for e in enrich
-                                         if e["size"] >= 3])) if enrich else 1.0
+        n_sig_fdr = sum(1 for e in enrich if e.get("best_p_fdr", 1.0) < 0.05)
+        valid_ps = [e for e in enrich if e["size"] >= 3]
+        median_best_p = float(np.median([e["best_p"] for e in valid_ps])) if valid_ps else 1.0
+        median_best_p_fdr = float(np.median([e.get("best_p_fdr", 1.0) for e in valid_ps])) if valid_ps else 1.0
         mouse_enrichment[method] = {
             "n_communities": len(comms), "n_significant_05": n_sig,
+            "n_significant_fdr_05": n_sig_fdr,
             "frac_significant": round(n_sig / len(comms), 3) if comms else 0,
+            "frac_significant_fdr": round(n_sig_fdr / len(comms), 3) if comms else 0,
             "median_best_p": median_best_p,
+            "median_best_p_fdr": median_best_p_fdr,
             "mean_community_size": round(np.mean([len(c) for c in comms]), 1),
             "communities": enrich,
         }
-        print(f"    {method:<12}: {len(comms)} comms, {n_sig} sig", flush=True)
+        print(f"    {method:<12}: {len(comms)} comms, {n_sig} sig, {n_sig_fdr} sig(FDR)", flush=True)
     print(f"  Mouse: {time.time()-t2:.1f}s", flush=True)
     enrichment_results["mouse"] = mouse_enrichment
 
@@ -1357,12 +1412,17 @@ def run_part_a_only():
             continue
         enrich = go_enrichment_hypergeom(comms, yeast_nodes, yeast_go, bp_terms)
         n_sig = sum(1 for e in enrich if e["best_p"] < 0.05)
-        median_best_p = float(np.median([e["best_p"] for e in enrich
-                                         if e["size"] >= 3])) if enrich else 1.0
+        n_sig_fdr = sum(1 for e in enrich if e.get("best_p_fdr", 1.0) < 0.05)
+        valid_ps = [e for e in enrich if e["size"] >= 3]
+        median_best_p = float(np.median([e["best_p"] for e in valid_ps])) if valid_ps else 1.0
+        median_best_p_fdr = float(np.median([e.get("best_p_fdr", 1.0) for e in valid_ps])) if valid_ps else 1.0
         yeast_enrichment[method] = {
             "n_communities": len(comms), "n_significant_05": n_sig,
+            "n_significant_fdr_05": n_sig_fdr,
             "frac_significant": round(n_sig / len(comms), 3) if comms else 0,
+            "frac_significant_fdr": round(n_sig_fdr / len(comms), 3) if comms else 0,
             "median_best_p": median_best_p,
+            "median_best_p_fdr": median_best_p_fdr,
             "mean_community_size": round(np.mean([len(c) for c in comms]), 1),
             "communities": enrich,
         }
@@ -1464,6 +1524,7 @@ def run_part_b_only():
                         top_terms.append({
                             "community_size": c["size"],
                             "best_p": c["best_p"],
+                            "best_p_fdr": c.get("best_p_fdr", c["best_p"]),
                             "best_term": c["best_term"],
                             "term_name": term_names.get(c["best_term"], ""),
                             "odds_ratio": c["best_odds_ratio"],

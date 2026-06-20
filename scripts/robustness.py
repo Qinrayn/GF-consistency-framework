@@ -27,7 +27,7 @@ from utils import (
     compute_centrality_features, rescale_coordinates,
     compute_gf_curve, save_embedding,
     build_similarity_matrix, diffusion_map_from_similarity,
-    classical_mds_from_distances,
+    classical_mds_from_distances, spectral_embedding_from_graph,
 )
 
 R_MIN = 0.05
@@ -37,7 +37,7 @@ R_MAX = 0.55
 DEFAULT_N_SUBSETS = 30
 DEFAULT_SUBSET_SIZES = "50,100,150,200,all"
 DEFAULT_N_POINTS = 30
-DEFAULT_METHODS = "DM,MDS"
+DEFAULT_METHODS = "DM,MDS,Spectral"
 
 # The size used for Bonferroni testing (must be <= 153, the curated network size)
 BONFERRONI_REFERENCE_SIZE = 150
@@ -68,10 +68,17 @@ def embed_mds_subset(G, nodes):
     return rescale_coordinates(coords, target_std=0.3)
 
 
+def embed_spectral_subset(G, nodes):
+    """Spectral embedding for a subset graph."""
+    coords = spectral_embedding_from_graph(G, nodelist=nodes)
+    return rescale_coordinates(coords, target_std=0.3)
+
+
 # Generic dispatcher: method name -> embedding function
 EMBED_METHODS = {
     "DM": embed_diffusion_map,
     "MDS": embed_mds_subset,
+    "SPECTRAL": embed_spectral_subset,
 }
 
 
@@ -161,50 +168,74 @@ def run_subset(G_full, all_nodes, go_map, subset_nodes, methods, r_vals):
 
 
 def compute_bonferroni(purity_matrices, methods, r_vals, n_points):
-    """Bonferroni-corrected paired t-tests between the first two methods.
+    """Bonferroni-corrected paired t-tests between all method pairs.
 
     *purity_matrices* is a dict  method_name -> np.ndarray (n_subsets x n_points).
-    The test is performed between the first two methods listed in *methods*.
+    Tests every pair of methods with Bonferroni correction applied per pair.
     """
     if len(methods) < 2:
         return None
 
-    m1, m2 = methods[0], methods[1]
-    mat1 = purity_matrices[m1]
-    mat2 = purity_matrices[m2]
+    from itertools import combinations
 
-    p_values = []
-    for j in range(n_points):
-        _, p_val = ttest_rel(mat1[:, j], mat2[:, j])
-        p_values.append(p_val)
-
-    p_values = np.array(p_values)
     alpha = 0.05
-    bonf_threshold = alpha / n_points
+    pair_results = []
 
-    significant_raw = (p_values < alpha).tolist()
-    significant_corrected = (p_values < bonf_threshold).tolist()
-    n_sig_corrected = sum(significant_corrected)
+    for m1, m2 in combinations(methods, 2):
+        mat1 = purity_matrices[m1]
+        mat2 = purity_matrices[m2]
 
-    sig_r_values = [float(r_vals[j]) for j in range(n_points) if significant_corrected[j]]
+        p_values = []
+        for j in range(n_points):
+            _, p_val = ttest_rel(mat1[:, j], mat2[:, j])
+            p_values.append(p_val)
 
-    # Plateau region (r in roughly [0.30, 0.43])
-    plateau_mask = (r_vals >= 0.30) & (r_vals <= 0.43)
-    plateau_sig = sum(
-        significant_corrected[j] for j in range(n_points) if plateau_mask[j]
-    )
+        p_values = np.array(p_values)
+        bonf_threshold = alpha / n_points
+
+        significant_raw = (p_values < alpha).tolist()
+        significant_corrected = (p_values < bonf_threshold).tolist()
+        n_sig_corrected = sum(significant_corrected)
+
+        sig_r_values = [float(r_vals[j]) for j in range(n_points) if significant_corrected[j]]
+
+        # Plateau region (r in roughly [0.30, 0.43])
+        plateau_mask = (r_vals >= 0.30) & (r_vals <= 0.43)
+        plateau_sig = sum(
+            significant_corrected[j] for j in range(n_points) if plateau_mask[j]
+        )
+
+        pair_results.append({
+            "methods_compared": [m1, m2],
+            "n_tests": n_points,
+            "alpha": alpha,
+            "bonferroni_threshold": bonf_threshold,
+            "p_values": p_values.tolist(),
+            "significant_raw": significant_raw,
+            "significant_corrected": significant_corrected,
+            "n_significant_corrected": n_sig_corrected,
+            "significant_r_values": sig_r_values,
+            "n_significant_in_plateau": plateau_sig,
+        })
+
+    # Legacy: return the first pair result as the top-level object
+    # (for backward compatibility with code that expects single-pair output)
+    legacy = pair_results[0] if pair_results else None
 
     return {
-        "methods_compared": [m1, m2],
-        "n_tests": n_points,
+        "pairs": pair_results,
+        "n_pairs": len(pair_results),
+        # Backward-compatible fields (from first pair)
+        "methods_compared": legacy["methods_compared"] if legacy else [],
+        "n_tests": legacy["n_tests"] if legacy else 0,
         "alpha": alpha,
-        "bonferroni_threshold": bonf_threshold,
-        "p_values": p_values.tolist(),
-        "significant_raw": significant_raw,
-        "significant_corrected": significant_corrected,
-        "n_significant_corrected": n_sig_corrected,
-        "significant_r_values": sig_r_values,
-        "n_significant_in_plateau": plateau_sig,
+        "bonferroni_threshold": legacy["bonferroni_threshold"] if legacy else alpha,
+        "p_values": legacy["p_values"] if legacy else [],
+        "significant_raw": legacy["significant_raw"] if legacy else [],
+        "significant_corrected": legacy["significant_corrected"] if legacy else [],
+        "n_significant_corrected": legacy["n_significant_corrected"] if legacy else 0,
+        "significant_r_values": legacy["significant_r_values"] if legacy else [],
+        "n_significant_in_plateau": legacy["n_significant_in_plateau"] if legacy else 0,
     }
 
 
@@ -354,14 +385,12 @@ def main():
             purity_matrices = {m: np.array(purity_lists[m]) for m in methods}
             bonf_result = compute_bonferroni(purity_matrices, methods, r_vals, n_points)
             if bonf_result is not None:
-                print(f"\n  Bonferroni test ({methods[0]} vs {methods[1]}, size={size_val}):")
-                print(f"    Threshold: {bonf_result['bonferroni_threshold']:.4f}")
-                print(f"    Significant after correction: "
-                      f"{bonf_result['n_significant_corrected']}/{n_points}")
-                print(f"    Significant in plateau (r=0.30-0.43): "
-                      f"{bonf_result['n_significant_in_plateau']}")
-                print(f"    Significant r values: "
-                      f"{[f'{r:.3f}' for r in bonf_result['significant_r_values']]}")
+                print(f"\n  Bonferroni test (all pairs, size={size_val}):")
+                for pair in bonf_result.get("pairs", []):
+                    m1, m2 = pair["methods_compared"]
+                    print(f"    {m1} vs {m2}: "
+                          f"{pair['n_significant_corrected']}/{n_points} significant "
+                          f"(plateau: {pair['n_significant_in_plateau']})")
 
         all_results[size_label] = subset_records
 
@@ -380,9 +409,11 @@ def main():
             ])
         bonf_result = compute_bonferroni(purity_matrices, methods, r_vals, n_points)
         if bonf_result is not None:
-            print(f"\n  Bonferroni test (fallback, size={fallback_size}):")
-            print(f"    Significant after correction: "
-                  f"{bonf_result['n_significant_corrected']}/{n_points}")
+            print(f"\n  Bonferroni test (fallback, all pairs, size={fallback_size}):")
+            for pair in bonf_result.get("pairs", []):
+                m1, m2 = pair["methods_compared"]
+                print(f"    {m1} vs {m2}: "
+                      f"{pair['n_significant_corrected']}/{n_points} significant")
 
     total_time = time.time() - t_start
 

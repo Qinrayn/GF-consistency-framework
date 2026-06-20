@@ -1,5 +1,5 @@
 {
-  "description": "Degree-preserving null model for GF Score. PPI edges randomized via double_edge_swap while preserving degree distribution. GF curves computed on intersection of spatial graph with (randomized) PPI network.",
+  "description": "Degree-preserving null model for GF Score. PPI edges randomized via double_edge_swap while preserving degree distribution. GF curves computed on intersection of spatial graph with (randomized) PPI network. Community detection uses greedy_modularity_communities.",
   "parameters": {
     "seed": 42,
     "n_randomizations": 50,
@@ -10,7 +10,8 @@
     "gf_r_max": 0.422,
     "nswap": 16690,
     "max_tries": 1669000,
-    "gf_curve_type": "intersection (spatial AND PPI)"
+    "gf_curve_type": "intersection (spatial AND PPI)",
+    "community_detection": "greedy_modularity_communities"
   },
   "network": {
     "nodes": 153,
@@ -76,10 +77,10 @@
         0.251245,
         0.254876
       ],
-      "coord_shuffle_mean": 0.152448,
-      "coord_shuffle_std": 0.007063,
-      "coord_shuffle_z": 13.6314,
-      "coord_shuffle_p": 0.0,
+      "coord_shuffle_mean": 0.246221,
+      "coord_shuffle_std": 0.005988,
+      "coord_shuffle_z": 0.4191,
+      "coord_shuffle_p": 0.337559,
       "n_common_nodes": 153
     },
     "MDS": {
@@ -141,10 +142,10 @@
         0.270383,
         0.266232
       ],
-      "coord_shuffle_mean": 0.100502,
-      "coord_shuffle_std": 0.002963,
-      "coord_shuffle_z": 31.4837,
-      "coord_shuffle_p": 0.0,
+      "coord_shuffle_mean": 0.242611,
+      "coord_shuffle_std": 0.0063,
+      "coord_shuffle_z": -7.7492,
+      "coord_shuffle_p": 1.0,
       "n_common_nodes": 153
     },
     "Spectral": {
@@ -206,10 +207,10 @@
         0.27124,
         0.27596
       ],
-      "coord_shuffle_mean": 0.099539,
-      "coord_shuffle_std": 0.004781,
-      "coord_shuffle_z": 24.4238,
-      "coord_shuffle_p": 0.0,
+      "coord_shuffle_mean": 0.236372,
+      "coord_shuffle_std": 0.009576,
+      "coord_shuffle_z": -2.0954,
+      "coord_shuffle_p": 0.98193,
       "n_common_nodes": 153
     },
     "DeepWalk": {
@@ -271,10 +272,10 @@
         0.1989,
         0.204917
       ],
-      "coord_shuffle_mean": 0.126577,
-      "coord_shuffle_std": 0.007879,
-      "coord_shuffle_z": 13.3426,
-      "coord_shuffle_p": 0.0,
+      "coord_shuffle_mean": 0.228976,
+      "coord_shuffle_std": 0.009576,
+      "coord_shuffle_z": 0.2845,
+      "coord_shuffle_p": 0.388012,
       "n_common_nodes": 153
     },
     "Node2Vec": {
@@ -336,10 +337,10 @@
         0.204112,
         0.220329
       ],
-      "coord_shuffle_mean": 0.155107,
-      "coord_shuffle_std": 0.010098,
-      "coord_shuffle_z": 7.6823,
-      "coord_shuffle_p": 0.0,
+      "coord_shuffle_mean": 0.23401,
+      "coord_shuffle_std": 0.008722,
+      "coord_shuffle_z": -0.1521,
+      "coord_shuffle_p": 0.560459,
       "n_common_nodes": 153
     },
     "VGAE": {
@@ -401,10 +402,10 @@
         0.144343,
         0.207476
       ],
-      "coord_shuffle_mean": 0.065639,
-      "coord_shuffle_std": 0.002652,
-      "coord_shuffle_z": 52.1561,
-      "coord_shuffle_p": 0.0,
+      "coord_shuffle_mean": 0.219126,
+      "coord_shuffle_std": 0.012794,
+      "coord_shuffle_z": -1.186,
+      "coord_shuffle_p": 0.882184,
       "n_common_nodes": 153
     },
     "PCA": {
@@ -466,10 +467,10 @@
         0.247415,
         0.237545
       ],
-      "coord_shuffle_mean": 0.132368,
-      "coord_shuffle_std": 0.007637,
-      "coord_shuffle_z": 13.1645,
-      "coord_shuffle_p": 0.0,
+      "coord_shuffle_mean": 0.23783,
+      "coord_shuffle_std": 0.007232,
+      "coord_shuffle_z": -0.6801,
+      "coord_shuffle_p": 0.751785,
       "n_common_nodes": 153
     },
     "VGAE-feat": {
@@ -531,10 +532,10 @@
         0.217493,
         0.204229
       ],
-      "coord_shuffle_mean": 0.129123,
-      "coord_shuffle_std": 0.010002,
-      "coord_shuffle_z": 10.2966,
-      "coord_shuffle_p": 0.0,
+      "coord_shuffle_mean": 0.235558,
+      "coord_shuffle_std": 0.008515,
+      "coord_shuffle_z": -0.405,
+      "coord_shuffle_p": 0.65727,
       "n_common_nodes": 153
     },
     "GraphSAGE": {
@@ -596,10 +597,10 @@
         0.18958,
         0.181884
       ],
-      "coord_shuffle_mean": 0.065712,
-      "coord_shuffle_std": 0.001783,
-      "coord_shuffle_z": 68.136,
-      "coord_shuffle_p": 0.0,
+      "coord_shuffle_mean": 0.193229,
+      "coord_shuffle_std": 0.015041,
+      "coord_shuffle_z": -0.4011,
+      "coord_shuffle_p": 0.655841,
       "n_common_nodes": 153
     },
     "GAT": {
@@ -661,10 +662,10 @@
         0.166522,
         0.161207
       ],
-      "coord_shuffle_mean": 0.068256,
-      "coord_shuffle_std": 0.00366,
-      "coord_shuffle_z": 39.6445,
-      "coord_shuffle_p": 0.0,
+      "coord_shuffle_mean": 0.18773,
+      "coord_shuffle_std": 0.012661,
+      "coord_shuffle_z": 2.0249,
+      "coord_shuffle_p": 0.021438,
       "n_common_nodes": 153
     },
     "GIN": {
@@ -726,10 +727,10 @@
         0.210487,
         0.222002
       ],
-      "coord_shuffle_mean": 0.126322,
-      "coord_shuffle_std": 0.007018,
-      "coord_shuffle_z": 15.1069,
-      "coord_shuffle_p": 0.0,
+      "coord_shuffle_mean": 0.241705,
+      "coord_shuffle_std": 0.007897,
+      "coord_shuffle_z": -1.1856,
+      "coord_shuffle_p": 0.882103,
       "n_common_nodes": 153
     }
   },
@@ -749,6 +750,7 @@
       "VGAE-feat",
       "GAT",
       "GIN"
-    ]
+    ],
+    "total_runtime_seconds": 8366.8
   }
 }

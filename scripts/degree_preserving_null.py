@@ -36,8 +36,9 @@ A method significantly above this null indicates that the specific PPI
 edges that fall within geometric proximity carry more functional signal
 than expected from degree distribution alone.
 
-Uses label_propagation_communities for speed (~2.5ms/call vs ~16ms for
-greedy_modularity_communities), keeping total runtime around 5 minutes.
+Uses greedy_modularity_communities to match the main pipeline (utils.py),
+ensuring methodological consistency between the null model and the primary
+GF Score analysis.
 """
 
 import sys
@@ -56,7 +57,7 @@ from utils import (
     load_curated_network, load_embedding, compute_gf_score,
     precompute_distance_matrix, functional_purity,
 )
-from networkx.algorithms.community import label_propagation_communities
+from networkx.algorithms.community import greedy_modularity_communities
 
 # ============================================================
 # Configuration
@@ -154,8 +155,8 @@ def compute_gf_curve_intersection_fast(sorted_rows, sorted_cols, sorted_d,
                                         ppi_edges):
     """Compute GF curve on spatial-PPI intersection (optimised).
 
-    Uses pre-sorted spatial edges and label_propagation_communities for
-    fast community detection (~2.5ms per call).  Pre-filters to only
+    Uses pre-sorted spatial edges and greedy_modularity_communities for
+    community detection (~16ms per call).  Pre-filters to only
     intersection edges for speed.
 
     Parameters
@@ -208,7 +209,7 @@ def compute_gf_curve_intersection_fast(sorted_rows, sorted_cols, sorted_d,
         if ne in _cache:
             communities = _cache[ne]
         else:
-            communities = list(label_propagation_communities(G_r))
+            communities = list(greedy_modularity_communities(G_r))
             _cache[ne] = communities
 
         purities_out[orig_idx] = functional_purity(communities, go_map, nodes)
@@ -296,7 +297,7 @@ def compute_coord_shuffle_baseline_fast(sorted_rows, sorted_cols, sorted_d,
             if ne in _cache:
                 communities = _cache[ne]
             else:
-                communities = list(label_propagation_communities(G_r))
+                communities = list(greedy_modularity_communities(G_r))
                 _cache[ne] = communities
 
             purities_out[orig_idx] = functional_purity(communities, go_map, nodes)
@@ -354,9 +355,9 @@ def main():
     # Step 2: Compute actual GF Score + null for each method
     # --------------------------------------------------------
     results = {}
-    print(f"\nComputing GF curves (intersection-based, label_propagation) for {len(ALL_METHODS)} methods...")
+    print(f"\nComputing GF curves (intersection-based, greedy_modularity) for {len(ALL_METHODS)} methods...")
     print(f"  {N_RANDOMIZATIONS} randomizations per method")
-    print(f"  Community detection: label_propagation_communities (~2.5ms/call)")
+    print(f"  Community detection: greedy_modularity_communities (~16ms/call)")
     print(f"  Total: {len(ALL_METHODS) * (1 + N_RANDOMIZATIONS)} GF curve computations\n")
 
     t_total = time.time()
@@ -544,7 +545,7 @@ def main():
             "PPI edges randomized via double_edge_swap while preserving "
             "degree distribution. GF curves computed on intersection of "
             "spatial graph with (randomized) PPI network. "
-            "Community detection uses label_propagation_communities."
+            "Community detection uses greedy_modularity_communities."
         ),
         "parameters": {
             "seed": SEED,
@@ -557,7 +558,7 @@ def main():
             "nswap": 10 * n_edges,
             "max_tries": 100 * 10 * n_edges,
             "gf_curve_type": "intersection (spatial AND PPI)",
-            "community_detection": "label_propagation_communities",
+            "community_detection": "greedy_modularity_communities",
         },
         "network": {
             "nodes": n_nodes,
