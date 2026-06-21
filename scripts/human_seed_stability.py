@@ -268,7 +268,41 @@ def generate_figure(seed_results, methods, figures_dir):
     print(f"\nSaved: {out_file}")
 
 
+def run_single_seed(args):
+    """Run GF analysis for a single seed. Designed for multiprocessing."""
+    seed, seed_idx, available_methods, embeddings, node_labels_per_method, r_values, r_min_u, r_max_u = args
+    import time as _time
+    t0 = _time.time()
+    rng = np.random.default_rng(seed)
+    scores = {}
+
+    for method in available_methods:
+        nodes, coords = embeddings[method]
+        node_labels = node_labels_per_method[method]
+        sub_coords, sub_labels, _ = subsample_annotated(
+            nodes, coords, node_labels, SUBSAMPLE_SIZE, rng
+        )
+        if len(sub_labels) < 10:
+            continue
+        purities, _ = compute_gf_curve_fast(
+            sub_coords, sub_labels, r_values, seed=seed
+        )
+        score = compute_gf_score(purities, r_values, r_min_u, r_max_u)
+        scores[method] = float(score)
+
+    elapsed = _time.time() - t0
+    ranking = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+    top3 = ", ".join(f"{m}={s:.4f}" for m, s in ranking[:3])
+    print(f"  [Seed {seed} ({seed_idx+1}/{N_SEEDS})] Top 3: {top3}  ({elapsed:.1f}s)", flush=True)
+    return {
+        "seed": seed,
+        "scores": scores,
+        "elapsed_s": round(elapsed, 1),
+    }
+
+
 def main():
+    from multiprocessing import Pool, cpu_count
     os.makedirs(RESULTS_DIR, exist_ok=True)
     os.makedirs(FIGURES_DIR, exist_ok=True)
 
@@ -323,42 +357,21 @@ def main():
           f"{SUBSAMPLE_SIZE} nodes x {len(available_methods)} methods")
     print(f"{'=' * 60}")
 
-    seed_results = []
     seeds = [SEED + i * 100 for i in range(N_SEEDS)]
+    n_workers = min(N_SEEDS, cpu_count() or N_SEEDS)
+    print(f"  Using {n_workers} parallel workers for {N_SEEDS} seeds")
 
-    for seed_idx, seed in enumerate(seeds):
-        print(f"\n--- Seed {seed} ({seed_idx + 1}/{N_SEEDS}) ---")
-        t0 = time.time()
-        rng = np.random.default_rng(seed)
-        scores = {}
+    task_args = [
+        (seed, seed_idx, available_methods, embeddings,
+         node_labels_per_method, r_values, r_min_u, r_max_u)
+        for seed_idx, seed in enumerate(seeds)
+    ]
 
-        for method in available_methods:
-            nodes, coords = embeddings[method]
-            node_labels = node_labels_per_method[method]
+    with Pool(processes=n_workers) as pool:
+        seed_results = pool.map(run_single_seed, task_args)
 
-            sub_coords, sub_labels, _ = subsample_annotated(
-                nodes, coords, node_labels, SUBSAMPLE_SIZE, rng
-            )
-
-            if len(sub_labels) < 10:
-                continue
-
-            purities, _ = compute_gf_curve_fast(
-                sub_coords, sub_labels, r_values, seed=seed
-            )
-            score = compute_gf_score(purities, r_values, r_min_u, r_max_u)
-            scores[method] = float(score)
-
-        elapsed = time.time() - t0
-        seed_results.append({
-            "seed": seed,
-            "scores": scores,
-            "elapsed_s": round(elapsed, 1),
-        })
-
-        ranking = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-        top3 = ", ".join(f"{m}={s:.4f}" for m, s in ranking[:3])
-        print(f"  Top 3: {top3}  ({elapsed:.1f}s)")
+    # Sort by seed to maintain consistent ordering
+    seed_results.sort(key=lambda x: x["seed"])
 
     # ---- Stability metrics ----
     print(f"\n{'=' * 60}")
