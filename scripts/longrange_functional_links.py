@@ -555,8 +555,8 @@ def discover_longrange_links(embeddings, graph, annotations, distances,
 # Visualisation
 # ============================================================
 
-def plot_fig71_stratified_recovery(strata_results, strata_counts):
-    """Fig71: Recovery rate by distance stratum for each method."""
+def plot_fig80_stratified_recovery(strata_results, strata_counts):
+    """Fig80: Recovery rate by distance stratum for each method."""
     fig, axes = plt.subplots(1, 2, figsize=(16, 7))
 
     # --- Panel A: Grouped bar chart ---
@@ -617,14 +617,14 @@ def plot_fig71_stratified_recovery(strata_results, strata_counts):
     fig.suptitle("Phase 14: Distance-Stratified Functional Recovery",
                  fontsize=15, fontweight="bold", y=1.02)
     fig.tight_layout()
-    fig.savefig(FIGURES / "Fig71_stratified_recovery.png",
+    fig.savefig(FIGURES / "Fig80_stratified_recovery.png",
                 dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print("  Saved Fig71_stratified_recovery.png")
+    print("  Saved Fig80_stratified_recovery.png")
 
 
-def plot_fig72_hybrid_sweep(weight_mrr, ppi_mrr, twohop_mrr, detail):
-    """Fig72: Hybrid predictor MRR vs embedding weight."""
+def plot_fig81_hybrid_sweep(weight_mrr, ppi_mrr, twohop_mrr, detail):
+    """Fig90: Hybrid predictor MRR vs embedding weight."""
     fig, axes = plt.subplots(1, 2, figsize=(16, 7))
 
     # --- Panel A: MRR vs weight ---
@@ -685,13 +685,13 @@ def plot_fig72_hybrid_sweep(weight_mrr, ppi_mrr, twohop_mrr, detail):
     fig.suptitle("Phase 14: Hybrid Predictor (Topology + Embedding)",
                  fontsize=15, fontweight="bold", y=1.02)
     fig.tight_layout()
-    fig.savefig(FIGURES / "Fig72_hybrid_sweep.png", dpi=300, bbox_inches="tight")
+    fig.savefig(FIGURES / "Fig90_hybrid_sweep.png", dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print("  Saved Fig72_hybrid_sweep.png")
+    print("  Saved Fig90_hybrid_sweep.png")
 
 
-def plot_fig73_longrange_discoveries(discoveries, strata_counts):
-    """Fig73: Long-range functional links discovered by embeddings."""
+def plot_fig82_longrange_discoveries(discoveries, strata_counts):
+    """Fig91: Long-range functional links discovered by embeddings."""
     fig, axes = plt.subplots(1, 2, figsize=(16, 7))
 
     # --- Panel A: Count of discoveries per method ---
@@ -733,15 +733,15 @@ def plot_fig73_longrange_discoveries(discoveries, strata_counts):
     fig.suptitle("Phase 14: Long-Range Functional Link Discovery",
                  fontsize=15, fontweight="bold", y=1.02)
     fig.tight_layout()
-    fig.savefig(FIGURES / "Fig73_longrange_discoveries.png",
+    fig.savefig(FIGURES / "Fig91_longrange_discoveries.png",
                 dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print("  Saved Fig73_longrange_discoveries.png")
+    print("  Saved Fig91_longrange_discoveries.png")
 
 
-def plot_fig74_summary_dashboard(strata_results, weight_mrr, discoveries,
+def plot_fig83_summary_dashboard(strata_results, weight_mrr, discoveries,
                                  detail, strata_counts):
-    """Fig74: Phase 14 four-panel summary dashboard."""
+    """Fig92: Phase 14 four-panel summary dashboard."""
     fig = plt.figure(figsize=(18, 16))
     gs = GridSpec(2, 2, figure=fig, hspace=0.4, wspace=0.35)
 
@@ -851,10 +851,10 @@ def plot_fig74_summary_dashboard(strata_results, weight_mrr, discoveries,
 
     fig.suptitle("Phase 14: Embeddings Reveal Long-Range Functional Topology",
                  fontsize=16, fontweight="bold", y=1.01)
-    fig.savefig(FIGURES / "Fig74_phase14_summary.png",
+    fig.savefig(FIGURES / "Fig92_phase14_summary.png",
                 dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print("  Saved Fig74_phase14_summary.png")
+    print("  Saved Fig92_phase14_summary.png")
 
 
 # ============================================================
@@ -1093,11 +1093,11 @@ def run():
 
     # --- Figures ---
     print("\n  Generating figures...")
-    plot_fig71_stratified_recovery(strata_results, strata_counts)
-    plot_fig72_hybrid_sweep(weight_mrr, detail["ppi_mrr"],
+    plot_fig80_stratified_recovery(strata_results, strata_counts)
+    plot_fig81_hybrid_sweep(weight_mrr, detail["ppi_mrr"],
                             detail["twohop_mrr"], detail)
-    plot_fig73_longrange_discoveries(discoveries, strata_counts)
-    plot_fig74_summary_dashboard(strata_results, weight_mrr, discoveries,
+    plot_fig82_longrange_discoveries(discoveries, strata_counts)
+    plot_fig83_summary_dashboard(strata_results, weight_mrr, discoveries,
                                  detail, strata_counts)
 
     # --- Report ---

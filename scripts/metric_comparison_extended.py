@@ -270,9 +270,9 @@ def unique_variance_analysis(data, methods):
 # Visualisation
 # ============================================================
 
-def plot_fig78_metric_comparison(data, methods, correlations, discrepancies,
+def plot_fig87_metric_comparison(data, methods, correlations, discrepancies,
                                  unique_var):
-    """Fig78: Metric comparison dashboard (GF Score vs AUROC vs kNN-F1)."""
+    """Fig96: Metric comparison dashboard (GF Score vs AUROC vs kNN-F1)."""
     fig = plt.figure(figsize=(18, 14))
     gs = GridSpec(2, 2, figure=fig, hspace=0.4, wspace=0.35)
 
@@ -404,14 +404,14 @@ def plot_fig78_metric_comparison(data, methods, correlations, discrepancies,
 
     fig.suptitle("Phase 16: GF Score vs Traditional Metrics",
                  fontsize=16, fontweight="bold", y=1.01)
-    fig.savefig(FIGURES / "Fig78_metric_comparison.png",
+    fig.savefig(FIGURES / "Fig96_metric_comparison.png",
                 dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print("  Saved Fig78_metric_comparison.png")
+    print("  Saved Fig96_metric_comparison.png")
 
 
-def plot_fig79_permutation_test(perm_result):
-    """Fig79: Permutation test histogram."""
+def plot_fig88_permutation_test(perm_result):
+    """Fig97: Permutation test histogram."""
     if perm_result is None:
         return
 
@@ -445,10 +445,10 @@ def plot_fig79_permutation_test(perm_result):
     ax.legend(fontsize=10, loc="upper left")
     ax.grid(True, alpha=0.3)
 
-    fig.savefig(FIGURES / "Fig79_permutation_test.png",
+    fig.savefig(FIGURES / "Fig97_permutation_test.png",
                 dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print("  Saved Fig79_permutation_test.png")
+    print("  Saved Fig97_permutation_test.png")
 
 
 # ============================================================
@@ -491,9 +491,9 @@ def run():
 
     # Figures
     print("\n  Generating figures...")
-    plot_fig78_metric_comparison(data, methods, correlations,
+    plot_fig87_metric_comparison(data, methods, correlations,
                                   discrepancies, unique_var)
-    plot_fig79_permutation_test(perm_result)
+    plot_fig88_permutation_test(perm_result)
 
     # Save results
     output = {

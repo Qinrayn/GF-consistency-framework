@@ -21,58 +21,58 @@
   },
   "gf_scores": {
     "MDS": {
-      "gf_score": 0.244942,
+      "gf_score": 0.2332,
       "peak_purity": 0.3642,
       "n_nodes": 2000
     },
     "Spectral": {
-      "gf_score": 0.240203,
+      "gf_score": 0.228688,
       "peak_purity": 0.2657,
       "n_nodes": 2000
     },
     "VGAE": {
-      "gf_score": 0.194268,
+      "gf_score": 0.184955,
       "peak_purity": 0.2554,
       "n_nodes": 2000
     },
+    "GIN": {
+      "gf_score": 0.086866,
+      "peak_purity": 0.1241,
+      "n_nodes": 2000
+    },
     "DeepWalk": {
-      "gf_score": 0.090929,
+      "gf_score": 0.08657,
       "peak_purity": 0.1037,
       "n_nodes": 2000
     },
-    "DM": {
-      "gf_score": 0.089305,
-      "peak_purity": 0.1917,
-      "n_nodes": 2000
-    },
     "Node2Vec": {
-      "gf_score": 0.089139,
+      "gf_score": 0.084866,
       "peak_purity": 0.098,
       "n_nodes": 2000
     },
-    "GIN": {
-      "gf_score": 0.082947,
-      "peak_purity": 0.1084,
+    "DM": {
+      "gf_score": 0.084178,
+      "peak_purity": 0.1825,
       "n_nodes": 2000
     },
     "PCA": {
-      "gf_score": 0.082638,
+      "gf_score": 0.078676,
       "peak_purity": 0.1596,
       "n_nodes": 2000
     },
-    "GraphSAGE": {
-      "gf_score": 0.060531,
-      "peak_purity": 0.2292,
+    "GAT": {
+      "gf_score": 0.05269,
+      "peak_purity": 0.4313,
       "n_nodes": 2000
     },
     "VGAE-feat": {
-      "gf_score": 0.047581,
+      "gf_score": 0.0453,
       "peak_purity": 0.0785,
       "n_nodes": 2000
     },
-    "GAT": {
-      "gf_score": 0.04395,
-      "peak_purity": 0.0439,
+    "GraphSAGE": {
+      "gf_score": 0.04235,
+      "peak_purity": 0.0621,
       "n_nodes": 2000
     }
   },
@@ -80,14 +80,14 @@
     "MDS": 1,
     "Spectral": 2,
     "VGAE": 3,
-    "DeepWalk": 4,
-    "DM": 5,
+    "GIN": 4,
+    "DeepWalk": 5,
     "Node2Vec": 6,
-    "GIN": 7,
+    "DM": 7,
     "PCA": 8,
-    "GraphSAGE": 9,
+    "GAT": 9,
     "VGAE-feat": 10,
-    "GAT": 11
+    "GraphSAGE": 11
   },
   "cross_species": {
     "methods": [
@@ -143,31 +143,31 @@
       "GIN": 9
     },
     "ecoli_ranks": {
-      "DM": 5,
+      "DM": 7,
       "MDS": 1,
       "Spectral": 2,
-      "DeepWalk": 4,
+      "DeepWalk": 5,
       "Node2Vec": 6,
       "VGAE": 3,
       "PCA": 8,
       "VGAE-feat": 10,
-      "GraphSAGE": 9,
-      "GAT": 11,
-      "GIN": 7
+      "GraphSAGE": 11,
+      "GAT": 9,
+      "GIN": 4
     },
     "kendall_W_3_species": 0.7394,
-    "kendall_W_4_species": 0.6523,
-    "W_change": -0.0871
+    "kendall_W_4_species": 0.5989,
+    "W_change": -0.1405
   },
   "spectral_quality": {
     "spectral_rank": 2,
     "gnn_ranks": {
-      "GraphSAGE": 9,
-      "GAT": 11,
-      "GIN": 7
+      "GraphSAGE": 11,
+      "GAT": 9,
+      "GIN": 4
     },
     "spectral_beats_all_gnn": true,
-    "sqi": 0.7
+    "sqi": 0.6
   },
-  "interpretation": "E. coli G-F analysis (3751 nodes, 2000 subsampled). Spectral rank #2 of 11. Kendall's W across 4 species: 0.6523 (decreased from 0.7394 with 3 species). Spectral > GNN pattern HOLDS for E. coli."
+  "interpretation": "E. coli G-F analysis (3751 nodes, 2000 subsampled). Spectral rank #2 of 11. Kendall's W across 4 species: 0.5989 (decreased from 0.7394 with 3 species). Spectral > GNN pattern HOLDS for E. coli."
 }

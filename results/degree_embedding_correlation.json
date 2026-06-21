@@ -1,0 +1,81 @@
+{
+  "hypothesis": "Spectral methods encode degree structure; DP null preserves degrees, so spectral GF is expected under null. Random-walk methods capture path-based structure beyond degrees.",
+  "per_method": [
+    {
+      "method": "DM",
+      "z_score": -0.9878,
+      "degree_dim_correlation": 0.023271876973615265,
+      "distance_degree_correlation": 0.5566241695190609
+    },
+    {
+      "method": "MDS",
+      "z_score": -18.3998,
+      "degree_dim_correlation": 0.5156491747092421,
+      "distance_degree_correlation": 0.08354670543528324
+    },
+    {
+      "method": "Spectral",
+      "z_score": -11.9137,
+      "degree_dim_correlation": 0.11493809309756385,
+      "distance_degree_correlation": 0.0864630148858477
+    },
+    {
+      "method": "DeepWalk",
+      "z_score": 2.6981,
+      "degree_dim_correlation": 0.11738352177609122,
+      "distance_degree_correlation": -0.001896770239811084
+    },
+    {
+      "method": "Node2Vec",
+      "z_score": 2.4038,
+      "degree_dim_correlation": 0.11863226481450546,
+      "distance_degree_correlation": -0.009142218931444268
+    },
+    {
+      "method": "VGAE",
+      "z_score": 0.9797,
+      "degree_dim_correlation": 0.09156760961280958,
+      "distance_degree_correlation": 0.01833825380014675
+    },
+    {
+      "method": "PCA",
+      "z_score": -1.3264,
+      "degree_dim_correlation": 0.9780297009459861,
+      "distance_degree_correlation": 0.8979001565315227
+    },
+    {
+      "method": "VGAE-feat",
+      "z_score": 2.2097,
+      "degree_dim_correlation": 0.019472075817186595,
+      "distance_degree_correlation": 0.031700448633907745
+    },
+    {
+      "method": "GraphSAGE",
+      "z_score": 0.1717,
+      "degree_dim_correlation": 0.4631914781683119,
+      "distance_degree_correlation": 0.12661132942493647
+    },
+    {
+      "method": "GAT",
+      "z_score": 3.2138,
+      "degree_dim_correlation": 0.2414878010676946,
+      "distance_degree_correlation": -0.013584713034254082
+    },
+    {
+      "method": "GIN",
+      "z_score": 2.42,
+      "degree_dim_correlation": 0.0557494864581458,
+      "distance_degree_correlation": 0.03052750626944328
+    }
+  ],
+  "cross_method_correlation": {
+    "z_vs_degree_dim": {
+      "rho": -0.2545454545454546,
+      "p": 0.45003657688882837
+    },
+    "z_vs_distance_degree": {
+      "rho": -0.790909090909091,
+      "p": 0.0037460829533974074
+    }
+  }
+}

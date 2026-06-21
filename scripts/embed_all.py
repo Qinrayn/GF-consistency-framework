@@ -24,7 +24,7 @@ from utils import (
 # Seeds are set inside main() to avoid side-effects on import.
 
 
-def embed_diffusion_map(G, nodes, features=None):
+def embed_diffusion_map(G, nodes, features=None, n_components=2):
     """Diffusion Map: 6 centrality features -> similarity -> Markov -> eigendecomposition.
 
     Parameters
@@ -32,18 +32,25 @@ def embed_diffusion_map(G, nodes, features=None):
     features : np.ndarray, optional
         Pre-computed centrality features.  When *None*, they are computed
         internally (backward compatible).
+    n_components : int, default 2
+        Number of dimensions to return.
     """
     if features is None:
         features = compute_centrality_features(G, nodes)
     sim = build_similarity_matrix(features)
-    coords = diffusion_map_from_similarity(sim)
+    coords = diffusion_map_from_similarity(sim, n_components=n_components)
     return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
-def embed_mds(G, nodes):
+def embed_mds(G, nodes, n_components=2):
     """Classical MDS on shortest-path distances.
 
     Optimised: uses vectorised NumPy filling instead of nested Python loops.
+
+    Parameters
+    ----------
+    n_components : int, default 2
+        Number of dimensions to return.
     """
     n = len(nodes)
     lengths = dict(nx.shortest_path_length(G))
@@ -53,29 +60,36 @@ def embed_mds(G, nodes):
         i = node_to_idx[u]
         for v, d in dists.items():
             D[i, node_to_idx[v]] = d
-    coords = classical_mds_from_distances(D)
+    coords = classical_mds_from_distances(D, n_components=n_components)
     return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
-def embed_spectral(G, nodes):
-    """Spectral embedding from normalized Laplacian."""
-    coords = spectral_embedding_from_graph(G, nodelist=nodes)
+def embed_spectral(G, nodes, n_components=2):
+    """Spectral embedding from normalized Laplacian.
+
+    Parameters
+    ----------
+    n_components : int, default 2
+        Number of dimensions (Fiedler and subsequent eigenvectors).
+    """
+    coords = spectral_embedding_from_graph(G, nodelist=nodes, n_components=n_components)
     return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
-def embed_deepwalk(G, nodes, walk_length=20, walks_per_node=10, window=5):
+def embed_deepwalk(G, nodes, walk_length=20, walks_per_node=10, window=5, n_components=2):
     """DeepWalk: uniform random walks + co-occurrence matrix + SVD."""
     coords = deepwalk_from_graph(G, walk_length=walk_length,
                                   walks_per_node=walks_per_node,
-                                  window_size=window, seed=SEED)
+                                  window_size=window, dimensions=n_components, seed=SEED)
     return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
-def embed_node2vec(G, nodes, walk_length=20, walks_per_node=10, window=5, p=0.5, q=2.0):
+def embed_node2vec(G, nodes, walk_length=20, walks_per_node=10, window=5, p=0.5, q=2.0, n_components=2):
     """Node2Vec: biased random walks + co-occurrence matrix + SVD."""
     coords = node2vec_from_graph(G, walk_length=walk_length,
                                   walks_per_node=walks_per_node,
-                                  window_size=window, p=p, q=q, seed=SEED)
+                                  window_size=window, p=p, q=q,
+                                  dimensions=n_components, seed=SEED)
     return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
@@ -86,7 +100,7 @@ def embed_vgae(G, nodes, features=None, hidden_dim=4, latent_dim=2, epochs=300, 
     return rescale_coordinates(coords, target_std=TARGET_STD)
 
 
-def embed_pca(G, nodes, features=None):
+def embed_pca(G, nodes, features=None, n_components=2):
     """PCA control: PCA on 6 centrality features.
 
     Parameters
@@ -94,14 +108,58 @@ def embed_pca(G, nodes, features=None):
     features : np.ndarray, optional
         Pre-computed centrality features.  When *None*, they are computed
         internally (backward compatible).
+    n_components : int, default 2
+        Number of principal components to return.
     """
     if features is None:
         features = compute_centrality_features(G, nodes)
     features_centered = features - features.mean(axis=0)
     cov = features_centered.T @ features_centered / (len(nodes) - 1)
     eigvals, eigvecs = np.linalg.eigh(cov)
-    coords = features_centered @ eigvecs[:, -2:]
+    coords = features_centered @ eigvecs[:, -n_components:]
     return rescale_coordinates(coords, target_std=TARGET_STD)
+
+
+def embed_method_by_name(G, nodes, method_name, features=None, n_components=2, **kwargs):
+    """Factory to compute any supported embedding at arbitrary dimensionality.
+
+    Parameters
+    ----------
+    G : nx.Graph
+    nodes : list
+    method_name : str
+        One of DM, MDS, Spectral, DeepWalk, Node2Vec, VGAE, VGAE-feat, PCA.
+    features : np.ndarray, optional
+        Pre-computed centrality features (for DM, VGAE-feat, PCA).
+    n_components : int, default 2
+        Embedding dimensionality.
+    **kwargs
+        Additional method-specific parameters (e.g., p, q for Node2Vec).
+
+    Returns
+    -------
+    np.ndarray
+        Embedding coordinates (n_nodes, n_components).
+    """
+    method_name = method_name.strip()
+    if method_name == "DM":
+        return embed_diffusion_map(G, nodes, features=features, n_components=n_components)
+    elif method_name == "MDS":
+        return embed_mds(G, nodes, n_components=n_components)
+    elif method_name == "Spectral":
+        return embed_spectral(G, nodes, n_components=n_components)
+    elif method_name == "DeepWalk":
+        return embed_deepwalk(G, nodes, n_components=n_components, **kwargs)
+    elif method_name == "Node2Vec":
+        return embed_node2vec(G, nodes, n_components=n_components, **kwargs)
+    elif method_name == "VGAE":
+        return embed_vgae(G, nodes, features=None, latent_dim=n_components, **kwargs)
+    elif method_name == "VGAE-feat":
+        return embed_vgae(G, nodes, features=features, latent_dim=n_components, **kwargs)
+    elif method_name == "PCA":
+        return embed_pca(G, nodes, features=features, n_components=n_components)
+    else:
+        raise ValueError(f"Unknown embedding method: {method_name}")
 
 
 def main():

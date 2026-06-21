@@ -160,12 +160,10 @@ Extension modules (v1.1+)
 config_loader                 YAML configuration loader and validator
 input_validator               Pre-flight input validation and error handling
 multispecies_loader           Multi-species dataset loader (yeast, human, ...)
-temporal_network              Dynamic/temporal PPI network framework
 
 Support modules
 ---------------
 robustness_analysis           Extended 30-subset convergence analysis
-visualization_helpers         Okabe-Ito colorblind-safe plotting utilities
 """
 
 __version__ = "2.11.0"

@@ -15,7 +15,7 @@ Output
 ------
 - results/uncharacterized_predictions.tsv
 - results/uncharacterized_summary.json
-- figures/Fig79_uncharacterized_network.png
+- figures/Fig98_uncharacterized_network.png
 """
 
 from __future__ import annotations
@@ -492,7 +492,7 @@ def plot_uncharacterized_summary(predictions, uncharacterized, G, nodes, coords)
                  f"of {len(uncharacterized)} uncharacterized proteins",
                  fontsize=13, fontweight="bold", y=1.02)
     plt.tight_layout()
-    fig_path = FIGURES / "Fig79_uncharacterized_summary.png"
+    fig_path = FIGURES / "Fig98_uncharacterized_summary.png"
     fig.savefig(fig_path, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"  Saved {fig_path}")

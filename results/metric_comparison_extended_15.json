@@ -1,0 +1,109 @@
+{
+  "n_methods": 15,
+  "methods": [
+    "DM",
+    "DeepWalk",
+    "GAT",
+    "GIN",
+    "GraphSAGE",
+    "MDS",
+    "Node2Vec",
+    "PCA",
+    "Spectral",
+    "TSNE",
+    "TSNE-sp",
+    "UMAP",
+    "UMAP-adj",
+    "VGAE",
+    "VGAE-feat"
+  ],
+  "per_method": {
+    "DM": {
+      "gf_score": 0.1552,
+      "link_pred_auc": 0.7263,
+      "knn_f1": 0.5126
+    },
+    "MDS": {
+      "gf_score": 0.1522,
+      "link_pred_auc": 0.9039,
+      "knn_f1": 0.6387
+    },
+    "Spectral": {
+      "gf_score": 0.1633,
+      "link_pred_auc": 0.8849,
+      "knn_f1": 0.6723
+    },
+    "DeepWalk": {
+      "gf_score": 0.1225,
+      "link_pred_auc": 0.4888,
+      "knn_f1": 0.1933
+    },
+    "Node2Vec": {
+      "gf_score": 0.1512,
+      "link_pred_auc": 0.4913,
+      "knn_f1": 0.1849
+    },
+    "VGAE": {
+      "gf_score": 0.0657,
+      "link_pred_auc": 0.4908,
+      "knn_f1": 0.2269
+    },
+    "VGAE-feat": {
+      "gf_score": 0.1238,
+      "link_pred_auc": 0.4664,
+      "knn_f1": 0.1681
+    },
+    "GraphSAGE": {
+      "gf_score": 0.069,
+      "link_pred_auc": 0.5307,
+      "knn_f1": 0.1765
+    },
+    "GAT": {
+      "gf_score": 0.0694,
+      "link_pred_auc": 0.5335,
+      "knn_f1": 0.1597
+    },
+    "GIN": {
+      "gf_score": 0.1217,
+      "link_pred_auc": 0.4827,
+      "knn_f1": 0.2101
+    },
+    "PCA": {
+      "gf_score": 0.1375,
+      "link_pred_auc": 0.6781,
+      "knn_f1": 0.521
+    },
+    "UMAP-adj": {
+      "gf_score": 0.177393,
+      "link_pred_auc": 0.8250279410500405,
+      "knn_f1": 0.7892918825561313
+    },
+    "UMAP": {
+      "gf_score": 0.067846,
+      "link_pred_auc": 0.8916098418860849,
+      "knn_f1": 0.8272884283246977
+    },
+    "TSNE": {
+      "gf_score": 0.152478,
+      "link_pred_auc": 0.8730925802749009,
+      "knn_f1": 0.7892918825561313
+    },
+    "TSNE-sp": {
+      "gf_score": 0.14953,
+      "link_pred_auc": 0.8611718197353556,
+      "knn_f1": 0.8117443868739206
+    }
+  },
+  "correlations": {
+    "gf_vs_link_pred_auc": {
+      "spearman_rho": 0.4428571428571427,
+      "p_value": 0.0982940655468714,
+      "n": 15
+    },
+    "gf_vs_knn_f1": {
+      "spearman_rho": 0.3842718245784293,
+      "p_value": 0.1573153076447457,
+      "n": 15
+    }
+  }
+}

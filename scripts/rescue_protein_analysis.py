@@ -294,9 +294,9 @@ def network_topology_analysis(rescue_proteins, graph, all_annotations):
     return metrics, metrics_nr, comparison
 
 
-def plot_fig76_rescue_characterisation(enrichment, topo_comp, metrics,
+def plot_fig85_rescue_characterisation(enrichment, topo_comp, metrics,
                                         metrics_nr, rescued, n_categories):
-    """Fig76: Rescue protein characterisation dashboard."""
+    """Fig94: Rescue protein characterisation dashboard."""
     fig = plt.figure(figsize=(18, 14))
     gs = GridSpec(2, 2, figure=fig, hspace=0.4, wspace=0.35)
 
@@ -413,14 +413,14 @@ def plot_fig76_rescue_characterisation(enrichment, topo_comp, metrics,
 
     fig.suptitle("Phase 15: Embedding-Rescued Protein Characterisation",
                  fontsize=16, fontweight="bold", y=1.01)
-    fig.savefig(FIGURES / "Fig76_rescue_characterisation.png",
+    fig.savefig(FIGURES / "Fig94_rescue_characterisation.png",
                 dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print("  Saved Fig76_rescue_characterisation.png")
+    print("  Saved Fig94_rescue_characterisation.png")
 
 
-def plot_fig77_network_distance_analysis(rescued):
-    """Fig77: Network distance of embedding-rescuing neighbors."""
+def plot_fig86_network_distance_analysis(rescued):
+    """Fig95: Network distance of embedding-rescuing neighbors."""
     fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
     # Collect all network distances of rescuing neighbors
@@ -477,10 +477,10 @@ def plot_fig77_network_distance_analysis(rescued):
     fig.suptitle("Phase 15: Rescuing Neighbor Distance Analysis",
                  fontsize=15, fontweight="bold", y=1.02)
     fig.tight_layout()
-    fig.savefig(FIGURES / "Fig77_rescue_distance.png",
+    fig.savefig(FIGURES / "Fig95_rescue_distance.png",
                 dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print("  Saved Fig77_rescue_distance.png")
+    print("  Saved Fig95_rescue_distance.png")
 
 
 def run():
@@ -602,10 +602,10 @@ def run():
 
     # Figures
     print("\n  Generating figures...")
-    plot_fig76_rescue_characterisation(
+    plot_fig85_rescue_characterisation(
         enrichment, topo_comp, metrics, metrics_nr, rescued, n_categories
     )
-    plot_fig77_network_distance_analysis(rescued)
+    plot_fig86_network_distance_analysis(rescued)
 
     print(f"\n{BANNER}")
     print("Phase 15 complete.")

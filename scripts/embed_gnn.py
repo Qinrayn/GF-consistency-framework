@@ -969,5 +969,53 @@ def main() -> None:
     print("\nAll GNN embeddings and evaluations complete!")
 
 
+
+def embed_gnn_method_by_name(
+    G, nodes, method_name, features=None, latent_dim=2, hidden_dim=16,
+    epochs=300, lr=0.01, seed=SEED
+):
+    """Factory to compute GNN embeddings at arbitrary dimensionality.
+
+    Parameters
+    ----------
+    G : nx.Graph
+    nodes : list
+    method_name : str
+        One of GraphSAGE, GAT, GIN.
+    features : np.ndarray, optional
+        Node features; if None, one-hot identity is used.
+    latent_dim : int, default 2
+        Output embedding dimensionality.
+    hidden_dim : int, default 16
+        Hidden layer dimensionality.
+    epochs : int, default 300
+    lr : float, default 0.01
+    seed : int
+
+    Returns
+    -------
+    np.ndarray
+        Embedding coordinates (n_nodes, latent_dim).
+    """
+    method_name = method_name.strip()
+    if method_name == "GraphSAGE":
+        return graphsage_from_graph(
+            G, hidden_dim=hidden_dim, latent_dim=latent_dim,
+            epochs=epochs, lr=lr, features=features, seed=seed
+        )
+    elif method_name == "GAT":
+        return gat_from_graph(
+            G, hidden_dim=hidden_dim, latent_dim=latent_dim,
+            epochs=epochs, lr=lr, features=features, seed=seed
+        )
+    elif method_name == "GIN":
+        return gin_from_graph(
+            G, hidden_dim=hidden_dim, latent_dim=latent_dim,
+            epochs=epochs, lr=lr, features=features, seed=seed
+        )
+    else:
+        raise ValueError(f"Unknown GNN method: {method_name}")
+
+
 if __name__ == "__main__":
     main()

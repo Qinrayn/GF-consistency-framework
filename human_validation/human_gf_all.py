@@ -4,8 +4,8 @@ for all six embedding methods (optimised for laptop hardware).
 
 Optimisations vs. the original script:
   1. Subsample annotated nodes to SUBSAMPLE_SIZE (default 2 000).
-  2. Use Louvain community detection (O(n log n)) instead of
-     NetworkX greedy_modularity_communities (O(n² log n)).
+  2. Use greedy_modularity_communities (same as yeast pipeline, Phase 9
+     standard) for deterministic community detection.
   3. Call community detection only **once** per r-value.
   4. Cap edges at MAX_EDGES — skip community detection for near-complete graphs.
   5. Use 100 r-points (sufficient for smooth curves on 2-D embeddings).
@@ -77,8 +77,8 @@ def communities_from_partition(partition):
 
 
 def compute_gf_curve_fast(coords, node_labels, r_values):
-    """G-F curve using Louvain community detection."""
-    import community as community_louvain
+    """G-F curve using greedy_modularity_communities (Phase 9 standard)."""
+    from networkx.algorithms.community import greedy_modularity_communities
     from scipy.spatial.distance import pdist, squareform
 
     dist_matrix = squareform(pdist(coords))
@@ -108,9 +108,9 @@ def compute_gf_curve_fast(coords, node_labels, r_values):
         else:
             G.add_edges_from(edges)
             try:
-                partition = community_louvain.best_partition(G, random_state=SEED)
-                communities = communities_from_partition(partition)
-                mod_val = community_louvain.modularity(partition, G)
+                partition = list(greedy_modularity_communities(G))
+                communities = [frozenset(c) for c in partition]
+                mod_val = nx.community.modularity(G, partition)
             except Exception:
                 communities = [frozenset(c) for c in nx.connected_components(G)]
                 mod_val = 0.0

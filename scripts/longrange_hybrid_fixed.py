@@ -544,7 +544,7 @@ def run():
     # ================================================================
     print("\n  Generating figures...")
 
-    # Fig75: Hybrid comparison dashboard
+    # Fig93: Hybrid comparison dashboard
     fig, axes = plt.subplots(1, 3, figsize=(20, 7))
 
     # Panel A: Rank fallback per method
@@ -634,9 +634,9 @@ def run():
     fig.suptitle("Phase 14b: Hybrid Predictor (Fixed Rank-Based)",
                  fontsize=16, fontweight="bold", y=1.02)
     fig.tight_layout()
-    fig.savefig(FIGURES / "Fig75_hybrid_fixed.png", dpi=300, bbox_inches="tight")
+    fig.savefig(FIGURES / "Fig93_hybrid_fixed.png", dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print("  Saved Fig75_hybrid_fixed.png")
+    print("  Saved Fig93_hybrid_fixed.png")
 
     print(f"\n{BANNER}")
     print("Phase 14b complete.")

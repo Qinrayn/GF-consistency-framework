@@ -21,7 +21,7 @@ Design
   * Same subsample (seed=42, 2000 nodes) as human_gf_extended.py for
     direct comparability.
   * IC computed from the full human GO annotation corpus.
-  * Louvain community detection at each r threshold.
+  * Greedy modularity community detection at each r threshold.
   * Spearman correlation between standard and IC-weighted rankings.
 
 Output
@@ -187,7 +187,7 @@ def compute_gf_curve_dual(coords, node_labels, ic, r_values, seed=SEED):
 
     Returns (std_purities, ic_purities, modularities).
     """
-    import community as community_louvain
+    from networkx.algorithms.community import greedy_modularity_communities
     from scipy.spatial.distance import pdist, squareform
 
     dist_matrix = squareform(pdist(coords))
@@ -216,9 +216,9 @@ def compute_gf_curve_dual(coords, node_labels, ic, r_values, seed=SEED):
         else:
             G.add_edges_from(edges)
             try:
-                partition = community_louvain.best_partition(G, random_state=seed)
-                communities = communities_from_partition(partition)
-                mod_val = community_louvain.modularity(partition, G)
+                partition = list(greedy_modularity_communities(G))
+                communities = [frozenset(c) for c in partition]
+                mod_val = nx.community.modularity(G, partition)
             except Exception:
                 communities = [frozenset(c) for c in nx.connected_components(G)]
                 mod_val = 0.0

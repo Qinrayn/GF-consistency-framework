@@ -38,5 +38,6 @@
     ]
   ],
   "subsample_size": 2000,
-  "_note": "DEPRECATED: This file uses 6 methods with Louvain community detection and interval [0.05, 0.297].  Superseded by human_gf_scores_extended.json (11 methods) and the unified Phase 9 analysis (greedy_modularity, interval [0.05, 0.422]). Retained for reproducibility traceability only."
+  "_note": "DEPRECATED: 6-method Louvain results. Superseded by human_gf_scores_extended.json (11 methods, greedy_modularity). Kept for backward compatibility.",
+  "_deprecated": true
 }

@@ -22,57 +22,57 @@
   "n_methods": 11,
   "gf_scores": {
     "DM": {
-      "yeast_interval": 0.050987,
+      "yeast_interval": 0.048543,
       "human_interval": 0.0,
       "old_louvain": 0.05982932304070516
     },
     "MDS": {
-      "yeast_interval": 0.48341,
+      "yeast_interval": 0.460236,
       "human_interval": 0.0,
       "old_louvain": 0.3665895159604647
     },
     "Spectral": {
-      "yeast_interval": 0.496756,
+      "yeast_interval": 0.472942,
       "human_interval": 0.0,
       "old_louvain": 0.401947672531325
     },
     "DeepWalk": {
-      "yeast_interval": 0.18574,
+      "yeast_interval": 0.176836,
       "human_interval": 0.0,
       "old_louvain": 0.10057815633051474
     },
     "Node2Vec": {
-      "yeast_interval": 0.199333,
+      "yeast_interval": 0.189777,
       "human_interval": 0.0,
       "old_louvain": 0.16620439439191592
     },
     "VGAE": {
-      "yeast_interval": 0.022914,
+      "yeast_interval": 0.021816,
       "human_interval": 0.0,
       "old_louvain": 0.013488095495757337
     },
     "PCA": {
-      "yeast_interval": 0.138786,
+      "yeast_interval": 0.132133,
       "human_interval": 0.0,
       "old_louvain": 0.08576238310566663
     },
     "VGAE-feat": {
-      "yeast_interval": 0.072608,
+      "yeast_interval": 0.069128,
       "human_interval": 0.0,
       "old_louvain": 0.08857432406051224
     },
     "GraphSAGE": {
-      "yeast_interval": 0.163952,
+      "yeast_interval": 0.156092,
       "human_interval": 0.0,
       "old_louvain": 0.13313221753172583
     },
     "GAT": {
-      "yeast_interval": 0.011227,
+      "yeast_interval": 0.010689,
       "human_interval": 0.0,
       "old_louvain": 0.010501460262225813
     },
     "GIN": {
-      "yeast_interval": 0.047439,
+      "yeast_interval": 0.045165,
       "human_interval": 0.0,
       "old_louvain": 0.08894291070905928
     }

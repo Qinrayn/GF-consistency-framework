@@ -21,58 +21,58 @@
   },
   "gf_scores": {
     "Spectral": {
-      "gf_score": 0.619226,
+      "gf_score": 0.589541,
       "peak_purity": 0.6651,
       "n_nodes": 2000
     },
     "MDS": {
-      "gf_score": 0.414695,
+      "gf_score": 0.394815,
       "peak_purity": 0.5498,
       "n_nodes": 2000
     },
     "Node2Vec": {
-      "gf_score": 0.362879,
+      "gf_score": 0.345483,
       "peak_purity": 0.4676,
       "n_nodes": 2000
     },
     "DeepWalk": {
-      "gf_score": 0.256866,
+      "gf_score": 0.244552,
       "peak_purity": 0.4208,
       "n_nodes": 2000
     },
     "PCA": {
-      "gf_score": 0.248944,
+      "gf_score": 0.237009,
       "peak_purity": 0.4183,
       "n_nodes": 2000
     },
     "GIN": {
-      "gf_score": 0.153848,
-      "peak_purity": 0.2194,
-      "n_nodes": 2000
-    },
-    "DM": {
-      "gf_score": 0.098147,
-      "peak_purity": 0.2584,
+      "gf_score": 0.166724,
+      "peak_purity": 0.2555,
       "n_nodes": 2000
     },
     "GraphSAGE": {
-      "gf_score": 0.092655,
-      "peak_purity": 0.1332,
+      "gf_score": 0.111182,
+      "peak_purity": 0.1872,
+      "n_nodes": 2000
+    },
+    "DM": {
+      "gf_score": 0.096487,
+      "peak_purity": 0.2584,
       "n_nodes": 2000
     },
     "VGAE": {
-      "gf_score": 0.049501,
+      "gf_score": 0.047128,
       "peak_purity": 0.2008,
       "n_nodes": 2000
     },
     "VGAE-feat": {
-      "gf_score": 0.034305,
+      "gf_score": 0.032661,
       "peak_purity": 0.1847,
       "n_nodes": 2000
     },
     "GAT": {
-      "gf_score": 0.023505,
-      "peak_purity": 0.2582,
+      "gf_score": 0.029379,
+      "peak_purity": 0.5082,
       "n_nodes": 2000
     }
   },
@@ -83,8 +83,8 @@
     "DeepWalk": 4,
     "PCA": 5,
     "GIN": 6,
-    "DM": 7,
-    "GraphSAGE": 8,
+    "GraphSAGE": 7,
+    "DM": 8,
     "VGAE": 9,
     "VGAE-feat": 10,
     "GAT": 11
@@ -156,7 +156,7 @@
       "GIN": 7
     },
     "fly_ranks": {
-      "DM": 7,
+      "DM": 8,
       "MDS": 2,
       "Spectral": 1,
       "DeepWalk": 4,
@@ -164,25 +164,25 @@
       "VGAE": 9,
       "PCA": 5,
       "VGAE-feat": 10,
-      "GraphSAGE": 8,
+      "GraphSAGE": 7,
       "GAT": 11,
       "GIN": 6
     },
     "kendall_W_3_species": 0.7394,
-    "kendall_W_4_species_no_ecoli": 0.7523,
+    "kendall_W_4_species_no_ecoli": 0.7477,
     "kendall_W_4_species_with_ecoli": 0.6523,
-    "kendall_W_5_species": 0.6902,
-    "W_change_4sp_to_5sp": 0.0379
+    "kendall_W_5_species": 0.6844,
+    "W_change_4sp_to_5sp": 0.0321
   },
   "spectral_quality": {
     "spectral_rank": 1,
     "gnn_ranks": {
-      "GraphSAGE": 8,
+      "GraphSAGE": 7,
       "GAT": 11,
       "GIN": 6
     },
     "spectral_beats_all_gnn": true,
-    "sqi": 0.7333
+    "sqi": 0.7
   },
-  "interpretation": "Drosophila G-F analysis (6909 nodes, 2000 subsampled). Spectral rank #1 of 11. Kendall's W across 5 species: 0.6902. Spectral > GNN pattern HOLDS for Drosophila."
+  "interpretation": "Drosophila G-F analysis (6909 nodes, 2000 subsampled). Spectral rank #1 of 11. Kendall's W across 5 species: 0.6844. Spectral > GNN pattern HOLDS for Drosophila."
 }

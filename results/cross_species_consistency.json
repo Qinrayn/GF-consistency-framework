@@ -27,17 +27,17 @@
     "GIN": 0.1217
   },
   "human_gf_scores": {
-    "DM": 0.05982932304070516,
-    "MDS": 0.3665895159604647,
-    "Spectral": 0.401947672531325,
-    "DeepWalk": 0.10057815633051474,
-    "Node2Vec": 0.16620439439191592,
-    "VGAE": 0.013488095495757337,
-    "PCA": 0.08576238310566663,
-    "VGAE-feat": 0.08857432406051224,
-    "GraphSAGE": 0.13313221753172583,
+    "DM": 0.06872719036326762,
+    "MDS": 0.4487247152276833,
+    "Spectral": 0.4063111880699595,
+    "DeepWalk": 0.1362485358312125,
+    "Node2Vec": 0.1925176393187605,
+    "VGAE": 0.013488095495757338,
+    "PCA": 0.10758418996858748,
+    "VGAE-feat": 0.09400590082666212,
+    "GraphSAGE": 0.18040196389929436,
     "GAT": 0.010501460262225813,
-    "GIN": 0.08894291070905928
+    "GIN": 0.11524553587440459
   },
   "yeast_ranks": {
     "DM": 2,
@@ -54,31 +54,31 @@
   },
   "human_ranks": {
     "DM": 9,
-    "MDS": 2,
-    "Spectral": 1,
+    "MDS": 1,
+    "Spectral": 2,
     "DeepWalk": 5,
     "Node2Vec": 3,
     "VGAE": 10,
-    "PCA": 8,
-    "VGAE-feat": 7,
+    "PCA": 7,
+    "VGAE-feat": 8,
     "GraphSAGE": 4,
     "GAT": 11,
     "GIN": 6
   },
   "spearman_correlation": {
-    "rho": 0.5,
-    "p_value": 0.11730680301423817,
+    "rho": 0.4909090909090909,
+    "p_value": 0.12520440713849548,
     "n": 11
   },
   "permutation_test": {
-    "rho": 0.5,
-    "p_perm": 0.1176,
+    "rho": 0.4909090909090909,
+    "p_perm": 0.1257,
     "n_permutations": 10000
   },
-  "kendalls_w": 0.75,
+  "kendalls_w": 0.7454545454545455,
   "z_score_spearman": {
-    "rho": 0.5,
-    "p_value": 0.11730680301423817
+    "rho": 0.4909090909090909,
+    "p_value": 0.12520440713849548
   },
   "rank_shifts": {
     "DM": {
@@ -86,63 +86,63 @@
       "human_rank": 9,
       "shift": 7,
       "yeast_score": 0.15518241816105013,
-      "human_score": 0.05982932304070516
+      "human_score": 0.06872719036326762
     },
     "MDS": {
       "yeast_rank": 3,
-      "human_rank": 2,
-      "shift": -1,
+      "human_rank": 1,
+      "shift": -2,
       "yeast_score": 0.152155432912679,
-      "human_score": 0.3665895159604647
+      "human_score": 0.4487247152276833
     },
     "Spectral": {
       "yeast_rank": 1,
-      "human_rank": 1,
-      "shift": 0,
+      "human_rank": 2,
+      "shift": 1,
       "yeast_score": 0.16332658400038436,
-      "human_score": 0.401947672531325
+      "human_score": 0.4063111880699595
     },
     "DeepWalk": {
       "yeast_rank": 7,
       "human_rank": 5,
       "shift": -2,
       "yeast_score": 0.1225356361238432,
-      "human_score": 0.10057815633051474
+      "human_score": 0.1362485358312125
     },
     "Node2Vec": {
       "yeast_rank": 4,
       "human_rank": 3,
       "shift": -1,
       "yeast_score": 0.1511706117501923,
-      "human_score": 0.16620439439191592
+      "human_score": 0.1925176393187605
     },
     "VGAE": {
       "yeast_rank": 11,
       "human_rank": 10,
       "shift": -1,
       "yeast_score": 0.06567018452344808,
-      "human_score": 0.013488095495757337
+      "human_score": 0.013488095495757338
     },
     "PCA": {
       "yeast_rank": 5,
-      "human_rank": 8,
-      "shift": 3,
+      "human_rank": 7,
+      "shift": 2,
       "yeast_score": 0.13753060668252517,
-      "human_score": 0.08576238310566663
+      "human_score": 0.10758418996858748
     },
     "VGAE-feat": {
       "yeast_rank": 6,
-      "human_rank": 7,
-      "shift": 1,
+      "human_rank": 8,
+      "shift": 2,
       "yeast_score": 0.12384417529354565,
-      "human_score": 0.08857432406051224
+      "human_score": 0.09400590082666212
     },
     "GraphSAGE": {
       "yeast_rank": 10,
       "human_rank": 4,
       "shift": -6,
       "yeast_score": 0.069,
-      "human_score": 0.13313221753172583
+      "human_score": 0.18040196389929436
     },
     "GAT": {
       "yeast_rank": 9,
@@ -156,8 +156,8 @@
       "human_rank": 6,
       "shift": -2,
       "yeast_score": 0.1217,
-      "human_score": 0.08894291070905928
+      "human_score": 0.11524553587440459
     }
   },
-  "interpretation": "Cross-species rank consistency is moderate (\u03c1=0.500, not significant at \u03b1=0.05) with high concordance (W=0.750). This partially supports the hypothesis that embedding quality is a method-intrinsic property."
+  "interpretation": "Cross-species rank consistency is moderate (\u03c1=0.491, not significant at \u03b1=0.05) with high concordance (W=0.745). This partially supports the hypothesis that embedding quality is a method-intrinsic property."
 }

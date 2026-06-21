@@ -179,7 +179,7 @@ def compute_gf_score(purities, r_vals, r_min, r_max):
         return 0.0
     r_sub = r_vals[mask]
     p_sub = purities[mask]
-    return float(trapezoid(p_sub, r_sub) / (r_sub[-1] - r_sub[0]))
+    return float(trapezoid(p_sub, r_sub) / (r_max - r_min))
 
 
 # ============================================================

@@ -565,35 +565,64 @@ def build_similarity_matrix(features: np.ndarray) -> np.ndarray:
     return features @ features.T
 
 
-def diffusion_map_from_similarity(sim: np.ndarray) -> np.ndarray:
-    """Diffusion Map coordinates (2-D) from a similarity matrix."""
+def diffusion_map_from_similarity(sim: np.ndarray, n_components: int = 2) -> np.ndarray:
+    """Diffusion Map coordinates from a similarity matrix.
+    
+    Parameters
+    ----------
+    sim : np.ndarray
+        Similarity matrix (n x n).
+    n_components : int, default 2
+        Number of dimensions to return (eigenvectors 2..n_components+1).
+    """
     row_sums = sim.sum(axis=1, keepdims=True)
     D_inv_sqrt = np.diag(1.0 / (np.sqrt(row_sums.flatten()) + 1e-10))
     norm_sim = D_inv_sqrt @ sim @ D_inv_sqrt
     eigvals, eigvecs = np.linalg.eigh(norm_sim)
     idx = np.argsort(eigvals)
-    coords = np.column_stack([eigvecs[:, idx[-2]], eigvecs[:, idx[-3]]])
+    # Take the 2nd, 3rd, ... (n_components+1)-th largest eigenvectors
+    # Skip the largest (constant) eigenvector.
+    selected = idx[-(n_components + 1):-1][::-1]
+    coords = eigvecs[:, selected]
     return coords
 
 
-def classical_mds_from_distances(D: np.ndarray) -> np.ndarray:
-    """Classical MDS (2-D) from a square distance matrix."""
+def classical_mds_from_distances(D: np.ndarray, n_components: int = 2) -> np.ndarray:
+    """Classical MDS from a square distance matrix.
+    
+    Parameters
+    ----------
+    D : np.ndarray
+        Square distance matrix (n x n).
+    n_components : int, default 2
+        Number of dimensions to return.
+    """
     n = D.shape[0]
     D_sq = D ** 2
     J = np.eye(n) - np.ones((n, n)) / n
     B = -0.5 * J @ D_sq @ J
     eigvals, eigvecs = np.linalg.eigh(B)
     idx = np.argsort(eigvals)[::-1]
-    coords = eigvecs[:, idx[:2]] * np.sqrt(np.abs(eigvals[idx[:2]]))
+    coords = eigvecs[:, idx[:n_components]] * np.sqrt(np.abs(eigvals[idx[:n_components]]))
     return coords
 
 
 def spectral_embedding_from_graph(G: nx.Graph,
-                                 nodelist=None) -> np.ndarray:
-    """Spectral embedding (2-D) from normalised Laplacian."""
+                                 nodelist=None, n_components: int = 2) -> np.ndarray:
+    """Spectral embedding from normalised Laplacian.
+    
+    Parameters
+    ----------
+    G : nx.Graph
+        Input graph.
+    nodelist : list, optional
+        Ordering of nodes.
+    n_components : int, default 2
+        Number of dimensions (eigenvectors starting from Fiedler).
+    """
     L = nx.normalized_laplacian_matrix(G, nodelist=nodelist).toarray()
     eigvals, eigvecs = np.linalg.eigh(L)
-    return eigvecs[:, 1:3]
+    return eigvecs[:, 1:1 + n_components]
 
 
 def deepwalk_from_graph(G: nx.Graph, walk_length: int = 20,
