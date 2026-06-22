@@ -1,6 +1,14 @@
-# Human Cross-Species Validation
+# Human Cross-Species Validation (DEPRECATED)
 
-This directory contains scripts for cross-species validation on the human PPI network (largest connected component), comparing all six embedding methods: Diffusion Map (DM), MDS, Spectral, DeepWalk, Node2Vec, and VGAE.
+> **This directory is deprecated.** Human PPI analysis has been integrated
+> into the main pipeline (`run_all_analysis.py`, Steps 37-38) using
+> **11 methods** and **greedy_modularity_communities** (not the 6-method
+> Louvain approach described below). See `scripts/human_gf_extended.py`,
+> `scripts/human_seed_stability.py`, and `scripts/human_ic_weighted_gf.py`.
+
+This directory contains early scripts for cross-species validation on the
+human PPI network, comparing six embedding methods: DM, MDS, Spectral,
+DeepWalk, Node2Vec, and VGAE.
 
 ## Important Note
 

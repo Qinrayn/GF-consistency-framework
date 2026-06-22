@@ -831,7 +831,7 @@ This repository accompanies a manuscript under peer review at *Nature Communicat
 
 ## Author Contributions
 
-Y.Z. conceived the study, designed the G-F consistency framework, implemented all 18 embedding methods and 72-step analysis pipeline, performed the cross-species validation (5 species), derived the mathematical propositions, conducted the functional dark matter analysis, wrote all 110 scripts, generated all figures, and wrote the manuscript.
+Y.Z. conceived the study, designed the G-F consistency framework, implemented all 18 embedding methods and 72-step analysis pipeline, performed the cross-species validation (5 species), derived the mathematical propositions, conducted the functional dark matter analysis, wrote all scripts (92 active + 18 legacy + 7 deprecated human validation = 117 total), generated all figures, and wrote the manuscript.
 
 ## Competing Interests
 
@@ -852,7 +852,7 @@ If you use this framework, please cite:
 >   author  = {Zhang, Yuhan},
 >   year    = {2026},
 >   note    = {Reproducible pipeline: 18 methods, 72-step validation,
->              110 scripts. Submitted to Nature Communications.},
+>              117 scripts. Submitted to Nature Communications.},
 > }
 > ```
 
