@@ -34,7 +34,7 @@ Complete reproduction of the experimental pipeline: 18 embedding methods · 72-s
 - Cross-species rank consistency (yeast vs human, 11 methods): **ρ = +0.491** (*P* = 0.125), **Kendall W = 0.745** — strong concordance; top-2 set {Spectral, MDS} consistent across species, MDS #1 on human
 - Scale gradient Kendall W (500-4000 nodes, 4 methods): **W = 0.700** — rank stability across scales; PCA consistently #1 at all scales
 - Density-corrected GF (STRING threshold gradient, 4 methods): **W<sub>raw</sub> = 0.178 → W<sub>corrected</sub> = 0.70** (ΔW = 0.522) — density correction dramatically improves rank concordance
-- Human seed stability (10 seeds, 11 methods): **Kendall W = 0.675** — strong rank stability; Spectral mean rank 1.1 (std 0.3), consistently #1
+- Human seed stability (10 seeds, 11 methods): **Kendall W = 0.859** — high rank stability; Spectral mean rank 1.1 (std 0.3), #1 in 9/10 seeds. MDS #2 (mean rank 2.3, std 1.3). GraphSAGE most score-stable (CV=0.110)
 - Human IC-weighted GF (11 methods): **Spearman ρ = +0.991** (*P* < 0.001) — IC-weighting preserves rankings while correcting for DAG inflation
 - GAT collapse diagnosis (5 variants): all variants show persistent collapse — architectural, not optimization-related
 - **Geometric predictability** (Phase 1-3): Effective dimensionality (ρ=+0.905, p=0.002) and spectral alignment (ρ=+0.810, p=0.015) are independent predictors of G-F Score; combined model achieves **ρ=+0.929** (p=0.001), explaining 86% of inter-method variance
