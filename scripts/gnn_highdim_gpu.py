@@ -49,7 +49,7 @@ def get_device():
     if torch.cuda.is_available():
         device = torch.device("cuda")
         print(f"  GPU: {torch.cuda.get_device_name(0)}")
-        print(f"  Memory: {torch.cuda.get_device_properties(0).total_mem / 1e9:.1f} GB")
+        print(f"  Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB")
     else:
         device = torch.device("cpu")
         print("  WARNING: No GPU available, falling back to CPU")
