@@ -1,0 +1,123 @@
+{
+  "analysis": "GNN High-Dimensional GPU Training",
+  "device": "cuda",
+  "gpu_name": "NVIDIA A800-SXM4-80GB",
+  "methods": [
+    "VGAE",
+    "GraphSAGE",
+    "GAT",
+    "GIN"
+  ],
+  "dimensions": [
+    8,
+    16,
+    32,
+    64
+  ],
+  "epochs": 300,
+  "hidden_dim": 64,
+  "network": {
+    "nodes": 153,
+    "edges": 1669
+  },
+  "gf_interval": [
+    0.05,
+    0.422
+  ],
+  "results": {
+    "VGAE": {
+      "8": {
+        "gf_score_2d_slice": 0.077884,
+        "gf_score_pca_2d": 0.159877,
+        "elapsed_s": 41.9
+      },
+      "16": {
+        "gf_score_2d_slice": 0.105134,
+        "gf_score_pca_2d": 0.146838,
+        "elapsed_s": 23.2
+      },
+      "32": {
+        "gf_score_2d_slice": 0.095162,
+        "gf_score_pca_2d": 0.146254,
+        "elapsed_s": 31.0
+      },
+      "64": {
+        "gf_score_2d_slice": 0.088404,
+        "gf_score_pca_2d": 0.143966,
+        "elapsed_s": 30.1
+      }
+    },
+    "GraphSAGE": {
+      "8": {
+        "gf_score_2d_slice": 0.064123,
+        "gf_score_pca_2d": 0.147621,
+        "elapsed_s": 22.6
+      },
+      "16": {
+        "gf_score_2d_slice": 0.06182,
+        "gf_score_pca_2d": 0.145682,
+        "elapsed_s": 16.5
+      },
+      "32": {
+        "gf_score_2d_slice": 0.061922,
+        "gf_score_pca_2d": 0.145224,
+        "elapsed_s": 17.4
+      },
+      "64": {
+        "gf_score_2d_slice": 0.063151,
+        "gf_score_pca_2d": 0.142732,
+        "elapsed_s": 26.8
+      }
+    },
+    "GAT": {
+      "8": {
+        "gf_score_2d_slice": 0.062671,
+        "gf_score_pca_2d": 0.098117,
+        "elapsed_s": 23.6
+      },
+      "16": {
+        "gf_score_2d_slice": 0.061913,
+        "gf_score_pca_2d": 0.093992,
+        "elapsed_s": 16.0
+      },
+      "32": {
+        "gf_score_2d_slice": 0.064823,
+        "gf_score_pca_2d": 0.109097,
+        "elapsed_s": 37.2
+      },
+      "64": {
+        "gf_score_2d_slice": 0.061622,
+        "gf_score_pca_2d": 0.103939,
+        "elapsed_s": 17.3
+      }
+    },
+    "GIN": {
+      "8": {
+        "gf_score_2d_slice": 0.062913,
+        "gf_score_pca_2d": 0.063118,
+        "elapsed_s": 32.1
+      },
+      "16": {
+        "gf_score_2d_slice": 0.097398,
+        "gf_score_pca_2d": 0.093121,
+        "elapsed_s": 37.0
+      },
+      "32": {
+        "gf_score_2d_slice": 0.124572,
+        "gf_score_pca_2d": 0.124572,
+        "elapsed_s": 36.0
+      },
+      "64": {
+        "gf_score_2d_slice": 0.104769,
+        "gf_score_pca_2d": 0.106582,
+        "elapsed_s": 28.6
+      }
+    }
+  },
+  "existing_2d_scores": {
+    "GraphSAGE": 0.069,
+    "GAT": 0.0694,
+    "GIN": 0.1217
+  },
+  "total_time_s": 437.2
+}
