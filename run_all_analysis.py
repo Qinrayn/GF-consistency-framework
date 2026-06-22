@@ -965,6 +965,19 @@ def main():
         else:
             failed += 1
 
+    # Step 39b: Persistence Image Analysis (produces cross_species_three_way.json needed by Step 40)
+    if start_from <= 39 and not skip_extended:
+        print_header("Step 39b: Persistence Image Analysis")
+        persist_cmd = [sys.executable,
+                       str(Path(__file__).parent / "scripts" / "persistence_image_analysis.py")]
+        def run_persist():
+            import subprocess
+            subprocess.run(persist_cmd, check=True)
+        if run_step(run_persist, "persistence image analysis"):
+            completed += 1
+        else:
+            failed += 1
+
     # Step 40: E. coli K-12 Cross-Species Validation (4th species)
     if start_from <= 40 and not skip_extended:
         print_header("Step 40: E. coli K-12 Cross-Species Validation")
