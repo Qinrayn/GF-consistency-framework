@@ -4,6 +4,7 @@ gf_score_sensitivity.py
 Step 12: Sensitivity analysis of G-F Score to integration interval choice.
 Paper Section: 3.7
 """
+from __future__ import annotations
 
 import argparse
 import json

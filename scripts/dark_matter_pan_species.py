@@ -47,8 +47,8 @@ RESULTS = get_results_dir()
 FIGURES = get_figures_dir()
 EMB = get_embeddings_dir()
 
-RESULTS.mkdir(parents=True, exist_ok=True)
-FIGURES.mkdir(parents=True, exist_ok=True)
+# RESULTS.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
+# FIGURES.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
 
 KNN_SEARCH = 50
 MIN_NETWORK_DIST = 5
@@ -381,6 +381,8 @@ def mine_dark_matter(graph, coords, nodes, annotations):
 
 def run():
     t_start = time.time()
+    RESULTS.mkdir(parents=True, exist_ok=True)
+    FIGURES.mkdir(parents=True, exist_ok=True)
     print(BANNER)
     print("  Pan-Species Dark Matter Mining (Phase 3.1)")
     print(BANNER)

@@ -3,6 +3,7 @@ statistical_analysis.py
 Core statistical analyses: G-F Score comparison, Spearman correlation,
 Wilcoxon pairwise tests, bootstrap CIs, and permutation tests.
 """
+from __future__ import annotations
 
 import warnings
 from itertools import combinations

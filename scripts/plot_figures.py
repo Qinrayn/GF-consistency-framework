@@ -4,6 +4,7 @@ plot_figures.py
 Generate all paper figures from result JSON files.
 Figures 1-6 + supplementary figures.
 """
+from __future__ import annotations
 
 import argparse
 import json

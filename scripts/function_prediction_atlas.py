@@ -63,8 +63,8 @@ RESULTS = get_results_dir()
 FIGURES = get_figures_dir()
 EMB = get_embeddings_dir()
 
-RESULTS.mkdir(parents=True, exist_ok=True)
-FIGURES.mkdir(parents=True, exist_ok=True)
+# RESULTS.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
+# FIGURES.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
 
 NETWORK_FILE = DATA / "yeast_ppi_5936.edgelist"
 GAF_FILE = DATA / "gene_association.sgd.gaf.gz"
@@ -291,6 +291,8 @@ def run_loto(coords, nodes, graph, annotations, term_freq, method_name,
 def run():
     """Run the multi-ontology function prediction atlas."""
     t_start = time.time()
+    RESULTS.mkdir(parents=True, exist_ok=True)
+    FIGURES.mkdir(parents=True, exist_ok=True)
     print(BANNER)
     print("  Function Prediction Atlas: 3 Ontologies x Multi-Dimension")
     print(BANNER)
@@ -331,7 +333,8 @@ def run():
                 spectral_embeddings[dim] = (coords, emb_nodes)
                 print(f"  d={dim}: loaded existing ({coords.shape})")
                 continue
-            except Exception:
+            except Exception as e:
+                import logging; logging.warning(f"Exception in {__name__}: {e}")
                 pass
 
         coords, nodes = compute_spectral_embedding(G, dim)

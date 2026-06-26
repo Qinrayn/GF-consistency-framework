@@ -19,6 +19,7 @@ Output:
   - results/scale_gradient.json
   - figures/Fig18_scale_gradient.png
 """
+from __future__ import annotations
 
 import sys
 import json

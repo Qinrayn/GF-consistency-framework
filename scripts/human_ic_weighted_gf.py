@@ -29,6 +29,7 @@ Output
   results/human_ic_weighted_gf.json
   figures/Fig24_ic_weighted_gf.png
 """
+from __future__ import annotations
 
 import os
 import sys
@@ -219,7 +220,7 @@ def compute_gf_curve_dual(coords, node_labels, ic, r_values, seed=SEED):
                 partition = list(greedy_modularity_communities(G))
                 communities = [frozenset(c) for c in partition]
                 mod_val = nx.community.modularity(G, partition)
-            except Exception:
+            except Exception as e:
                 communities = [frozenset(c) for c in nx.connected_components(G)]
                 mod_val = 0.0
 

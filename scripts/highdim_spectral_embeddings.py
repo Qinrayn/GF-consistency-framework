@@ -13,6 +13,7 @@ Outputs:
     embeddings/mouse_spectral_d64_nodes.json
     results/highdim_spectral_embeddings.json (summary statistics)
 """
+from __future__ import annotations
 
 import sys
 import os

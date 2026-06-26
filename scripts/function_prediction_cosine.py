@@ -47,7 +47,7 @@ DATA = get_data_dir()
 RESULTS = get_results_dir()
 EMB = get_embeddings_dir()
 
-RESULTS.mkdir(parents=True, exist_ok=True)
+# RESULTS.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
 
 BANNER = "=" * 70
 
@@ -714,6 +714,7 @@ def _cast(val):
 # ============================================================
 
 def run():
+    RESULTS.mkdir(parents=True, exist_ok=True)
     print(BANNER)
     print("  Cosine Similarity Voting Baseline")
     print("  Protein Function Prediction: Euclidean KNN vs Cosine Voting")

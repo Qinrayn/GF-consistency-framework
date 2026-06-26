@@ -13,6 +13,7 @@ Output:
   - results/network_topology_comparison.json
   - figures/FigS1_topology_radar.png
 """
+from __future__ import annotations
 
 import sys
 import json
@@ -294,7 +295,7 @@ def compute_community_structure(G):
     """
     try:
         communities = list(nx.community.greedy_modularity_communities(G))
-    except Exception:
+    except Exception as e:
         communities = []
 
     if not communities:

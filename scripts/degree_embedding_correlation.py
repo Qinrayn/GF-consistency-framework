@@ -13,6 +13,8 @@ Hypothesis:
 
 Test: correlate each method's degree-embedding similarity with its DP null z-score.
 """
+from __future__ import annotations
+
 import json
 import sys
 import numpy as np
@@ -22,7 +24,7 @@ from scipy.stats import spearmanr
 from scipy.spatial.distance import cdist
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from utils import SEED, get_results_dir, get_data_dir, load_curated_network, TARGET_STD, rescale_coordinates
+from utils import SEED, set_seed, get_results_dir, get_data_dir, load_curated_network, TARGET_STD, rescale_coordinates
 
 RESULTS = get_results_dir()
 DATA = get_data_dir()
@@ -165,5 +167,5 @@ def main():
 
 
 if __name__ == "__main__":
-    np.random.seed(SEED)
+    set_seed(SEED)
     main()

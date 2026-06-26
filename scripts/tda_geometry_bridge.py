@@ -31,6 +31,7 @@ Outputs:
   - figures/Fig44_tda_bridge_correlations.png
   - figures/Fig45_three_factor_model.png
 """
+from __future__ import annotations
 
 import sys
 import json
@@ -97,7 +98,8 @@ def build_feature_matrix():
                 "top3_energy": prof.get("top3_energy", 0),
                 "modes_90pct": prof.get("n_modes_90pct", 0),
             }
-    except Exception:
+    except Exception as e:
+        import logging; logging.warning(f"Exception in {__name__}: {e}")
         pass
 
     # Effective dimensionality + effective rank (Phase 1, 4)
@@ -113,7 +115,8 @@ def build_feature_matrix():
                 "dist_compression": r.get("dist_compression", 0),
                 "fraction_close_pairs": r.get("fraction_close_pairs", 0),
             }
-    except Exception:
+    except Exception as e:
+        import logging; logging.warning(f"Exception in {__name__}: {e}")
         pass
 
     # Effective dimensionality from Phase 2
@@ -124,7 +127,8 @@ def build_feature_matrix():
             if m not in geom_features:
                 geom_features[m] = {}
             geom_features[m]["effective_dim"] = r.get("effective_dimensionality", 0)
-    except Exception:
+    except Exception as e:
+        import logging; logging.warning(f"Exception in {__name__}: {e}")
         pass
 
     # --- Assemble feature matrix ---

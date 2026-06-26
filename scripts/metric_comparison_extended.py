@@ -28,11 +28,11 @@ from matplotlib.gridspec import GridSpec
 from scipy import stats
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from utils import SEED, get_results_dir, get_figures_dir
+from utils import SEED, get_results_dir, get_figures_dir, BANNER
 
 RESULTS = get_results_dir()
 FIGURES = get_figures_dir()
-BANNER = "=" * 64
+# BANNER imported from utils
 
 
 def load_all_metrics():

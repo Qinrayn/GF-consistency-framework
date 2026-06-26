@@ -9,9 +9,9 @@ Modules (Steps 1-14: core pipeline)
 ------------------------------------
 utils                         Shared utilities (data loading, G-F computation)
 data_preprocessing            Step 1: Prepare data from raw STRING files
-embed_all                     Step 2: Compute 8 classical/NN embedding methods
+embed_all                     Step 2: Compute 8 classical/NN embedding methods (GNNs added in Step 15)
 compute_gf                    Step 3: G-F curves (200-point grid) and scores
-leiden_baseline               Step 4: Leiden community detection baseline
+leiden_baseline               Step 4: Community-detection baseline (4 algorithms; greedy-mod headline)
 robustness                    Step 5: Subset robustness (30 x 5 sizes)
 full_network                  Step 6: Full 5,936-node STRING validation
 geometric_analysis            Step 7: d_intra / d_inter geometric margins
@@ -65,31 +65,33 @@ human_seed_stability          Step 37: 10-seed subsample stability test (human 1
 human_ic_weighted_gf          Step 38: IC-weighted G-F Score on human PPI (11 methods)
 gat_collapse_diagnosis        Step 39: GAT embedding collapse root-cause analysis
 
-Deep analysis modules (Phase 1-6)
------------------------------------
-#   - deep_geometric_analysis: Multi-scale geometric fingerprint decomposition (Phase 1)
-#   - geometric_predictor: Cross-species geometric predictability model (Phase 2)
+Deep analysis modules (Phase 1-16)
+------------------------------------
+Active modules (importable, results reproducible):
 #   - spectral_alignment: Network-aware spectral alignment analysis (Phase 3)
-#   - gat_collapse_theory: Mathematical theory of GAT collapse (Phase 4)
-#   - human_spectral_alignment: Human network spectral alignment / two-factor transfer test (Phase 5A)
-#   - gat_dimension_sweep: GAT latent dimension sweep / causal disentanglement (Phase 5B)
-#   - gat_collapse_formal_proof: Formal proofs of GAT collapse: 3 theorems + corollary (Phase 6)
 #   - tda_geometry_bridge: TDA-geometry bridge — unified feature matrix, partial correlations, Betti transitions (Phase 7)
 #   - human_cross_network_validation: Cross-network validation on human PPI + bootstrap CIs for Phase 7 (Phase 8)
 #   - human_tda_full: Full human TDA analysis — 11-method persistent homology + three-factor validation (Phase 8B)
 #   - human_loo_sensitivity: Leave-one-out sensitivity — Spectral outlier reveals latent H1 signal (Phase 8C)
 #   - human_gf_unified: Unified human G-F Scores — eliminates community-detection + interval confounds (Phase 9)
-#   - mouse_data_prep: Mouse STRING PPI download + MGI GAF ID mapping (Phase 10A)
-#   - mouse_embeddings_full: Full-network mouse embeddings (11 methods, ~16K nodes) matching human pipeline (Phase 10B)
 #   - persistence_image_analysis: Persistence image TDA + three-species cross-species comparison (Phase 10C)
 #   - spectral_transferability: Spectral Quality Index (SQI) + SBM validation — explains two-factor model transferability (Phase 11)
-#   - biological_validation: GO BP enrichment + multi-seed panel + mixed-effects model (Phase 12)
 #   - function_prediction: Protein function prediction via LOTO-CV + GF Score correlation (Phase 13)
-#   - dimension_sweep: Spectral embedding dimension sweep d=2..64 (Phase 13b)
-#   - longrange_functional_links: Distance-stratified recovery + long-range discovery (Phase 14)
 #   - longrange_hybrid_fixed: Rank-based fallback hybrid predictor + rescue analysis (Phase 14b)
 #   - rescue_protein_analysis: Characterisation of embedding-rescued proteins — GO enrichment, network topology (Phase 15)
-#   - metric_comparison_extended: GF Score vs traditional metrics + permutation test + unique variance (Phase 16)
+
+Archived modules (results retained in results/; source moved to scripts/_legacy/):
+#   - deep_geometric_analysis: Multi-scale geometric fingerprint decomposition (Phase 1)        [ARCHIVED]
+#   - geometric_predictor: Cross-species geometric predictability model (Phase 2)               [ARCHIVED]
+#   - gat_collapse_theory: Mathematical theory of GAT collapse (Phase 4)                        [ARCHIVED]
+#   - gat_dimension_sweep: GAT latent dimension sweep / causal disentanglement (Phase 5B)       [ARCHIVED]
+#   - gat_collapse_formal_proof: Formal proofs of GAT collapse: 3 theorems + corollary (Phase 6)[ARCHIVED]
+#   - mouse_data_prep: Mouse STRING PPI download + MGI GAF ID mapping (Phase 10A)               [ARCHIVED]
+#   - mouse_embeddings_full: Full-network mouse embeddings (11 methods, ~16K nodes) (Phase 10B)[ARCHIVED]
+#   - biological_validation: GO BP enrichment + multi-seed panel + mixed-effects model (Phase 12)[ARCHIVED]
+#   - dimension_sweep: Spectral embedding dimension sweep d=2..64 (Phase 13b)                   [ARCHIVED]
+#   - longrange_functional_links: Distance-stratified recovery + long-range discovery (Phase 14)[ARCHIVED]
+#   - metric_comparison_extended: GF Score vs traditional metrics + permutation + unique variance(Phase 16) [ARCHIVED]
 
 Modules (Steps 40-45: submission-tier robustness experiments)
 ---------------------------------------------------------------
@@ -150,10 +152,11 @@ atlas_extension_512             Step 70: Atlas extension — MF/CC ontologies at
 ortholog_cross_validation       Step 71: Ortholog cross-validation — conserved function prediction across species
 dark_matter_pan_species         Step 72: Pan-species dark matter mining (44 high-confidence functional pairs across 5 species)
 
-Supplementary experiment modules
-----------------------------------
-multihead_gat_experiment        Multi-head GAT configuration sweep (1/4/8 heads, d=2-32)
-recalculate_rescue_stats        Recalculate rescue protein statistics
+Supplementary experiment modules (archived; results retained)
+-------------------------------------------------------------
+multihead_gat_experiment        Multi-head GAT configuration sweep (1/4/8 heads, d=2-32) [ARCHIVED]
+recalculate_rescue_stats        Recalculate rescue protein statistics             [ARCHIVED]
+robustness_analysis             Extended 30-subset convergence analysis           [ARCHIVED]
 
 Extension modules (v1.1+)
 --------------------------
@@ -161,9 +164,16 @@ config_loader                 YAML configuration loader and validator
 input_validator               Pre-flight input validation and error handling
 multispecies_loader           Multi-species dataset loader (yeast, human, ...)
 
-Support modules
----------------
-robustness_analysis           Extended 30-subset convergence analysis
+Audit and extension modules (2026-06)
+--------------------------------------
+multiple_comparison_correction  FDR correction for all Spearman correlation tests (P0-1)
+outlier_sensitivity_analysis    Human embedding outlier detection and sensitivity (P1-1)
+interval_sensitivity_analysis  Integration interval data-snooping risk assessment (P1-2)
+generate_manifest              Auto-generate results/MANIFEST.md for traceability (P1-5)
+embed_extended_methods         14 new embedding methods for n=25 statistical power
+extended_25method_correlation  25-method Spearman correlation + FDR (n=11->25 breakthrough)
+highdim_knn_gf                 kNN-GF Score: high-dimensional generalisation (Theorems 5-6)
 """
+from __future__ import annotations
 
 __version__ = "2.11.0"

@@ -19,54 +19,72 @@
   "random_baseline": 0.1348021239146226,
   "link_prediction": {
     "DM": {
-      "auroc_mean": 0.7377500918753743,
-      "auroc_std": 0.009413784884937704
+      "auroc_mean": 0.7263
     },
     "MDS": {
-      "auroc_mean": 0.8042822592394108,
-      "auroc_std": 0.013339864022526035
+      "auroc_mean": 0.9039
     },
     "Spectral": {
-      "auroc_mean": 0.8191868676737263,
-      "auroc_std": 0.007737572130333778
+      "auroc_mean": 0.8849
     },
     "DeepWalk": {
-      "auroc_mean": 0.5178516947870457,
-      "auroc_std": 0.023623312287808434
+      "auroc_mean": 0.4888
     },
     "Node2Vec": {
-      "auroc_mean": 0.5249122998002484,
-      "auroc_std": 0.024942271177025747
+      "auroc_mean": 0.4913
     },
     "VGAE": {
-      "auroc_mean": 0.4718174833372581,
-      "auroc_std": 0.008384802623731747
+      "auroc_mean": 0.4908
+    },
+    "VGAE-feat": {
+      "auroc_mean": 0.4664
+    },
+    "GraphSAGE": {
+      "auroc_mean": 0.5307
+    },
+    "GAT": {
+      "auroc_mean": 0.5335
+    },
+    "GIN": {
+      "auroc_mean": 0.4827
+    },
+    "PCA": {
+      "auroc_mean": 0.6781
     }
   },
   "downstream_knn": {
     "DM": {
-      "micro_f1_mean": 0.5127,
-      "micro_f1_std": 0.0553
+      "micro_f1_mean": 0.5126
     },
     "MDS": {
-      "micro_f1_mean": 0.6058,
-      "micro_f1_std": 0.0741
+      "micro_f1_mean": 0.6387
     },
     "Spectral": {
-      "micro_f1_mean": 0.6725,
-      "micro_f1_std": 0.0601
+      "micro_f1_mean": 0.6723
     },
     "DeepWalk": {
-      "micro_f1_mean": 0.1855,
-      "micro_f1_std": 0.0793
+      "micro_f1_mean": 0.1933
     },
     "Node2Vec": {
-      "micro_f1_mean": 0.1431,
-      "micro_f1_std": 0.0683
+      "micro_f1_mean": 0.1849
     },
     "VGAE": {
-      "micro_f1_mean": 0.2105,
-      "micro_f1_std": 0.0759
+      "micro_f1_mean": 0.2269
+    },
+    "VGAE-feat": {
+      "micro_f1_mean": 0.1681
+    },
+    "GraphSAGE": {
+      "micro_f1_mean": 0.1765
+    },
+    "GAT": {
+      "micro_f1_mean": 0.1597
+    },
+    "GIN": {
+      "micro_f1_mean": 0.2101
+    },
+    "PCA": {
+      "micro_f1_mean": 0.521
     }
   },
   "plateau_width_200pts": {
@@ -127,6 +145,26 @@
       "effective_threshold": 0.1154
     }
   },
+  "baseline_purity": 0.12777251445619123,
+  "baseline_algorithm": "greedy_modularity",
+  "baseline_by_algorithm": {
+    "greedy_modularity": {
+      "purity": 0.12777251445619123,
+      "n_communities": 3
+    },
+    "leiden": {
+      "purity": 0.17968645550852239,
+      "n_communities": 5
+    },
+    "louvain": {
+      "purity": 0.17968645550852239,
+      "n_communities": 5
+    },
+    "label_propagation": {
+      "purity": 0.181624585789273,
+      "n_communities": 3
+    }
+  },
   "leiden_baseline_purity": 0.17968645550852239,
   "geometric_margins": {
     "DM": {
@@ -170,11 +208,401 @@
       "gap": -0.0467753961088786
     }
   },
-  "spearman_rho_auroc_gf": 0.942857142857143,
+  "spearman_rho_auroc_gf": 0.591,
+  "link_prediction_source": "metric_comparison.json (11 methods, embedding-distance AUC)",
   "knn_n_nodes": 119,
   "knn_n_categories": 12,
+  "downstream_knn_source": "metric_comparison.json (11 methods)",
+  "spearman_rho_knn_gf": 0.609,
   "bonferroni_n_significant": 9,
   "bonferroni_n_significant_in_plateau": 0,
   "randomization_original_max_purity": 0.24679606677244728,
-  "randomization_shuffled_max_purity": 0.22974401874388603
+  "randomization_shuffled_max_purity": 0.22974401874388603,
+  "metric_comparison": {
+    "gf_vs_link_pred_auc": {
+      "spearman_rho": 0.591,
+      "p_value": 0.056
+    },
+    "gf_vs_knn_f1": {
+      "spearman_rho": 0.609,
+      "p_value": 0.047
+    },
+    "link_pred_auc_vs_knn_f1": {
+      "spearman_rho": 0.636,
+      "p_value": 0.035
+    }
+  },
+  "semantic_purity_scores": {
+    "DM": {
+      "gf_standard": 0.1552,
+      "gf_ic_weighted": 0.204,
+      "gf_semantic": 0.0948
+    },
+    "MDS": {
+      "gf_standard": 0.1522,
+      "gf_ic_weighted": 0.1965,
+      "gf_semantic": 0.0748
+    },
+    "Spectral": {
+      "gf_standard": 0.1633,
+      "gf_ic_weighted": 0.1902,
+      "gf_semantic": 0.0794
+    },
+    "DeepWalk": {
+      "gf_standard": 0.1225,
+      "gf_ic_weighted": 0.1402,
+      "gf_semantic": 0.1159
+    },
+    "Node2Vec": {
+      "gf_standard": 0.1512,
+      "gf_ic_weighted": 0.1824,
+      "gf_semantic": 0.1566
+    },
+    "VGAE": {
+      "gf_standard": 0.0657,
+      "gf_ic_weighted": 0.0513,
+      "gf_semantic": 0.0384
+    },
+    "VGAE-feat": {
+      "gf_standard": 0.1238,
+      "gf_ic_weighted": 0.1459,
+      "gf_semantic": 0.1265
+    },
+    "PCA": {
+      "gf_standard": 0.1375,
+      "gf_ic_weighted": 0.1636,
+      "gf_semantic": 0.0663
+    },
+    "GraphSAGE": {
+      "gf_standard": 0.069,
+      "gf_ic_weighted": 0.0577,
+      "gf_semantic": 0.0375
+    },
+    "GAT": {
+      "gf_standard": 0.0694,
+      "gf_ic_weighted": 0.0588,
+      "gf_semantic": 0.0368
+    },
+    "GIN": {
+      "gf_standard": 0.1217,
+      "gf_ic_weighted": 0.1455,
+      "gf_semantic": 0.0909
+    }
+  },
+  "semantic_purity_correlations": {
+    "standard_vs_ic_weighted": {
+      "spearman_rho": 0.9636,
+      "p_value": 0.0,
+      "n": 11
+    },
+    "standard_vs_semantic": {
+      "spearman_rho": 0.4909,
+      "p_value": 0.1252,
+      "n": 11
+    },
+    "ic_weighted_vs_semantic": {
+      "spearman_rho": 0.4818,
+      "p_value": 0.1334,
+      "n": 11
+    },
+    "propagated_standard_vs_ic": {
+      "spearman_rho": 0.6091,
+      "p_value": 0.0467,
+      "n": 11
+    },
+    "propagated_standard_vs_semantic": {
+      "spearman_rho": 0.5182,
+      "p_value": 0.1025,
+      "n": 11
+    }
+  },
+  "dag_inflation": {
+    "original_mean_terms_per_gene": 3.79,
+    "propagated_mean_terms_per_gene": 20.84,
+    "expansion_factor": 5.51,
+    "standard_purity_original": 0.0617,
+    "standard_purity_propagated": 0.048,
+    "ic_weighted_purity_original": 0.0458,
+    "ic_weighted_purity_propagated": 0.0098,
+    "inflation_ratio_std": 0.7769,
+    "inflation_ratio_ic": 0.2145
+  },
+  "cross_species_consistency": {
+    "spearman": {
+      "rho": 0.4909090909090909,
+      "p_value": 0.12520440713849548,
+      "n": 11
+    },
+    "kendalls_w": 0.7454545454545455,
+    "n_shared_methods": 11
+  },
+  "scale_gradient": {
+    "kendalls_w": 0.7,
+    "scales": [
+      500,
+      1000,
+      2000,
+      4000
+    ],
+    "methods": [
+      "Spectral",
+      "DeepWalk",
+      "Node2Vec",
+      "PCA"
+    ]
+  },
+  "bootstrap_stability": {
+    "DM": {
+      "ci_95": [
+        0.133551831938248,
+        0.18247950031899496
+      ],
+      "cv": 0.0776607644307605
+    },
+    "DeepWalk": {
+      "ci_95": [
+        0.07964141555170376,
+        0.13743639017405718
+      ],
+      "cv": 0.15160798504675763
+    },
+    "GAT": {
+      "ci_95": [
+        0.06057463438171142,
+        0.08629166394764225
+      ],
+      "cv": 0.08830607299801846
+    },
+    "GIN": {
+      "ci_95": [
+        0.10113468332202498,
+        0.1490986987189753
+      ],
+      "cv": 0.10694817784878208
+    },
+    "GraphSAGE": {
+      "ci_95": [
+        0.060964829422649636,
+        0.0851317526234445
+      ],
+      "cv": 0.08638738240249258
+    },
+    "MDS": {
+      "ci_95": [
+        0.1454563970771865,
+        0.17939141299174713
+      ],
+      "cv": 0.054666393504087536
+    },
+    "Node2Vec": {
+      "ci_95": [
+        0.08543190964126868,
+        0.15782380694116246
+      ],
+      "cv": 0.1583682701945061
+    },
+    "PCA": {
+      "ci_95": [
+        0.11406050078117085,
+        0.1563240321841878
+      ],
+      "cv": 0.08445890136885913
+    },
+    "Spectral": {
+      "ci_95": [
+        0.15087413069813074,
+        0.1973335980417171
+      ],
+      "cv": 0.06964885235062344
+    },
+    "VGAE": {
+      "ci_95": [
+        0.06088399757288088,
+        0.08361435242295187
+      ],
+      "cv": 0.0803111015631373
+    },
+    "VGAE-feat": {
+      "ci_95": [
+        0.07436059643981845,
+        0.1372756315162382
+      ],
+      "cv": 0.19714994383550902
+    }
+  },
+  "bootstrap_adjacent_significance": [
+    {
+      "higher": "Spectral",
+      "lower": "MDS",
+      "p_higher_wins": 0.849,
+      "significant_0.95": false
+    },
+    {
+      "higher": "MDS",
+      "lower": "DM",
+      "p_higher_wins": 0.664,
+      "significant_0.95": false
+    },
+    {
+      "higher": "DM",
+      "lower": "PCA",
+      "p_higher_wins": 0.993,
+      "significant_0.95": true
+    },
+    {
+      "higher": "PCA",
+      "lower": "Node2Vec",
+      "p_higher_wins": 0.595,
+      "significant_0.95": false
+    },
+    {
+      "higher": "Node2Vec",
+      "lower": "GIN",
+      "p_higher_wins": 0.592,
+      "significant_0.95": false
+    },
+    {
+      "higher": "GIN",
+      "lower": "DeepWalk",
+      "p_higher_wins": 0.881,
+      "significant_0.95": false
+    },
+    {
+      "higher": "DeepWalk",
+      "lower": "VGAE-feat",
+      "p_higher_wins": 0.607,
+      "significant_0.95": false
+    },
+    {
+      "higher": "VGAE-feat",
+      "lower": "GAT",
+      "p_higher_wins": 0.963,
+      "significant_0.95": true
+    },
+    {
+      "higher": "GAT",
+      "lower": "GraphSAGE",
+      "p_higher_wins": 0.55,
+      "significant_0.95": false
+    },
+    {
+      "higher": "GraphSAGE",
+      "lower": "VGAE",
+      "p_higher_wins": 0.618,
+      "significant_0.95": false
+    }
+  ],
+  "human_gf_scores_extended": {
+    "scores": {
+      "DM": 0.06872719036326762,
+      "MDS": 0.4487247152276833,
+      "Spectral": 0.4063111880699595,
+      "DeepWalk": 0.1362485358312125,
+      "Node2Vec": 0.1925176393187605,
+      "VGAE": 0.013488095495757338,
+      "PCA": 0.10758418996858748,
+      "VGAE-feat": 0.09400590082666212,
+      "GraphSAGE": 0.18040196389929436,
+      "GAT": 0.010501460262225813,
+      "GIN": 0.11524553587440459
+    },
+    "ranking": [
+      [
+        "MDS",
+        0.4487247152276833
+      ],
+      [
+        "Spectral",
+        0.4063111880699595
+      ],
+      [
+        "Node2Vec",
+        0.1925176393187605
+      ],
+      [
+        "GraphSAGE",
+        0.18040196389929436
+      ],
+      [
+        "DeepWalk",
+        0.1362485358312125
+      ],
+      [
+        "GIN",
+        0.11524553587440459
+      ],
+      [
+        "PCA",
+        0.10758418996858748
+      ],
+      [
+        "VGAE-feat",
+        0.09400590082666212
+      ],
+      [
+        "DM",
+        0.06872719036326762
+      ],
+      [
+        "VGAE",
+        0.013488095495757338
+      ],
+      [
+        "GAT",
+        0.010501460262225813
+      ]
+    ],
+    "n_methods": 11,
+    "unified_interval": [
+      0.1712121212121212,
+      0.30252525252525253
+    ]
+  },
+  "multimodal_anchoring": {
+    "kendalls_w_threshold": 0.07777777777777778,
+    "kendalls_w_channel": null,
+    "thresholds_tested": [
+      400,
+      500,
+      600,
+      700,
+      800,
+      900
+    ],
+    "n_valid_thresholds": 6
+  },
+  "hyperparameter_sensitivity": {
+    "n_points": {
+      "Spectral": 0.0073989350201386925,
+      "DeepWalk": 0.010774892268945525,
+      "Node2Vec": 0.0046022808978510325,
+      "PCA": 0.008251401746489107
+    },
+    "resolution": {
+      "Spectral": 0.167063598854368,
+      "DeepWalk": 0.22333170980389122,
+      "Node2Vec": 0.1933816373060386,
+      "PCA": 0.18841632938158737
+    },
+    "dimensions": {
+      "Spectral": 0.0,
+      "DeepWalk": 0.0,
+      "Node2Vec": 0.0,
+      "PCA": 0.07882982268461601
+    },
+    "walk_length": {
+      "DeepWalk": 0.019930272818158023,
+      "Node2Vec": 0.030783603809274786
+    },
+    "window_size": {
+      "DeepWalk": 0.023779747317406754,
+      "Node2Vec": 0.03890726916709722
+    },
+    "n2v_pq": {
+      "best": 0.1353152387835818,
+      "worst": 0.089858787484463,
+      "range": 0.04545645129911878,
+      "cv": 0.09319013159062552
+    }
+  }
 }

@@ -29,6 +29,7 @@ Generates:  results/mouse_gf_analysis.json
             results/phase10_report.md
             figures/Fig51-54
 """
+from __future__ import annotations
 
 import json
 import sys
@@ -56,7 +57,9 @@ from utils import (
     ALL_METHODS, SEED, TARGET_STD,
     R_MIN, R_MAX, GF_R_MIN, GF_R_MAX,
     get_data_dir, get_results_dir, get_figures_dir,
+    compute_gf_score,
     rescale_coordinates,
+    BANNER,
 )
 
 DATA = get_data_dir()
@@ -66,7 +69,7 @@ FIGURES = get_figures_dir()
 SUBSAMPLE = 2000
 N_POINTS = 25
 MAX_EDGES = 150_000
-BANNER = "=" * 70
+# BANNER imported from utils
 
 
 # ============================================================
@@ -153,7 +156,7 @@ def compute_gf_curve(coords, nodes, go_map, r_vals):
         else:
             try:
                 communities = list(greedy_modularity_communities(G))
-            except Exception:
+            except Exception as e:
                 communities = [frozenset(c) for c in nx.connected_components(G)]
 
         comm_purities = []
@@ -171,15 +174,6 @@ def compute_gf_curve(coords, nodes, go_map, r_vals):
             purities[ri] = float(np.mean(comm_purities))
 
     return purities
-
-
-def compute_gf_score(purities, r_vals, r_min, r_max):
-    mask = (r_vals >= r_min) & (r_vals <= r_max)
-    if mask.sum() < 2:
-        return 0.0
-    r_sub = r_vals[mask]
-    p_sub = purities[mask]
-    return float(trapezoid(p_sub, r_sub) / (r_max - r_min))
 
 
 # ============================================================
@@ -283,7 +277,7 @@ def compute_spectral_alignment(coords, nodes):
     try:
         n_eig = min(20, n - 2)
         eigvals, eigvecs = eigsh(csr_matrix(L_norm), k=n_eig, which="SM")
-    except Exception:
+    except Exception as e:
         eigvals, eigvecs = np.linalg.eigh(L_norm)
         eigvals = eigvals[:20]
         eigvecs = eigvecs[:, :20]
@@ -355,7 +349,7 @@ def run():
         t0 = time.time()
         purities = compute_gf_curve(coords, nodes, mouse_go, r_vals)
         print()
-        gf = compute_gf_score(purities, r_vals, GF_R_MIN, GF_R_MAX)
+        gf = compute_gf_score(r_vals, purities, GF_R_MIN, GF_R_MAX)
         mouse_results[m] = {
             "purities": purities.tolist(),
             "gf_score": round(gf, 6),

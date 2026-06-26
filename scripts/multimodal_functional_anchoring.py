@@ -26,6 +26,7 @@ Output
   results/multimodal_anchoring.json
   figures/Fig20_multimodal_anchoring.png
 """
+from __future__ import annotations
 
 import sys
 import os

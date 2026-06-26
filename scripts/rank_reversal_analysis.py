@@ -20,6 +20,7 @@ Output files
   figures/FigS2_embedding_distance_distributions.png
   figures/FigS3_node2vec_pq_heatmap.png
 """
+from __future__ import annotations
 
 import sys
 import json
@@ -141,7 +142,7 @@ def get_community_assignments(G, nodes_list):
     """
     try:
         communities = list(nx.community.greedy_modularity_communities(G))
-    except Exception:
+    except Exception as e:
         communities = [frozenset(G.nodes())]
 
     assignments = {}

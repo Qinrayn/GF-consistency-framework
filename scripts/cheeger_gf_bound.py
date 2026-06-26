@@ -15,6 +15,7 @@ Mathematical basis:
 
 Output: results/cheeger_gf_bound.json
 """
+from __future__ import annotations
 
 import sys
 import json
@@ -39,7 +40,7 @@ PROJECT_ROOT = SCRIPT_DIR.parent
 sys.path.insert(0, str(SCRIPT_DIR))
 
 from utils import (
-    SEED, get_data_dir, get_results_dir,
+    SEED, set_seed, get_data_dir, get_results_dir,
     load_curated_network, GF_R_MIN, GF_R_MAX,
 )
 
@@ -57,7 +58,7 @@ K_EIGENVALUES = 50          # number of Laplacian eigenvalues to compute
 STRING_MIN_SCORE = 700      # minimum STRING confidence score
 N_CV_FOLDS = 5              # leave-one-out is n_species choose 1
 
-np.random.seed(SEED)
+set_seed(SEED)
 
 
 # ===================================================================
@@ -321,13 +322,13 @@ def compute_laplacian_spectrum(G, k=K_EIGENVALUES):
         eigenvalues, eigenvectors = eigsh(
             L.astype(np.float64), k=k_actual, which="SM", tol=1e-6
         )
-    except Exception:
+    except Exception as e:
         # Fallback: shift-invert mode for better convergence
         try:
             eigenvalues, eigenvectors = eigsh(
                 L.astype(np.float64), k=k_actual, sigma=0.0, which="LM", tol=1e-6
             )
-        except Exception:
+        except Exception as e:
             # Last resort: dense eigensolver for small networks
             L_dense = L.toarray()
             all_eigvals, all_eigvecs = np.linalg.eigh(L_dense)

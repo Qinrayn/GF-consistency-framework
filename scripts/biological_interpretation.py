@@ -31,6 +31,7 @@ CLI usage
     python biological_interpretation.py --method Spectral
     python biological_interpretation.py --level-thresholds 0.3,0.5,0.7
 """
+from __future__ import annotations
 
 import sys
 import json
@@ -775,7 +776,8 @@ def _draw_convex_hull(ax, points, color, alpha_fill=0.12, alpha_edge=0.55,
             )
             ax.add_patch(poly)
             return
-        except Exception:
+        except Exception as e:
+            import logging; logging.warning(f"Exception in {__name__}: {e}")
             pass
 
     # Fallback for degenerate geometry

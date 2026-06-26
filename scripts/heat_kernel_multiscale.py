@@ -23,6 +23,7 @@ Output
 ------
 results/heat_kernel_multiscale.json
 """
+from __future__ import annotations
 
 import sys
 import json
@@ -57,7 +58,7 @@ from utils import (
 
 DATA = get_data_dir()
 RESULTS = get_results_dir()
-RESULTS.mkdir(parents=True, exist_ok=True)
+# RESULTS.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
 
 # ------------------------------------------------------------------
 # Constants
@@ -221,7 +222,7 @@ def compute_spectrum_and_embeddings(L_norm, nodes, go_map):
 
     try:
         eigenvalues, eigenvectors = eigsh(L_norm, k=k, which="SM", tol=1e-8)
-    except Exception:
+    except Exception as e:
         # Fallback: shift-invert
         eigenvalues, eigenvectors = eigsh(L_norm, k=k, sigma=0, which="LM")
 
@@ -580,6 +581,7 @@ def cross_scale_consistency(eigenvalues, eigenvectors, t_opt,
 def main():
     np.random.seed(SEED)
 
+    RESULTS.mkdir(parents=True, exist_ok=True)
     print(BANNER)
     print("  Heat Kernel Multi-Scale Analysis")
     print("  Yeast PPI Network")

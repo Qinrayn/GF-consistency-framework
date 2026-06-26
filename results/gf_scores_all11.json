@@ -1,0 +1,22 @@
+{
+  "description": "Canonical merged G-F Scores for all 11 methods (8 classical + 3 GNN). Source of truth for the README Key Results table and all cross-method correlations.",
+  "unified_interval": [
+    0.05,
+    0.422
+  ],
+  "random_baseline": 0.1348021239146226,
+  "community_algorithm": "greedy_modularity_communities",
+  "scores": {
+    "DM": 0.15518241816105013,
+    "MDS": 0.152155432912679,
+    "Spectral": 0.16332658400038436,
+    "DeepWalk": 0.1225356361238432,
+    "Node2Vec": 0.1511706117501923,
+    "VGAE": 0.06567018452344808,
+    "PCA": 0.13753060668252517,
+    "VGAE-feat": 0.12384417529354565,
+    "GraphSAGE": 0.069,
+    "GAT": 0.0694,
+    "GIN": 0.1217
+  }
+}

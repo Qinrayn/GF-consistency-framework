@@ -3,6 +3,8 @@
 Expand the GF Score vs downstream task correlation from n=11 to n=15
 by computing link prediction AUC and k-NN F1 for UMAP-adj, UMAP, TSNE, TSNE-sp.
 """
+from __future__ import annotations
+
 import json
 import sys
 import numpy as np

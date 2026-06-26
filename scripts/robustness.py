@@ -10,6 +10,7 @@ Step 5: Robustness subset analysis.
 Backward compatible: running with no arguments produces the same output
 files as the original 10-subset x 150-node version, plus new extended files.
 """
+from __future__ import annotations
 
 import sys
 import json

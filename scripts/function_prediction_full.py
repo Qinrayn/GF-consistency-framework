@@ -47,7 +47,7 @@ DATA = get_data_dir()
 RESULTS = get_results_dir()
 EMB = get_embeddings_dir()
 
-RESULTS.mkdir(parents=True, exist_ok=True)
+# RESULTS.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
 
 # All 11 methods
 ALL_METHODS = [
@@ -582,6 +582,7 @@ def compute_correlation(method_mrr, gf_scores):
 # ============================================================
 
 def main():
+    RESULTS.mkdir(parents=True, exist_ok=True)
     print(BANNER)
     print("Full 11-Method LOTO-CV Function Prediction Analysis")
     print(BANNER)

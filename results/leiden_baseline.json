@@ -1,18 +1,35 @@
 {
-  "leiden_baseline_purity": 0.17968645550852239,
-  "n_communities": 5,
+  "baseline_purity": 0.12777251445619123,
+  "baseline_algorithm": "greedy_modularity",
+  "purity_note": "mean over communities of (most-common GO term count / total GO terms). Identical formula to utils._community_purity used in compute_gf_curve.",
+  "n_communities": 3,
   "community_purities": [
-    0.12371134020618557,
-    0.12389380530973451,
-    0.1773049645390071,
-    0.23214285714285715,
-    0.2413793103448276
+    0.061946902654867256,
+    0.1388888888888889,
+    0.18248175182481752
   ],
   "community_sizes": [
-    30,
-    30,
-    35,
-    29,
-    29
-  ]
+    64,
+    55,
+    34
+  ],
+  "per_algorithm": {
+    "greedy_modularity": {
+      "purity": 0.12777251445619123,
+      "n_communities": 3
+    },
+    "leiden": {
+      "purity": 0.17968645550852239,
+      "n_communities": 5
+    },
+    "louvain": {
+      "purity": 0.17968645550852239,
+      "n_communities": 5
+    },
+    "label_propagation": {
+      "purity": 0.181624585789273,
+      "n_communities": 3
+    }
+  },
+  "leiden_baseline_purity": 0.17968645550852239
 }

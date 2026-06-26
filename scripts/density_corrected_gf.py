@@ -33,6 +33,7 @@ Output
   results/density_corrected_gf.json
   figures/Fig22_density_corrected.png
 """
+from __future__ import annotations
 
 import sys
 import json

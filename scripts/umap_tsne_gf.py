@@ -12,6 +12,7 @@ Two evaluation modes:
 Usage:
     python scripts/umap_tsne_gf.py
 """
+from __future__ import annotations
 
 import sys
 import json

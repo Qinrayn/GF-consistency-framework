@@ -36,7 +36,7 @@ from function_prediction import (
 DATA = get_data_dir()
 RESULTS = get_results_dir()
 EMB = get_embeddings_dir()
-RESULTS.mkdir(parents=True, exist_ok=True)
+# RESULTS.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
 
 NETWORK_FILE = DATA / "yeast_ppi_5936.edgelist"
 GAF_FILE = DATA / "gene_association.sgd.gaf.gz"
@@ -145,6 +145,7 @@ def run_loto_quick(coords, nodes, graph, annotations, dim, aspect):
 
 def run():
     t_start = time.time()
+    RESULTS.mkdir(parents=True, exist_ok=True)
     print(BANNER)
     print("  Atlas Extension: MF/CC at d=512, d=1024")
     print(BANNER)

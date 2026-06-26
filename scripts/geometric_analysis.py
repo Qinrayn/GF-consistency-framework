@@ -4,6 +4,7 @@ geometric_analysis.py
 Step 7: Geometric analysis - d_intra and d_inter (Proposition 1).
 Expected: DM d_inter - d_intra = -1.640, VGAE gap also large.
 """
+from __future__ import annotations
 
 import sys
 import json

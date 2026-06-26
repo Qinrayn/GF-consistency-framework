@@ -6,6 +6,7 @@ Filter: GO terms appearing >= 3 times -> 119 nodes, 12 classes.
 5-fold CV, 5-NN, micro-F1.
 Expected: DM ≈ 0.505, MDS ≈ 0.587
 """
+from __future__ import annotations
 
 import sys
 import json

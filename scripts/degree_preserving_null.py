@@ -40,6 +40,7 @@ Uses greedy_modularity_communities to match the main pipeline (utils.py),
 ensuring methodological consistency between the null model and the primary
 GF Score analysis.
 """
+from __future__ import annotations
 
 import sys
 import json

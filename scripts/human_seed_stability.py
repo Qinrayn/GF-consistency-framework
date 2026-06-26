@@ -23,6 +23,7 @@ Output
   results/human_seed_stability.json
   figures/Fig23_seed_stability.png
 """
+from __future__ import annotations
 
 import os
 import sys
@@ -133,7 +134,7 @@ def compute_gf_curve_fast(coords, node_labels, r_values, seed=SEED):
                 partition = list(greedy_modularity_communities(G))
                 communities = [frozenset(c) for c in partition]
                 mod_val = nx.community.modularity(G, partition)
-            except Exception:
+            except Exception as e:
                 communities = [frozenset(c) for c in nx.connected_components(G)]
                 mod_val = 0.0
 

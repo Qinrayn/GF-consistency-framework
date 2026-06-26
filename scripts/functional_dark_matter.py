@@ -47,6 +47,7 @@ from utils import (
     SEED,
     get_data_dir, get_results_dir, get_figures_dir, get_embeddings_dir,
     STRING_MIN_SCORE,
+    BANNER,
 )
 from function_prediction import (
     build_alias_mapping,
@@ -63,14 +64,14 @@ RESULTS = get_results_dir()
 FIGURES = get_figures_dir()
 EMB = get_embeddings_dir()
 
-RESULTS.mkdir(parents=True, exist_ok=True)
-FIGURES.mkdir(parents=True, exist_ok=True)
+# RESULTS.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
+# FIGURES.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
 
 NETWORK_FILE = DATA / "yeast_ppi_5936.edgelist"
 STRING_FULL_FILE = DATA / "4932.protein.links.full.v11.5.txt.gz"
 GO_OBO_FILE = DATA / "go.obo"
 
-BANNER = "=" * 64
+# BANNER imported from utils
 
 # Dark matter search parameters
 MIN_NETWORK_DIST = 5       # minimum hops in PPI network
@@ -583,11 +584,20 @@ def plot_dark_matter_overview(dm_pairs, characterisation, graph):
 # Main
 # ============================================================
 
-def run():
-    """Run the full dark matter mining pipeline."""
+def run(dim=2):
+    """Run the full dark matter mining pipeline.
+
+    Parameters
+    ----------
+    dim : int
+        Embedding dimensionality. dim=2 uses Spectral_full.npy (original),
+        dim=64 uses yeast_spectral_d64.npy (high-dimensional validation).
+    """
     t_start = time.time()
+    RESULTS.mkdir(parents=True, exist_ok=True)
+    FIGURES.mkdir(parents=True, exist_ok=True)
     print(BANNER)
-    print("  Phase 19: Functional Dark Matter Mining")
+    print(f"  Phase 19: Functional Dark Matter Mining (dim={dim})")
     print(BANNER)
 
     np.random.seed(SEED)
@@ -599,9 +609,16 @@ def run():
     print(f"  Network: {G.number_of_nodes()} nodes, {G.number_of_edges()} edges")
 
     # ---- Load Spectral embedding ----
-    print(f"\n[2/7] Loading Spectral embedding (full network) ...")
-    emb_file = EMB / "Spectral_full.npy"
-    nodes_file = EMB / "Spectral_full_nodes.json"
+    if dim == 2:
+        emb_file = EMB / "Spectral_full.npy"
+        nodes_file = EMB / "Spectral_full_nodes.json"
+    elif dim == 64:
+        emb_file = EMB / "yeast_spectral_d64.npy"
+        nodes_file = EMB / "yeast_spectral_d64_nodes.json"
+    else:
+        print(f"  ERROR: dim={dim} not supported. Use dim=2 or dim=64.")
+        return
+    print(f"\n[2/7] Loading Spectral embedding (dim={dim}, full network) ...")
     if not emb_file.exists():
         print(f"  ERROR: {emb_file} not found")
         return
@@ -720,9 +737,10 @@ def run():
         "all_pairs_count": len(scored_pairs),
     }
 
-    out_file = RESULTS / "functional_dark_matter.json"
+    suffix = "" if dim == 2 else f"_d{dim}"
+    out_file = RESULTS / f"functional_dark_matter{suffix}.json"
     with open(out_file, "w", encoding="utf-8") as f:
-        json.dump(output, f, indent=2)
+        json.dump(output, f, indent=2, default=str)
     print(f"\nSaved results to {out_file}")
 
     # ---- Plot ----
@@ -738,4 +756,9 @@ def run():
 # ============================================================
 
 if __name__ == "__main__":
-    run()
+    import argparse
+    parser = argparse.ArgumentParser(description="Functional Dark Matter Mining")
+    parser.add_argument("--dim", type=int, default=2,
+                        help="Embedding dimensionality (2 or 64)")
+    args = parser.parse_args()
+    run(dim=args.dim)

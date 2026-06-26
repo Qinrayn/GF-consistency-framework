@@ -6,6 +6,7 @@ Input: node pair Hadamard product of embeddings.
 Expected ranking: Spectral > MDS > DM > DeepWalk ~ Node2Vec > VGAE
 Observed Spearman rho(AUROC, G-F Score) ~ +0.943 (positive: higher G-F score ~ higher AUROC)
 """
+from __future__ import annotations
 
 import sys
 import json

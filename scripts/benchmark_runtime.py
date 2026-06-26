@@ -17,6 +17,7 @@ Usage:
     python benchmark_runtime.py --n-repeat 5                 # 5 repetitions
     python benchmark_runtime.py --sampling-points 50,100,200 # Custom grid
 """
+from __future__ import annotations
 
 import sys
 import json

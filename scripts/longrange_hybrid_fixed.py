@@ -28,6 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from utils import (
     SEED,
     get_data_dir, get_results_dir, get_figures_dir, get_embeddings_dir,
+    BANNER, METHOD_COLORS,
 )
 from function_prediction import (
     build_alias_mapping,
@@ -42,13 +43,10 @@ RESULTS = get_results_dir()
 FIGURES = get_figures_dir()
 EMB = get_embeddings_dir()
 NETWORK_FILE = DATA / "yeast_ppi_5936.edgelist"
-BANNER = "=" * 64
+# BANNER imported from utils
 
 FULL_METHODS = ["DM", "MDS", "Spectral", "Node2Vec", "VGAE"]
-METHOD_COLORS = {
-    "DM": "#08306b", "MDS": "#08519c", "Spectral": "#3182bd",
-    "Node2Vec": "#fb6a4a", "VGAE": "#67000d",
-}
+# METHOD_COLORS imported from utils
 
 
 # ============================================================

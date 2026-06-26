@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed — Comprehensive Code Audit (2026-06-19)
+### Fixed — Full Code Audit (2026-06-19)
 
 **Scope:** 8-way parallel audit of all 530 files / 110 scripts. 32 files modified (+146/−83 lines). All Python files compile. 6 affected pipeline steps re-run with consistent results.
 

@@ -1,0 +1,859 @@
+{
+  "description": "Phase 19: Functional Dark Matter Mining",
+  "parameters": {
+    "min_network_dist": 5,
+    "max_emb_rank": 50,
+    "string_low_min": 400,
+    "string_low_max": 699,
+    "embedding_method": "Spectral",
+    "network_nodes": 5936,
+    "annotated_proteins": 4643
+  },
+  "summary": {
+    "total_dm_pairs": 35,
+    "high_confidence_pairs": 3,
+    "medium_confidence_pairs": 6,
+    "string_low_conf_supported": 0,
+    "multiple_shared_terms": 3,
+    "disconnected_pairs": 0,
+    "unique_dm_proteins": 47
+  },
+  "characterisation": {
+    "n_dm_proteins": 47,
+    "n_dm_pairs": 35,
+    "go_enrichment": [
+      {
+        "term": "GO:0045944",
+        "term_name": "positive regulation of transcription by RNA polymerase II",
+        "n_dm_pairs": 13,
+        "n_background": 215,
+        "fold_enrichment": 173.9910441829416
+      },
+      {
+        "term": "GO:0051321",
+        "term_name": "meiotic cell cycle",
+        "n_dm_pairs": 5,
+        "n_background": 48,
+        "fold_enrichment": 1364.7926798378926
+      },
+      {
+        "term": "GO:0031505",
+        "term_name": "fungal-type cell wall organization",
+        "n_dm_pairs": 4,
+        "n_background": 67,
+        "fold_enrichment": 557.0280028429282
+      },
+      {
+        "term": "GO:0007124",
+        "term_name": "pseudohyphal growth",
+        "n_dm_pairs": 2,
+        "n_background": 53,
+        "fold_enrichment": 446.8755131660792
+      },
+      {
+        "term": "GO:0000122",
+        "term_name": "negative regulation of transcription by RNA polymerase II",
+        "n_dm_pairs": 2,
+        "n_background": 138,
+        "fold_enrichment": 65.14275437880643
+      },
+      {
+        "term": "GO:0030476",
+        "term_name": "ascospore wall assembly",
+        "n_dm_pairs": 2,
+        "n_background": 49,
+        "fold_enrichment": 523.634742468416
+      },
+      {
+        "term": "GO:0055085",
+        "term_name": "transmembrane transport",
+        "n_dm_pairs": 2,
+        "n_background": 53,
+        "fold_enrichment": 446.8755131660792
+      },
+      {
+        "term": "GO:0036267",
+        "term_name": "invasive filamentous growth",
+        "n_dm_pairs": 1,
+        "n_background": 6,
+        "fold_enrichment": 1000.0
+      },
+      {
+        "term": "GO:0045454",
+        "term_name": "cell redox homeostasis",
+        "n_dm_pairs": 1,
+        "n_background": 21,
+        "fold_enrichment": 1000.0
+      },
+      {
+        "term": "GO:0030163",
+        "term_name": "protein catabolic process",
+        "n_dm_pairs": 1,
+        "n_background": 21,
+        "fold_enrichment": 1000.0
+      },
+      {
+        "term": "GO:0007005",
+        "term_name": "mitochondrion organization",
+        "n_dm_pairs": 1,
+        "n_background": 39,
+        "fold_enrichment": 415.5158280316175
+      },
+      {
+        "term": "GO:0034599",
+        "term_name": "cellular response to oxidative stress",
+        "n_dm_pairs": 1,
+        "n_background": 83,
+        "fold_enrichment": 90.47817471978507
+      },
+      {
+        "term": "GO:0032543",
+        "term_name": "mitochondrial translation",
+        "n_dm_pairs": 1,
+        "n_background": 30,
+        "fold_enrichment": 707.8097208538587
+      },
+      {
+        "term": "GO:0006457",
+        "term_name": "protein folding",
+        "n_dm_pairs": 1,
+        "n_background": 64,
+        "fold_enrichment": 152.7267998866213
+      },
+      {
+        "term": "GO:0008645",
+        "term_name": "hexose transmembrane transport",
+        "n_dm_pairs": 1,
+        "n_background": 10,
+        "fold_enrichment": 1000.0
+      }
+    ],
+    "topology_comparison": {
+      "dm_median_degree": 3.0,
+      "non_dm_median_degree": 21.0,
+      "n_dm_proteins": 47,
+      "mannwhitney_U": 27494.5,
+      "p_value": 2.575669577505362e-21
+    }
+  },
+  "top_100_catalog": [
+    {
+      "protein_a": "YLR313C",
+      "protein_b": "YOR315W",
+      "emb_dist": 0.014884293803475954,
+      "emb_rank": 6,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0007124",
+        "GO:0036267"
+      ],
+      "n_shared": 2,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 8,
+      "go_term_names": [
+        "pseudohyphal growth",
+        "invasive filamentous growth"
+      ]
+    },
+    {
+      "protein_a": "YOR229W",
+      "protein_b": "YNL199C",
+      "emb_dist": 0.012030750584787772,
+      "emb_rank": 25,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0000122",
+        "GO:0045944"
+      ],
+      "n_shared": 2,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 6,
+      "go_term_names": [
+        "negative regulation of transcription by RNA polymerase II",
+        "positive regulation of transcription by RNA polymerase II"
+      ]
+    },
+    {
+      "protein_a": "YGL162W",
+      "protein_b": "YNL199C",
+      "emb_dist": 0.015173385701434098,
+      "emb_rank": 11,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0000122",
+        "GO:0045944"
+      ],
+      "n_shared": 2,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 6,
+      "go_term_names": [
+        "negative regulation of transcription by RNA polymerase II",
+        "positive regulation of transcription by RNA polymerase II"
+      ]
+    },
+    {
+      "protein_a": "YDR506C",
+      "protein_b": "YGL036W",
+      "emb_dist": 0.014652187585855863,
+      "emb_rank": 1,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0051321"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 5,
+      "go_term_names": [
+        "meiotic cell cycle"
+      ]
+    },
+    {
+      "protein_a": "YDR506C",
+      "protein_b": "YOR229W",
+      "emb_dist": 0.01605798618040414,
+      "emb_rank": 10,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0051321"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 5,
+      "go_term_names": [
+        "meiotic cell cycle"
+      ]
+    },
+    {
+      "protein_a": "YDR522C",
+      "protein_b": "YCL048W",
+      "emb_dist": 0.0238516035753418,
+      "emb_rank": 16,
+      "network_dist": 6,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0030476"
+      ],
+      "n_shared": 1,
+      "string_score": 156,
+      "string_low_conf": false,
+      "channels": {
+        "homology": 901,
+        "coexpression": 157
+      },
+      "same_component": true,
+      "confidence_score": 5,
+      "go_term_names": [
+        "ascospore wall assembly"
+      ]
+    },
+    {
+      "protein_a": "YLR121C",
+      "protein_b": "YJL174W",
+      "emb_dist": 0.019703427515521343,
+      "emb_rank": 13,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0031505"
+      ],
+      "n_shared": 1,
+      "string_score": 313,
+      "string_low_conf": false,
+      "channels": {
+        "textmining": 314
+      },
+      "same_component": true,
+      "confidence_score": 4,
+      "go_term_names": [
+        "fungal-type cell wall organization"
+      ]
+    },
+    {
+      "protein_a": "YIR039C",
+      "protein_b": "YJL174W",
+      "emb_dist": 0.021565020039913705,
+      "emb_rank": 49,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0031505"
+      ],
+      "n_shared": 1,
+      "string_score": 317,
+      "string_low_conf": false,
+      "channels": {
+        "textmining": 317
+      },
+      "same_component": true,
+      "confidence_score": 4,
+      "go_term_names": [
+        "fungal-type cell wall organization"
+      ]
+    },
+    {
+      "protein_a": "YOL132W",
+      "protein_b": "YDR522C",
+      "emb_dist": 0.03892497591950951,
+      "emb_rank": 17,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0030476"
+      ],
+      "n_shared": 1,
+      "string_score": 218,
+      "string_low_conf": false,
+      "channels": {
+        "coexpression": 143,
+        "coexpression_transferred": 84,
+        "textmining_transferred": 84
+      },
+      "same_component": true,
+      "confidence_score": 4,
+      "go_term_names": [
+        "ascospore wall assembly"
+      ]
+    },
+    {
+      "protein_a": "YJL174W",
+      "protein_b": "YDR528W",
+      "emb_dist": 0.012608930618075019,
+      "emb_rank": 34,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0031505"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "fungal-type cell wall organization"
+      ]
+    },
+    {
+      "protein_a": "YML050W",
+      "protein_b": "YLR390W",
+      "emb_dist": 0.014017799812577222,
+      "emb_rank": 44,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0045454"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "cell redox homeostasis"
+      ]
+    },
+    {
+      "protein_a": "YNL295W",
+      "protein_b": "YJR062C",
+      "emb_dist": 0.014951810638105318,
+      "emb_rank": 24,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0030163"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "protein catabolic process"
+      ]
+    },
+    {
+      "protein_a": "YLR083C",
+      "protein_b": "YOR315W",
+      "emb_dist": 0.015447253763333888,
+      "emb_rank": 30,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0007124"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "pseudohyphal growth"
+      ]
+    },
+    {
+      "protein_a": "YFL052W",
+      "protein_b": "YMR182C",
+      "emb_dist": 0.015978917412327924,
+      "emb_rank": 14,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ]
+    },
+    {
+      "protein_a": "YFL052W",
+      "protein_b": "YLR019W",
+      "emb_dist": 0.01714931380839778,
+      "emb_rank": 33,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ]
+    },
+    {
+      "protein_a": "YPR083W",
+      "protein_b": "YDR512C",
+      "emb_dist": 0.01721258512497576,
+      "emb_rank": 50,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0007005"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "mitochondrion organization"
+      ]
+    },
+    {
+      "protein_a": "YFL052W",
+      "protein_b": "YNL199C",
+      "emb_dist": 0.017578191907943002,
+      "emb_rank": 46,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ]
+    },
+    {
+      "protein_a": "YPL026C",
+      "protein_b": "YNL199C",
+      "emb_dist": 0.017871783545224708,
+      "emb_rank": 39,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ]
+    },
+    {
+      "protein_a": "YPL026C",
+      "protein_b": "YDR223W",
+      "emb_dist": 0.018014072713221724,
+      "emb_rank": 47,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ]
+    },
+    {
+      "protein_a": "YJR100C",
+      "protein_b": "YEL052W",
+      "emb_dist": 0.02002883197292415,
+      "emb_rank": 18,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0034599"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "cellular response to oxidative stress"
+      ]
+    },
+    {
+      "protein_a": "YLR281C",
+      "protein_b": "YLR139C",
+      "emb_dist": 0.02813688949376197,
+      "emb_rank": 37,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0032543"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "mitochondrial translation"
+      ]
+    },
+    {
+      "protein_a": "YDL212W",
+      "protein_b": "YJL146W",
+      "emb_dist": 0.02827957254444557,
+      "emb_rank": 27,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0006457"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "protein folding"
+      ]
+    },
+    {
+      "protein_a": "YLL052C",
+      "protein_b": "YFL050C",
+      "emb_dist": 0.03894193312351741,
+      "emb_rank": 46,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0055085"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "transmembrane transport"
+      ]
+    },
+    {
+      "protein_a": "YPL130W",
+      "protein_b": "YJL146W",
+      "emb_dist": 0.05520535232948785,
+      "emb_rank": 22,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0051321"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "meiotic cell cycle"
+      ]
+    },
+    {
+      "protein_a": "YPL130W",
+      "protein_b": "YGL036W",
+      "emb_dist": 0.056914708630497975,
+      "emb_rank": 26,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0051321"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "meiotic cell cycle"
+      ]
+    },
+    {
+      "protein_a": "YPL130W",
+      "protein_b": "YDR506C",
+      "emb_dist": 0.05797317277419986,
+      "emb_rank": 37,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0051321"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "meiotic cell cycle"
+      ]
+    },
+    {
+      "protein_a": "YER033C",
+      "protein_b": "YLR121C",
+      "emb_dist": 0.06464834694371169,
+      "emb_rank": 43,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0031505"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "fungal-type cell wall organization"
+      ]
+    },
+    {
+      "protein_a": "YIR013C",
+      "protein_b": "YJL184W",
+      "emb_dist": 0.06834049789775201,
+      "emb_rank": 14,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ]
+    },
+    {
+      "protein_a": "YEL004W",
+      "protein_b": "YBR294W",
+      "emb_dist": 0.0698560532725918,
+      "emb_rank": 31,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0055085"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "transmembrane transport"
+      ]
+    },
+    {
+      "protein_a": "YIR013C",
+      "protein_b": "YKR095W-A",
+      "emb_dist": 0.0724746324628879,
+      "emb_rank": 17,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ]
+    },
+    {
+      "protein_a": "YIR013C",
+      "protein_b": "YML036W",
+      "emb_dist": 0.07587005443707513,
+      "emb_rank": 29,
+      "network_dist": 6,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ]
+    },
+    {
+      "protein_a": "YIR013C",
+      "protein_b": "YKR038C",
+      "emb_dist": 0.07627134902938733,
+      "emb_rank": 31,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ]
+    },
+    {
+      "protein_a": "YIR013C",
+      "protein_b": "YOR363C",
+      "emb_dist": 0.07700041088535858,
+      "emb_rank": 32,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ]
+    },
+    {
+      "protein_a": "YIR013C",
+      "protein_b": "YGR262C",
+      "emb_dist": 0.07739865195067647,
+      "emb_rank": 33,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0045944"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "positive regulation of transcription by RNA polymerase II"
+      ]
+    },
+    {
+      "protein_a": "YDL245C",
+      "protein_b": "YJL214W",
+      "emb_dist": 0.09196646325129941,
+      "emb_rank": 36,
+      "network_dist": 5,
+      "network_disconnected": false,
+      "shared_go_terms": [
+        "GO:0008645"
+      ],
+      "n_shared": 1,
+      "string_score": 0,
+      "string_low_conf": false,
+      "channels": {},
+      "same_component": true,
+      "confidence_score": 3,
+      "go_term_names": [
+        "hexose transmembrane transport"
+      ]
+    }
+  ],
+  "all_pairs_count": 35
+}

@@ -1,0 +1,442 @@
+{
+  "description": "P1-1: Outlier sensitivity analysis for human embeddings",
+  "outlier_node_searched": "9606.ENSP00000334051",
+  "outlier_found_in_current_embeddings": true,
+  "outlier_report_source": "human_validation/human_embed_all.py (DEPRECATED)",
+  "current_embedding_source": "scripts/human_embed_extended.py",
+  "conclusion": "The outlier node ENSP00000334051 is absent from all current human embeddings. The outlier_report.txt was from a deprecated script. Current embeddings have no nodes exceeding 10 sigma deviation.",
+  "per_method": [
+    {
+      "method": "DM",
+      "n_nodes": 15882,
+      "coords_shape": [
+        15882,
+        2
+      ],
+      "outlier_present": true,
+      "outlier_node": "9606.ENSP00000334051",
+      "outlier_coord": [
+        -1.2070880607464765,
+        1.229395219304291
+      ],
+      "max_deviation_sigma": 8.060007609541456,
+      "max_deviation_node": "9606.ENSP00000311221",
+      "max_deviation_axis": "y",
+      "max_deviation_coord": [
+        0.19934117557200134,
+        -2.4330138099517487
+      ],
+      "n_nodes_above_3sigma": 444,
+      "n_nodes_above_5sigma": 30,
+      "n_nodes_above_10sigma": 0,
+      "n_nodes_above_50sigma": 0,
+      "n_nodes_above_100sigma": 0,
+      "coord_stats": {
+        "x_mean": 0.039964912673104154,
+        "y_mean": -0.017320702531855196,
+        "x_std": 0.29754158670387854,
+        "y_std": 0.2997135020766222,
+        "x_range": [
+          -1.6450388314835618,
+          0.69497161846819
+        ],
+        "y_range": [
+          -2.4330138099517487,
+          1.229395219304291
+        ]
+      }
+    },
+    {
+      "method": "MDS",
+      "n_nodes": 15882,
+      "coords_shape": [
+        15882,
+        2
+      ],
+      "outlier_present": true,
+      "outlier_node": "9606.ENSP00000334051",
+      "outlier_coord": [
+        0.45744948993330237,
+        0.3846282043676933
+      ],
+      "max_deviation_sigma": 9.384545352268251,
+      "max_deviation_node": "9606.ENSP00000381541",
+      "max_deviation_axis": "y",
+      "max_deviation_coord": [
+        -1.9801935183234882,
+        2.6195361054324504
+      ],
+      "n_nodes_above_3sigma": 102,
+      "n_nodes_above_5sigma": 45,
+      "n_nodes_above_10sigma": 0,
+      "n_nodes_above_50sigma": 0,
+      "n_nodes_above_100sigma": 0,
+      "coord_stats": {
+        "x_mean": -3.413435983657373e-17,
+        "y_mean": -6.747530377278884e-17,
+        "x_std": 0.3195070887404506,
+        "y_std": 0.2791329795000998,
+        "x_range": [
+          -1.9801935183234882,
+          0.9319791834544876
+        ],
+        "y_range": [
+          -0.8682457953848209,
+          2.6195361054324504
+        ]
+      }
+    },
+    {
+      "method": "SPECTRAL",
+      "n_nodes": 15882,
+      "coords_shape": [
+        15882,
+        2
+      ],
+      "outlier_present": true,
+      "outlier_node": "9606.ENSP00000334051",
+      "outlier_coord": [
+        0.02578538094583567,
+        -0.008229543185889978
+      ],
+      "max_deviation_sigma": 46.83149061508305,
+      "max_deviation_node": "9606.ENSP00000398559",
+      "max_deviation_axis": "y",
+      "max_deviation_coord": [
+        0.020503931833669976,
+        14.053396222393992
+      ],
+      "n_nodes_above_3sigma": 101,
+      "n_nodes_above_5sigma": 92,
+      "n_nodes_above_10sigma": 64,
+      "n_nodes_above_50sigma": 0,
+      "n_nodes_above_100sigma": 0,
+      "coord_stats": {
+        "x_mean": -0.011760981805853542,
+        "y_mean": 0.004631752510314991,
+        "x_std": 0.29979056987261776,
+        "y_std": 0.29998542188958177,
+        "x_range": [
+          -6.826551092141289,
+          0.05856078379857109
+        ],
+        "y_range": [
+          -0.015780185770715976,
+          14.053396222393992
+        ]
+      }
+    },
+    {
+      "method": "DEEPWALK",
+      "n_nodes": 15881,
+      "coords_shape": [
+        15881,
+        2
+      ],
+      "outlier_present": false,
+      "outlier_node": null,
+      "max_deviation_sigma": 63.97701718810074,
+      "max_deviation_node": "9606.ENSP00000248150",
+      "max_deviation_axis": "x",
+      "max_deviation_coord": [
+        -9.236070458116378,
+        -0.19586047317364144
+      ],
+      "n_nodes_above_3sigma": 593,
+      "n_nodes_above_5sigma": 282,
+      "n_nodes_above_10sigma": 28,
+      "n_nodes_above_50sigma": 1,
+      "n_nodes_above_100sigma": 0,
+      "coord_stats": {
+        "x_mean": -0.0329613363047602,
+        "y_mean": 0.17956637967353056,
+        "x_std": 0.143850237574429,
+        "y_std": 0.3697608607198803,
+        "x_range": [
+          -9.236070458116378,
+          -4.042648395970661e-08
+        ],
+        "y_range": [
+          -0.19586047317364144,
+          5.643023760012147
+        ]
+      }
+    },
+    {
+      "method": "NODE2VEC",
+      "n_nodes": 15881,
+      "coords_shape": [
+        15881,
+        2
+      ],
+      "outlier_present": false,
+      "outlier_node": null,
+      "max_deviation_sigma": 55.82159027285358,
+      "max_deviation_node": "9606.ENSP00000248150",
+      "max_deviation_axis": "x",
+      "max_deviation_coord": [
+        -7.372954040144522,
+        0.19366982710718045
+      ],
+      "n_nodes_above_3sigma": 539,
+      "n_nodes_above_5sigma": 311,
+      "n_nodes_above_10sigma": 41,
+      "n_nodes_above_50sigma": 1,
+      "n_nodes_above_100sigma": 0,
+      "coord_stats": {
+        "x_mean": -0.023500283495973887,
+        "y_mean": 0.15790788309715204,
+        "x_std": 0.1316596987066246,
+        "y_std": 0.3823758128898067,
+        "x_range": [
+          -7.372954040144522,
+          -6.442732059105868e-11
+        ],
+        "y_range": [
+          -0.09379445082724902,
+          6.035547890318068
+        ]
+      }
+    },
+    {
+      "method": "VGAE",
+      "n_nodes": 15882,
+      "coords_shape": [
+        15882,
+        2
+      ],
+      "outlier_present": true,
+      "outlier_node": "9606.ENSP00000334051",
+      "outlier_coord": [
+        -3.5235021114349365,
+        -4.100647449493408
+      ],
+      "max_deviation_sigma": 12.785931063104597,
+      "max_deviation_node": "9606.ENSP00000334051",
+      "max_deviation_axis": "y",
+      "max_deviation_coord": [
+        -3.5235021114349365,
+        -4.100647449493408
+      ],
+      "n_nodes_above_3sigma": 424,
+      "n_nodes_above_5sigma": 76,
+      "n_nodes_above_10sigma": 2,
+      "n_nodes_above_50sigma": 0,
+      "n_nodes_above_100sigma": 0,
+      "coord_stats": {
+        "x_mean": 0.0025506910703551825,
+        "y_mean": -0.03461387618354641,
+        "x_std": 0.2796069796699331,
+        "y_std": 0.3180084073065989,
+        "x_range": [
+          -3.5235021114349365,
+          0.40774837136268616
+        ],
+        "y_range": [
+          -4.100647449493408,
+          0.4342416822910309
+        ]
+      }
+    },
+    {
+      "method": "VGAE-FEAT",
+      "n_nodes": 15882,
+      "coords_shape": [
+        15882,
+        2
+      ],
+      "outlier_present": true,
+      "outlier_node": "9606.ENSP00000334051",
+      "outlier_coord": [
+        7.31676721572876,
+        -1.7399934530258179
+      ],
+      "max_deviation_sigma": 18.50949012417775,
+      "max_deviation_node": "9606.ENSP00000334051",
+      "max_deviation_axis": "x",
+      "max_deviation_coord": [
+        7.31676721572876,
+        -1.7399934530258179
+      ],
+      "n_nodes_above_3sigma": 406,
+      "n_nodes_above_5sigma": 81,
+      "n_nodes_above_10sigma": 3,
+      "n_nodes_above_50sigma": 0,
+      "n_nodes_above_100sigma": 0,
+      "coord_stats": {
+        "x_mean": -0.06188926853677439,
+        "y_mean": -0.1867978940224859,
+        "x_std": 0.3986418013010133,
+        "y_std": 0.1152548094281663,
+        "x_range": [
+          -0.7684943079948425,
+          7.31676721572876
+        ],
+        "y_range": [
+          -1.7399934530258179,
+          0.06171458587050438
+        ]
+      }
+    },
+    {
+      "method": "PCA",
+      "n_nodes": 15882,
+      "coords_shape": [
+        15882,
+        2
+      ],
+      "outlier_present": true,
+      "outlier_node": "9606.ENSP00000334051",
+      "outlier_coord": [
+        3.176208328824925,
+        -1.9920674299243746
+      ],
+      "max_deviation_sigma": 17.03593249449129,
+      "max_deviation_node": "9606.ENSP00000269305",
+      "max_deviation_axis": "x",
+      "max_deviation_coord": [
+        3.3255466812241536,
+        -3.5709607222768294
+      ],
+      "n_nodes_above_3sigma": 746,
+      "n_nodes_above_5sigma": 227,
+      "n_nodes_above_10sigma": 5,
+      "n_nodes_above_50sigma": 0,
+      "n_nodes_above_100sigma": 0,
+      "coord_stats": {
+        "x_mean": -5.465019012264181e-15,
+        "y_mean": 8.147423605243778e-15,
+        "x_std": 0.19520778697024668,
+        "y_std": 0.3766880936612926,
+        "x_range": [
+          -0.998223827059255,
+          3.3255466812241536
+        ],
+        "y_range": [
+          -3.8391827122300484,
+          0.274465309736447
+        ]
+      }
+    },
+    {
+      "method": "GRAPHSAGE",
+      "n_nodes": 15882,
+      "coords_shape": [
+        15882,
+        2
+      ],
+      "outlier_present": true,
+      "outlier_node": "9606.ENSP00000334051",
+      "outlier_coord": [
+        2.054039716720581,
+        -0.39888307452201843
+      ],
+      "max_deviation_sigma": 17.812137475309157,
+      "max_deviation_node": "9606.ENSP00000334051",
+      "max_deviation_axis": "x",
+      "max_deviation_coord": [
+        2.054039716720581,
+        -0.39888307452201843
+      ],
+      "n_nodes_above_3sigma": 258,
+      "n_nodes_above_5sigma": 14,
+      "n_nodes_above_10sigma": 1,
+      "n_nodes_above_50sigma": 0,
+      "n_nodes_above_100sigma": 0,
+      "coord_stats": {
+        "x_mean": -0.5972241428101207,
+        "y_mean": -0.11972496041138676,
+        "x_std": 0.14884591269328754,
+        "y_std": 0.20938523252491473,
+        "x_range": [
+          -1.7170002460479736,
+          2.054039716720581
+        ],
+        "y_range": [
+          -1.663084864616394,
+          0.7927339673042297
+        ]
+      }
+    },
+    {
+      "method": "GAT",
+      "n_nodes": 15882,
+      "coords_shape": [
+        15882,
+        2
+      ],
+      "outlier_present": true,
+      "outlier_node": "9606.ENSP00000334051",
+      "outlier_coord": [
+        -0.3856993615627289,
+        0.24854996800422668
+      ],
+      "max_deviation_sigma": 9.01208871263769,
+      "max_deviation_node": "9606.ENSP00000492905",
+      "max_deviation_axis": "y",
+      "max_deviation_coord": [
+        -0.378567636013031,
+        0.2435525804758072
+      ],
+      "n_nodes_above_3sigma": 809,
+      "n_nodes_above_5sigma": 90,
+      "n_nodes_above_10sigma": 0,
+      "n_nodes_above_50sigma": 0,
+      "n_nodes_above_100sigma": 0,
+      "coord_stats": {
+        "x_mean": -0.3025446681357604,
+        "y_mean": 0.2966384781514453,
+        "x_std": 0.021332750291167317,
+        "y_std": 0.005890520984463404,
+        "x_range": [
+          -0.3856993615627289,
+          -0.19491231441497803
+        ],
+        "y_range": [
+          0.2435525804758072,
+          0.31417927145957947
+        ]
+      }
+    },
+    {
+      "method": "GIN",
+      "n_nodes": 15882,
+      "coords_shape": [
+        15882,
+        2
+      ],
+      "outlier_present": true,
+      "outlier_node": "9606.ENSP00000334051",
+      "outlier_coord": [
+        -3.32249116897583,
+        0.8662795424461365
+      ],
+      "max_deviation_sigma": 11.462630012231726,
+      "max_deviation_node": "9606.ENSP00000334051",
+      "max_deviation_axis": "x",
+      "max_deviation_coord": [
+        -3.32249116897583,
+        0.8662795424461365
+      ],
+      "n_nodes_above_3sigma": 169,
+      "n_nodes_above_5sigma": 15,
+      "n_nodes_above_10sigma": 1,
+      "n_nodes_above_50sigma": 0,
+      "n_nodes_above_100sigma": 0,
+      "coord_stats": {
+        "x_mean": 0.06576615823036329,
+        "y_mean": 0.0406650085369377,
+        "x_std": 0.2955916158499924,
+        "y_std": 0.3038265746504416,
+        "x_range": [
+          -3.32249116897583,
+          2.4303832054138184
+        ],
+        "y_range": [
+          -1.1032716035842896,
+          1.9451526403427124
+        ]
+      }
+    }
+  ]
+}

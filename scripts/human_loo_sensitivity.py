@@ -10,6 +10,7 @@ Depends on: results/human_tda_full.json
 Generates:  results/human_loo_sensitivity.json
             figures/Fig49_loo_sensitivity.png
 """
+from __future__ import annotations
 
 import json
 import sys

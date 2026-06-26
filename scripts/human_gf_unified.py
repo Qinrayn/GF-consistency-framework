@@ -15,6 +15,7 @@ Depends on: data/human_*_embedding.json, data/human_go_annotations.json
 Generates:  results/human_gf_unified.json
             figures/Fig50_unified_human_comparison.png
 """
+from __future__ import annotations
 
 import json
 import sys
@@ -41,7 +42,9 @@ from utils import (
     R_MIN, R_MAX,
     GF_R_MIN, GF_R_MAX,
     get_data_dir, get_results_dir, get_figures_dir,
+    compute_gf_score,
     rescale_coordinates,
+    BANNER,
 )
 
 DATA = get_data_dir()
@@ -51,7 +54,7 @@ FIGURES = get_figures_dir()
 SUBSAMPLE = 2000
 N_POINTS = 25            # Coarse grid for tractable computation (25 sufficient for trapezoid)
 MAX_EDGES = 150_000      # Fallback to connected_components above this (greedy_mod is O(n^2 log n))
-BANNER = "=" * 70
+# BANNER imported from utils
 
 
 # ============================================================
@@ -141,7 +144,7 @@ def compute_gf_curve_greedy(coords, nodes, go_map, r_vals):
         else:
             try:
                 communities = list(greedy_modularity_communities(G))
-            except Exception:
+            except Exception as e:
                 communities = [frozenset(c) for c in nx.connected_components(G)]
 
         comm_purities = []
@@ -160,17 +163,6 @@ def compute_gf_curve_greedy(coords, nodes, go_map, r_vals):
             purities[ri] = float(np.mean(comm_purities))
 
     return purities
-
-
-def compute_gf_score(purities, r_vals, r_min, r_max):
-    """Compute G-F Score over [r_min, r_max] via trapezoidal integration."""
-    mask = (r_vals >= r_min) & (r_vals <= r_max)
-    if mask.sum() < 2:
-        return 0.0
-    r_sub = r_vals[mask]
-    p_sub = purities[mask]
-    integral = trapezoid(p_sub, r_sub)
-    return float(integral / (r_max - r_min))
 
 
 # ============================================================
@@ -222,8 +214,8 @@ def run():
         print()  # end progress dots
 
         # Compute scores on both intervals
-        gf_yeast = compute_gf_score(purities, r_vals, GF_R_MIN, GF_R_MAX)
-        gf_human = compute_gf_score(purities, r_vals, 0.282, 0.297)
+        gf_yeast = compute_gf_score(r_vals, purities, GF_R_MIN, GF_R_MAX)
+        gf_human = compute_gf_score(r_vals, purities, 0.282, 0.297)
 
         all_results[method] = {
             "purities": purities.tolist(),

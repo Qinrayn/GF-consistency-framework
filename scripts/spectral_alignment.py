@@ -27,6 +27,7 @@ Note on terminology:
   ratio ("effective rank").  Both measure how evenly the embedding
   uses its dimensions, but they are computed from different spectra.
 """
+from __future__ import annotations
 
 import sys
 import json

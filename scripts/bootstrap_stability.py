@@ -19,6 +19,7 @@ Output:
   - results/bootstrap_stability.json
   - figures/Fig19_bootstrap_stability.png
 """
+from __future__ import annotations
 
 import sys
 import json
@@ -96,7 +97,7 @@ def compute_gf_curve_greedy(coords, nodes, go_map, r_vals):
                 try:
                     communities = list(greedy_modularity_communities(G_r))
                     mod_val = nx.community.modularity(G_r, communities)
-                except Exception:
+                except Exception as e:
                     communities = [frozenset(c) for c in nx.connected_components(G_r)]
                     mod_val = 0.0
             _cache[ne] = (communities, mod_val)
@@ -214,7 +215,8 @@ def main():
                 )
                 gf = compute_gf_score(r_vals, purities, GF_R_MIN, GF_R_MAX)
                 boot_scores[method].append(float(gf))
-            except Exception:
+            except Exception as e:
+                import logging; logging.warning(f"Exception in {__name__}: {e}")
                 pass
 
         if (b + 1) % 50 == 0 or b == 0:

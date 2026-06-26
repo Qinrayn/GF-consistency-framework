@@ -6,6 +6,7 @@ Step 1: Prepare all data files from raw STRING data.
 - Generate curated_153_ppi.edgelist (curated subgraph)
 - Generate 10 random 150-node subset edgelists
 """
+from __future__ import annotations
 
 import sys
 import json

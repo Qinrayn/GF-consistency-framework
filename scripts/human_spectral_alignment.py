@@ -19,6 +19,7 @@ Outputs:
   - figures/Fig39_human_spectral_decomposition.png
   - figures/Fig40_human_alignment_summary.png
 """
+from __future__ import annotations
 
 import sys
 import json
@@ -519,7 +520,7 @@ def main():
                 "alignment_score": prof.get("alignment_score", 0),
                 "top3_energy": prof.get("top3_energy", 0),
             }
-    except Exception:
+    except Exception as e:
         print("  WARNING: Could not load yeast Phase 3 results")
     
     all_profiles = {}

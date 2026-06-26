@@ -65,7 +65,7 @@ from utils import (
 # ============================================================
 
 RESULTS = get_results_dir()
-RESULTS.mkdir(parents=True, exist_ok=True)
+# RESULTS.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
 
 logger = setup_logging("position_encoding_comparison")
 
@@ -384,6 +384,7 @@ def main():
     t0 = time.time()
     np.random.seed(SEED)
 
+    RESULTS.mkdir(parents=True, exist_ok=True)
     print(BANNER)
     print("  Position Encoding Comparison -- Graph Transformer PE Benchmark")
     print(BANNER)

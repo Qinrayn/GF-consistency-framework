@@ -11,6 +11,7 @@ With A800 GPU, training at d=64 takes seconds instead of hours.
 Outputs:
   results/gnn_highdim_gpu.json
 """
+from __future__ import annotations
 
 import json
 import os

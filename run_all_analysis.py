@@ -9,7 +9,7 @@ This script orchestrates the complete analysis pipeline:
 1.  Data preprocessing
 2.  Embedding computation (8 classical + 3 GNN methods)
 3.  G-F curve computation (200-point grid)
-4.  Leiden baseline
+4.  Community-detection baseline (4 algorithms)
 5.  Robustness analysis (30 subsets x 5 size levels)
 6.  Full network validation (5,936 nodes)
 7.  Geometric analysis
@@ -169,11 +169,17 @@ def generate_final_summary(results_dir):
         if "plateau_widths" in gnn_data:
             summary["plateau_width_200pts"].update(gnn_data["plateau_widths"])
 
-    # 2. Leiden baseline
+    # 2. Community-detection baseline (greedy_modularity headline + Leiden/Louvain/label-prop)
     leiden_file = results_dir / "leiden_baseline.json"
     if leiden_file.exists():
         with open(leiden_file, encoding="utf-8") as f:
             data = json.load(f)
+        # Apples-to-apples baseline: same algorithm the G-F pipeline uses.
+        summary["baseline_purity"] = data.get("baseline_purity")
+        summary["baseline_algorithm"] = data.get("baseline_algorithm", "greedy_modularity")
+        if "per_algorithm" in data:
+            summary["baseline_by_algorithm"] = data["per_algorithm"]
+        # Backward-compatible alias (Leiden value).
         summary["leiden_baseline_purity"] = data.get("leiden_baseline_purity", None)
 
     # 3. Geometric analysis
@@ -191,6 +197,8 @@ def generate_final_summary(results_dir):
                 }
 
     # 4. Link prediction
+    #    Priority: metric_comparison.json (11 methods, Step 27) >
+    #              link_prediction.json (6 methods, Step 8)
     lp_file = results_dir / "link_prediction.json"
     if not lp_file.exists():
         lp_file = results_dir / "link_prediction_yeast.json"
@@ -211,7 +219,30 @@ def generate_final_summary(results_dir):
             summary["link_prediction"] = data.get("auroc_results", {})
             summary["spearman_rho_auroc_gf"] = data.get("spearman_rho_auroc_gf")
 
+    # Override with 11-method results from metric_comparison.json (Step 27)
+    # which uses embedding-distance AUC for all 11 methods consistently.
+    # The 6-method link_prediction.json uses a different AUC computation
+    # (classifier-based CV), causing数值不一致.
+    mc_file = results_dir / "metric_comparison.json"
+    if mc_file.exists():
+        with open(mc_file, encoding="utf-8") as f:
+            mc_data = json.load(f)
+        if "per_method" in mc_data:
+            if "link_prediction" not in summary:
+                summary["link_prediction"] = {}
+            for method, vals in mc_data["per_method"].items():
+                summary["link_prediction"][method] = {
+                    "auroc_mean": vals.get("link_pred_auc"),
+                }
+            summary["link_prediction_source"] = "metric_comparison.json (11 methods, embedding-distance AUC)"
+        if "correlations" in mc_data:
+            gf_auc = mc_data["correlations"].get("gf_vs_link_pred_auc", {})
+            if gf_auc:
+                summary["spearman_rho_auroc_gf"] = gf_auc.get("spearman_rho")
+
     # 5. Downstream k-NN
+    #    Priority: metric_comparison.json (11 methods, Step 27) >
+    #              downstream_knn.json (6 methods, Step 9)
     knn_file = results_dir / "downstream_knn.json"
     if knn_file.exists():
         with open(knn_file, encoding="utf-8") as f:
@@ -219,6 +250,19 @@ def generate_final_summary(results_dir):
         summary["downstream_knn"] = data.get("results", {})
         summary["knn_n_nodes"] = data.get("n_nodes")
         summary["knn_n_categories"] = data.get("n_categories")
+
+    # Override with 11-method k-NN F1 from metric_comparison.json (Step 27)
+    if mc_file.exists() and "per_method" in mc_data:
+        if "downstream_knn" not in summary:
+            summary["downstream_knn"] = {}
+        for method, vals in mc_data["per_method"].items():
+            summary["downstream_knn"][method] = {
+                "micro_f1_mean": vals.get("knn_micro_f1"),
+            }
+        summary["downstream_knn_source"] = "metric_comparison.json (11 methods)"
+        gf_f1 = mc_data.get("correlations", {}).get("gf_vs_knn_f1", {})
+        if gf_f1:
+            summary["spearman_rho_knn_gf"] = gf_f1.get("spearman_rho")
 
     # 6. Plateau widths
     plateau_file = results_dir / "plateau_width_v3_200pts.csv"
@@ -502,11 +546,11 @@ def main():
         finally:
             sys.argv = _saved_argv
 
-    # Step 4: Leiden baseline
+    # Step 4: Community-detection baseline (greedy_modularity headline + Leiden/Louvain/label-prop)
     if start_from <= 4:
-        print_header("Step 4: Leiden Baseline on Original Network")
+        print_header("Step 4: Community-Detection Baseline (4 algorithms)")
         from scripts.leiden_baseline import main as leiden_main
-        if run_step(leiden_main, "Leiden baseline"):
+        if run_step(leiden_main, "Community-detection baseline"):
             completed += 1
         else:
             failed += 1

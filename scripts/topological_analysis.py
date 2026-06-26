@@ -39,6 +39,7 @@ CLI usage
     python scripts/topological_analysis.py
     python scripts/topological_analysis.py --max-dim 2 --method DM
 """
+from __future__ import annotations
 
 import sys
 import json

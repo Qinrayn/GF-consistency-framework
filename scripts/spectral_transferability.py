@@ -29,6 +29,7 @@ Outputs:
   results/spectral_transferability.json
   figures/Fig55-59
 """
+from __future__ import annotations
 
 import json
 import sys
@@ -469,7 +470,8 @@ def run():
                                                    for j in range(k_comm)]
                                                   for i in range(k_comm)],
                                           seed=SEED + ci)
-        except Exception:
+        except Exception as e:
+            import logging; logging.warning(f"Exception in {__name__}: {e}")
             continue
 
         # Largest CC
@@ -489,7 +491,8 @@ def run():
         try:
             eig_vals, eig_vecs, _, _ = compute_laplacian_spectrum(
                 G_sbm, node_list_sbm, k=min(30, n_actual - 2))
-        except Exception:
+        except Exception as e:
+            import logging; logging.warning(f"Exception in {__name__}: {e}")
             continue
 
         lam2 = eig_vals[1]
@@ -593,7 +596,7 @@ def run():
                     sa_sbm[method] = sa
                 else:
                     sa_sbm[method] = None
-            except Exception:
+            except Exception as e:
                 sa_sbm[method] = None
 
         sa_valid = {m: v for m, v in sa_sbm.items() if v is not None}
@@ -655,7 +658,7 @@ def run():
                 else:
                     try:
                         comms = list(greedy_modularity_communities(G_r))
-                    except Exception:
+                    except Exception as e:
                         comms = [frozenset(c) for c in nx.connected_components(G_r)]
 
                 # Community purity (using ground-truth communities)
@@ -674,7 +677,8 @@ def run():
                     comm_purities.append(counts.most_common(1)[0][1] / len(labels))
                 if comm_purities:
                     purities[method] = float(np.mean(comm_purities))
-            except Exception:
+            except Exception as e:
+                import logging; logging.warning(f"Exception in {__name__}: {e}")
                 pass
 
         # Correlation: SA vs purity

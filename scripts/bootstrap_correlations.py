@@ -9,6 +9,7 @@ Computes bootstrap CIs (10,000 resamples, with replacement) for:
   3. G-F Score vs k-NN F1 (n=11)
   4. Topological consistency vs G-F Score (yeast, n=11)
 """
+from __future__ import annotations
 
 import json
 import os
@@ -91,7 +92,7 @@ def bootstrap_spearman_ci(x, y, n_bootstrap=N_BOOTSTRAP, seed=SEED):
             r, _ = stats.spearmanr(x[idx], y[idx])
             if np.isnan(r):
                 r = 0.0
-        except Exception:
+        except Exception as e:
             r = 0.0
         bootstrap_rhos[i] = r
 

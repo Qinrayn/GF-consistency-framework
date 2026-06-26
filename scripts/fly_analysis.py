@@ -21,6 +21,7 @@ Pipeline (mirrors ecoli_analysis.py exactly):
 Output:
   results/fly_gf_scores.json
 """
+from __future__ import annotations
 
 import json
 import sys
@@ -48,9 +49,11 @@ from utils import (
     GF_R_MIN, GF_R_MAX, R_MIN, R_MAX,
     get_data_dir, get_results_dir,
     compute_centrality_features,
+    compute_gf_score,
     rescale_coordinates,
     deepwalk_from_graph,
     node2vec_from_graph,
+    BANNER,
 )
 
 from human_embed_extended import (
@@ -70,7 +73,7 @@ LANDMARK_COUNT = 500
 SUBSAMPLE_SIZE = 2000
 N_POINTS = 25           # Coarse grid for GF curve
 MAX_EDGES_GF = 150_000  # Fallback to CC above this
-BANNER = "=" * 70
+# BANNER imported from utils
 
 # Download URLs
 STRING_PPI_URL = "https://stringdb-downloads.org/download/protein.links.v11.5/7227.protein.links.v11.5.txt.gz"
@@ -522,17 +525,6 @@ def compute_gf_curve_cc(coords, nodes, go_map, r_vals):
     return purities
 
 
-def compute_gf_score(purities, r_vals, r_min, r_max):
-    """Compute G-F Score over [r_min, r_max] via trapezoidal integration."""
-    mask = (r_vals >= r_min) & (r_vals <= r_max)
-    if mask.sum() < 2:
-        return 0.0
-    r_sub = r_vals[mask]
-    p_sub = purities[mask]
-    integral = trapezoid(p_sub, r_sub)
-    return float(integral / (r_max - r_min))
-
-
 # ============================================================
 # 5. Cross-Species Kendall's W
 # ============================================================
@@ -803,7 +795,7 @@ def run():
         elapsed = time.time() - t1
         print()  # end progress dots
 
-        gf_score = compute_gf_score(purities, r_vals, GF_R_MIN, GF_R_MAX)
+        gf_score = compute_gf_score(r_vals, purities, GF_R_MIN, GF_R_MAX)
         peak_purity = float(np.max(purities))
 
         all_results[method] = {

@@ -20,6 +20,7 @@ Outputs
 - ``results/go_propagation_stats.json``
 - ``figures/FigS4_sample_size_convergence.png``
 """
+from __future__ import annotations
 
 import re
 import sys
@@ -90,7 +91,7 @@ def _is_lfs_pointer(filepath):
         with open(filepath, "r", errors="replace") as fh:
             head = fh.read(200)
         return "git-lfs" in head.lower() or "oid sha256" in head.lower()
-    except Exception:
+    except Exception as e:
         return True
 
 
@@ -618,7 +619,7 @@ def _compute_gf_curve_fast(coords, nodes, go_map, r_vals):
         if len(communities) > 1:
             try:
                 modularities.append(modularity(G_r, communities))
-            except Exception:
+            except Exception as e:
                 modularities.append(0.0)
         else:
             modularities.append(0.0)

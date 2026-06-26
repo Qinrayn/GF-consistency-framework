@@ -14,6 +14,7 @@ Outputs:
   results/prone_harp_gf_scores.json    -- curated 153-node results
   results/prone_harp_full_network.json -- full 5936-node results
 """
+from __future__ import annotations
 
 import sys
 import json
@@ -78,7 +79,7 @@ def prone_embedding(G, nodes, embedding_dim=2, chebyshev_order=5):
     # Use smallest eigenvalues (near 0) which capture community structure
     try:
         eigvals, eigvecs = eigsh(L_norm, k=k, which="SM", tol=1e-6)
-    except Exception:
+    except Exception as e:
         # Fallback to dense if sparse solver fails
         L_dense = L_norm.toarray()
         eigvals_all, eigvecs_all = np.linalg.eigh(L_dense)

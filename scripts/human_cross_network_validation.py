@@ -18,6 +18,7 @@ Generates:
     Fig47_bootstrap_confidence_intervals.png   (3 panels)
     results/human_cross_network_validation.json
 """
+from __future__ import annotations
 
 import json
 import sys
@@ -397,7 +398,8 @@ def run_bootstrap_ci(n_boot: int = 10000):
                     fvals[idx], gf[idx], sa[idx], er[idx])
                 if not np.isnan(r):
                     rhos.append(r)
-            except Exception:
+            except Exception as e:
+                import logging; logging.warning(f"Exception in {__name__}: {e}")
                 continue
         rhos = np.array(rhos)
         ci_lo = float(np.percentile(rhos, 2.5))

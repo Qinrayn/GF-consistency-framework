@@ -4,6 +4,7 @@ randomization_control.py
 Step 10: Randomization control - shuffle DM embedding coordinates multiple times,
 verify that the G-F purity plateau is significantly reduced relative to the original.
 """
+from __future__ import annotations
 
 import sys
 import json

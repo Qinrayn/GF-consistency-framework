@@ -8,6 +8,7 @@ Step 13: Human PPI cross-species validation.
 - Detect and remove Node2Vec outlier (ENSP00000334051, x ≈ -40.75)
 - Compare original vs cleaned curves
 """
+from __future__ import annotations
 
 import sys
 import json

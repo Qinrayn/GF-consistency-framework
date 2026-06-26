@@ -14,6 +14,7 @@ Output
   results/human_gf_scores_extended.json   — 11-method scores & ranking
   results/human_gf_curves_extended.pkl    — raw curve data
 """
+from __future__ import annotations
 
 import os
 import sys
@@ -121,7 +122,7 @@ def compute_gf_curve_fast(coords, node_labels, r_values):
                 partition = list(greedy_modularity_communities(G))
                 communities = [frozenset(c) for c in partition]
                 mod_val = nx.community.modularity(G, partition)
-            except Exception:
+            except Exception as e:
                 communities = [frozenset(c) for c in nx.connected_components(G)]
                 mod_val = 0.0
 

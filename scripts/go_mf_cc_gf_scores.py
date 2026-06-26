@@ -57,7 +57,7 @@ from utils import (
 
 DATA = get_data_dir()
 RESULTS = get_results_dir()
-RESULTS.mkdir(parents=True, exist_ok=True)
+# RESULTS.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
 
 GAF_FILE = DATA / "gene_association.sgd.gaf.gz"
 ALIAS_FILE = DATA / "4932.protein.aliases.v11.5.txt.gz"
@@ -424,6 +424,7 @@ def compute_gf_score_from_curve(r_vals, purity_vals,
 def main():
     np.random.seed(SEED)
 
+    RESULTS.mkdir(parents=True, exist_ok=True)
     print(BANNER)
     print("G-F Scores across GO Ontology Aspects (BP, MF, CC)")
     print(BANNER)

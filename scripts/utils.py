@@ -82,6 +82,59 @@ STRING_MIN_SCORE: int = 700
 PLATEAU_RELATIVE_THRESHOLD: float = 0.80
 
 # ============================================================
+# Shared display constants (single source of truth)
+# ============================================================
+# Unified banner string for all scripts (was inconsistent: some used 64, some 70)
+BANNER: str = "=" * 70
+
+# Okabe-Ito colourblind-safe palette for all 11 embedding methods
+METHOD_COLORS: dict[str, str] = {
+    "Spectral": "#E69F00", "DM": "#0072B2", "MDS": "#009E73",
+    "Node2Vec": "#CC79A7", "PCA": "#56B4E9", "VGAE-feat": "#F0E442",
+    "DeepWalk": "#D55E00", "GIN": "#949494", "GAT": "#000000",
+    "GraphSAGE": "#8B4513", "VGAE": "#808080",
+}
+
+# Baseline colours for function prediction comparisons
+BASELINE_COLORS: dict[str, str] = {
+    "PPI-Neighbors": "#636363", "2-Hop Diffusion": "#969696", "Random": "#d9d9d9",
+}
+
+# ============================================================
+# JSON Serialization (numpy-safe)
+# ============================================================
+
+def json_default(obj):
+    """JSON serializer for numpy types.
+
+    Usage::
+
+        from utils import json_default
+        json.dump(data, f, indent=2, default=json_default)
+    """
+    if isinstance(obj, np.integer):
+        return int(obj)
+    if isinstance(obj, np.floating):
+        return float(obj)
+    if isinstance(obj, np.bool_):
+        return bool(obj)
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    raise TypeError(f"Object of type {type(obj).__name__} is not JSON serializable")
+
+def save_json(data, path, **kwargs):
+    """Write JSON with numpy-safe serialization and UTF-8 encoding.
+
+    Wraps json.dump with default=json_default, indent=2, ensure_ascii=False
+    unless overridden by **kwargs.
+    """
+    kwargs.setdefault("default", json_default)
+    kwargs.setdefault("indent", 2)
+    kwargs.setdefault("ensure_ascii", False)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, **kwargs)
+
+# ============================================================
 # Directory Helpers
 # ============================================================
 
@@ -401,6 +454,110 @@ def compute_gf_score(r_vals, purity_vals,
     if len(r_sub) < 2:
         return 0.0
     return float(trapezoid(p_sub, r_sub) / (r_max - r_min))
+
+
+# ============================================================
+# kNN-GF Score: High-dimensional generalisation
+# ============================================================
+# The standard G-F Score uses Euclidean distance thresholds to build
+# spatial graphs. In high dimensions, distances concentrate (all pairwise
+# distances become similar), causing the spatial graph to degenerate.
+# The kNN-GF Score replaces distance thresholds with k-nearest-neighbour
+# graphs, which depend only on distance *rankings* (order statistics),
+# not absolute distances. This makes the score invariant to the curse
+# of dimensionality.
+#
+# See: Theorem 5 (Concentration Invariance) in Supplementary Materials.
+
+KNN_DEFAULT_RANGE: tuple[int, int] = (3, 30)
+
+
+def build_knn_graph(dist_matrix: np.ndarray, k: int) -> nx.Graph:
+    """Build a symmetric k-nearest-neighbour graph from a distance matrix.
+
+    Parameters
+    ----------
+    dist_matrix : (n, n) pairwise distances
+    k : number of nearest neighbours per node
+
+    Returns
+    -------
+    nx.Graph with n nodes and edges connecting each node to its k
+    nearest neighbours (union of both directions).
+    """
+    n = dist_matrix.shape[0]
+    G = nx.Graph()
+    G.add_nodes_from(range(n))
+    k = min(k, n - 1)
+
+    for i in range(n):
+        # argsort gives sorted indices; skip self (index 0 after sort)
+        neighbours = np.argsort(dist_matrix[i])[1:k + 1]
+        for j in neighbours:
+            j = int(j)
+            if not G.has_edge(i, j):
+                G.add_edge(i, j)
+    return G
+
+
+def compute_gf_curve_knn(
+    coords: np.ndarray, nodes: list, go_map: dict,
+    k_vals: Optional[list[int]] = None,
+) -> tuple[list[float], list[int]]:
+    """Compute the kNN-GF purity curve over a range of k values.
+
+    For each k, builds a kNN graph, runs community detection, and computes
+    functional purity. This is the high-dimensional generalisation of
+    compute_gf_curve — it depends only on distance rankings, not absolute
+    distances, making it robust to the curse of dimensionality.
+
+    Parameters
+    ----------
+    coords : (n, d) embedding coordinates (any dimension d)
+    nodes : ordered node labels
+    go_map : gene -> [GO terms]
+    k_vals : list of k values to evaluate (default: 3..30)
+
+    Returns
+    -------
+    (purities, k_values) — parallel lists
+    """
+    if k_vals is None:
+        k_vals = list(range(KNN_DEFAULT_RANGE[0], KNN_DEFAULT_RANGE[1] + 1))
+
+    dist_matrix = precompute_distance_matrix(coords)
+    n = dist_matrix.shape[0]
+
+    purities: list[float] = []
+    for k in k_vals:
+        k_eff = min(k, n - 1)
+        G_k = build_knn_graph(dist_matrix, k_eff)
+        if G_k.number_of_edges() == 0:
+            purities.append(0.0)
+            continue
+        communities = list(greedy_modularity_communities(G_k))
+        purities.append(functional_purity(communities, go_map, nodes))
+    return purities, list(k_vals)
+
+
+def compute_knn_gf_score(
+    purities: list[float], k_vals: list[int],
+    k_min: int = KNN_DEFAULT_RANGE[0],
+    k_max: int = KNN_DEFAULT_RANGE[1],
+) -> float:
+    """Compute the kNN-GF Score as mean purity over [k_min, k_max].
+
+    Unlike the Euclidean G-F Score (which uses trapezoidal integration
+    over continuous r), the kNN-GF Score uses simple averaging over
+    discrete k values, since k is an integer parameter.
+    """
+    k_arr = np.asarray(k_vals)
+    p_arr = np.asarray(purities)
+    mask = (k_arr >= k_min) & (k_arr <= k_max)
+    p_sub = p_arr[mask]
+    if len(p_sub) == 0:
+        return 0.0
+    return float(np.mean(p_sub))
 
 
 # ============================================================

@@ -77,7 +77,7 @@ from go_mf_cc_gf_scores import (
 
 DATA = get_data_dir()
 RESULTS = get_results_dir()
-RESULTS.mkdir(parents=True, exist_ok=True)
+# RESULTS.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
 
 STRING_FILE = DATA / "4932.protein.links.v11.5.txt.gz"
 GAF_FILE = DATA / "gene_association.sgd.gaf.gz"
@@ -420,6 +420,7 @@ def count_dark_matter_pairs(G_full_string, spectral_coords, spectral_nodes,
 def main():
     np.random.seed(SEED)
 
+    RESULTS.mkdir(parents=True, exist_ok=True)
     print(BANNER)
     print("STRING Threshold Sensitivity Analysis")
     print(BANNER)

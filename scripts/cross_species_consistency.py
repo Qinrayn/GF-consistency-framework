@@ -18,6 +18,7 @@ Output:
   - results/cross_species_consistency.json
   - figures/Fig17_cross_species_rank_consistency.png
 """
+from __future__ import annotations
 
 import sys
 import json

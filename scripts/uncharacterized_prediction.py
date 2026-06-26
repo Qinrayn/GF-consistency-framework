@@ -40,6 +40,7 @@ from utils import (
     SEED,
     get_data_dir, get_results_dir, get_figures_dir, get_embeddings_dir,
     TARGET_STD,
+    BANNER,
 )
 from function_prediction import (
     build_alias_mapping,
@@ -55,10 +56,10 @@ RESULTS = get_results_dir()
 FIGURES = get_figures_dir()
 EMB = get_embeddings_dir()
 
-RESULTS.mkdir(parents=True, exist_ok=True)
-FIGURES.mkdir(parents=True, exist_ok=True)
+# RESULTS.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
+# FIGURES.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
 
-BANNER = "=" * 64
+# BANNER imported from utils
 
 GAF_FILE = DATA / "gene_association.sgd.gaf.gz"
 NETWORK_FILE = DATA / "yeast_ppi_5936.edgelist"
@@ -282,6 +283,8 @@ def predict_uncharacterized(coords, nodes, annotations, k=K_NEIGHBORS):
 def run():
     """Run uncharacterized protein mining."""
     t_start = time.time()
+    RESULTS.mkdir(parents=True, exist_ok=True)
+    FIGURES.mkdir(parents=True, exist_ok=True)
     print(BANNER)
     print("  Uncharacterized Protein Mining (d=256 Spectral)")
     print(BANNER)

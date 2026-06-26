@@ -17,6 +17,7 @@ small 153-node network?"
 Outputs:
   - results/gat_theorem_large_network.json
 """
+from __future__ import annotations
 
 import sys
 import json

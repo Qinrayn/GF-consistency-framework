@@ -6,6 +6,7 @@ Step 6: Full network validation.
 - Evaluate G-F curves only on the 153 GO-annotated nodes
 Methods: DM, MDS, Node2Vec, VGAE
 """
+from __future__ import annotations
 
 import sys
 import json

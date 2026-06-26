@@ -49,8 +49,8 @@ from utils import (
 
 RESULTS = get_results_dir()
 FIGURES = get_figures_dir()
-RESULTS.mkdir(parents=True, exist_ok=True)
-FIGURES.mkdir(parents=True, exist_ok=True)
+# RESULTS.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
+# FIGURES.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
 
 # Okabe-Ito colourblind-safe palette
 PALETTE = {
@@ -285,6 +285,8 @@ def compute_transition_sharpness(r, purity):
 def run():
     """Run the full phase transition analysis."""
     t0 = time.time()
+    RESULTS.mkdir(parents=True, exist_ok=True)
+    FIGURES.mkdir(parents=True, exist_ok=True)
     print("=" * 64)
     print("  Phase 17: G-F Curve Phase Transition Analysis")
     print("=" * 64)

@@ -61,8 +61,8 @@ RESULTS = get_results_dir()
 FIGURES = get_figures_dir()
 EMB = get_embeddings_dir()
 
-RESULTS.mkdir(parents=True, exist_ok=True)
-FIGURES.mkdir(parents=True, exist_ok=True)
+# RESULTS.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
+# FIGURES.mkdir(parents=True, exist_ok=True)  # deferred to run() — P1-4b
 
 NETWORK_FILE = DATA / "yeast_ppi_5936.edgelist"
 
@@ -211,6 +211,8 @@ def run_loto_for_dimension(coords, nodes, graph, annotations, term_freq, dim,
 def run():
     """Run the extended dimension sweep."""
     t_start = time.time()
+    RESULTS.mkdir(parents=True, exist_ok=True)
+    FIGURES.mkdir(parents=True, exist_ok=True)
     print(BANNER)
     print("  Phase 18: Extended Dimension Sweep (d = 128, 256)")
     print(BANNER)

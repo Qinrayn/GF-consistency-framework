@@ -23,6 +23,7 @@ Output
   data/human_gat_embedding.json
   data/human_gin_embedding.json
 """
+from __future__ import annotations
 
 import os
 import sys

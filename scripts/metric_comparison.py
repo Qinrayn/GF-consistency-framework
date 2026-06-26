@@ -9,6 +9,7 @@ metric to assess whether G-F Score captures complementary information.
 
 Output: JSON summary + scatter plot figure.
 """
+from __future__ import annotations
 
 import json
 import os
@@ -19,6 +20,9 @@ from collections import Counter
 from itertools import combinations
 from scipy.stats import spearmanr
 from scipy.spatial.distance import cdist
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from utils import set_seed
 
 # ---------------------------------------------------------------------------
 # Paths
@@ -38,7 +42,7 @@ METHODS_153 = [
 ]
 
 SEED = 42
-np.random.seed(SEED)
+set_seed(SEED)
 
 
 # ---------------------------------------------------------------------------

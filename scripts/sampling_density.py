@@ -5,6 +5,7 @@ Step 11: Sampling density verification - compare 30-point vs 200-point grid.
 Generate Supplementary Table S3.
 DM plateau width W should be stable; MDS pseudo-plateau should disappear at 200 pts.
 """
+from __future__ import annotations
 
 import sys
 import json

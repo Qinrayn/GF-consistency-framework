@@ -24,6 +24,7 @@ Output
   results/hyperparameter_sensitivity.json
   figures/Fig21_hyperparameter_sensitivity.png
 """
+from __future__ import annotations
 
 import sys
 import os
@@ -121,7 +122,7 @@ def _compute_gf_custom(coords, nodes, go_map, n_points=100, resolution=1.0):
                 for node, comm in partition.items():
                     groups[comm].add(node)
                 communities = [frozenset(g) for g in groups.values()]
-            except Exception:
+            except Exception as e:
                 communities = [frozenset(c) for c in nx.connected_components(G)]
 
         comm_purities = []

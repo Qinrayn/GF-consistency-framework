@@ -17,6 +17,7 @@ structure rather than an artifact of a specific clustering method.
 Outputs:
   - results/gf_ablation_community_detection.json
 """
+from __future__ import annotations
 
 import sys
 import json
@@ -84,7 +85,7 @@ def detect_greedy_modularity(G):
         if not comms:
             return [set(G.nodes())]
         return comms
-    except Exception:
+    except Exception as e:
         return [set(G.nodes())]
 
 
@@ -101,7 +102,7 @@ def detect_louvain(G, seed=SEED):
         for node, comm_id in partition.items():
             comm_dict.setdefault(comm_id, set()).add(node)
         return list(comm_dict.values())
-    except Exception:
+    except Exception as e:
         return [set(G.nodes())]
 
 
@@ -114,7 +115,7 @@ def detect_label_propagation(G):
         if not comms:
             return [set(G.nodes())]
         return comms
-    except Exception:
+    except Exception as e:
         return [set(G.nodes())]
 
 
@@ -142,7 +143,7 @@ def detect_leiden(G, seed=SEED):
         for comm_indices in partition:
             comms.append({node_list[i] for i in comm_indices})
         return comms
-    except Exception:
+    except Exception as e:
         return [set(G.nodes())]
 
 
@@ -200,7 +201,7 @@ def compute_gf_curve_custom_community(coords, nodes, go_map, r_vals,
                     mod_val = modularity(G_r, communities)
                 else:
                     mod_val = 0.0
-            except Exception:
+            except Exception as e:
                 mod_val = 0.0
             _cache[ne] = (communities, mod_val)
 

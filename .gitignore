@@ -19,6 +19,7 @@ venv/
 .vscode/
 .idea/
 .positron/
+.qoder/
 
 # OS
 .DS_Store
@@ -37,6 +38,13 @@ MANIFEST.json
 .pytest_cache/
 .coverage
 htmlcov/
+
+# AI-generated reports (never commit)
+results/reports/
+results/*_report.md
+phase*_report.md
+docs/verification-log.md
+results/MANIFEST.md
 
 # Windows artifacts
 nul

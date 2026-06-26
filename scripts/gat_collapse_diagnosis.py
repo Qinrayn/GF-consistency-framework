@@ -30,6 +30,7 @@ Output
   results/gat_collapse_diagnosis.json
   figures/Fig25_gat_diagnosis.png
 """
+from __future__ import annotations
 
 import sys
 import json

@@ -97,7 +97,7 @@ def resolve_string_id(orf_name):
             row = dict(zip(header, lines[1].split("\t")))
             return row.get("stringId", ""), row.get("preferredName", "")
         return f"{TAXON}.{orf_name}", orf_name
-    except Exception:
+    except Exception as e:
         return f"{TAXON}.{orf_name}", orf_name
 
 

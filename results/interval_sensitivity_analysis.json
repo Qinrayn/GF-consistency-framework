@@ -1,0 +1,252 @@
+{
+  "description": "P1-2: Interval sensitivity analysis for G-F Score",
+  "n_methods": 11,
+  "n_intervals": 7,
+  "intervals": {
+    "current": {
+      "r_min": 0.05,
+      "r_max": 0.422
+    },
+    "short": {
+      "r_min": 0.05,
+      "r_max": 0.3
+    },
+    "wide": {
+      "r_min": 0.05,
+      "r_max": 0.5
+    },
+    "full_range": {
+      "r_min": 0.05,
+      "r_max": 0.55
+    },
+    "narrow_central": {
+      "r_min": 0.1,
+      "r_max": 0.4
+    },
+    "tight_central": {
+      "r_min": 0.15,
+      "r_max": 0.35
+    },
+    "offset": {
+      "r_min": 0.2,
+      "r_max": 0.422
+    }
+  },
+  "gf_scores": {
+    "current": {
+      "DM": 0.15518241816105013,
+      "MDS": 0.15192253807021705,
+      "Spectral": 0.16332658400038436,
+      "DeepWalk": 0.1225356361238432,
+      "Node2Vec": 0.1511706117501923,
+      "VGAE": 0.06567018452344808,
+      "VGAE-feat": 0.12318905170018535,
+      "PCA": 0.13755685725198097,
+      "GraphSAGE": 0.069026977530774,
+      "GAT": 0.06939369522912948,
+      "GIN": 0.12155707115732498
+    },
+    "short": {
+      "DM": 0.17043803430988969,
+      "MDS": 0.1798034590373657,
+      "Spectral": 0.1850575112449772,
+      "DeepWalk": 0.1416528113586157,
+      "Node2Vec": 0.16852070349796114,
+      "VGAE": 0.06701143724679026,
+      "VGAE-feat": 0.123636608118008,
+      "PCA": 0.14913251770867256,
+      "GraphSAGE": 0.069423968838982,
+      "GAT": 0.07316559012043042,
+      "GIN": 0.14028414274578477
+    },
+    "wide": {
+      "DM": 0.1450546579959882,
+      "MDS": 0.1391047133712719,
+      "Spectral": 0.15184096073746903,
+      "DeepWalk": 0.11205422320165372,
+      "Node2Vec": 0.13581937032381136,
+      "VGAE": 0.06507830480240222,
+      "VGAE-feat": 0.12349888009572031,
+      "PCA": 0.12811224430270554,
+      "GraphSAGE": 0.06908537556417092,
+      "GAT": 0.06812539516569865,
+      "GIN": 0.11136888187505646
+    },
+    "full_range": {
+      "DM": 0.13954774114083845,
+      "MDS": 0.13299241362121736,
+      "Spectral": 0.14458559651185066,
+      "DeepWalk": 0.10709630668891601,
+      "Node2Vec": 0.12853066691453105,
+      "VGAE": 0.06484489619946048,
+      "VGAE-feat": 0.12373231701223711,
+      "PCA": 0.12380331429623637,
+      "GraphSAGE": 0.06897466405437197,
+      "GAT": 0.06792032067292403,
+      "GIN": 0.10662007102844395
+    },
+    "narrow_central": {
+      "DM": 0.1455310682267095,
+      "MDS": 0.143563537754752,
+      "Spectral": 0.15592048837781627,
+      "DeepWalk": 0.11674012665646424,
+      "Node2Vec": 0.15404350841182637,
+      "VGAE": 0.06369444557912063,
+      "VGAE-feat": 0.12054469670842081,
+      "PCA": 0.13014820317303114,
+      "GraphSAGE": 0.06787079551188246,
+      "GAT": 0.06143938834657278,
+      "GIN": 0.11405832992279967
+    },
+    "tight_central": {
+      "DM": 0.14034191329270163,
+      "MDS": 0.13629976337485275,
+      "Spectral": 0.1555014521198892,
+      "DeepWalk": 0.11826798947243126,
+      "Node2Vec": 0.14997968284823246,
+      "VGAE": 0.06176905499282316,
+      "VGAE-feat": 0.12084763175011035,
+      "PCA": 0.12422625473873616,
+      "GraphSAGE": 0.06785810112551703,
+      "GAT": 0.06109707466027312,
+      "GIN": 0.11463100226583944
+    },
+    "offset": {
+      "DM": 0.12584306442540355,
+      "MDS": 0.10704019793429746,
+      "Spectral": 0.13431920847674153,
+      "DeepWalk": 0.10015502219379457,
+      "Node2Vec": 0.13135308709534788,
+      "VGAE": 0.061982593802626,
+      "VGAE-feat": 0.12154903965135376,
+      "PCA": 0.11807949308008651,
+      "GraphSAGE": 0.06756427069274144,
+      "GAT": 0.06117406211301601,
+      "GIN": 0.09749194227593207
+    }
+  },
+  "rankings": {
+    "current": [
+      "Spectral",
+      "DM",
+      "MDS",
+      "Node2Vec",
+      "PCA",
+      "VGAE-feat",
+      "DeepWalk",
+      "GIN",
+      "GAT",
+      "GraphSAGE",
+      "VGAE"
+    ],
+    "short": [
+      "Spectral",
+      "MDS",
+      "DM",
+      "Node2Vec",
+      "PCA",
+      "DeepWalk",
+      "GIN",
+      "VGAE-feat",
+      "GAT",
+      "GraphSAGE",
+      "VGAE"
+    ],
+    "wide": [
+      "Spectral",
+      "DM",
+      "MDS",
+      "Node2Vec",
+      "PCA",
+      "VGAE-feat",
+      "DeepWalk",
+      "GIN",
+      "GraphSAGE",
+      "GAT",
+      "VGAE"
+    ],
+    "full_range": [
+      "Spectral",
+      "DM",
+      "MDS",
+      "Node2Vec",
+      "PCA",
+      "VGAE-feat",
+      "DeepWalk",
+      "GIN",
+      "GraphSAGE",
+      "GAT",
+      "VGAE"
+    ],
+    "narrow_central": [
+      "Spectral",
+      "Node2Vec",
+      "DM",
+      "MDS",
+      "PCA",
+      "VGAE-feat",
+      "DeepWalk",
+      "GIN",
+      "GraphSAGE",
+      "VGAE",
+      "GAT"
+    ],
+    "tight_central": [
+      "Spectral",
+      "Node2Vec",
+      "DM",
+      "MDS",
+      "PCA",
+      "VGAE-feat",
+      "DeepWalk",
+      "GIN",
+      "GraphSAGE",
+      "VGAE",
+      "GAT"
+    ],
+    "offset": [
+      "Spectral",
+      "Node2Vec",
+      "DM",
+      "VGAE-feat",
+      "PCA",
+      "MDS",
+      "DeepWalk",
+      "GIN",
+      "GraphSAGE",
+      "VGAE",
+      "GAT"
+    ]
+  },
+  "rank_stability_vs_current": {
+    "short": {
+      "spearman_rho": 0.9636363636363637,
+      "p_value": 1.8520398640703128e-06
+    },
+    "wide": {
+      "spearman_rho": 0.990909090909091,
+      "p_value": 3.7625718070854e-09
+    },
+    "full_range": {
+      "spearman_rho": 0.990909090909091,
+      "p_value": 3.7625718070854e-09
+    },
+    "narrow_central": {
+      "spearman_rho": 0.9454545454545454,
+      "p_value": 1.1183037701493196e-05
+    },
+    "tight_central": {
+      "spearman_rho": 0.9454545454545454,
+      "p_value": 1.1183037701493196e-05
+    },
+    "offset": {
+      "spearman_rho": 0.8909090909090911,
+      "p_value": 0.00023345817037873177
+    }
+  },
+  "kendalls_w_all_intervals": 3.6454810495626826,
+  "top1_consistency": {
+    "Spectral": 7
+  },
+  "conclusion": "Kendall's W=3.645 across 7 intervals. Top-1 method: Spectral (7/7 intervals)."
+}

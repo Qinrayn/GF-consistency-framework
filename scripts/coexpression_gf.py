@@ -32,6 +32,7 @@ Output
 ------
   results/coexpression_gf.json
 """
+from __future__ import annotations
 
 import sys
 import json

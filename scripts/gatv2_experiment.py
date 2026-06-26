@@ -28,6 +28,7 @@ Output
 ------
   results/gatv2_comparison.json
 """
+from __future__ import annotations
 
 import sys
 import json

@@ -8,6 +8,7 @@ Optional --adaptive-interval flag integrates the adaptive interval algorithm
 from adaptive_interval.py to determine a data-driven consensus integration
 interval instead of (or in addition to) the fixed [0.05, 0.422] interval.
 """
+from __future__ import annotations
 
 import sys
 import json

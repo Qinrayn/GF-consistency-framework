@@ -1,0 +1,148 @@
+{
+  "description": "Extended embedding methods for statistical power (n\u219225)",
+  "n_new_methods": 14,
+  "methods": [
+    "Laplacian-EM",
+    "Isomap",
+    "LLE",
+    "Mod-LLE",
+    "KPCA",
+    "tSNE-2D",
+    "RandProj",
+    "DegreeEnc",
+    "Spectral+",
+    "Spectral-",
+    "GraphFact",
+    "HeatKernel",
+    "PageRank",
+    "Gravity"
+  ],
+  "results": {
+    "Laplacian-EM": {
+      "gf_score": 0.16332658400038436,
+      "peak_purity": 0.2558458553424948,
+      "shape": [
+        153,
+        2
+      ],
+      "time_sec": 22.644431829452515
+    },
+    "Isomap": {
+      "gf_score": 0.16390522944433736,
+      "peak_purity": 0.2524829226854151,
+      "shape": [
+        153,
+        2
+      ],
+      "time_sec": 20.991862058639526
+    },
+    "LLE": {
+      "gf_score": 0.14521880720741107,
+      "peak_purity": 0.21420106546462053,
+      "shape": [
+        153,
+        2
+      ],
+      "time_sec": 21.518390893936157
+    },
+    "Mod-LLE": {
+      "gf_score": 0.16198545559900993,
+      "peak_purity": 0.2262376562442738,
+      "shape": [
+        153,
+        2
+      ],
+      "time_sec": 18.63364577293396
+    },
+    "KPCA": {
+      "gf_score": 0.14644970575388733,
+      "peak_purity": 0.23821615888445513,
+      "shape": [
+        153,
+        2
+      ],
+      "time_sec": 16.973158359527588
+    },
+    "tSNE-2D": {
+      "gf_score": 0.15247797108347297,
+      "peak_purity": 0.24908770377520373,
+      "shape": [
+        153,
+        2
+      ],
+      "time_sec": 15.82397723197937
+    },
+    "RandProj": {
+      "gf_score": 0.1404210930276898,
+      "peak_purity": 0.22708567116716524,
+      "shape": [
+        153,
+        2
+      ],
+      "time_sec": 17.404340982437134
+    },
+    "DegreeEnc": {
+      "gf_score": 0.11286830218889654,
+      "peak_purity": 0.1615365445825192,
+      "shape": [
+        153,
+        2
+      ],
+      "time_sec": 4.746950149536133
+    },
+    "Spectral+": {
+      "gf_score": 0.20302127508727866,
+      "peak_purity": 0.24437263134471815,
+      "shape": [
+        153,
+        2
+      ],
+      "time_sec": 15.967489957809448
+    },
+    "Spectral-": {
+      "gf_score": 0.17744344004113255,
+      "peak_purity": 0.25601622034283633,
+      "shape": [
+        153,
+        2
+      ],
+      "time_sec": 17.569201946258545
+    },
+    "GraphFact": {
+      "gf_score": 0.14870175048634834,
+      "peak_purity": 0.23164556713489667,
+      "shape": [
+        153,
+        2
+      ],
+      "time_sec": 18.2470965385437
+    },
+    "HeatKernel": {
+      "gf_score": 0.1621516594612173,
+      "peak_purity": 0.2558458553424948,
+      "shape": [
+        153,
+        2
+      ],
+      "time_sec": 22.990753889083862
+    },
+    "PageRank": {
+      "gf_score": 0.08940496603507689,
+      "peak_purity": 0.13961222483301555,
+      "shape": [
+        153,
+        2
+      ],
+      "time_sec": 25.782068490982056
+    },
+    "Gravity": {
+      "gf_score": 0.15722121659772118,
+      "peak_purity": 0.23456317569762947,
+      "shape": [
+        153,
+        2
+      ],
+      "time_sec": 24.717376232147217
+    }
+  }
+}

@@ -4,6 +4,7 @@ embed_all.py
 Step 2: Compute all 8 embedding methods on the curated 153-node network.
 Methods: DM, MDS, Spectral, DeepWalk, Node2Vec, VGAE, VGAE-feat, PCA
 """
+from __future__ import annotations
 
 import sys
 import json

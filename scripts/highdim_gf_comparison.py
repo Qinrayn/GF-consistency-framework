@@ -57,6 +57,7 @@ from utils import (
     load_curated_network, compute_centrality_features, save_embedding,
     compute_gf_curve, compute_gf_score, compute_plateau_width,
     rescale_coordinates, precompute_distance_matrix,
+    BANNER, METHOD_COLORS,
 )
 from embed_all import embed_method_by_name
 
@@ -78,14 +79,8 @@ for d in [RESULTS, FIGURES, EMB]:
 DIMENSIONS = [2, 4, 8, 16, 32, 64]
 METHODS = ALL_CURATED_METHODS + GNN_METHODS  # 11 methods
 
-METHOD_COLORS = {
-    "Spectral": "#E69F00", "DM": "#0072B2", "MDS": "#009E73",
-    "Node2Vec": "#CC79A7", "PCA": "#56B4E9", "VGAE-feat": "#F0E442",
-    "DeepWalk": "#D55E00", "GIN": "#949494", "GAT": "#000000",
-    "GraphSAGE": "#8B4513", "VGAE": "#808080",
-}
-
-BANNER = "=" * 70
+# METHOD_COLORS imported from utils
+# BANNER imported from utils
 
 
 def embed_highdim(G, nodes, method, features, n_components, seed=SEED):

@@ -12,6 +12,7 @@ Generates:
     results/human_tda_full.json
     figures/Fig48_human_tda_summary.png (3 panels)
 """
+from __future__ import annotations
 
 import json
 import sys
@@ -137,7 +138,7 @@ def compute_purity_at_r(coords_sub, nodes_sub, go_map, dist_matrix, r):
         return 0.0
     try:
         communities = list(greedy_modularity_communities(G))
-    except Exception:
+    except Exception as e:
         return 0.0
 
     purities = []
