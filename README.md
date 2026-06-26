@@ -184,7 +184,7 @@ Mathematical proofs (Propositions 1–2, Theorems 1–4) → [`Supplementary_Mat
 
 ```
 Step 1  ─ Data Preprocessing ────────── Yeast PPI + GO annotations
-Step 2  ─ Compute Embeddings ────────── 8 methods → embeddings/*.npy
+Step 2  ─ Compute Embeddings ────────── 11 methods → embeddings/*.npy
 Step 3  ─ G-F Curves & Scores ───────── 200-point grid → gf_scores.json
 Step 4  ─ Community-Detection Baseline ── 4 algorithms (greedy-mod, Leiden, Louvain, label-prop)
 Step 5  ─ Subset Robustness ──────────── 30 subsets × 5 sizes + Bonferroni correction
@@ -274,9 +274,9 @@ All embeddings standardized to **σ = 0.3** before G-F analysis.
 
 ```
 GF-consistency-framework/
-├── scripts/                    # 72-step analysis pipeline + extensions
+├── scripts/                    # 72-step analysis pipeline + extensions (101 active)
 │   ├── data_preprocessing.py   # Load PPI + GO data
-│   ├── embed_all.py            # Compute 8 classical/NN embeddings
+│   ├── embed_all.py            # Compute 8 classical/NN embeddings (DM, MDS, Spectral, DW, N2V, VGAE×2, PCA)
 │   ├── compute_gf.py           # G-F curves + scores
 │   ├── leiden_baseline.py      # Community-detection baseline (4 algorithms; greedy-mod headline)
 │   ├── robustness.py           # Subset analysis + Bonferroni
@@ -297,7 +297,7 @@ GF-consistency-framework/
 │   ├── biological_interpretation.py  # 4-level G-F scale + case study (Step 20)
 │   ├── benchmark_runtime.py    # Pipeline profiling + complexity (Step 21)
 │   ├── statistical_analysis.py # Spearman, Wilcoxon, bootstrap, permutation
-│   ├── robustness_analysis.py  # Extended 30-subset convergence
+│   ├── robustness_analysis.py  # Extended 30-subset convergence ~
 │   ├── visualization_helpers.py# Okabe-Ito colorblind-safe plotting
 │   ├── config_loader.py        # YAML configuration loader + validator
 │   ├── input_validator.py      # Pre-flight input validation
@@ -320,23 +320,23 @@ GF-consistency-framework/
 │   ├── human_seed_stability.py         # Human 10-seed stability analysis (Step 37)
 │   ├── human_ic_weighted_gf.py         # Human IC-weighted GF analysis (Step 38)
 │   ├── gat_collapse_diagnosis.py       # GAT variant ablation study (Step 39)
-│   ├── deep_geometric_analysis.py      # Multi-scale geometric fingerprint (Phase 1, Fig 26-29)
-│   ├── geometric_predictor.py          # Cross-species geometric predictor (Phase 2, Fig 30-33)
+│   ├── deep_geometric_analysis.py      # Multi-scale geometric fingerprint (Phase 1, Fig 26-29) ~
+│   ├── geometric_predictor.py          # Cross-species geometric predictor (Phase 2, Fig 30-33) ~
 │   ├── spectral_alignment.py           # Network-aware spectral alignment (Phase 3, Fig 34-35)
-│   ├── gat_collapse_theory.py          # GAT collapse mathematical theory (Phase 4, Fig 36-38)
+│   ├── gat_collapse_theory.py          # GAT collapse mathematical theory (Phase 4, Fig 36-38) ~
 │   ├── human_spectral_alignment.py     # Human network spectral alignment (Phase 5A, Fig 39-40)
-│   ├── gat_dimension_sweep.py          # GAT latent dimension sweep (Phase 5B, Fig 41)
-│   ├── gat_collapse_formal_proof.py    # Formal proofs of GAT collapse (Phase 6, Fig 42-43)
+│   ├── gat_dimension_sweep.py          # GAT latent dimension sweep (Phase 5B, Fig 41) ~
+│   ├── gat_collapse_formal_proof.py    # Formal proofs of GAT collapse (Phase 6, Fig 42-43) ~
 │   ├── tda_geometry_bridge.py         # TDA-geometry bridge analysis (Phase 7, Fig 44-45)
 │   ├── human_cross_network_validation.py  # Cross-network validation & bootstrap CIs (Phase 8, Fig 46-47)
 │   ├── human_tda_full.py               # Full human TDA: 11-method persistent homology + three-factor validation (Phase 8B, Fig 48)
 │   ├── human_loo_sensitivity.py        # Leave-one-out sensitivity analysis (Phase 8C, Fig 49)
 │   ├── human_gf_unified.py             # Unified human G-F Scores: fix confounds 1+2 (Phase 9, Fig 50)
-│   ├── mouse_data_prep.py              # Mouse STRING PPI download + MGI GAF ID mapping (Phase 10A)
-│   ├── mouse_embeddings_full.py        # Full-network mouse embeddings: 11 methods, ~16K nodes (Phase 10B)
+│   ├── mouse_data_prep.py              # Mouse STRING PPI download + MGI GAF ID mapping (Phase 10A) ~
+│   ├── mouse_embeddings_full.py        # Full-network mouse embeddings: 11 methods, ~16K nodes (Phase 10B) ~
 │   ├── persistence_image_analysis.py   # Persistence image TDA + three-species comparison (Phase 10C, Fig 51-54)
 │   ├── spectral_transferability.py     # Spectral Quality Index (SQI) + SBM validation (Phase 11, Fig 55-59)
-│   ├── biological_validation.py        # GO BP enrichment + multi-seed panel + mixed-effects (Phase 12, Fig 60-64)
+│   ├── biological_validation.py        # GO BP enrichment + multi-seed panel + mixed-effects (Phase 12, Fig 60-64) ~
 │   ├── function_prediction.py         # Protein function prediction via LOTO-CV + GF correlation (Phase 13, Fig 65-68)
 │   ├── ecoli_analysis.py              # E. coli K-12 4th species cross-species validation (Step 40)
 │   ├── coexpression_gf.py             # Coexpression network G-F analysis (Step 41)
@@ -347,7 +347,7 @@ GF-consistency-framework/
 │   ├── gf_phase_transition.py        # G-F curve phase transition analysis (Step 46)
 │   ├── dimension_sweep_extended.py   # Extended dimension sweep d=128/256 (Step 47)
 │   ├── functional_dark_matter.py     # Functional dark matter mining (Step 48)
-│   ├── multihead_gat_experiment.py    # Multi-head GAT configuration sweep
+│   ├── multihead_gat_experiment.py    # Multi-head GAT configuration sweep ~
 │   ├── cross_species_dark_matter.py   # Cross-species dark matter ortholog analysis (Step 49)
 │   ├── generate_missing_figures.py   # Generate missing supplementary figures FigS18-S20 (Step 50)
 │   ├── string_v12_revalidation.py    # STRING v12.0 re-validation of dark matter (Step 51)
@@ -373,7 +373,7 @@ GF-consistency-framework/
 │   ├── dark_matter_pan_species.py   # Pan-species dark matter mining (Step 72)
 │   ├── dark_matter_ortholog_validation.py # Dark matter ortholog proximity check
 │   ├── rescue_protein_analysis.py    # Rescue protein characterisation — GO enrichment, topology
-│   ├── dimension_sweep.py            # Dimension sweep utility
+│   ├── dimension_sweep.py            # Dimension sweep utility ~
 │   ├── utils.py                # Shared utilities (G-F computation, kNN-GF, constants)
 │   ├── multiple_comparison_correction.py  # FDR correction for 13 Spearman tests (P0-1)
 │   ├── outlier_sensitivity_analysis.py     # Human embedding outlier detection (P1-1)
@@ -383,7 +383,7 @@ GF-consistency-framework/
 │   ├── extended_25method_correlation.py    # 25-method Spearman + FDR (n=11->25)
 │   └── highdim_knn_gf.py                   # kNN-GF Score: high-dimensional theory (Thm 5-6)
 │
-├── tests/                      # pytest test suite (51 tests)
+├── tests/                      # pytest test suite (106 tests)
 │   ├── conftest.py             # Shared fixtures
 │   ├── test_utils.py           # Core computation tests
 │   └── test_config_loader.py   # Config loader tests
@@ -684,7 +684,7 @@ Three-species cross-species validation on mouse STRING v11.5 PPI (~16,180 nodes,
 - Two-factor model does NOT transfer to mouse (rho=−0.037) — geometric predictors are network-specific
 - Persistence images do not improve G-F prediction over scalar H1 features
 
-Report → [`results/phase10_report.md`](results/phase10_report.md) · Figures → [`figures/Fig51-54`](figures/)
+Figures → [`figures/Fig51-54`](figures/)
 
 ---
 
@@ -705,7 +705,7 @@ $$\text{SQI} = \frac{\lambda_2}{\lambda_2^{\text{ER}}} \times \text{PR}(v_2) \ti
 - Validated on 20 synthetic SBM networks: SA_std correlates +0.647 with log(SQI)
 - Practical implication: compute SQI from a PPI network alone to predict a priori whether spectral-based evaluation will work
 
-Report → [`results/phase11_report.md`](results/phase11_report.md) · Figures → [`figures/Fig55-59`](figures/)
+Figures → [`figures/Fig55-59`](figures/)
 
 ## Biological Validation & Statistical Power (Phase 12)
 
@@ -728,7 +728,7 @@ Does the G-F framework detect biologically meaningful structure, and are ranking
 | Human \|ρ\| | 0.967 (n=110) |
 | Mouse \|ρ\| | 0.800 (n=55) |
 
-Report → [`results/phase12_report.md`](results/phase12_report.md) · Figures → [`figures/Fig60-64`](figures/)
+Figures → [`figures/Fig60-64`](figures/)
 
 ---
 
@@ -749,7 +749,7 @@ Can the GF-consistent embedding space predict protein function, and does GF Scor
 
 **Closing the loop**: GF Score (curated 153-node network) vs MRR (full 5,936-node network) yields Spearman rho = 0.900 (P = 0.037, n = 5 methods). The framework's structural quality metric predicts function-prediction accuracy across network scales.
 
-Report → [`results/phase13_report.md`](results/phase13_report.md) · Figures → [`figures/Fig65-68`](figures/)
+Figures → [`figures/Fig65-68`](figures/)
 
 ---
 
@@ -765,12 +765,12 @@ The community-detection baseline (apples-to-apples `greedy_modularity`, the same
 |--------|:--------:|:---------:|:-----:|----------------|
 | **MDS** | 0.152 | **0.267** | 1.76x | Monotonic improvement; distance geometry fully captures functional hierarchy |
 | **Spectral** | 0.163 | **0.267** | 1.64x | Eigenbasis captures all functional scales |
-| **GIN** | 0.235 | **0.261** | 1.11x | MLP expressiveness benefits from higher d |
-| **GAT** | 0.183 | **0.260** | 1.43x | **Major rescue**: attention mechanism benefits from higher-dimensional representation |
+| **GIN** | 0.122 | **0.261** | 2.14x | MLP expressiveness benefits from higher d |
+| **GAT** | 0.069 | **0.260** | 3.77x | **Major rescue**: higher-dimensional representation overcomes 2D collapse |
 | **VGAE** | 0.066 | **0.205** | 3.12x | **Dramatic rescue**: VAE latent space captures functional structure lost in 2D |
 | **PCA** | 0.138 | 0.178 | 1.30x | Limited by 6 input features |
 | **VGAE-feat** | 0.123 | 0.152 | 1.23x | Features partially compensate |
-| **GraphSAGE** | 0.229 | 0.044 | 0.19x | Collapse at high d; mean aggregation degenerates |
+| **GraphSAGE** | 0.069 | 0.044 | 0.64x | Mean aggregation degenerates at high d |
 | **DM** | 0.155 | 0.000 | — | Diffusion map degenerates at d≥16 |
 | **DeepWalk** | 0.123 | 0.000 | — | SVD co-occurrence matrix rank-limited |
 | **Node2Vec** | 0.151 | 0.000 | — | Same SVD limitation as DeepWalk |
@@ -778,9 +778,9 @@ The community-detection baseline (apples-to-apples `greedy_modularity`, the same
 ### GNN High-Dimensional Behaviour
 
 - **VGAE**: Largest relative improvement (3.12x). At d=64, GF=0.205 exceeds Leiden baseline (0.180). The VAE latent space encodes rich functional structure that is irrecoverably compressed in 2D.
-- **GAT**: Major improvement from 0.183 to 0.260 at d=64. Higher-dimensional attention representations capture functional geometry effectively — contradicting the 2D-only "collapse" narrative.
-- **GIN**: Steady improvement to 0.261 at d=64, competitive with Spectral and MDS.
-- **GraphSAGE**: Unexpected collapse at high d (GF=0.044 at d=64 vs 0.229 at d=2). Mean aggregation in high dimensions may over-smooth node representations.
+- **GAT**: Major improvement from 0.069 to 0.260 at d=64 (3.77x). Higher-dimensional attention representations effectively capture functional geometry — the 2D "collapse" is primarily an output-dimension constraint.
+- **GIN**: Steady improvement to 0.261 at d=64 (2.14x), competitive with Spectral and MDS.
+- **GraphSAGE**: Slight degradation at high d (GF=0.044 at d=64 vs 0.069 at d=2). Mean aggregation in high dimensions may over-smooth node representations.
 
 ### Rank Stability Across Dimensions
 
@@ -829,7 +829,7 @@ ORCID: [0009-0000-2769-467X](https://orcid.org/0009-0000-2769-467X)
 
 ## History
 
-Development began in February 2026. Pre-submission verification and documentation review took place throughout June 2026 (see [`docs/verification-log.md`](docs/verification-log.md)). The framework was publicly released alongside a manuscript submitted to *Nature Communications*.
+Development began in February 2026. Pre-submission verification and documentation review took place throughout June 2026. The framework was publicly released alongside a manuscript submitted to *Nature Communications*.
 
 ---
 
@@ -847,7 +847,7 @@ This repository accompanies a manuscript under peer review at *Nature Communicat
 
 ## Author Contributions
 
-Y.Z. conceived the study, designed the G-F consistency framework, implemented all 11 embedding methods and 72-step analysis pipeline, performed the cross-species validation (5 species), derived the mathematical propositions, conducted the functional dark matter analysis, wrote all scripts (94 active + 16 legacy + 7 deprecated human validation = 117 total), generated all figures, and wrote the manuscript.
+Y.Z. conceived the study, designed the G-F consistency framework, implemented all 11 embedding methods and 72-step analysis pipeline, performed the cross-species validation (5 species), derived the mathematical propositions, conducted the functional dark matter analysis, wrote all scripts (101 active + 16 legacy + 7 deprecated human validation = 124 total), generated all figures, and wrote the manuscript.
 
 ## Competing Interests
 
@@ -868,7 +868,7 @@ If you use this framework, please cite:
 >   author  = {Zhang, Yuhan},
 >   year    = {2026},
 >   note    = {Reproducible pipeline: 11 methods, 72-step validation,
->              117 scripts. Submitted to Nature Communications.},
+>              124 scripts. Submitted to Nature Communications.},
 > }
 > ```
 
