@@ -1,0 +1,49 @@
+{
+  "analysis": "Full-Network 11-Method G-F (Yeast 5936)",
+  "network": {
+    "n_nodes": 5716,
+    "n_edges": 104138
+  },
+  "gf_subsample_size": 1000,
+  "n_r_points": 100,
+  "results": {
+    "DM": {
+      "gf_score": 0.18627975669883795,
+      "peak_purity": 0.24258941842679038,
+      "n_common": 154
+    },
+    "MDS": {
+      "gf_score": 0.1617617446448027,
+      "peak_purity": 0.2442716950389214,
+      "n_common": 154
+    },
+    "Spectral": {
+      "gf_score": 0.1733918581453628,
+      "peak_purity": 0.23666494871023547,
+      "n_common": 154
+    },
+    "DeepWalk": {
+      "gf_score": 0.1713607266307709,
+      "peak_purity": 0.22226420381706724,
+      "n_common": 154
+    },
+    "Node2Vec": {
+      "gf_score": 0.19388006202213526,
+      "peak_purity": 0.2335762507534659,
+      "n_common": 154
+    },
+    "PCA": {
+      "gf_score": 0.2051956163682495,
+      "peak_purity": 0.26568241282527005,
+      "n_common": 154
+    }
+  },
+  "ranking": [
+    "PCA",
+    "Node2Vec",
+    "DM",
+    "Spectral",
+    "DeepWalk",
+    "MDS"
+  ]
+}

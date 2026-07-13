@@ -604,5 +604,42 @@
       "range": 0.04545645129911878,
       "cv": 0.09319013159062552
     }
+  },
+  "new_analyses_2026_07": {
+    "degree_controlled_gf": {
+      "step": "42c",
+      "finding": "Only 3/11 methods retain significant pair-level geometry-function signal after degree control",
+      "key_methods": [
+        "MDS",
+        "Spectral",
+        "DM"
+      ],
+      "p_value": "< 0.005 (permutation test)",
+      "cross_species": "MDS is the only method with consistent negative rho across yeast, human, mouse"
+    },
+    "gf_conditional_embedding": {
+      "step": "42d",
+      "finding": "G-F Score is not gameable; GF-opt embedding (0.1637) barely exceeds Spectral (0.1633)",
+      "implication": "Spectral is near-optimal for G-F; framework is robust to adversarial optimization"
+    },
+    "mouse_go_fix": {
+      "step": "42e",
+      "finding": "DAG propagation is not the cause of mouse Spectral anomaly; Fiedler localization is (5/16180 nodes carry 50% energy)"
+    },
+    "nmi_ari_comparison": {
+      "step": "42f",
+      "finding": "G-F Score vs ARI: rho=+0.691 (p=0.019, n=11) - significant without n=25 extension",
+      "implication": "G-F Score is consistent with standard clustering metrics"
+    },
+    "dark_matter_disease": {
+      "step": "42g",
+      "finding": "Dark matter orthologs 7.4x enriched for disease GO terms (p=0.003)",
+      "n_orthologs": 10
+    },
+    "v11_full_network": {
+      "step": "42h",
+      "finding": "Spectral #1 on both 153-node (0.163) and full-network (0.194) v11.5",
+      "gnn_rescue": "GIN +0.071, VGAE +0.078, GAT +0.050 on full network"
+    }
   }
 }

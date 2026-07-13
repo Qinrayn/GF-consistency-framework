@@ -1,0 +1,141 @@
+{
+  "analysis": "Metric Comparison: G-F Score vs NMI vs ARI",
+  "description": "Compares G-F Score ranking with NMI and ARI between spatial-graph communities and GO-based ground-truth partitions. Tests whether G-F Score is consistent with standard clustering quality metrics.",
+  "network": {
+    "n_nodes": 153,
+    "n_edges": 1669
+  },
+  "go_ground_truth": {
+    "n_clusters": 71
+  },
+  "method_results": [
+    {
+      "method": "DM",
+      "gf_score": 0.15518241816105013,
+      "r_peak": 0.05251256281407035,
+      "nmi_peak": 0.7686240139725774,
+      "ari_peak": 0.09305768847169842,
+      "nmi_mean": 0.47236007605958075,
+      "ari_mean": 0.04994015105002267,
+      "n_communities_at_peak": 3
+    },
+    {
+      "method": "MDS",
+      "gf_score": 0.15192253807021705,
+      "r_peak": 0.05,
+      "nmi_peak": 0.7720802291671651,
+      "ari_peak": 0.18010991722911435,
+      "nmi_mean": 0.5322636987886554,
+      "ari_mean": 0.10487733623532007,
+      "n_communities_at_peak": 3
+    },
+    {
+      "method": "Spectral",
+      "gf_score": 0.16332658400038436,
+      "r_peak": 0.05251256281407035,
+      "nmi_peak": 0.5931823916488878,
+      "ari_peak": 0.09901852515823076,
+      "nmi_mean": 0.48622939165001683,
+      "ari_mean": 0.07354165302013566,
+      "n_communities_at_peak": 4
+    },
+    {
+      "method": "DeepWalk",
+      "gf_score": 0.1225356361238432,
+      "r_peak": 0.06005025125628141,
+      "nmi_peak": 0.43873492279022147,
+      "ari_peak": 0.0034790559884102057,
+      "nmi_mean": 0.24596822203823865,
+      "ari_mean": -0.002888273524572521,
+      "n_communities_at_peak": 4
+    },
+    {
+      "method": "Node2Vec",
+      "gf_score": 0.1511706117501923,
+      "r_peak": 0.14547738693467338,
+      "nmi_peak": 0.1678296550842064,
+      "ari_peak": -0.0012949648574957977,
+      "nmi_mean": 0.17116639488721172,
+      "ari_mean": -0.002712513585171902,
+      "n_communities_at_peak": 3
+    },
+    {
+      "method": "VGAE",
+      "gf_score": 0.06567018452344808,
+      "r_peak": 0.05,
+      "nmi_peak": 0.3137492424149672,
+      "ari_peak": -0.003276121347924162,
+      "nmi_mean": 0.15925205821679467,
+      "ari_mean": -0.0029197395747484188,
+      "n_communities_at_peak": 2
+    },
+    {
+      "method": "PCA",
+      "gf_score": 0.13755685725198097,
+      "r_peak": 0.05,
+      "nmi_peak": 0.7290088828709413,
+      "ari_peak": 0.07323099998557782,
+      "nmi_mean": 0.4059327817885257,
+      "ari_mean": 0.03816780303927963,
+      "n_communities_at_peak": 3
+    },
+    {
+      "method": "VGAE-feat",
+      "gf_score": 0.12318905170018535,
+      "r_peak": 0.05502512562814071,
+      "nmi_peak": 0.3663639120867999,
+      "ari_peak": -0.0013974448357395401,
+      "nmi_mean": 0.20744002133717454,
+      "ari_mean": -0.0010906666361932373,
+      "n_communities_at_peak": 3
+    },
+    {
+      "method": "GraphSAGE",
+      "gf_score": 0.069026977530774,
+      "r_peak": 0.14798994974874374,
+      "nmi_peak": 0.17001600993614047,
+      "ari_peak": 0.001231828414449379,
+      "nmi_mean": 0.1607880156167623,
+      "ari_mean": 0.0008880444056427805,
+      "n_communities_at_peak": 2
+    },
+    {
+      "method": "GAT",
+      "gf_score": 0.06939369522912948,
+      "r_peak": 0.08266331658291458,
+      "nmi_peak": 0.15465695404456087,
+      "ari_peak": -0.00044730596934792864,
+      "nmi_mean": 0.1363272498650233,
+      "ari_mean": -0.0004675366818811428,
+      "n_communities_at_peak": 2
+    },
+    {
+      "method": "GIN",
+      "gf_score": 0.12155707115732498,
+      "r_peak": 0.05,
+      "nmi_peak": 0.5182170022098432,
+      "ari_peak": 0.0056543392813138025,
+      "nmi_mean": 0.2890531155010865,
+      "ari_mean": 0.00228346241780227,
+      "n_communities_at_peak": 5
+    }
+  ],
+  "rank_correlations": {
+    "gf_vs_nmi": {
+      "rho": 0.6454545454545455,
+      "p": 0.03196279932801746
+    },
+    "gf_vs_ari": {
+      "rho": 0.690909090909091,
+      "p": 0.018565033381595007
+    },
+    "nmi_vs_ari": {
+      "rho": 0.8272727272727273,
+      "p": 0.0016769738964523804
+    }
+  },
+  "top3_overlap": {
+    "gf_vs_nmi": 2,
+    "gf_vs_ari": 3
+  }
+}

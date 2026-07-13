@@ -1,0 +1,200 @@
+{
+  "analysis": "Degree-Controlled Geometric-Functional Analysis",
+  "description": "Pair-level test of whether G-F Score ranking is confounded by degree-annotation correlation. Computes partial Spearman correlation of embedding distance and GO Jaccard similarity, controlling for degree dissimilarity.",
+  "network": {
+    "n_nodes": 153,
+    "n_edges": 1669,
+    "n_annotated": 153,
+    "n_pairs": 11628,
+    "n_pairs_shared_go": 2169
+  },
+  "confound_check": {
+    "degree_sim_vs_go_jaccard_rho": -0.1863895961476498,
+    "degree_sim_vs_go_jaccard_p": 2.149339969298187e-91,
+    "interpretation": "Proteins with similar degrees share more GO terms. This is the degree-annotation confound."
+  },
+  "method_results": [
+    {
+      "method": "DM",
+      "gf_standard": 0.15518241816105013,
+      "rho_ds": -0.264861613774944,
+      "rho_ds_p": 6.688330614661528e-186,
+      "rho_ds_partial": -0.11794836339030898,
+      "rho_ds_partial_p": 2.6742197730739874e-37,
+      "attenuation": 0.5546792843657176,
+      "permutation_p": 0.0,
+      "permutation_z": -1.841404543870659,
+      "permutation_null_mean": 0.00032767758792871777,
+      "permutation_null_std": 0.06423142659650405,
+      "n_perm": 200
+    },
+    {
+      "method": "MDS",
+      "gf_standard": 0.152155432912679,
+      "rho_ds": -0.4989470836045001,
+      "rho_ds_p": 0.0,
+      "rho_ds_partial": -0.3697558731418617,
+      "rho_ds_partial_p": 0.0,
+      "attenuation": 0.2589276793228924,
+      "permutation_p": 0.0,
+      "permutation_z": -30.488733043232568,
+      "permutation_null_mean": -0.0004231277976340128,
+      "permutation_null_std": 0.012113745158634373,
+      "n_perm": 200
+    },
+    {
+      "method": "Spectral",
+      "gf_standard": 0.16332658400038436,
+      "rho_ds": -0.4819284424770823,
+      "rho_ds_p": 0.0,
+      "rho_ds_partial": -0.36694199656652854,
+      "rho_ds_partial_p": 0.0,
+      "attenuation": 0.23859651304150165,
+      "permutation_p": 0.0,
+      "permutation_z": -23.866422130518483,
+      "permutation_null_mean": -0.0005211312114164081,
+      "permutation_null_std": 0.015352986759583041,
+      "n_perm": 200
+    },
+    {
+      "method": "DeepWalk",
+      "gf_standard": 0.1225356361238432,
+      "rho_ds": 0.0017736523718176263,
+      "rho_ds_p": 0.8483389701459665,
+      "rho_ds_partial": -0.008212601273381474,
+      "rho_ds_partial_p": 0.3758811760204929,
+      "attenuation": null,
+      "permutation_p": 0.175,
+      "permutation_z": -1.273013627518364,
+      "permutation_null_mean": 0.00036536277114045953,
+      "permutation_null_std": 0.0067383127185705076,
+      "n_perm": 200
+    },
+    {
+      "method": "Node2Vec",
+      "gf_standard": 0.1511706117501923,
+      "rho_ds": 0.00571716887414791,
+      "rho_ds_p": 0.537604555313699,
+      "rho_ds_partial": -0.01081605194406022,
+      "rho_ds_partial_p": 0.24351812514921325,
+      "attenuation": null,
+      "permutation_p": 0.115,
+      "permutation_z": -1.612138221698537,
+      "permutation_null_mean": 0.00023658955680118268,
+      "permutation_null_std": 0.0068558893963835184,
+      "n_perm": 200
+    },
+    {
+      "method": "VGAE",
+      "gf_standard": 0.06567018452344808,
+      "rho_ds": 0.009169657774811348,
+      "rho_ds_p": 0.32280599497787443,
+      "rho_ds_partial": 0.004645271369299517,
+      "rho_ds_partial_p": 0.6164672981161331,
+      "attenuation": null,
+      "permutation_p": 0.525,
+      "permutation_z": 0.6385645206315573,
+      "permutation_null_mean": 0.0001400137640678313,
+      "permutation_null_std": 0.007055289474772908,
+      "n_perm": 200
+    },
+    {
+      "method": "PCA",
+      "gf_standard": 0.13753060668252517,
+      "rho_ds": -0.18532922367874566,
+      "rho_ds_p": 2.319817217449889e-90,
+      "rho_ds_partial": -0.02191717908018417,
+      "rho_ds_partial_p": 0.018106673992655874,
+      "attenuation": 0.8817392171340664,
+      "permutation_p": 1.0,
+      "permutation_z": -0.4079749072444434,
+      "permutation_null_mean": -0.00025010011849825044,
+      "permutation_null_std": 0.05310885188315349,
+      "n_perm": 200
+    },
+    {
+      "method": "VGAE-feat",
+      "gf_standard": 0.12384417529354565,
+      "rho_ds": 0.004464613841698567,
+      "rho_ds_p": 0.6302434212516854,
+      "rho_ds_partial": 0.00789758495818522,
+      "rho_ds_partial_p": 0.3944674436328651,
+      "attenuation": null,
+      "permutation_p": 0.305,
+      "permutation_z": 1.0692784116813294,
+      "permutation_null_mean": 0.00014731691345165287,
+      "permutation_null_std": 0.007248129068293106,
+      "n_perm": 200
+    },
+    {
+      "method": "GraphSAGE",
+      "gf_standard": 0.069,
+      "rho_ds": -0.02541838933748282,
+      "rho_ds_p": 0.006123488355560711,
+      "rho_ds_partial": -0.0040912876646975,
+      "rho_ds_partial_p": 0.659118106363978,
+      "attenuation": 0.8390422142655456,
+      "permutation_p": 0.49,
+      "permutation_z": -0.6913536862102835,
+      "permutation_null_mean": 0.0007288436517795291,
+      "permutation_null_std": 0.006972019305724162,
+      "n_perm": 200
+    },
+    {
+      "method": "GAT",
+      "gf_standard": 0.0694,
+      "rho_ds": -0.0133312111110945,
+      "rho_ds_p": 0.15058831262476524,
+      "rho_ds_partial": -0.007552375378369817,
+      "rho_ds_partial_p": 0.4154611398214158,
+      "attenuation": null,
+      "permutation_p": 0.255,
+      "permutation_z": -1.1113878257814602,
+      "permutation_null_mean": 0.0003339893925377445,
+      "permutation_null_std": 0.007095960992935629,
+      "n_perm": 200
+    },
+    {
+      "method": "GIN",
+      "gf_standard": 0.1217,
+      "rho_ds": 0.014176805840709662,
+      "rho_ds_p": 0.12635300198129426,
+      "rho_ds_partial": 0.012100494608214291,
+      "rho_ds_partial_p": 0.19198051121379617,
+      "attenuation": null,
+      "permutation_p": 0.08,
+      "permutation_z": 1.6446471770127435,
+      "permutation_null_mean": 0.00040373900108555517,
+      "permutation_null_std": 0.007112015030427032,
+      "n_perm": 200
+    }
+  ],
+  "rank_correlations": {
+    "gf_vs_rho_ds": {
+      "rho": 0.6363636363636364,
+      "p": 0.0352869812200623
+    },
+    "gf_vs_rho_partial": {
+      "rho": 0.790909090909091,
+      "p": 0.0037460829533974074
+    },
+    "rho_ds_vs_rho_partial": {
+      "rho": 0.8545454545454546,
+      "p": 0.0008066741521648986
+    }
+  },
+  "ranking_stability": {
+    "top3_gf": [
+      "DM",
+      "MDS",
+      "Spectral"
+    ],
+    "top3_partial": [
+      "DM",
+      "MDS",
+      "Spectral"
+    ],
+    "top3_overlap": 3,
+    "ranking_changed": false
+  }
+}

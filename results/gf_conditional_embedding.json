@@ -1,0 +1,132 @@
+{
+  "analysis": "G-F Conditional Embedding: Design vs Evaluate",
+  "description": "Optimizes a 2D embedding to maximize a differentiable G-F proxy, then evaluates it on standard G-F Score and degree-controlled rho(D,S|degree). Tests whether G-F Score is gameable.",
+  "optimization": {
+    "init": "Spectral",
+    "n_iter": 300,
+    "lr": 0.005,
+    "lambda_spread": 0.05,
+    "lambda_ppi": 0.005,
+    "margin": 0.3,
+    "gf_proxy_optimized": 0.13162362479177475,
+    "elapsed_sec": 76.81908369064331
+  },
+  "all_results": [
+    {
+      "method": "DM",
+      "gf_score": 0.15518241816105013,
+      "knn_gf_score": 0.10171602272066871,
+      "rho_ds": -0.264861613774944,
+      "rho_ds_partial": -0.11794836339030898,
+      "rho_ds_partial_p": 2.6742197730739874e-37,
+      "attenuation": 0.5546792843657176
+    },
+    {
+      "method": "MDS",
+      "gf_score": 0.15192253807021705,
+      "knn_gf_score": 0.13226380304712743,
+      "rho_ds": -0.4989470836045001,
+      "rho_ds_partial": -0.3697558731418617,
+      "rho_ds_partial_p": 0.0,
+      "attenuation": 0.2589276793228924
+    },
+    {
+      "method": "Spectral",
+      "gf_score": 0.16332658400038436,
+      "knn_gf_score": 0.13614128219543678,
+      "rho_ds": -0.4819284424770823,
+      "rho_ds_partial": -0.36694199656652854,
+      "rho_ds_partial_p": 0.0,
+      "attenuation": 0.23859651304150165
+    },
+    {
+      "method": "DeepWalk",
+      "gf_score": 0.1225356361238432,
+      "knn_gf_score": 0.07234981191845732,
+      "rho_ds": 0.0017736523718176263,
+      "rho_ds_partial": -0.008212601273381474,
+      "rho_ds_partial_p": 0.3758811760204929,
+      "attenuation": null
+    },
+    {
+      "method": "Node2Vec",
+      "gf_score": 0.1511706117501923,
+      "knn_gf_score": 0.07060535672625635,
+      "rho_ds": 0.00571716887414791,
+      "rho_ds_partial": -0.01081605194406022,
+      "rho_ds_partial_p": 0.24351812514921325,
+      "attenuation": null
+    },
+    {
+      "method": "VGAE",
+      "gf_score": 0.06567018452344808,
+      "knn_gf_score": 0.0796871586672739,
+      "rho_ds": 0.009169657774811348,
+      "rho_ds_partial": 0.004645271369299517,
+      "rho_ds_partial_p": 0.6164672981161331,
+      "attenuation": null
+    },
+    {
+      "method": "PCA",
+      "gf_score": 0.13755685725198097,
+      "knn_gf_score": 0.1043898370336576,
+      "rho_ds": -0.18532922367874566,
+      "rho_ds_partial": -0.02191717908018417,
+      "rho_ds_partial_p": 0.018106673992655874,
+      "attenuation": 0.8817392171340664
+    },
+    {
+      "method": "VGAE-feat",
+      "gf_score": 0.12318905170018535,
+      "knn_gf_score": 0.06911905264269984,
+      "rho_ds": 0.004464613841698567,
+      "rho_ds_partial": 0.00789758495818522,
+      "rho_ds_partial_p": 0.3944674436328651,
+      "attenuation": null
+    },
+    {
+      "method": "GraphSAGE",
+      "gf_score": 0.069026977530774,
+      "knn_gf_score": 0.07558894214675196,
+      "rho_ds": -0.02541838933748282,
+      "rho_ds_partial": -0.0040912876646975,
+      "rho_ds_partial_p": 0.659118106363978,
+      "attenuation": 0.8390422142655456
+    },
+    {
+      "method": "GAT",
+      "gf_score": 0.06939369522912948,
+      "knn_gf_score": 0.06872829233997248,
+      "rho_ds": -0.0133312111110945,
+      "rho_ds_partial": -0.007552375378369817,
+      "rho_ds_partial_p": 0.4154611398214158,
+      "attenuation": null
+    },
+    {
+      "method": "GIN",
+      "gf_score": 0.12155707115732498,
+      "knn_gf_score": 0.06991414036195864,
+      "rho_ds": 0.014176805840709662,
+      "rho_ds_partial": 0.012100494608214291,
+      "rho_ds_partial_p": 0.19198051121379617,
+      "attenuation": null
+    },
+    {
+      "method": "GF-opt",
+      "gf_score": 0.1636627424523365,
+      "knn_gf_score": 0.13657940057680623,
+      "rho_ds": -0.48234374376646266,
+      "rho_ds_partial": -0.36737949052171076,
+      "rho_ds_partial_p": 0.0,
+      "attenuation": 0.23834506973602287
+    }
+  ],
+  "comparison": {
+    "gf_opt_gf_score": 0.1636627424523365,
+    "best_baseline_gf_score": 0.16332658400038436,
+    "gf_opt_rho_partial": -0.36737949052171076,
+    "best_baseline_rho_partial": -0.3697558731418617,
+    "gf_opt_wins_gf": true,
+    "gf_opt_wins_rho": false
+  }
+}

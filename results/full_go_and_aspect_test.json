@@ -1,0 +1,41 @@
+{
+  "analysis": "True Full-Network G-F with Full GO Map (v12.0, server)",
+  "go_map_genes": 5772,
+  "network_coverage": "92.2%",
+  "subsample_size": 478,
+  "results": {
+    "Spectral_v12": {
+      "gf": 0.7051,
+      "n": 478
+    },
+    "MDS_v12": {
+      "gf": 0.4482,
+      "n": 478
+    },
+    "DeepWalk_v12": {
+      "gf": 0.3476,
+      "n": 478
+    },
+    "Node2Vec_v12": {
+      "gf": 0.2868,
+      "n": 478
+    },
+    "PCA_v12": {
+      "gf": 0.1833,
+      "n": 478
+    },
+    "DM_v12": {
+      "gf": 0.1141,
+      "n": 478
+    }
+  },
+  "ranking": [
+    "Spectral",
+    "MDS",
+    "DeepWalk",
+    "Node2Vec",
+    "PCA",
+    "DM"
+  ],
+  "key_finding": "With full GO coverage (5772 genes, 92.2%), Spectral ranks #1 on v12.0 full network (GF=0.705). The previous PCA>Spectral ranking was entirely due to the 154-gene GO map artifact."
+}

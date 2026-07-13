@@ -1,0 +1,161 @@
+{
+  "analysis": "Dark Matter Disease Enrichment (Local)",
+  "description": "Maps 44 yeast dark matter pairs to human functional orthologs via GO BP term overlap (no external API), then tests disease enrichment and pairwise GO sharing.",
+  "n_yeast_proteins": 71,
+  "n_yeast_with_go": 18,
+  "n_human_orthologs": 10,
+  "n_human_dm_pairs": 1,
+  "ortholog_mapping": {
+    "YMR010W": "YMR010W",
+    "YCL058W-A": "S000028518",
+    "YPL137C": "protein phosphatase regulator GIP3",
+    "YHR133C": "S000001175",
+    "YER096W": "SHC1",
+    "YBR069C": "amino acid transporter TAT1",
+    "YCR030C": "YCR029C-A",
+    "YOL089C": "S000005449",
+    "YPL026C": "putative serine/threonine protein kinase SKS1",
+    "YER033C": "ZRG8",
+    "YHR205W": "serine/threonine protein kinase SCH9",
+    "YGR032W": "S000003264",
+    "YNL309W": "STB1",
+    "YDR346C": "SVF1",
+    "YOR221C": "[acyl-carrier-protein] S-malonyltransferase",
+    "YER180C": "S000000982",
+    "YNL099C": "putative tyrosine protein phosphatase OCA1",
+    "YMR184W": "S000004796",
+    "YNL156C": "S000005100",
+    "YDL024C": "putative acid phosphatase DIA3",
+    "YOR190W": "glucan 1,3-beta-glucosidase",
+    "YAL022C": "nucleoside transmembrane transporter FUN26",
+    "YEL052W": "S000000778",
+    "YJR049C": "UTR1",
+    "YOR372C": "S000005899",
+    "YDR522C": "SPS2",
+    "YML048W": "S000004511",
+    "YOL047C": "YOL047C",
+    "YDL179W": "S000002338",
+    "YAR018C": "serine/threonine protein kinase KIN3",
+    "YBL066C": "SEF1",
+    "YNL257C": "SIP3",
+    "YJR127C": "ZMS1",
+    "YFL025C": "S000001869",
+    "YCL026C-A": "type II nitroreductase",
+    "YGR249W": "S000003481",
+    "YOR229W": "transcriptional modulator",
+    "YOR363C": "oleate-activated transcription factor PIP2",
+    "YFL052W": "ZNF1",
+    "YDR508C": "glutamine permease GNP1",
+    "YDR421W": "S000002829",
+    "YDR173C": "inositol polyphosphate multikinase",
+    "YIL056W": "VHR1",
+    "YDR253C": "S000002661",
+    "YDR046C": "amino acid transporter BAP3",
+    "YDL247W": "alpha-glucoside permease",
+    "YPL224C": "S000006145",
+    "YDR259C": "YAP6",
+    "YJR060W": "S000003821",
+    "YIL085C": "putative mannosyltransferase",
+    "YPL021W": "SRD2",
+    "YLR055C": "SPT8",
+    "YDL056W": "transcription factor MBP1",
+    "YDR107C": "TMN2",
+    "YLR341W": "SPO77",
+    "YLL033W": "S000003956",
+    "YJL174W": "S000003710",
+    "YJL207C": "S000003743",
+    "YKL046C": "putative mannan endo-1,6-alpha-mannosidase",
+    "YJR100C": "SLM35",
+    "YBR293W": "VBA2",
+    "YER184C": "YER184C",
+    "YLL052C": "S000003975",
+    "YOR043W": "WHI2",
+    "YAL053W": "flavin adenine dinucleotide transporter FLC2",
+    "YJR131W": "mannosyl-oligosaccharide 1,2-alpha-mannosidase",
+    "YOR247W": "SRL1",
+    "YDR538W": "phenylacrylic acid decarboxylase PAD1",
+    "YJL184W": "S000003720",
+    "YIR013C": "S000007452",
+    "YHR009C": "TDA3"
+  },
+  "human_orthologs": {
+    "YNL309W": {
+      "human_id": "9606.ENSP00000262904",
+      "shared_go": 3,
+      "yeast_go_terms": 4
+    },
+    "YDR346C": {
+      "human_id": "9606.ENSP00000383996",
+      "shared_go": 3,
+      "yeast_go_terms": 5
+    },
+    "YJR049C": {
+      "human_id": "9606.ENSP00000367890",
+      "shared_go": 2,
+      "yeast_go_terms": 3
+    },
+    "YBL066C": {
+      "human_id": "9606.ENSP00000342136",
+      "shared_go": 4,
+      "yeast_go_terms": 4
+    },
+    "YFL052W": {
+      "human_id": "9606.ENSP00000227163",
+      "shared_go": 3,
+      "yeast_go_terms": 3
+    },
+    "YIL056W": {
+      "human_id": "9606.ENSP00000489024",
+      "shared_go": 2,
+      "yeast_go_terms": 3
+    },
+    "YDR259C": {
+      "human_id": "9606.ENSP00000250024",
+      "shared_go": 3,
+      "yeast_go_terms": 3
+    },
+    "YLR055C": {
+      "human_id": "9606.ENSP00000355354",
+      "shared_go": 4,
+      "yeast_go_terms": 4
+    },
+    "YBR293W": {
+      "human_id": "9606.ENSP00000260649",
+      "shared_go": 2,
+      "yeast_go_terms": 3
+    },
+    "YOR043W": {
+      "human_id": "9606.ENSP00000355865",
+      "shared_go": 4,
+      "yeast_go_terms": 15
+    }
+  },
+  "human_dm_pairs": [
+    {
+      "yeast_a": "YIL056W",
+      "yeast_b": "YBL066C",
+      "human_a": "9606.ENSP00000489024",
+      "human_b": "9606.ENSP00000342136",
+      "shared_go": 2,
+      "jaccard": 0.10526315789473684
+    }
+  ],
+  "disease_enrichment": {
+    "n_disease_go_terms": 15,
+    "dm_disease_count": 7,
+    "dm_total": 10,
+    "bg_disease_count": 4024,
+    "bg_total": 16818,
+    "fisher_odds": 7.418654738237243,
+    "fisher_p": 0.002682703132060933
+  },
+  "pairwise_overlap": {
+    "dm_jaccard_mean": 0,
+    "dm_jaccard_median": 0,
+    "random_jaccard_mean": 0,
+    "random_jaccard_median": 0,
+    "mannwhitney_u": 0.0,
+    "mannwhitney_p": 1.0,
+    "enrichment_ratio": 0
+  }
+}
