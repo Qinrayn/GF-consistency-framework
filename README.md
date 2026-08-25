@@ -847,7 +847,7 @@ Script → [`scripts/highdim_gf_comparison.py`](scripts/highdim_gf_comparison.py
 ## Author
 
 **Yuhan Zhang (张宇涵)**
-Department of Chemical Engineering and Pharmacy, Guangling College, Yangzhou University
+Yangzhou University
 Correspondence: qinray@hotmail.com
 ORCID: [0009-0000-2769-467X](https://orcid.org/0009-0000-2769-467X)
 
